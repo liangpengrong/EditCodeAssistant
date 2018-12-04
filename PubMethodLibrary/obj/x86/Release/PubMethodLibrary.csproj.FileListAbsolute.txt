@@ -1,0 +1,10 @@
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\bin\Release\PubMethodLibrary.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\bin\Release\PubMethodLibrary.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\bin\Release\StaticDataLibrary.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\bin\Release\StaticDataLibrary.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\bin\Release\StaticDataLibrary.dll.config
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\obj\x86\Release\PubMethodLibrary.csprojAssemblyReference.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\obj\x86\Release\PubMethodLibrary.csproj.CoreCompileInputs.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\obj\x86\Release\PubMethodLibrary.csproj.CopyComplete
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\obj\x86\Release\PubMethodLibrary.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubMethodLibrary\obj\x86\Release\PubMethodLibrary.pdb

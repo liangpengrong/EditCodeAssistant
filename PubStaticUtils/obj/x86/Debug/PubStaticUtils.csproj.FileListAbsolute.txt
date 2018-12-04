@@ -1,0 +1,17 @@
+C:\VisualStudioWorks\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.dll
+C:\VisualStudioWorks\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.pdb
+C:\VisualStudioWorks\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.dll
+C:\VisualStudioWorks\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.pdb
+C:\VisualStudioWorks\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csprojResolveAssemblyReference.cache
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.dll
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.pdb
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csprojAssemblyReference.cache
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csproj.CoreCompileInputs.cache
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.dll
+C:\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Debug\PubStaticUtils.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csprojAssemblyReference.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csproj.CoreCompileInputs.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.pdb

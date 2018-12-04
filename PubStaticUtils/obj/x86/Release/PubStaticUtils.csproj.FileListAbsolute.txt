@@ -1,0 +1,6 @@
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Release\PubStaticUtils.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\bin\Release\PubStaticUtils.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Release\PubStaticUtils.csprojAssemblyReference.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Release\PubStaticUtils.csproj.CoreCompileInputs.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Release\PubStaticUtils.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Release\PubStaticUtils.pdb

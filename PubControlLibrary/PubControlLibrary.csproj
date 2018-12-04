@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E25E8869-092D-489C-99A2-1E083EFBF27B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PubControlLibrary</RootNamespace>
+    <AssemblyName>PubControlLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlLibrary\DropdownBut.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\DropdownBut.Designer.cs">
+      <DependentUpon>DropdownBut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlLibrary\MyDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\MyDataTable.Designer.cs">
+      <DependentUpon>MyDataTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlLibrary\EditorArea.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\EditorArea.Designer.cs">
+      <DependentUpon>EditorArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlLibrary\PromptMessage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\PromptMessage.Designer.cs">
+      <DependentUpon>PromptMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlLibrary\Toolbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\Toolbar.Designer.cs">
+      <DependentUpon>Toolbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\AskMessFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\AskMessFrom.Designer.cs">
+      <DependentUpon>AskMessFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\CharsStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\CharsStatistics.Designer.cs">
+      <DependentUpon>CharsStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\FindAndReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\FindAndReplace.Designer.cs">
+      <DependentUpon>FindAndReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\RowGoToForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\RowGoToForm.Designer.cs">
+      <DependentUpon>RowGoToForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\SplitCharsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\SplitCharsForm.Designer.cs">
+      <DependentUpon>SplitCharsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLibrary\ThereofForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\ThereofForm.Designer.cs">
+      <DependentUpon>ThereofForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ControlLibrary\ControlRightMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\ControlRightMenu.Designer.cs">
+      <DependentUpon>ControlRightMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ControlLibrary\DropdownBut.resx">
+      <DependentUpon>DropdownBut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\MyDataTable.resx">
+      <DependentUpon>MyDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\EditorArea.resx">
+      <DependentUpon>EditorArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\PromptMessage.resx">
+      <DependentUpon>PromptMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\ControlRightMenu.resx">
+      <DependentUpon>ControlRightMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\Toolbar.resx">
+      <DependentUpon>Toolbar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\AskMessFrom.resx">
+      <DependentUpon>AskMessFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\CharsStatistics.resx">
+      <DependentUpon>CharsStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\FindAndReplace.resx">
+      <DependentUpon>FindAndReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\RowGoToForm.resx">
+      <DependentUpon>RowGoToForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\SplitCharsForm.resx">
+      <DependentUpon>SplitCharsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\ThereofForm.resx">
+      <DependentUpon>ThereofForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllDllLoad\AllDllLoad.csproj">
+      <Project>{2B9F39E0-DD4B-41C3-A84B-2B0F567BE952}</Project>
+      <Name>AllDllLoad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PubCacheArea\PubCacheArea.csproj">
+      <Project>{a7758def-11a3-408a-ae4a-5f8271bb604b}</Project>
+      <Name>PubCacheArea</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PubMethodLibrary\PubMethodLibrary.csproj">
+      <Project>{9D75FB53-C7D9-4A61-BD9A-E7495900E854}</Project>
+      <Name>PubMethodLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StaticDataLibrary\StaticDataLibrary.csproj">
+      <Project>{5E9C94E5-88B7-4928-963D-6D25237F4AD9}</Project>
+      <Name>StaticDataLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ControlMethod\" />
+    <Folder Include="FormMethod\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\疑问.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\警告.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

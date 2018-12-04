@@ -1,0 +1,12 @@
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\PubCacheArea.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\PubCacheArea.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\PubMethodLibrary.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\PubMethodLibrary.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\obj\Debug\PubCacheArea.csprojAssemblyReference.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\obj\Debug\PubCacheArea.csproj.CoreCompileInputs.cache
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\obj\Debug\PubCacheArea.csproj.CopyComplete
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\obj\Debug\PubCacheArea.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\obj\Debug\PubCacheArea.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\StaticDataLibrary.dll
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\StaticDataLibrary.pdb
+D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubCacheArea\bin\Debug\StaticDataLibrary.dll.config
