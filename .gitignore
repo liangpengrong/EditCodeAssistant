@@ -1,0 +1,24 @@
+# 只忽略target文件夹
+target/
+# 只忽略bin文件夹
+bin/
+# 忽略.settings文件夹和命名或后缀名为.settings的文件
+.settings
+# 忽略.idea文件夹和命名或后缀名为.idea的文件
+.idea
+# 只忽略后缀名为classpath的文件
+*.classpath
+# 只忽略后缀名为project的文件
+*.project
+# 只忽略后缀名为setting的文件
+*.setting
+# 只忽略后缀名为log的文件
+*.log
+# 只忽略后缀名为prefs的文件
+*.prefs
+# 只忽略后缀名为component的文件
+*.component
+# 只忽略后缀名为iml的文件
+*.iml
+# 只忽略后缀名为factorypath的文件
+*.factorypath
