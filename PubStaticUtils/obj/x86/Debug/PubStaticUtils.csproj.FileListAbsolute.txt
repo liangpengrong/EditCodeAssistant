@@ -15,3 +15,9 @@ D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x8
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csproj.CoreCompileInputs.cache
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.dll
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\PubStaticUtils\obj\x86\Debug\PubStaticUtils.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\bin\Debug\PubStaticUtils.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\bin\Debug\PubStaticUtils.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\obj\x86\Debug\PubStaticUtils.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\obj\x86\Debug\PubStaticUtils.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubStaticUtils\obj\x86\Debug\PubStaticUtils.pdb
