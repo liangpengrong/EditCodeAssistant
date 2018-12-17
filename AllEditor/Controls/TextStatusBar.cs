@@ -45,15 +45,18 @@ namespace CharsToolset
                 label.ToolTipText = strAll[2];
                 label.AutoSize = false;
                 label.TextAlign = ContentAlignment.BottomCenter;
-                if(StrutsStripDateLib.ItemName.大小写状态.Equals(label.Name)) {
-                        
-                }
+
                 // 绑定鼠标单击事件
                 label.MouseDown += new MouseEventHandler(toolLabelMouseDown);
                 // 绑定双击击事件
                 label.DoubleClick += new EventHandler(toolLabelDoubleClick);
                 // 绑定文本改变事件
                 label.TextChanged += new EventHandler(toolLabelTextChanged);
+                // 鼠标移入事件
+                label.MouseEnter += (object sender, EventArgs e) =>{
+                    ToolStripLabel lab = (ToolStripLabel)sender;
+                    lab.ToolTipText = lab.ToolTipText.Split('：')[0] + "：" + lab.Text;
+                };
                 // 启用双击事件
                 label.DoubleClickEnabled = true;
                 strutsBar.Items.Add(label);
@@ -62,6 +65,7 @@ namespace CharsToolset
                 strutsBar.Items.Add(separator);
             }
         }
+
         /// <summary>
         /// 状态栏集合的数据列表
         /// </summary>
@@ -214,6 +218,7 @@ namespace CharsToolset
             toolBindingDic.Add(StrutsStripDateLib.ItemName.总行数, new methodDelegate(TextStatusBarEventMet.openRowGoToForm));
             toolBindingDic.Add(StrutsStripDateLib.ItemName.行列数, new methodDelegate(TextStatusBarEventMet.openCharsStatistics));
             toolBindingDic.Add(StrutsStripDateLib.ItemName.选中字符数, new methodDelegate(TextStatusBarEventMet.openCharsStatistics));
+            toolBindingDic.Add(StrutsStripDateLib.ItemName.编码, new methodDelegate(TextStatusBarEventMet.openSetCodingForm));
             toolBindingDic.Add(StrutsStripDateLib.ItemName.大小写状态, new methodDelegate(TextStatusBarEventMet.setCaseMouse));
             return toolBindingDic;
         }

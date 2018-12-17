@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PubMethodLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,6 +40,8 @@ namespace PubControlLibrary
         // 窗体加载事件
         private void CharsStatistics_Load(object sender, EventArgs e)
         {
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.统计,true);
             // 获取待添加的控件集合
             List<Control[]> conList = getControlList();
             // 为选中字符控件绑定事件

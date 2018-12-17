@@ -38,6 +38,8 @@ namespace CharsToolset
         private static MenuStrip topMenu = null;
         //状态栏
         private static ToolStrip strutsBar = null;
+
+        private static Label sizeLab = null;
         /// <summary>
         /// 窗体的启动函数
         /// </summary>
@@ -47,12 +49,12 @@ namespace CharsToolset
         {
             // 将控件组合到一起并添加到窗体中
             this.ControlCombination();
+            // 加载默认配置
+            initRootForm("我的程序");
             // 将窗体加入到单例窗体工厂
             addSingletonAllForm();
             // 将控件加入到单例控件工厂
             addSingletonAllCon();
-            // 加载默认配置
-            initRootForm("我的程序");
         }
         /// <summary>
         /// 设置窗体的默认启动配置
@@ -65,23 +67,26 @@ namespace CharsToolset
             // 图标
             this.Icon = Properties.Resources.编辑器32x32;
             // 加载调整大小图标
-            addSize();
+            sizeLab = addSize();
         }
         /// <summary>
         /// 添加调整大小角标
         /// </summary>
-        private void addSize() { 
+        private Label addSize() { 
             Label lab = new Label();
+            lab.Name = DefaultNameCof.sizeSubscript;
             lab.Size = new Size(9,9);
             lab.AutoSize = false;
             lab.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lab.Image = Properties.Resources.调整大小;
             lab.Text = "";
             lab.BringToFront();
-            lab.Location = new Point(this.ClientSize.Width - lab.Width - 3
-                , this.ClientSize.Height - lab.Height - 3);
+            lab.Location = new Point(this.ClientSize.Width - lab.Width - 2
+                , this.ClientSize.Height - lab.Height - 2);
             this.Controls.Add(lab);
             lab.BringToFront();
+            lab.Cursor = Cursors.SizeNWSE;
+            return lab;
         }
         /// <summary>
         /// 将控件组合到一起并添加到窗体中
@@ -133,6 +138,8 @@ namespace CharsToolset
             ControlCache.addSingletonFac(topMenu);
             // 状态栏
             ControlCache.addSingletonFac(strutsBar);
+            // 调整大小角标
+            ControlCache.addSingletonFac(sizeLab);
         }
 
         /// <summary>
@@ -163,13 +170,6 @@ namespace CharsToolset
             tab.Height = this.ClientSize.Height-1 - topMenu.Height - strutsBar.Height;;
             // Tab容器相对于窗体的位置
             tab.Location = new Point(1, 1 + topMenu.Height);
-            //tab.Click += (object sender, EventArgs e) => { 
-            //    TabControl tc = (TabControl)sender;
-            //    if(tc.TabCount > 0) { 
-            //       tc.SelectedTab.Controls[0].Focus();
-            //    }
-                
-            //};
             return tab;
         }
 
@@ -300,7 +300,7 @@ namespace CharsToolset
             // 设置右键菜单
             strtusBar.ContextMenuStrip = textStatusBar.getStrutsBarRightMenu(strtusBar);
             // 绑定状态栏的重绘事件
-            strtusBar.Paint += new PaintEventHandler(TextStatusBar.paintStrutsBarFrame);
+            // strtusBar.Paint += new PaintEventHandler(TextStatusBar.paintStrutsBarFrame);
             return strtusBar;
         }
 

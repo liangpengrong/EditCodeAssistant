@@ -95,3 +95,4 @@ D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.csproj.CopyComplete
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.dll
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.SetCodingForm.resources

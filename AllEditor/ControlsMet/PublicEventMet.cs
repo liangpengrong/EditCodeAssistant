@@ -8,6 +8,7 @@ using System.Linq;
 using StaticDataLibrary;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace CharsToolset {
    /// <summary>
@@ -125,6 +126,17 @@ namespace CharsToolset {
             return rowGoToForm;
         }
         /// <summary>
+        /// 打开设置文本框编码窗口
+        /// </summary>
+        /// <param name="t">所需文本框</param>
+        /// <param name="isShow">是否显示窗体</param>
+        /// <returns></returns>
+        public static SetCodingForm openSetCodingForm(TextBox t, bool isShow){
+            SetCodingForm setCodingForm = new SetCodingForm(t);
+            if(isShow) setCodingForm.ShowDialog();
+            return setCodingForm;
+        }
+        /// <summary>
         /// 监听文件变化并弹出提示框提示重新加载或另存为
         /// </summary>
         /// <param name="filepath"></param>
@@ -142,20 +154,29 @@ namespace CharsToolset {
                     encoding = FileUtilsMet.isFileEncoding(filepath);
                 }
                 // 判断文本框的Tag中是否纯在一个监听,存在就销毁他
-                if(TextBoxUtilsMet.getDicTextTag(t).ContainsKey(StaticDataLibrary.TextBoxTagKey.fileMonitor)){
-                    Object obj = TextBoxUtilsMet.getDicTextTag(t)[StaticDataLibrary.TextBoxTagKey.fileMonitor];
+                if(TextBoxUtilsMet.getDicTextTag(t).ContainsKey(TextBoxTagKey.fileMonitor)){
+                    Object obj = TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.fileMonitor];
                     if(obj.GetType().Equals(typeof(FileSystemWatcher))) { 
-                        wat =(FileSystemWatcher) TextBoxUtilsMet.getDicTextTag(t)[StaticDataLibrary
-                            .TextBoxTagKey.fileMonitor];
+                        wat =(FileSystemWatcher) TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.fileMonitor];
                         wat.EnableRaisingEvents = false;
                         wat.Dispose();
                     }
                 }
+                
                 // 获取一个新的文件监听
                 wat = FileUtilsMet.fileMonitor(pathArr[0], pathArr[1]+"."+pathArr[2],
                     NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.Size
                     ,null,null
-                    ,delegate{
+                    ,delegate(object sender, FileSystemEventArgs e){
+                        FileSystemWatcher watcher = (FileSystemWatcher)sender;
+                        // 闪烁窗体
+                        Form f = t.FindForm();
+                        if(f.InvokeRequired) { 
+                            f.Invoke(new EventHandler(delegate{ 
+                                WinApiUtilsMet.flashWindesTime(f.Handle, 400, 3, true);
+                            }));
+                        }
+                        
                         // 弹出对话框
                         ControlsUtilsMet.showAskMessBox("文件内容已经更改,是否要重新加载文件", "提示"
                         ,delegate{
@@ -167,6 +188,7 @@ namespace CharsToolset {
                                 }));
                             }    
                         },null);
+                        watcher.EnableRaisingEvents = false;
                     }
                     , delegate{ 
                         // 弹出对话框
@@ -179,9 +201,10 @@ namespace CharsToolset {
                                 }));
                             }    
                         },null); 
+
                 });
                 // 加入到文本框的tag数据中
-                TextBoxUtilsMet.textAddTag(t, StaticDataLibrary.TextBoxTagKey.fileMonitor, wat);
+                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.fileMonitor, wat);
             } catch {
                 MessageBox.Show("监听文件状态时发生异常");
             }

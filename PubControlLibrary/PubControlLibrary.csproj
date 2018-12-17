@@ -101,6 +101,12 @@
     <Compile Include="FormLibrary\RowGoToForm.Designer.cs">
       <DependentUpon>RowGoToForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLibrary\SetCodingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\SetCodingForm.Designer.cs">
+      <DependentUpon>SetCodingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLibrary\SplitCharsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLibrary\RowGoToForm.resx">
       <DependentUpon>RowGoToForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\SetCodingForm.resx">
+      <DependentUpon>SetCodingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLibrary\SplitCharsForm.resx">
       <DependentUpon>SplitCharsForm.cs</DependentUpon>

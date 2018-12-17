@@ -91,6 +91,9 @@ namespace PubControlLibrary
         /// <param name="e"></param>
         private void FindAndReplace_Load(object sender, EventArgs e)
         {
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.查找替换,true);
+
             if(textBox.SelectionLength == 0) { 
                 this.当前文档R.Checked = true;
             } else { 

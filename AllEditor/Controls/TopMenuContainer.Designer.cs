@@ -34,6 +34,8 @@
             this.保存Item = new System.Windows.Forms.ToolStripMenuItem();
             this.另存为Item = new System.Windows.Forms.ToolStripMenuItem();
             this.用记事本打开Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.退出Item = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑Item = new System.Windows.Forms.ToolStripMenuItem();
             this.撤销Item = new System.Windows.Forms.ToolStripMenuItem();
             this.恢复Item = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,8 +59,8 @@
             this.字体Item = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助Item = new System.Windows.Forms.ToolStripMenuItem();
             this.关于Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.退出Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.添加字符Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除字符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,6 +120,17 @@
             this.用记事本打开Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.用记事本打开Item.Size = new System.Drawing.Size(207, 22);
             this.用记事本打开Item.Text = "用记事本打开";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(204, 6);
+            // 
+            // 退出Item
+            // 
+            this.退出Item.Name = "退出Item";
+            this.退出Item.Size = new System.Drawing.Size(207, 22);
+            this.退出Item.Text = "退出";
             // 
             // 编辑Item
             // 
@@ -231,6 +244,8 @@
             // 
             this.工具Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.分列Item,
+            this.添加字符Item,
+            this.删除字符Item,
             this.首选项Item});
             this.工具Item.Name = "工具Item";
             this.工具Item.Size = new System.Drawing.Size(46, 20);
@@ -239,13 +254,13 @@
             // 分列Item
             // 
             this.分列Item.Name = "分列Item";
-            this.分列Item.Size = new System.Drawing.Size(115, 22);
+            this.分列Item.Size = new System.Drawing.Size(180, 22);
             this.分列Item.Text = "分列";
             // 
             // 首选项Item
             // 
             this.首选项Item.Name = "首选项Item";
-            this.首选项Item.Size = new System.Drawing.Size(115, 22);
+            this.首选项Item.Size = new System.Drawing.Size(180, 22);
             this.首选项Item.Text = "首选项";
             // 
             // 查看Item
@@ -296,16 +311,17 @@
             this.关于Item.Size = new System.Drawing.Size(116, 22);
             this.关于Item.Text = "关于..";
             // 
-            // toolStripSeparator3
+            // 添加字符Item
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(204, 6);
+            this.添加字符Item.Name = "添加字符Item";
+            this.添加字符Item.Size = new System.Drawing.Size(180, 22);
+            this.添加字符Item.Text = "添加字符";
             // 
-            // 退出Item
+            // 删除字符Item
             // 
-            this.退出Item.Name = "退出Item";
-            this.退出Item.Size = new System.Drawing.Size(207, 22);
-            this.退出Item.Text = "退出";
+            this.删除字符Item.Name = "删除字符Item";
+            this.删除字符Item.Size = new System.Drawing.Size(180, 22);
+            this.删除字符Item.Text = "删除字符";
             // 
             // TopMenuContainer
             // 
@@ -353,5 +369,7 @@
         public System.Windows.Forms.ToolStripMenuItem 用记事本打开Item;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem 退出Item;
+        private System.Windows.Forms.ToolStripMenuItem 添加字符Item;
+        private System.Windows.Forms.ToolStripMenuItem 删除字符Item;
     }
 }

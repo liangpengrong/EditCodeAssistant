@@ -36,5 +36,9 @@ namespace StaticDataLibrary {
         /// 默认标签容器命名
         /// </summary>
         public const string tabContent = "mainTabControl";
+        /// <summary>
+        /// 调整大小角标的命名
+        /// </summary>
+        public const string sizeSubscript = "sizeSubscript";
     }
 }

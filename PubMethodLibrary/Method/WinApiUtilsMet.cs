@@ -123,5 +123,40 @@ namespace PubMethodLibrary
         [DllImport("user32")]
         public static extern bool AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
 
+        /// <summary>
+        /// 闪烁指定窗体
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="invert"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool FlashWindow(IntPtr handle, bool invert);
+
+        /// <summary>
+        /// 闪烁指定窗体
+        /// </summary>
+        /// <param name="handle">窗体句柄</param>
+        /// <param name="countTime">闪烁的间隔，单位毫秒</param>
+        /// <param name="countTime">闪烁的总时长，单位秒</param>
+        /// <param name="isMus">是否播放提示音</param>
+        public static void flashWindesTime(IntPtr handle, int interval, int countTime, bool isMus) {
+            // 是否播放提示音
+            if(isMus) System.Media.SystemSounds.Asterisk.Play();
+            // 定时器
+            System.Timers.Timer myTimer = new System.Timers.Timer();
+            int counter = 0;
+            myTimer.AutoReset = true;
+            myTimer.Interval = interval;
+            myTimer.Enabled = true;
+            myTimer.Elapsed += (sender, e) =>
+            {
+                FlashWindow(handle, true);
+                counter = counter + 1;
+                if(counter.Equals((int)Math.Floor((double)(countTime * 1000 / interval)))){
+                    myTimer.Enabled = false;
+                    myTimer.Dispose();
+                }
+            };
+        }
     }
 }

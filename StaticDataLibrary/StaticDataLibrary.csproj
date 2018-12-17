@@ -82,9 +82,6 @@
     <None Include="Resources\重做.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\查找替换.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\去除.png" />
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\记事本.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\分列.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\关于.png" />
@@ -143,6 +137,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\转化.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\查找替换.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分列.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

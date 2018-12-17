@@ -193,5 +193,19 @@ namespace CharsToolset
             rowGoToForm.ShowDialog();
             return rowGoToForm;
         }
+        /// <summary>
+        /// 打开设置文本框编码窗体
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static object openSetCodingForm(Dictionary<Type , object> data)
+        { 
+            // 获取控件
+            TextBox t = (TextBox)data[typeof(TextBox)];
+
+            SetCodingForm setCodingForm = PublicEventMet.openSetCodingForm(t, false);
+            setCodingForm.ShowDialog();
+            return setCodingForm;
+        }
     }
 }

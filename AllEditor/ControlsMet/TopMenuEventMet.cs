@@ -60,7 +60,6 @@ namespace CharsToolset
                 TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.saveFilePath, openFile.FileName);
                 // 将文件编码写入到文本框tag数据中
                 TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.textEcoding, encoding);
-
                 // 监听文件变化并弹窗提醒
                 PublicEventMet.monitorFileShowMess(openFile.FileName, t);
                 t.Focus();
@@ -84,16 +83,14 @@ namespace CharsToolset
             newSaveFile.DefaultExt = "txt";
             newSaveFile.Filter = "文本文档(*.txt)|*.txt|所有文件(*.*)|*.*";
             newSaveFile.FileName = TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.fControlText].ToString();
-            if (newSaveFile.ShowDialog() == DialogResult.OK)
-            {//判断是否点击确定
-                FileUtilsMet.FileWrite.writeFile
-                (newSaveFile.FileName.ToString()//调用方法写入文件内容
-                , t.Text//获取选中标签中的主文本框的值
-                , Encoding.Default);
-                TextBoxUtilsMet.textAddTag(
-                    t
-                    , TextBoxTagKey.saveFilePath
-                    , newSaveFile.FileName.ToString());//将文本框的Tag属性变为保存路径
+            //判断是否点击确定
+            if (newSaveFile.ShowDialog() == DialogResult.OK) {
+                // 调用方法写入文件内容
+                FileUtilsMet.FileWrite.writeFile(newSaveFile.FileName.ToString(), t.Text, Encoding.Default);
+                // 将保存路径加入到文本框的Tag属性
+                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.saveFilePath , newSaveFile.FileName.ToString());
+                // 监听文件变化并弹窗提醒
+                PublicEventMet.monitorFileShowMess(newSaveFile.FileName, t);
             }
             return null;
         }
@@ -308,6 +305,12 @@ namespace CharsToolset
                 bool check = item.Checked;
 
                 toolStrip.Visible = check;
+                // 设置调整大小角标的显示与隐藏
+                if(single.ContainsKey(DefaultNameCof.sizeSubscript)) { 
+                    Control sizeCon = single[DefaultNameCof.sizeSubscript];
+                    sizeCon.Visible = check;
+                }
+
                 // 调整标签容器的位置
                 if(check) { 
                     tabControl.Height = tabControl.Height - toolStrip.Height;
@@ -315,7 +318,6 @@ namespace CharsToolset
                     tabControl.Height = tabControl.Height + toolStrip.Height;
                 }
             }
-
             return null;
         }
         

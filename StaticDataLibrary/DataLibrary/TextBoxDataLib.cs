@@ -48,5 +48,9 @@ namespace StaticDataLibrary
         /// 文本框是否处于恢复状态
         /// </summary>
         public const string textIsRestore = "textIsRestore";
+        /// <summary>
+        /// 是否触发了文件监听更改事件
+        /// </summary>
+        public const string isFileChangEvent = "isFileChangEvent";
     }
 }

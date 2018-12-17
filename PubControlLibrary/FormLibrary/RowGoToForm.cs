@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PubMethodLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,6 +32,9 @@ namespace PubControlLibrary
         // 窗体加载事件
         private void RowGoToForm_Load(object sender, EventArgs e)
         {
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.转到行,true);
+
             if(textBox.TextLength != 0){
                 maxTextLings = this.textBox.Lines.Length;
                 //改变行号范围

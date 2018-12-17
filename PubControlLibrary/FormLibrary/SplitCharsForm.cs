@@ -520,7 +520,8 @@ namespace PubControlLibrary {
         }
         // 窗体加载事件
         private void SplitOrAddChars_Load(object sender, EventArgs e) {
-            
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.分列,true);
             // 加载数据表格配置
             initDataViewConf();
             // 判断要操作的字符串

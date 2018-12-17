@@ -93,5 +93,14 @@ namespace PubControlLibrary {
                 }
             }
         }
+        // 按钮失去焦点事件
+        private void but_Leave(object sender, EventArgs e) {
+            Button but = (Button)sender;
+            if(this.button1.Name.Equals(but.Name)) {
+                if(historicalPanel != null && !historicalPanel.IsDisposed) { 
+                    historicalPanel.Dispose();
+                }
+            }
+        }
     }
 }

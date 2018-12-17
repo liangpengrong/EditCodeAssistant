@@ -9,20 +9,18 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Windows.Forms;
-
+using StaticDataLibrary;
 namespace PubControlLibrary {
     public partial class ThereofForm : Form {
         public ThereofForm() {
             InitializeComponent();
         }
 
-        private void aa() { 
-            
-            
-        }
         // 窗体加载事件
         private void ThereofForm_Load(object sender, EventArgs e) {
-            this.Text = "关于 " + StaticDataLibrary.DefaultNameCof.programName+"";
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.关于,true);
+            this.Text = "关于 " + DefaultNameCof.programName+"";
             setVersion();
 
             // 组装Tab容器

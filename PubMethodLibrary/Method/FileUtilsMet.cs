@@ -330,23 +330,27 @@ namespace PubMethodLibrary
             watcher.Filter = filter;
             // 要监听的类型
             watcher.NotifyFilter = NotifyFilter;
-            if(delEvent != null) { 
+            if(delEvent != null) {
+                watcher.EnableRaisingEvents = true;
                 // 删除时发生
                 watcher.Deleted += delEvent;
             }
             if(creatEvent != null) { 
+                watcher.EnableRaisingEvents = true;
                 // 创建时发生
                 watcher.Created += creatEvent;
             }
             if(changedEvent != null) {
+                watcher.EnableRaisingEvents = true;
                 // 更改文件内容时发生
                 watcher.Changed += changedEvent;
             }
-            if(renamedEvent != null) { 
+            if(renamedEvent != null) {
+                watcher.EnableRaisingEvents = true;
                 // 重命名发生
                 watcher.Renamed += renamedEvent;
             }
-            watcher.EnableRaisingEvents = true;
+            // watcher.EnableRaisingEvents = true;
             return watcher;
         }
     }
