@@ -63,7 +63,7 @@ namespace CharsToolset
             tool.BackColor = Color.White;
             tool.AutoToolTip = true;
             tool.ToolTipText = tool.Text;
-            tool.Font = topMenuStrip.Font;
+            // tool.Font = topMenuStrip.Font;
             // 绑定Image
             setItemImage(tool);
         }
@@ -204,8 +204,11 @@ namespace CharsToolset
             toolBindingDic.Add(this.自动换行Item.Name, new methodDelegate(TopMenuEventMet.isAutoLine));
             toolBindingDic.Add(this.状态栏Item.Name, new methodDelegate(TopMenuEventMet.isStartBarDisplay));
 
-            toolBindingDic.Add(this.首选项Item.Name, new methodDelegate(TopMenuEventMet.openSetUp));
             toolBindingDic.Add(this.分列Item.Name, new methodDelegate(TopMenuEventMet.openSplitCharsForm));
+            toolBindingDic.Add(this.添加字符Item.Name, new methodDelegate(TopMenuEventMet.openAddCharsForm));
+
+            toolBindingDic.Add(this.首选项Item.Name, new methodDelegate(TopMenuEventMet.openSetUp));
+            
 
             toolBindingDic.Add(this.字体Item.Name, new methodDelegate(TopMenuEventMet.fontDialogMethod));
             // 实例化关于窗体
@@ -219,7 +222,7 @@ namespace CharsToolset
         public static void paintMenuFrame(object sender, PaintEventArgs e)
         {
             MenuStrip menu = (MenuStrip)sender;
-            ControlsUtilsMet.paintConSide(e.Graphics, menu.ClientRectangle
+            ControlsUtilsMet.setCOntrolBorderStyle(e.Graphics, menu.ClientRectangle
                 ,ButtonBorderStyle.Solid
                 ,0,0,0,1
                 , Color.FromArgb(160, 160, 160));

@@ -15,6 +15,11 @@ namespace PubControlLibrary {
         /// </summary>
         private DataGridView mainDataGridView;
         /// <summary>
+        /// 存放当前鼠标所在单元格
+        /// </summary>
+        private DataGridViewCell mouseCell = null;
+
+        /// <summary>
         /// 要操作的文本框
         /// </summary>
         private TextBox textBox;
@@ -53,9 +58,9 @@ namespace PubControlLibrary {
         // 单元格默认宽度
         private int cellDefWidth = 100;
         // 单元格默认高度
-        private int cellDefHeight = 30;
+        private int cellDefHeight = 25;
         // 列头的默认高度
-        private int colHeadersHeight = 25;
+        private int colHeadersHeight = 20;
 
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace PubControlLibrary {
             InitializeComponent();
             // 初始化消息提示控件
             initToolTip();
-            //this.DoubleBuffered = true;
+            //DoubleBuffered = true;
         }
 
         /// <summary>
@@ -88,15 +93,15 @@ namespace PubControlLibrary {
         /// 初始化消息提示
         /// </summary>
         private void initToolTip() { 
-            String mess1 = "按照固定字符分列数据, 如空格, 逗号等, 其中\\为转义字符";
-            String mess2 = "按照固定字符位置分列数据, 如1,2等, 默认从0位开始";
+            string mess1 = "按照固定字符分列数据, 如空格, 逗号等, 其中\\为转义字符";
+            string mess2 = "按照固定字符位置分列数据, 如1,2等, 默认从0位开始";
             Button but1 = PromptMessage.getMessBut(字符_rad.Name+"mess_but", mess1);
             but1.Location = new Point(字符_rad.Location.X + 字符_rad.Width + 1, 字符_rad.Location.Y);
 
             Button but2 = PromptMessage.getMessBut(字符个数_rad.Name+""+"mess_but", mess2);
             but2.Location = new Point(字符个数_rad.Location.X + 字符个数_rad.Width + 1, 字符个数_rad.Location.Y);
-            this.分列设置容器.Controls.Add(but1);
-            this.分列设置容器.Controls.Add(but2);
+            分列设置容器.Controls.Add(but1);
+            分列设置容器.Controls.Add(but2);
         }
         /// <summary>
         /// 将二维数组的数据放入表格中
@@ -224,21 +229,21 @@ namespace PubControlLibrary {
             int dataViewH = mainDataGridView.Location.Y + colHeadersHeight + (cellDefHeight * rowColuArr.Length);
             // 判断工作区的宽
             if(dataViewW > 1000) { 
-                this.Width = MessyUtilsMet.getResolvingpower()[0] - 100;
+                Width = MessyUtilsMet.getResolvingpower()[0] - 100;
             } else if(dataViewW < 600) {
-                this.Width = 600;
+                Width = 600;
             } else{ 
-                this.Width = (this.Width - this.ClientSize.Width) + dataViewW + 15;    
+                Width = (Width - ClientSize.Width) + dataViewW + 15;    
             }
             // 判断工作区的高
             if(dataViewH > Screen.PrimaryScreen.Bounds.Height) {
-                this.Height = MessyUtilsMet.getResolvingpower()[1] - 100;
+                Height = MessyUtilsMet.getResolvingpower()[1] - 100;
             } else if(dataViewH < 500) { 
-                this.Height = 500;
+                Height = 500;
             } else{ 
-                this.Height = (this.Height - this.ClientSize.Height) + dataViewH + 15;    
+                Height = (Height - ClientSize.Height) + dataViewH + 15;    
             }
-            this.MinimumSize = new Size(this.Width, this.Height);
+            MinimumSize = new Size(Width, Height);
         }
         /// <summary>
         /// 调节窗体的位置
@@ -246,19 +251,19 @@ namespace PubControlLibrary {
         private void middleForm() {
             Form rootDisplayForm = textBox.FindForm();
             // 根据父窗体居中
-            this.Location = FormUtislMet.middleForm(this, rootDisplayForm);
+            Location = FormUtislMet.middleForm(this, rootDisplayForm);
             // 获取当前屏幕分辨率
             int[] wh = MessyUtilsMet.getResolvingpower();
             
             int w = rootDisplayForm.Location.X+rootDisplayForm.Width;
-            if(w + this.Width <= wh[0]) {
+            if(w + Width <= wh[0]) {
                 // 设置相对于启动窗体贴右
-                this.Location = new Point(w, this.Location.Y);
+                Location = new Point(w, Location.Y);
                 return;
             }
-            if(this.Width <= rootDisplayForm.Location.X) { 
-                w = rootDisplayForm.Location.X - this.Width;
-                this.Location = new Point(w, this.Location.Y);
+            if(Width <= rootDisplayForm.Location.X) { 
+                w = rootDisplayForm.Location.X - Width;
+                Location = new Point(w, Location.Y);
                 return;
             }
         }
@@ -270,12 +275,12 @@ namespace PubControlLibrary {
         private String[] addSeparatorArr() {
             List<String> separatorList = new List<string>();
             // 判断复选框
-            if(this.制表符_chk.Checked) separatorList.Add("\t");
-            if(this.分号_chk.Checked) separatorList.Add(";");
-            if(this.冒号_chk.Checked) separatorList.Add(":");
-            if(this.空格_chk.Checked) separatorList.Add(" ");
+            if(制表符_chk.Checked) separatorList.Add("\t");
+            if(分号_chk.Checked) separatorList.Add(";");
+            if(冒号_chk.Checked) separatorList.Add(":");
+            if(空格_chk.Checked) separatorList.Add(" ");
             // 判断其他文本框
-            String splitChars = this.字符_textB.Text;
+            String splitChars = 字符_textB.Text;
             if(splitChars.IndexOf("\\,") >= 0) separatorList.Add(",");
             if(splitChars.IndexOf("\\\\") >= 0) separatorList.Add("\\");
             // 将字符文本框中的文本添加到分隔符集合中
@@ -298,7 +303,7 @@ namespace PubControlLibrary {
         /// <returns></returns>
         private int[] addIndexArr() {
             try { 
-                String splitChars = this.字符个数_textB.Text;
+                String splitChars = 字符个数_textB.Text;
                 // 将字符串按逗号分割
                 String[] tempStrArr = splitChars.Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries);
                 // 将字符串数组转化为int数组并赋值全局变量
@@ -373,7 +378,7 @@ namespace PubControlLibrary {
         /// 总的分列执行方法
         /// </summary>
         private void splitMethod() {
-            String[][] rowColArr = null;
+            string[][] rowColArr = null;
             // 判断是否为字符分列方式
             if(1.Equals(isCharsOrCharIndex)) { 
                 rowColArr = charsSplitMethod();
@@ -391,28 +396,36 @@ namespace PubControlLibrary {
         /// </summary>
         private void initDataViewConf() {
             MyDataTable dataTable = new MyDataTable();
-            dataTable.cellDefHeight = this.cellDefHeight;
-            dataTable.cellDefWidth = this.cellDefWidth;
-            dataTable.colHeadersHeight = this.colHeadersHeight;
+            dataTable.cellDefHeight = cellDefHeight;
+            dataTable.cellDefWidth = cellDefWidth;
+            dataTable.colHeadersHeight = colHeadersHeight;
             Point point = 数据表格.Location;
             Size size = 数据表格.Size;
-            String name = 数据表格.Name;
+            string name = 数据表格.Name;
 
             DataGridView dataView = dataTable.数据表格;
             dataView.Name = name;
             dataView.Location = point;
             dataView.Size = 数据表格.Size;
-            this.数据表格.Dispose();
-            this.Controls.Add(dataView);
+            // 设置单元格移入事件
+            dataView.CellMouseEnter += (object sender, DataGridViewCellEventArgs e) =>{ 
+                DataGridView data = (DataGridView)sender;
+                if(e.ColumnIndex != -1 && e.RowIndex != -1) { 
+                    mouseCell = data.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                }
+            };
+            数据表格.Dispose();
+            Controls.Add(dataView);
             mainDataGridView = dataView;
         }
+
         /// <summary>
         /// 设置字符文本框中特定字符的背景色
         /// </summary>
         /// <param name="rTextBox"></param>
         private void selectRichColor(RichTextBox rTextBox) {
             int selStart = rTextBox.SelectionStart;
-            String richText = rTextBox.Text;
+            string richText = rTextBox.Text;
             // 设置选中背景色
             rTextBox.Select(0, richText.Length);
             rTextBox.SelectionBackColor = ColorTranslator.FromHtml("#DB494E");
@@ -439,99 +452,68 @@ namespace PubControlLibrary {
             rTextBox.SelectionLength = 0;
         }
         /// <summary>
-        /// 生成导出按钮
+        /// 设置导出按钮
         /// </summary>
-        private void setExportBut() {
-            string[] arr = new string[]{"导出到源文本框","导出到记事本","导出到Excel"};
-            DropdownBut dropdownBut = new DropdownBut(arr);
-            // 获取下拉容器
-            Panel expPan =  dropdownBut.下拉按钮_pan;
-            // 获取下拉按钮
-            Button expBut = dropdownBut.下拉按钮_but;
-            // 设置下拉按钮的属性
-            expBut.Name = "导出到_but";
-            expBut.Text = "导出到源文本框";
+        private void setExportCombox() {
+            // 实例化导出下拉框
+            ExportComBox exportComBox = new ExportComBox();
+            ComboBox comboBox = exportComBox.export_combox;
             // 绑定点击事件
-            expBut.Click += (object sender, EventArgs e) =>{ 
-                Button b = (Button)sender;
-                if("导出到源文本框".Equals(b.Text)) { 
-                    exportText();
-                } else if("导出到记事本".Equals(b.Text)) { 
-                    exportNotepad();
-                } else if("导出到Excel".Equals(b.Text)){ 
-                    exportExcel();
-                }
-                
-            };
-            expBut.TextChanged += (object sender, EventArgs e) =>{ 
-                Button b = (Button)sender;
-                if("导出到源文本框".Equals(b.Text)) { 
-                    exportText();
-                } else if("导出到记事本".Equals(b.Text)) { 
-                    exportNotepad();
-                } else if("导出到Excel".Equals(b.Text)){ 
-                    exportExcel();
+            comboBox.SelectedIndexChanged += (object sender, EventArgs e) =>{
+                ComboBox box = (ComboBox)sender;
+                int val = int.Parse(box.SelectedValue.ToString());
+                switch(val) {
+                    case 0:
+                        DataGridViewUtilMet.exportText(mainDataGridView, textBox, excNoHaveTabs);
+                        break;
+                    case 1:
+                        DataGridViewUtilMet.exportNotepad(mainDataGridView, excNoHaveTabs);
+                        break;
+                    case 2:
+                        DataGridViewUtilMet.exportExcel(mainDataGridView, excNoHaveTabs);
+                        break;
                 }
             };
-            // 设置下拉容器的属性
-            expPan.Width = 150;
-            expPan.Height = 分列_but.Height - 2;
-            expPan.Location = new Point(分列_but.Location.X + 分列_but.Width + 5, 分列_but.Location.Y + 1);
-            this.操作区容器.Controls.Add(expPan);
+            // 加入到容器中
+            comboBox.Location = new Point(5,18);
+            操作区容器.Controls.Add(comboBox);
         }
         /// <summary>
         /// 获取表格中选定单元格的数据
         /// </summary>
+        /// <param name="isSelectAll">是否全在全部</param>
         /// <returns></returns>
-        private string getDatatabelSelText() { 
-            String tableText = "";
+        private string getDatatabelSelText(bool isSelectAll) { 
+            string tableText = "";
             // 选定的单元格集合
             DataGridViewSelectedCellCollection selCell = mainDataGridView.SelectedCells;
-            // mainDataGridView.SelectAll();
+            if(isSelectAll) mainDataGridView.SelectAll();
             tableText = mainDataGridView.GetClipboardContent().GetText();
-            Console.WriteLine(tableText);
             // 还原
-            mainDataGridView.ClearSelection();
-            foreach(DataGridViewCell cell in selCell) { 
-                cell.Selected = true;
+            if(isSelectAll) { 
+                mainDataGridView.ClearSelection();
+                foreach(DataGridViewCell cell in selCell) { 
+                    cell.Selected = true;
+                }
             }
             return tableText;
         }
-        /// <summary>
-        /// 导出表格数据到源文本框
-        /// </summary>
-        private void exportText() { 
-            String s = getDatatabelSelText();
-            // 不包含制表符
-            if(excNoHaveTabs) {s = s.Replace("\t", "");}
-            textBox.Text = s;
-            textBox.SelectionStart = s.Length;
-        }
-        /// <summary>
-        /// 导出表格数据到记事本
-        /// </summary>
-        private void exportNotepad() {
-            String s = getDatatabelSelText();
-            if(excNoHaveTabs) {s = s.Replace("\t", "");}
-            FileUtilsMet.turnOnNotepad(s);
-        }
-        private void exportExcel() { 
-                
-        }
+
         // 窗体加载事件
         private void SplitOrAddChars_Load(object sender, EventArgs e) {
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.分列,true);
+            Icon = MessyUtilsMet.IamgeToIcon(StaticDataLibrary.Image.分列,true);
             // 加载数据表格配置
             initDataViewConf();
             // 判断要操作的字符串
             isOperatingText();
             // 数据表格生成数据
             readTextSetDataView(initRowColuArr(text));
+            // 设置导出按钮
+            setExportCombox();
             // 调节窗口位置
-            middleForm();
-            // 生成导出按钮
-            setExportBut();
+            // middleForm();
+            Location = FormUtislMet.middleForm(this);
         }
 
         // 单选按钮选项改变事件
@@ -541,19 +523,19 @@ namespace PubControlLibrary {
                 // 赋值变量
                 if(radBut.Checked) isCharsOrCharIndex = 2;
                 // 一些关联控件的设置
-                this.字符个数_textB.Focus();
-                this.制表符_chk.Enabled = !radBut.Checked;
-                this.分号_chk.Enabled = !radBut.Checked;
-                this.冒号_chk.Enabled = !radBut.Checked;
-                this.空格_chk.Enabled = !radBut.Checked;
-                this.字符_textB.Enabled = !radBut.Checked;
-                this.不区分大小写_chk.Enabled = !radBut.Checked;
-                this.字符个数_textB.Enabled = radBut.Checked;
+                字符个数_textB.Focus();
+                制表符_chk.Enabled = !radBut.Checked;
+                分号_chk.Enabled = !radBut.Checked;
+                冒号_chk.Enabled = !radBut.Checked;
+                空格_chk.Enabled = !radBut.Checked;
+                字符_textB.Enabled = !radBut.Checked;
+                不区分大小写_chk.Enabled = !radBut.Checked;
+                字符个数_textB.Enabled = radBut.Checked;
             }
             if(radBut.Equals(字符_rad)) {
                 if(radBut.Checked) isCharsOrCharIndex = 1;
-                this.字符_textB.Focus();
-                this.字符个数_textB.Enabled = !radBut.Checked;
+                字符_textB.Focus();
+                字符个数_textB.Enabled = !radBut.Checked;
             }
             if(radBut.Equals(单个行_rad)) { 
                 isSinglelineOrAll = 1;    
@@ -587,17 +569,17 @@ namespace PubControlLibrary {
         // 窗体关闭事件
         private void SplitCharsForm_FormClosed(object sender, FormClosedEventArgs e) {
             // 清除单例工厂中的本窗体
-            PubCacheArea.FormCache.setSingletonFactory(this.Name, null);
+            // PubCacheArea.FormCache.setSingletonFactory(Name, null);
         }
 
         private void 关闭_but_Click(object sender, EventArgs e) {
-            this.Close();
+            Close();
         }
         // 字符文本框文本改变事件
         private void 字符_textB_TextChanged(object sender, EventArgs e) {
             RichTextBox richT = (RichTextBox)sender;
             // 设置特定文本颜色
-            selectRichColor(richT);
+            // selectRichColor(richT);
         }
     }
 }

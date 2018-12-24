@@ -30,7 +30,7 @@ namespace PubControlLibrary
         // 右键菜单项的宽
         public int menuWidth = 200;
         // 右键菜单项的高
-        public int itemHeigth = 23;
+        public int itemHeigth = 22;
        
         /// <summary>
         /// 判断文本框的右键菜单那些需要禁用那些需要启用
@@ -218,8 +218,9 @@ namespace PubControlLibrary
             toolBindingDic.Add(this.换行符Item.Name, new methodDelegate(TextBoxUtilsMet.textPlaceNewline));
             toolBindingDic.Add(this.制表符Item.Name, new methodDelegate(TextBoxUtilsMet.textPlaceTabs));
             toolBindingDic.Add(this.清空文本框Item.Name, new methodDelegate(TextBoxUtilsMet.textClear));
-            toolBindingDic.Add(this.大写字符Item.Name, new methodDelegate(TextBoxUtilsMet.textToUpper));
-            toolBindingDic.Add(this.小写字符Item.Name, new methodDelegate(TextBoxUtilsMet.textToLower));
+            toolBindingDic.Add(this.大写形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToUpper));
+            toolBindingDic.Add(this.小写形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToLower));
+            toolBindingDic.Add(this.驼峰形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToHump));
             return toolBindingDic;
         }
         /// <summary>

@@ -28,18 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusStrip = new System.Windows.Forms.ToolStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.SuspendLayout();
             // 
             // statusStrip
             // 
-            this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.statusStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.statusStrip.Location = new System.Drawing.Point(0, 125);
+            this.statusStrip.Location = new System.Drawing.Point(0, 128);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(816, 25);
-            this.statusStrip.TabIndex = 0;
-            this.statusStrip.Text = "1:1";
+            this.statusStrip.Size = new System.Drawing.Size(816, 22);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // TextStatusBar
             // 
@@ -53,11 +51,10 @@
 
         }
 
+
+
         #endregion
 
-        public System.Windows.Forms.ToolStrip statusStrip;
-
-
-
+        public System.Windows.Forms.StatusStrip statusStrip;
     }
 }

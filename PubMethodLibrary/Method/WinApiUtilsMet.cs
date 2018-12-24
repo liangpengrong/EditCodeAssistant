@@ -36,6 +36,14 @@ namespace PubMethodLibrary
         public static extern IntPtr FindWindowEx(IntPtr hwndParent,
             IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
         /// <summary>
+        /// 该函数获得一个顶层窗口的句柄，该窗口的类名和窗口名与给定的字符串相匹配。这个函数不查找子窗口。在查找时不区分大小写。
+        /// </summary>
+        /// <param name="lpClassName">指向一个指定了类名的空结束字符串，或一个标识类名字符串的成员的指针。如果该参数为一个成员，则它必须为前次调用theGlobafAddAtom函 数产生的全局成员。该成员为16位，必须位于IpClassName的低 16位，高位必须为 0。</param>
+        /// <param name="lpWindowName">指向一个指定了窗口名（窗口标题）的空结束字符串。如果该参数为空，则为所有窗口全匹配。返回值：如果函数成功，返回值为具有指定类名和窗口名的窗口句柄；如果函数失败，返回值为NULL。</param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        /// <summary>
         /// 获取当前鼠标位置对应的Point
         /// </summary>
         /// <param name="p"></param>

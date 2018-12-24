@@ -11,46 +11,38 @@ namespace PubCacheArea
     /// </summary>
     public class TextBoxCacheModel
     {
-        private String textBName;
-        private int selectStart;
-        private int selectLegth;
-        private String text;
-        private TextCacheTypeEnum textType;
-        private String createTime;
-        private MouseEventArgs mouseEvent;
-        private KeyEventArgs keysEvent;
 
         /// <summary>
         /// 文本框起始选择位置
         /// </summary>
-        public int SelectStart { get => selectStart; set => selectStart = value; }
+        public int SelectStart { get; set; }
         /// <summary>
         /// 文本框选中长度
         /// </summary>
-        public int SelectLegth { get => selectLegth; set => selectLegth = value; }
+        public int SelectLegth { get; set; }
         /// <summary>
         /// 文本框内容
         /// </summary>
-        public string Text { get => text; set => text = value; }
+        public string Text { get; set; }
         /// <summary>
         /// 修改类型
         /// </summary>
-        public TextCacheTypeEnum TextType { get => textType; set => textType = value; }
+        public TextCacheTypeEnum TextType { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
-        public string CreateTime { get => createTime; set => createTime = value; }
+        public string CreateTime { get; set; }
         /// <summary>
         /// 按下的鼠标按钮
         /// </summary>
-        public MouseEventArgs MouseEvent { get => mouseEvent; set => mouseEvent = value; }
+        public MouseEventArgs MouseEvent { get; set; }
         /// <summary>
         /// 按下的键盘按键
         /// </summary>
-        public KeyEventArgs KeysEvent { get => keysEvent; set => keysEvent = value; }
+        public KeyEventArgs KeysEvent { get; set; }
         /// <summary>
         /// 文本框的Name
         /// </summary>
-        public string TextBName { get => textBName; set => textBName = value; }
+        public string TextBName { get; set; }
     }
 }

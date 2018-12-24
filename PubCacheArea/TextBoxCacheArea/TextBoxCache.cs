@@ -35,7 +35,7 @@ namespace PubCacheArea
             // 判断是否需要记录到缓存缓存
             if( !isAddCasche(t)) return;
             // 记录文本框Name
-            String key = t.Name;
+            string key = t.Name;
             // 刷新索引
             refreshCacheIndex(t);
             // 将传入的文本框数据封装为缓存实体

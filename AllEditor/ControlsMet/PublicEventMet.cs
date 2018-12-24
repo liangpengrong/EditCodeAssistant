@@ -48,26 +48,8 @@ namespace CharsToolset {
         {
             
             FindAndReplace findAndReplace = new FindAndReplace(t, t.FindForm());
-            try {
-                // 判断单例工厂中是否不存在该窗体
-                if (!FormCache.getSingletonFactory().ContainsKey(findAndReplace.Name)) { 
-                    if(isShow) findAndReplace.Show();
-                    // 添加到缓存工厂中
-                    FormCache.addSingletonFac(findAndReplace);
-                    return findAndReplace;
-                } 
-                // 如果存在判断是否为null
-                if (FormCache.getSingletonFactory()[findAndReplace.Name] == null) { 
-                    if(isShow) findAndReplace.Show();
-                    // 添加到缓存工厂中
-                    FormCache.addSingletonFac(findAndReplace);
-                    return findAndReplace;
-                }
-                findAndReplace = (FindAndReplace)FormCache.getSingletonFactory()[findAndReplace.Name];
-                findAndReplace.Activate();
-            } catch {  
-                
-            }
+            findAndReplace.Name = DefaultNameCof.findForm;
+            findAndReplace = ininSingletonForm(findAndReplace, isShow);
             return findAndReplace;
         }
         /// <summary>
@@ -79,27 +61,22 @@ namespace CharsToolset {
         public static SplitCharsForm openSplitCharsForm(TextBox t, bool isShow)
         {
             SplitCharsForm splitChars = new SplitCharsForm(t);
-            try {
-                // 判断单例工厂中是否存在该窗体
-                if (!FormCache.getSingletonFactory().ContainsKey(splitChars.Name)) { 
-                    if(isShow) splitChars.Show();
-                    // 添加到缓存工厂中
-                    FormCache.addSingletonFac(splitChars);
-                    return splitChars;
-                } 
-                // 如果存在判断是否为null
-                if (FormCache.getSingletonFactory()[splitChars.Name] == null) { 
-                    if(isShow) splitChars.Show();
-                    // 添加到缓存工厂中
-                    FormCache.addSingletonFac(splitChars);
-                    return splitChars;
-                }
-                splitChars = (SplitCharsForm)FormCache.getSingletonFactory()[splitChars.Name];
-                splitChars.Activate();
-            } catch {  
-                
-            }
+            splitChars.Name = DefaultNameCof.splitCharsForm;
+            splitChars = ininSingletonForm(splitChars, isShow);
             return splitChars;
+        }
+        /// <summary>
+        /// 打开添加字符窗口
+        /// </summary>
+        /// <param name="t">所需文本框</param>
+        /// <param name="isShow">是否显示窗体</param>
+        /// <returns></returns>
+        public static AddCharsForm openAddCharsForm(TextBox t, bool isShow) {
+
+            AddCharsForm addCharsForm = new AddCharsForm(t);
+            addCharsForm.Name = DefaultNameCof.addCharsForm;
+            addCharsForm = ininSingletonForm(addCharsForm, isShow);
+            return addCharsForm;
         }
         /// <summary>
         /// 打开转到行窗体
@@ -131,11 +108,52 @@ namespace CharsToolset {
         /// <param name="t">所需文本框</param>
         /// <param name="isShow">是否显示窗体</param>
         /// <returns></returns>
-        public static SetCodingForm openSetCodingForm(TextBox t, bool isShow){
+        public static SetCodingForm openSetCodingForm(TextBox t, bool isShow) {
             SetCodingForm setCodingForm = new SetCodingForm(t);
             if(isShow) setCodingForm.ShowDialog();
             return setCodingForm;
         }
+        /// <summary>
+        /// 单例窗体的实例化方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="form">实例化后的单例窗体</param>
+        /// <param name="isShow">是否show</param>
+        /// <returns></returns>
+        private static T ininSingletonForm<T> (T form, bool isShow)where T:Form { 
+            try {
+                // 判断单例工厂中是否不存在该窗体
+                if (!FormCache.getSingletonFactory().ContainsKey(form.Name)) {
+                    if(isShow) form.Show();
+                    // 添加到缓存工厂中
+                    FormCache.addSingletonFac(form);
+                    return form;
+                }
+                // 如果存在判断是否为null
+                if (FormCache.getSingletonFactory()[form.Name] == null) { 
+                    if(isShow) form.Show();
+                    // 添加到缓存工厂中
+                    FormCache.addSingletonFac(form);
+                    return form;
+                } else { 
+                    T tt = (T)FormCache.getSingletonFactory()[form.Name];
+                    // 判断窗口是否已经关闭
+                    if(tt.IsDisposed) { 
+                        if(isShow) form.Show();
+                        // 添加到缓存工厂中
+                        FormCache.addSingletonFac(form);
+                        return form;
+                    }
+                }
+                form = (T)FormCache.getSingletonFactory()[form.Name];
+                form.Activate();
+            } catch {  
+                
+            }
+            return form;
+        }
+
+
         /// <summary>
         /// 监听文件变化并弹出提示框提示重新加载或另存为
         /// </summary>

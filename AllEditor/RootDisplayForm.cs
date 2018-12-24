@@ -37,9 +37,9 @@ namespace CharsToolset
         //顶部菜单
         private static MenuStrip topMenu = null;
         //状态栏
-        private static ToolStrip strutsBar = null;
+        private static StatusStrip strutsBar = null;
 
-        private static Label sizeLab = null;
+        // private static Label sizeLab = null;
         /// <summary>
         /// 窗体的启动函数
         /// </summary>
@@ -55,6 +55,8 @@ namespace CharsToolset
             addSingletonAllForm();
             // 将控件加入到单例控件工厂
             addSingletonAllCon();
+            // 调节窗口位置
+            this.Location = FormUtislMet.middleForm(this);
         }
         /// <summary>
         /// 设置窗体的默认启动配置
@@ -67,7 +69,7 @@ namespace CharsToolset
             // 图标
             this.Icon = Properties.Resources.编辑器32x32;
             // 加载调整大小图标
-            sizeLab = addSize();
+            // sizeLab = addSize();
         }
         /// <summary>
         /// 添加调整大小角标
@@ -139,7 +141,7 @@ namespace CharsToolset
             // 状态栏
             ControlCache.addSingletonFac(strutsBar);
             // 调整大小角标
-            ControlCache.addSingletonFac(sizeLab);
+            // ControlCache.addSingletonFac(sizeLab);
         }
 
         /// <summary>
@@ -249,7 +251,8 @@ namespace CharsToolset
             ContextMenuStrip textContextMenu = new ControlRightMenu().rightMenuStrip;
             // 设置不具有Tab焦点
             textContextMenu.TabStop = false;
-
+            // 字体
+            textContextMenu.Font = new Font("微软雅黑",9,FontStyle.Regular);
             //不显示图像边距
             textContextMenu.ShowImageMargin = true;
             //不显示选中边距
@@ -278,6 +281,8 @@ namespace CharsToolset
             topMenu.BackColor = Color.White;
             // 绑定重绘函数
             topMenu.Paint += new PaintEventHandler(TopMenuContainer.paintMenuFrame);
+            // 字体
+            topMenu.Font = new Font("微软雅黑",9,FontStyle.Regular);
 
             topMenu.Renderer =  new MyToolStripRenderer();
             return topMenu;
@@ -286,12 +291,12 @@ namespace CharsToolset
         /// 实例化文本框状态栏
         /// </summary>
         /// <returns></returns>
-        public ToolStrip initTextStrtusBar()
+        public StatusStrip initTextStrtusBar()
         {
             // 获取TextStatusBar实例
             TextStatusBar textStatusBar = new TextStatusBar(this);
             // 获取文本框状态栏
-            ToolStrip strtusBar = textStatusBar.statusStrip;
+            StatusStrip strtusBar = textStatusBar.statusStrip;
             strtusBar.AutoSize = false;
             strtusBar.Height = 20;
             strtusBar.LayoutStyle = ToolStripLayoutStyle.StackWithOverflow;
@@ -317,10 +322,17 @@ namespace CharsToolset
                 // 查找和替换窗体
                 fToMostList.Add(FormCache.getSingletonFactory()[DefaultNameCof.findForm]);
             }
+
             // 判断窗口是否在单例窗口工厂中存在
-            if(FormCache.getSingletonFactory().ContainsKey(DefaultNameCof.splOrAddCharsForm)) { 
-                // 分列或添加字符窗体
-                fToMostList.Add(FormCache.getSingletonFactory()[DefaultNameCof.splOrAddCharsForm]);
+            if(FormCache.getSingletonFactory().ContainsKey(DefaultNameCof.splitCharsForm)) { 
+                // 分列窗体
+                fToMostList.Add(FormCache.getSingletonFactory()[DefaultNameCof.splitCharsForm]);
+            }
+
+            // 判断窗口是否在单例窗口工厂中存在
+            if(FormCache.getSingletonFactory().ContainsKey(DefaultNameCof.addCharsForm)) { 
+                // 添加字符窗体
+                fToMostList.Add(FormCache.getSingletonFactory()[DefaultNameCof.addCharsForm]);
             }
             return fToMostList.ToArray();
         }

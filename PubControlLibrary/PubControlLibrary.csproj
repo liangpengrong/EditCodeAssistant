@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +32,28 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -52,6 +74,12 @@
     </Compile>
     <Compile Include="ControlLibrary\DropdownBut.Designer.cs">
       <DependentUpon>DropdownBut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlLibrary\ExportComBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlLibrary\ExportComBox.Designer.cs">
+      <DependentUpon>ExportComBox.cs</DependentUpon>
     </Compile>
     <Compile Include="ControlLibrary\MyDataTable.cs">
       <SubType>Component</SubType>
@@ -76,6 +104,13 @@
     </Compile>
     <Compile Include="ControlLibrary\Toolbar.Designer.cs">
       <DependentUpon>Toolbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlMethod\DataGridViewUtilMet.cs" />
+    <Compile Include="FormLibrary\AddCharsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLibrary\AddCharsForm.Designer.cs">
+      <DependentUpon>AddCharsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLibrary\AskMessFrom.cs">
       <SubType>Form</SubType>
@@ -137,6 +172,9 @@
     <EmbeddedResource Include="ControlLibrary\DropdownBut.resx">
       <DependentUpon>DropdownBut.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ControlLibrary\ExportComBox.resx">
+      <DependentUpon>ExportComBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ControlLibrary\MyDataTable.resx">
       <DependentUpon>MyDataTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ControlLibrary\Toolbar.resx">
       <DependentUpon>Toolbar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLibrary\AddCharsForm.resx">
+      <DependentUpon>AddCharsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLibrary\AskMessFrom.resx">
       <DependentUpon>AskMessFrom.cs</DependentUpon>
@@ -200,7 +241,6 @@
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ControlMethod\" />
     <Folder Include="FormMethod\" />
   </ItemGroup>
   <ItemGroup>

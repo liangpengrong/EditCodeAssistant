@@ -24,6 +24,7 @@ namespace PubMethodLibrary
         /// <param name="f1"></param>
         /// <returns></returns>
         public static Point middleForm(Form f1) {
+            f1.StartPosition = FormStartPosition.Manual;
             Point point;
             int iActulaWidth = Screen.PrimaryScreen.Bounds.Width;
             int iActulaHeight = Screen.PrimaryScreen.Bounds.Height;
@@ -68,8 +69,7 @@ namespace PubMethodLibrary
         /// </summary>
         /// <param name="b">true最顶层，false非顶层</param>
         /// <param name="fAll">要操作的窗口的集合</param>
-        public static void topFormNoFocus(Boolean isTop, Form[] formArr)
-        {
+        public static void topFormNoFocus(Boolean isTop, Form[] formArr){
             // 判断传入的窗体集合为null或大小为0
             if(formArr == null || 0.Equals(formArr.Length)) return;
             // 遍历
@@ -89,6 +89,15 @@ namespace PubMethodLibrary
                 }
                 }
             }
+        }
+        /// <summary>
+        /// 通过窗体标题名获取进程中的窗体句柄
+        /// </summary>
+        /// <param name="name">窗体标题名</param>
+        /// <returns></returns>
+        public static IntPtr getProcessFormByName(string headName) {
+            IntPtr intPtr = WinApiUtilsMet.FindWindow(null, headName);
+            return intPtr;
         }
 
     }

@@ -260,6 +260,19 @@ namespace CharsToolset
             return rowGoToForm;
         }
         /// <summary>
+        /// 实例化添加字符窗体
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static object openAddCharsForm(Dictionary<Type , object> data) {
+            // 获取文本框
+            TextBox t = (TextBox)data[typeof(TextBox)];
+
+            // 实例化窗体
+            AddCharsForm addCharsForm = PublicEventMet.openAddCharsForm(t, true);
+            return addCharsForm;
+        }
+        /// <summary>
         /// 实例化关于窗体
         /// </summary>
         /// <param name="data"></param>
@@ -295,22 +308,15 @@ namespace CharsToolset
             TextBox t = (TextBox)data[typeof(TextBox)];
             ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
             // 全局单例控件工厂
-            Dictionary<String, Control> single = ControlCache.getSingletonFactory();
+            Dictionary<string, Control> single = ControlCache.getSingletonFactory();
             if(single.ContainsKey(DefaultNameCof.toolStart) && single.ContainsKey(DefaultNameCof.tabContent)) { 
                 // 状态栏
-                ToolStrip toolStrip = (ToolStrip)single[DefaultNameCof.toolStart];
+                StatusStrip toolStrip = (StatusStrip)single[DefaultNameCof.toolStart];
                 // 标签容器
                 TabControl tabControl = (TabControl)single[DefaultNameCof.tabContent];
                 // 设置状态栏显示与隐藏
                 bool check = item.Checked;
-
                 toolStrip.Visible = check;
-                // 设置调整大小角标的显示与隐藏
-                if(single.ContainsKey(DefaultNameCof.sizeSubscript)) { 
-                    Control sizeCon = single[DefaultNameCof.sizeSubscript];
-                    sizeCon.Visible = check;
-                }
-
                 // 调整标签容器的位置
                 if(check) { 
                     tabControl.Height = tabControl.Height - toolStrip.Height;

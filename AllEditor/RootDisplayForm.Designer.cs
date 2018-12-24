@@ -38,6 +38,7 @@
             this.KeyPreview = true;
             this.Name = "RootDisplayForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RootDisplayForm";
             this.Activated += new System.EventHandler(this.RootDisplayForm_Activated);
             this.Deactivate += new System.EventHandler(this.RootDisplayForm_Deactivate);

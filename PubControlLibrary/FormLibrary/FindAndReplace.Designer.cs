@@ -301,6 +301,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FindAndReplace";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "查找和替换";
             this.Activated += new System.EventHandler(this.FindAndReplace_Activated);

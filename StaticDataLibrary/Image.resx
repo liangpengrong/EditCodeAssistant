@@ -143,10 +143,10 @@
   </data>
   <data name="分列" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAABaSURBVChTlU1BDsAwCPKJ/v8zLJpiqOlWd6BSBDQAv5CP
-        u2MI6+atgK2yzw8FcjV0LS908YTy8KQGUhO9AqHVchm41Oat5C2gGAViKr8GFKNATOWfgROWB/YAXVYh
-        ZmdzABcAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAFpJREFUKFOVTUEOwDAI8on+/zMsmmKo6VZ3oFIENAC/kI+7Ywjr5q2ArbLPDwVy
+        NXQtL3TxhPLwpAZSE70CodVyGbjU5q3kLaAYBWIqvwYUo0BM5Z+BE5YH9gBdViFmZ3MAFwAAAABJRU5E
+        rkJggg==
 </value>
   </data>
   <data name="删除" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -218,11 +218,11 @@
   </data>
   <data name="擦除" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAJ1JREFUKFNj+P//P0kYJ/D19RUBYg0oFz/w8/MTDwwM/A/CQLYKVBg7QFYMwwEB
-        AQpQaVTg4+MjjazQwcGBBacmZMVoTrID0r+gfIjioKAgeZgCkCAI+/v7yyKJwcUZQkNDOdEFQTg4OFgJ
-        mzjM9D+enp58MEGg6VpAGlMxDCBJgjHQg7/RxUAYaLgkTAPIJgt0BegYrAFb9OPG/xkAU8LKA+QKfqUA
-        AAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAACaSURBVChTlY+7CoIxDIU7uLg4CSIiOjj4CI5dC71D3/89
+        VIhJTaQtf0UPfLQ9OWkbBQB/MZVzbotc+fhd3vtdSgkI3F/YXlYbFmKMZy73stYeJET/1Vqvpk1jGNfP
+        oLi/c+0dzjmf2KgmEUI4crjzVSllPZrEUpiQ25/GmI2Y07CoKVZwwMfoEXj5XhropVszZIf4tUEOvwHq
+        BbAj0+4vFPU5AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="查找替换" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -235,10 +235,10 @@
   </data>
   <data name="清空" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAHZJREFUKFONkN0NgCAMhFlAR2AfHiDp/sNUaXrNFUzQ5Lz+3IfEoqqFn9mLiEK8
-        t3oFWms3gnBkzLmZAjDGuPwrsbOsvRzwgImAuFoAHEbP4l0aum/ifTrhpAAA9d7r63Hyoh2Ac42/hlm6
-        0le9zhJwUgD/peUB5TQwdwksgMcAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAABeSURBVChTjYzdCcAwCAYzSTfywf2HsVX8ivEnrXAo5C5L
+        RAwd3cwsiffNvBjoQHLshrMFQCXf34ELheh0Mn4HW5SDLIMxGGkDIrqeHX8GfXCiC2JU7i4YZaUE/5B1
+        AzEAOFW6GEGTAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="粘贴" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -260,8 +260,8 @@
   <data name="裁剪" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAFBJREFUKFOVjgEKACAIA/2i/3/MMmFSpoHBkW0eJABGxKCq2PDdEQOFjkuoFjJZ
-        aL9UCrmw28n5phS8sFPmHFgYkZ0530/xYyRwL4SOsXADWdQRaulTk+wKAAAAAElFTkSuQmCC
+        EwAACxMBAJqcGAAAAE9JREFUKFOdjMkRACAIA22R/otBeESNIh6PHYVkKar6BA0iYg8XZmi4FryYEQlN
+        RABCASD0A7sj7eN8C9luCTMWIQJFQCGw0oitekbFM1oqJeOA3MdoyEUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="记事本" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

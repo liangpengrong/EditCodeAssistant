@@ -21,9 +21,13 @@ namespace StaticDataLibrary {
         /// </summary>
         public const string findForm = "FindAndReplace";
         /// <summary>
-        /// 分列或添加字符窗口的默认命名
+        /// 分列窗口的默认命名
         /// </summary>
-        public const string splOrAddCharsForm = "SplitOrAddChars";
+        public const string splitCharsForm = "SplitCharsForm";
+        /// <summary>
+        /// 添加字符窗体的默认密码
+        /// </summary>
+        public const string addCharsForm = "AddCharsForm";
         /// <summary>
         /// 状态栏默认命名
         /// </summary>

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Text;
 using System.Drawing;
 using PubMethodLibrary;
+using PubCacheArea;
 
 namespace PubControlLibrary {
     public partial class MyDataTable : Component{
@@ -17,17 +18,21 @@ namespace PubControlLibrary {
             dataViewConfig();
         }
         /// <summary>
+        /// 存放当前鼠标所在单元格
+        /// </summary>
+        private DataGridViewCell mouseCell = null;
+        /// <summary>
         /// 单元格默认宽度
         /// </summary>
         public int cellDefWidth = 100;
         /// <summary>
         /// 单元格默认高度
         /// </summary>
-        public int cellDefHeight = 30;
+        public int cellDefHeight = 25;
         /// <summary>
         /// 列标题的默认高度
         /// </summary>
-        public int colHeadersHeight = 25;
+        public int colHeadersHeight = 20;
         
         /// <summary>
         /// 选中单元格的标题的背景色
@@ -38,7 +43,6 @@ namespace PubControlLibrary {
         /// </summary>
         public Color selCellHeadFontC = Color.Black;
 
-
         // 点击的单元格的列
         private int clickColIndex = 0;
         // 点击的单元格的行
@@ -47,12 +51,25 @@ namespace PubControlLibrary {
         private int mouseColIndex = 0;
         // 当前鼠标位置的单元格的行
         private int mouseRowIndex = 0;
+
+        /// <summary>
+        /// 撤销 恢复的缓存工厂
+        /// </summary>
+        private Dictionary<string, List<DataViewCacheModel>> cacheFactory = new Dictionary<string, List<DataViewCacheModel>>();
+        // 调整大小之前的行
+        private List<DataGridViewRow> sizeRow = new List<DataGridViewRow>();
+        // 调整大小之前的列
+        private List<DataGridViewColumn>  sizeColumn = new List<DataGridViewColumn>();
+        // 单元格调整大小时是否和上一次调整大小属于同一操作
+        private bool sizeIsJoin = false;
+        // 单元格修改内容时是否和上一次修改属于同一操作
+        private bool editIsJoin = false;
         /// <summary>
         /// 数据表格的配置
         /// </summary>
         private void dataViewConfig() {
             // 边框
-            数据表格.BorderStyle = BorderStyle.FixedSingle;
+            数据表格.BorderStyle = BorderStyle.None;
             数据表格.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             数据表格.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             数据表格.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
@@ -61,8 +78,8 @@ namespace PubControlLibrary {
             数据表格.StandardTab = false;
             数据表格.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
             数据表格.AllowUserToAddRows = false;
-
-
+            数据表格.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            数据表格.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
 
             // 列头的高
             数据表格.ColumnHeadersHeight = colHeadersHeight;
@@ -83,14 +100,29 @@ namespace PubControlLibrary {
             // 默认选中单元格的行标题前景色
             数据表格.RowHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC;
 
-            // 绑定单元格鼠标移过事件
-            数据表格.CellMouseMove += 数据表格_CellMouseMove;
             // 绑定单元格鼠标按下事件
             数据表格.CellMouseDown += 数据表格_CellMouseDown;
             // 绑定单元格进入编辑模式事件
             数据表格.EditingControlShowing += 数据表格_EditingControlShowing;
+            // 绑定单元格离开编辑模式事件
+            数据表格.CellEndEdit += 数据表格_CellEndEdit;
             // 绑定离开编辑模式单元格内容改变事件
             数据表格.CellParsing +=  数据表格_CellParsing;
+            // 绑定单元格内容更改事件
+            数据表格.CellValueChanged += 数据表格_CellValueChanged;
+            // 绑定单元格鼠标移入事件
+            数据表格.CellMouseEnter += 数据表格_CellMouseEnter;
+            // 绑定列宽调整事件
+            数据表格.ColumnWidthChanged += 数据表格_ColumnWidthChanged;
+            // 绑定行高调整事件
+            数据表格.RowHeightChanged += 数据表格_RowHeightChanged;
+            // 绑定添加行事件
+            数据表格.RowsAdded += 数据表格_RowsAdded;
+            // 绑定添加列事件
+            数据表格.ColumnAdded += 数据表格_ColumnAdded;
+            // 绑定右键菜单并使用自定义的样式
+            数据表格.ContextMenuStrip = table_rightStrip;
+            table_rightStrip.Renderer = new MyToolStripRenderer();
         }
 
 
@@ -113,126 +145,69 @@ namespace PubControlLibrary {
             mouseRowIndex = rowIndex;
         }
         /// <summary>
-        /// 根据传入的二维数组获取列的最大宽度
+        /// 判断要调整大小的行与列
         /// </summary>
-        /// <param name="rowColuArr"></param>
-        /// <returns></returns>
-        private int getMaxColumnWidth(String[][] rowColuArr) { 
-            List<int> intList = new List<int>();
-            foreach(String[] strArr1 in rowColuArr) {
-                foreach(String str1 in strArr1) { 
-                   intList.Add((int)this.数据表格.CreateGraphics().MeasureString(str1 , 数据表格.Font).Width);
-                }
+        /// <param name="rowIndex"></param>
+        /// <param name="colIndex"></param>
+        private void isSizeRowColumn(int rowIndex, int colIndex) {
+            if(rowIndex > -1) {
+                if(rowIndex - 1 > -1) sizeRow.Add(数据表格.Rows[rowIndex - 1]);
+                if(rowIndex + 1 < 数据表格.Rows.Count) sizeRow.Add(数据表格.Rows[rowIndex + 1]);
+                sizeRow.Add(数据表格.Rows[rowIndex]);
             }
-            return intList.Max()+10;
+            if(colIndex > -1) { 
+                if(colIndex - 1 > -1) sizeColumn.Add(数据表格.Columns[colIndex - 1]);
+                if(colIndex + 1 < 数据表格.Columns.Count) sizeColumn.Add(数据表格.Columns[colIndex + 1]);
+                sizeColumn.Add(数据表格.Columns[colIndex]);
+            }
         }
         /// <summary>
-        /// 单元格选中后改变对应的行,列头颜色
+        /// 修改单元格内容时放入缓存区
         /// </summary>
-        private void selectCallHeandColor(int colIndex, int rowIndex){
-            // 默认列标题背景色
-            Color colHeadBack = 数据表格.ColumnHeadersDefaultCellStyle.BackColor;
-            // 默认列标题前景色
-            Color colHeadColor = 数据表格.ColumnHeadersDefaultCellStyle.ForeColor;
-            // 默认列标题字体
-            Font colHeadFont = 数据表格.ColumnHeadersDefaultCellStyle.Font;
-
-            // 默认行标题背景色
-            Color rowHeadBack = 数据表格.RowHeadersDefaultCellStyle.BackColor;
-            // 默认行标题前景色
-            Color rowHeadColor = 数据表格.RowHeadersDefaultCellStyle.ForeColor;
-            // 默认行标题字体
-            Font rowHeadFont = 数据表格.RowHeadersDefaultCellStyle.Font;
-
-            // 开辟新线程执行方法
-            ControlsUtilsMet.timersEventMet(数据表格, 1, new EventHandler(delegate {
-                //获取该单元格
-                DataGridViewCell cell = 数据表格.Rows[rowIndex].Cells[colIndex];
-                // 判断该列索引不为-1
-                if(colIndex != -1) { 
-                    // 改变列标题的样式
-                    // 判断当前单元格是否选中
-                    if(cell.Selected) { 
-                        // 改变样式
-                        DataGridViewCellStyle cellSty = 数据表格.RowsDefaultCellStyle;
-                        // 设置选中列头和行头的样式
-                        数据表格.Columns[colIndex].HeaderCell.Style.BackColor = selCellHeadBack;
-                        数据表格.Columns[colIndex].HeaderCell.Style.ForeColor = selCellHeadFontC;
-                        // 文本加粗
-                        数据表格.Columns[colIndex].HeaderCell.Style.Font 
-                        = new Font(colHeadFont, FontStyle.Bold);
-                    } else {
-                        // 恢复默认
-                        数据表格.Columns[colIndex].HeaderCell.Style.BackColor = colHeadBack;
-                        数据表格.Columns[colIndex].HeaderCell.Style.ForeColor = colHeadColor;
-                        数据表格.Columns[colIndex].HeaderCell.Style.Font = colHeadFont;
-                    }
-                }
-                
-                // 改变行标题的样式
-                // 判断该行索引不为-1
-                if(rowIndex != -1) {
-                    if (cell.Selected) {
-                        // 单元格样式
-                        DataGridViewCellStyle cellSty = 数据表格.RowsDefaultCellStyle;
-                        // 设置选中列头和行头的样式
-                        数据表格.Rows[rowIndex].HeaderCell.Style.BackColor = selCellHeadBack;
-                        数据表格.Rows[rowIndex].HeaderCell.Style.ForeColor = selCellHeadFontC;
-                        // 文本加粗
-                        数据表格.Rows[rowIndex].HeaderCell.Style.Font 
-                        = new Font(colHeadFont, FontStyle.Bold);
-                    } else {
-                        数据表格.Rows[rowIndex].HeaderCell.Style.BackColor = colHeadBack;
-                        数据表格.Rows[rowIndex].HeaderCell.Style.ForeColor = colHeadColor;
-                        数据表格.Rows[rowIndex].HeaderCell.Style.Font = rowHeadFont;
-                    }
-                }
-            }));
+        private void setCacheByEdit(DataGridViewCell cell) {
+            EditMode editMode = null;
+            if(cell != null) {
+                Console.WriteLine(editIsJoin);
+                editMode = new EditMode();
+                editMode.ColumnIndex = cell.ColumnIndex;
+                editMode.RowIndex = cell.RowIndex;
+                editMode.CellValue = cell.Value != null? cell.Value.ToString() : null;
+                editMode.IsJoin = editIsJoin;
+            }
+            DataViewCache.addCacheFactory(cacheFactory, DataCacheTypeEnum.修改内容, null , editMode , 数据表格);
+            
         }
+
         /// <summary>
-        /// 全选或反选某单列或某单行,为-1表示不选中
+        /// 调整大小时放入撤销缓存区
         /// </summary>
-        /// <param name="colInxe">列索引</param>
-        /// <param name="rowIndex">行索引</param>
-        /// <param name="isClearSel">是否清楚清楚之前的单元格选中</param>
-        private void selectAllCellBySingle(int colInxe, int rowIndex, Boolean isSelet, Boolean isClearSel){
-            // 是否需要清楚之前的选中
-            if(isClearSel) 数据表格.ClearSelection();
-            if(colInxe >= 0) {
-                // 全选某列
-                数据表格.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
-                数据表格.Columns[colInxe].HeaderCell.SortGlyphDirection = SortOrder.None;
-                数据表格.Columns[colInxe].Selected = isSelet;
-            }
-            if(rowIndex >= 0) { 
-                // 全选某行
-                数据表格.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-                数据表格.Rows[rowIndex].Selected = isSelet;
-            }
-        }
-        
-        /// <summary>
-        /// 是否禁止用户调整大小
-        /// </summary>
-        /// <param name="boo"></param>
-        private void isNoResizing(Boolean boo) { 
-            数据表格.AllowUserToResizeColumns = !boo;
-            数据表格.AllowUserToResizeRows = !boo;
-        }
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        private void setCacheBySize(DataGridViewRow row, DataGridViewColumn column) {
+            AdjustSizeMode sizeMode = new AdjustSizeMode();
+            
+            sizeMode.ColumnIndex = column!= null? column.Index : -1;
+            sizeMode.RowIndex = row!= null? row.Index : -1;
 
-        // 鼠标移过单元格事件
-        private void 数据表格_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e) {
-
-            DataGridView dataView = (DataGridView)sender;
-            // 判断该行或该列是否全部选中
-            // isRowOrColSelAll(e.ColumnIndex, e.RowIndex, true);
-            if (e.Button.Equals(MouseButtons.Left)) { 
-                // 判断行标题与列标题的颜色
-              //  selectCallHeandColor(e.ColumnIndex, e.RowIndex);
+            if(sizeRow.Count > 0 && row!= null) { 
+                sizeMode.BeforeHeight = sizeRow.FirstOrDefault(s=>s.Index.Equals(row.Index)).Height;
+            } else { 
+                sizeMode.BeforeHeight = -1;
+            }
+            if(sizeColumn.Count > 0 && column!= null) { 
+                sizeMode.BeforeWidth = sizeColumn.FirstOrDefault(s=>s.Index.Equals(column.Index)).Width;
+            } else { 
+                sizeMode.BeforeWidth = -1;
             }
 
+            sizeMode.RearHeight = row!= null? row.Height : -1;
+            sizeMode.RearWidth = column!= null? column.Width : -1;
+            sizeMode.IsJoin = sizeIsJoin;
+
+            DataViewCache.addCacheFactory(cacheFactory, DataCacheTypeEnum.调整大小, sizeMode,null,数据表格);
+            
         }
-        
+
         // 单元格鼠标按下事件
         private void 数据表格_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) {
             DataGridView dataView = (DataGridView)sender;
@@ -241,21 +216,138 @@ namespace PubControlLibrary {
             if(!数据表格.Cursor.Equals(Cursors.SizeWE) && !数据表格.Cursor.Equals(Cursors.SizeNS)
                 && e.Button.Equals(MouseButtons.Left)) {
                 // 全选该列或行
-                selectAllCellBySingle(e.ColumnIndex, e.RowIndex, true, true);
+                DataGridViewUtilMet.selectAllCellBySingle(数据表格, e.ColumnIndex, e.RowIndex, true, true);
             }
-            // 判断行标题与列标题的颜色
-           // selectCallHeandColor(e.ColumnIndex, e.RowIndex);
+            if(MouseButtons.Left.Equals(e.Button)  && (Cursors.SizeNS.Equals(数据表格.Cursor) 
+                || Cursors.SizeWE.Equals(数据表格.Cursor)) ) { 
+                isSizeRowColumn(e.RowIndex , e.ColumnIndex);
+            }
         }
-        // 单元格内容发生改变时发生
+        // 进入编辑模式时发生
         private void 数据表格_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
-            // 背景色
-            e.CellStyle.BackColor = ColorTranslator.FromHtml("#DB9C9E");
+            DataGridView view = (DataGridView)sender;
         }
         // 离开编辑模式事件
+        private void 数据表格_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            DataGridView view = (DataGridView)sender;
+        }
+        // 离开编辑模式并改变了内容事件
         private void 数据表格_CellParsing(object sender, DataGridViewCellParsingEventArgs e) {
             DataGridView view = (DataGridView)sender;
-            view.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor 
-                = ColorTranslator.FromHtml("#DB9C9E");
+            // 设置背景色
+            // e.InheritedCellStyle.BackColor = ColorTranslator.FromHtml("#DB9C9E");
+        }
+        // 单元格内容发生改变时发生
+        private void 数据表格_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            DataGridView view = (DataGridView)sender;
+            if(e.RowIndex >= 0 && e.ColumnIndex >= 0) {
+                // 改变提示文本
+                DataGridViewCell cell = view.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                cell.ToolTipText = cell.Value == null ? null : cell.Value.ToString();
+                // 记录到缓冲区
+                if(数据表格.Focused) {
+                    setCacheByEdit(cell);
+                }
+                
+            }
+        }
+        // 鼠标进入单元格事件
+        private void 数据表格_CellMouseEnter(object sender, DataGridViewCellEventArgs e) {
+            DataGridView data = (DataGridView)sender;
+            if(e.ColumnIndex != -1 && e.RowIndex != -1) { 
+                mouseCell = data.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            }else if(e.RowIndex == -1 && e.ColumnIndex != -1) {
+                mouseCell = data.Columns[e.ColumnIndex].HeaderCell;
+
+            }else if(e.RowIndex != -1 && e.ColumnIndex == -1) {
+                mouseCell = data.Rows[e.RowIndex].HeaderCell;
+            }
+        }
+        // 键盘按下事件
+        private void 数据表格_KeyDown(object sender, KeyEventArgs e) {
+            // ctrl+ c
+            if(e.Control && Keys.C.Equals(e.KeyCode)) {
+                DataGridViewUtilMet.copySelectCellText(数据表格);
+            }
+            // ctrl+ v
+            if(e.Control && Keys.V.Equals(e.KeyCode)) {
+                editIsJoin = true;
+                DataGridViewUtilMet.pasteTextToSelCell(数据表格);
+                editIsJoin = false;
+            }
+            // ctrl+ z
+            if(e.Control && Keys.Z.Equals(e.KeyCode)) { 
+                Console.WriteLine("");
+            }
+            // ctrl+ y
+            if(e.Control && Keys.Y.Equals(e.KeyCode)) { 
+                
+            }
+            // del
+            if(Keys.Delete.Equals(e.KeyCode)) { 
+                DataGridViewUtilMet.delSelectCellText(数据表格);
+            }
+        }
+        // 添加列事件
+        private void 数据表格_ColumnAdded(object sender, DataGridViewColumnEventArgs e) {
+            
+        }
+        // 添加行事件
+        private void 数据表格_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+            
+        }
+        // 行高调整事件
+        private void 数据表格_RowHeightChanged(object sender, DataGridViewRowEventArgs e) {
+            if(数据表格.Focused) {
+                // 放入撤销缓存区
+                setCacheBySize(e.Row, null);
+            }
+        }
+            
+        // 列宽调整事件
+        private void 数据表格_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e) {
+            if(数据表格.Focused) {
+                // 放入撤销缓存区
+                setCacheBySize(null, e.Column);
+            }
+            
+        }
+        /// <summary>
+        /// 右键菜单鼠标点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rightStripMenuItem_MouseDown(object sender, MouseEventArgs e) {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            if(复制全部Item.Equals(item)) { 
+                Clipboard.SetDataObject(DataGridViewUtilMet.getDatatabelSelText(数据表格, true), true);
+            }
+            if(复制选中Item.Equals(item)) { 
+                Clipboard.SetDataObject(DataGridViewUtilMet.getDatatabelSelText(数据表格, false), true);
+            }
+            if(导出到记事本Item.Equals(item)) { 
+                DataGridViewUtilMet.exportNotepad(数据表格, true);
+            }
+            if(导出到Excel_Item.Equals(item)) { 
+                DataGridViewUtilMet.exportExcel(数据表格, true);
+            }
+            if(选中此列Item.Equals(item)) {
+                if(mouseCell != null) { 
+                    // 全选某列
+                    数据表格.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
+                    数据表格.Columns[mouseCell.ColumnIndex].HeaderCell.SortGlyphDirection = SortOrder.None;
+
+                    mouseCell.OwningColumn.Selected = true;
+                    }
+            }
+            if(选中此行Item.Equals(item)) {
+                if(mouseCell != null) { 
+                    // 全选某行
+                    数据表格.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+                    mouseCell.OwningRow.Selected = true;
+                }
+            }
         }
     }
 }

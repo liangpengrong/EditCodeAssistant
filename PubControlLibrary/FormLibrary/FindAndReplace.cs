@@ -59,14 +59,10 @@ namespace PubControlLibrary
         private Boolean isfindDownBut = false;
 
         // 查找的历史记录
-        private List<String> findHistorical = new List<string>();
-        // 查找的历史记录Panel
-        private Panel findHistoricalPanel = null;
+        private List<string> findHistorical = new List<string>();
 
         // 替换的历史记录
-        private List<String> repHistorical = new List<string>();
-        // 替换的历史记录的Panel
-        private Panel repHistoricalPanel = null;
+        private List<string> repHistorical = new List<string>();
         /// <summary>
         /// 初始化
         /// </summary>
@@ -100,7 +96,8 @@ namespace PubControlLibrary
                 this.选定内容R.Checked = true;
             }
             // 调节窗体的位置
-            middleForm();
+            // middleForm();
+            FormUtislMet.middleForm(this);
             // 设置当前索引和总共的索引
             setCurrentLab();
 
@@ -683,7 +680,7 @@ namespace PubControlLibrary
         private void FindAndReplace_FormClosed(object sender, FormClosedEventArgs e)
         {
             // 清除单例工厂中的本窗体
-            PubCacheArea.FormCache.setSingletonFactory(this.Name, null);
+            // PubCacheArea.FormCache.setSingletonFactory(this.Name, null);
         }
         // 文本框鼠标移入并按下按钮事件
         private void TextBox_MouseDown(object sender, MouseEventArgs e)
@@ -708,10 +705,6 @@ namespace PubControlLibrary
         // 文本框失去焦点事件
         private void TextBox_Leave(object sender, EventArgs e) {
             TextBox t = (TextBox)sender;
-            // 关闭查找历史Panel
-            if(this.查找内容T.Name.Equals(t.Name) && !this.查找历史B.Focused) closeFindHistoricalPanel();
-            // 关闭替换历史Panel
-            if(this.替换内容T.Name.Equals(t.Name) && !this.替换历史B.Focused) closeRepHistoricalPanel();
         }
         /// <summary>
         /// 判断文本框框是否输入了换行符
@@ -803,66 +796,22 @@ namespace PubControlLibrary
         /// <param name="e"></param>
         private void historyBut_Click(object sender, EventArgs e) {
             Button but = (Button)sender;
-            //findHistorical = new List<String>();
-            //findHistorical.Add("abcvgsdfsdf");
-            //findHistorical.Add("fsdf");
-            //findHistorical.Add("abcgsdf");
-            //findHistorical.Add("absfsdf");
-            //findHistorical.Add("abcgsdfsdf");
-            //findHistorical.Add("agsfsdf");
-            //findHistorical.Add("abcvgsdfsdf");
-            //findHistorical.Add("abcdfaasdf");
-            //findHistorical.Add("abgsdfsdf");
-            //findHistorical.Add("abcssdf");
-            //findHistorical.Add("abcvgsddasddafsdf");
-            //findHistorical.Add("abcvgsaaaasdfsdf");
-            //findHistorical.Add("abcvsfsdf");
-            //findHistorical.Add("abcv12312123saaaaaaaaaaaaaaaaaaaaaaaaaaaaaafsdf");
-            //findHistorical.Add("abcv123123sfsdf");
-            //findHistorical.Add("abcvs3123123fsdf");
-            //findHistorical.Add("12312312");
-            if (this.查找历史B.Name.Equals(but.Name)) {
-                // 判断查找历史Panel是否已经在显示
-                if(findHistoricalPanel == null || findHistoricalPanel.IsDisposed) {
-                    findHistoricalPanel = ControlsUtilsMet.getHistoricalPanel(this.查找内容T, findHistorical.ToArray()
-                        , this.查找内容T.Width+but.Width, 24);
-                    this.查找内容T.Focus();
-                } else {
-                    // 关闭查找历史Panel
-                    closeFindHistoricalPanel();
-                }
-                
+            if(查找历史B.Name.Equals(but.Name)) {
+                ControlsUtilsMet.getHistoricalPanel(查找内容T
+                    , but.FindForm().Controls
+                    , true
+                    , findHistorical.ToArray()
+                    , 查找内容T.Width+but.Width
+                    , 22);
             }
-            if(this.替换历史B.Name.Equals(but.Name)) {
-                if(repHistoricalPanel == null || repHistoricalPanel.IsDisposed) {
-                    repHistoricalPanel = ControlsUtilsMet.getHistoricalPanel(this.替换内容T, repHistorical.ToArray()
-                        , this.替换内容T.Width+but.Width, 24);
-                    this.替换内容T.Focus();
-                } else {
-                    // 关闭替换历史Panel
-                    closeRepHistoricalPanel();
-                }
-                
-            }
-        }
-        /// <summary>
-        /// 关闭查找历史Panel
-        /// </summary>
-        private void closeFindHistoricalPanel() {
-            // 关闭查找历史Panel
-            if(findHistoricalPanel != null) { 
-                findHistoricalPanel.Dispose();
-                findHistoricalPanel = null;
-            }
-        }
-        /// <summary>
-        /// 关闭替换历史Panel
-        /// </summary>
-        private void closeRepHistoricalPanel() { 
-            // 关闭替换历史Panel
-            if(repHistoricalPanel != null) { 
-                repHistoricalPanel.Dispose();
-                repHistoricalPanel = null;
+            if(替换历史B.Name.Equals(but.Name)) {
+                ControlsUtilsMet.getHistoricalPanel(替换内容T
+                    , but.FindForm().Controls
+                    , true
+                    , repHistorical.ToArray()
+                    , 替换内容T.Width+but.Width
+                    , 22);
+
             }
         }
         

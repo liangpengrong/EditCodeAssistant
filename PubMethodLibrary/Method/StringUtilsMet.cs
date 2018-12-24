@@ -16,58 +16,24 @@ namespace PubMethodLibrary {
         /// <param name="text">字符串</param>
         /// <param name="findS">被替换的字符串</param>
         /// <param name="repS">要替换的字符串</param>
-        /// <param name="isCass">是否匹配大小写</param>
+        /// <param name="sensitive">是否匹配大小写</param>
         /// <returns></returns>
-        public static String repCaseText(String text, String findS, String repS ,Boolean isCass) {
-            String retS = text;
-            if(isCass) {
+        public static string repCaseText(string text, string findS, string repS ,bool sensitive) {
+            string retS = text;
+            if(sensitive) {
                 retS = Strings.Replace(text, findS, repS, 1, -1, CompareMethod.Binary);
             } else { 
                 retS = Strings.Replace(text, findS, repS, 1, -1, CompareMethod.Text);
             }
             return retS;
         }
-        /// <summary>
-        /// 将字符串按照指定的分隔符分割为数组
-        /// </summary>
-        /// <param name="str">字符串</param>
-        /// <param name="sip">分隔符字符组</param>
-        /// <param name="isNone">是否保留空行</param>
-        /// <param name="sensitive">是否区分大小写</param>
-        /// <returns></returns>
-        public static String[] splitStrToArr(String str, String[] sip, Boolean isNone, Boolean sensitive) { 
-            String[] retArr = null;
-            StringSplitOptions sipEnum = StringSplitOptions.None;
-            // 是否不包含空行
-            if( !isNone) { 
-                sipEnum = StringSplitOptions.RemoveEmptyEntries;
-            }
-            // 是否区分大小写
-            if(sensitive) {
-               retArr = str.Split(sip, sipEnum);
-            } else {
-                foreach (String s in sip) {
-                    if (retArr == null || 0.Equals(retArr.Length)) {
-                        retArr = splitNotSensitive(new String[] { str }, sip[0]);
-                    } else {
-                        retArr = splitNotSensitive(retArr, s);
-                    }
-                }
-                // 是否不包含空行
-                if( !isNone) { 
-                    retArr = retArr.Where(s=>!string.IsNullOrEmpty(s)).ToArray();
-                }
-            }
-            return retArr;
-        }
-
-        private static String[] splitNotSensitive(String[] splitArr, String sip) {
+        private static string[] splitNotSensitive(string[] splitArr, string sip) {
             // 要返回的List
             List<string> retList = new List<string>();
             // 找到的索引数组
             int[] indexArr = null;
             // 遍历分隔符
-            foreach(String str in splitArr) {
+            foreach(string str in splitArr) {
                 // 判断分隔符不为''就执行查找
                 if(sip.Length > 0) indexArr = getCharsIndexOf(str, sip, false);
 
@@ -105,6 +71,39 @@ namespace PubMethodLibrary {
             }
             return retList.ToArray();
         }
+        /// <summary>
+        /// 将字符串按照指定的分隔符分割为数组
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="sip">分隔符字符组</param>
+        /// <param name="isNone">是否保留空行</param>
+        /// <param name="sensitive">是否区分大小写</param>
+        /// <returns></returns>
+        public static string[] splitStrToArr(string str, string[] sip, bool isNone, bool sensitive) { 
+            string[] retArr = null;
+            StringSplitOptions sipEnum = StringSplitOptions.None;
+            // 是否不包含空行
+            if(!isNone) { 
+                sipEnum = StringSplitOptions.RemoveEmptyEntries;
+            }
+            // 是否区分大小写
+            if(sensitive) {
+               retArr = str.Split(sip, sipEnum);
+            } else {
+                foreach (string s in sip) {
+                    if (retArr == null || 0.Equals(retArr.Length)) {
+                        retArr = splitNotSensitive(new string[] { str }, sip[0]);
+                    } else {
+                        retArr = splitNotSensitive(retArr, s);
+                    }
+                }
+                // 是否不包含空行
+                if(!isNone) { 
+                    retArr = retArr.Where(s=>!string.IsNullOrEmpty(s)).ToArray();
+                }
+            }
+            return retArr;
+        }
 
         /// <summary>
         /// 将字符串按照指定的索引分割为数组
@@ -112,9 +111,9 @@ namespace PubMethodLibrary {
         /// <param name="str">字符串</param>
         /// <param name="sipIndex">指定的索引</param>
         /// <param name="isNone">是否保留空行</param>
-        /// <param name="isNone">是否对数组排序</param>
+        /// <param name="isSort">是否对数组排序</param>
         /// <returns></returns>
-        public static String[] splitStrToArr(String str, int[] sipIndex, bool isNone, bool isSort){
+        public static string[] splitStrToArr(string str, int[] sipIndex, bool isNone, bool isSort){
             string[] retArr = null;
             List<string> tempList = new List<string>();
             if(sipIndex != null && sipIndex.Length > 0) { 
@@ -165,17 +164,17 @@ namespace PubMethodLibrary {
         /// <param name="sensitive1">第一个分割是否区分大小写</param>
         /// <param name="sensitive2">第二个分割是否区分大小写</param>
         /// <returns></returns>
-        public static String[][] splitStrToArr(String str, String[] oneSip, String[] twoSip, Boolean oneIsNone
-            , Boolean twoIsNone, Boolean sensitive1, Boolean sensitive2) {
+        public static string[][] splitStrToArr(string str, string[] oneSip, string[] twoSip, bool oneIsNone
+            , bool twoIsNone, bool sensitive1, bool sensitive2) {
             // 验证参数的合法性
             if(str == null || oneSip == null || twoSip == null) { 
                 return null;
             }
-            List<String[]> tempList = new List<string[]>();
-            String[] twoSpiArr;
+            List<string[]> tempList = new List<string[]>();
+            string[] twoSpiArr;
             // 按照第一个分隔符分割
-            String[] oneSpiArr = splitStrToArr(str, oneSip, oneIsNone, sensitive1);
-            foreach (String s in oneSpiArr) { 
+            string[] oneSpiArr = splitStrToArr(str, oneSip, oneIsNone, sensitive1);
+            foreach (string s in oneSpiArr) { 
                 // 按照第二个分隔符分割
                 twoSpiArr = splitStrToArr(s, twoSip, twoIsNone, sensitive2);
                 tempList.Add(twoSpiArr);
@@ -190,7 +189,7 @@ namespace PubMethodLibrary {
         /// <param name="findChars">子字符串</param>
         /// <param name="isCase">是否区分大小写</param>
         /// <returns></returns>
-        public static int getIndexOfAllCount(String str, String findChars, Boolean isCase) { 
+        public static int getIndexOfAllCount(string str, string findChars, bool isCase) { 
             int count = 0;
             if(isCase) {
               count = str.Split(new string[] {findChars}, StringSplitOptions.None).Length-1;
@@ -206,9 +205,9 @@ namespace PubMethodLibrary {
         /// <param name="text">字符串</param>
         /// <param name="findChars">要遍历的字符串</param>
         /// <param name="isCase">是否匹配大小写</param>
-        public static int[] getCharsIndexOf(String text, String[] findCharsArr, Boolean isCase) {
+        public static int[] getCharsIndexOf(string text, string[] findCharsArr, bool isCase) {
             List<int> retIndex = new List<int>();
-            foreach(String s1 in findCharsArr) { 
+            foreach(string s1 in findCharsArr) { 
                 int[] tempArr = getCharsIndexOf(text, s1, isCase);
                 foreach(int i in tempArr) {
                     if( !retIndex.Contains(i)) { 
@@ -225,7 +224,7 @@ namespace PubMethodLibrary {
         /// <param name="text">字符串</param>
         /// <param name="findChars">要遍历的字符串</param>
         /// <param name="isCase">是否匹配大小写</param>
-        public static int[] getCharsIndexOf(String text, String findChars, Boolean isCase) {
+        public static int[] getCharsIndexOf(string text, string findChars, bool isCase) {
             List<int> subIndex = new List<int>();
             int ii = getCharsIndexOf(text, findChars, 0, isCase);
             while(ii >= 0 && ii < text.Length)
@@ -244,7 +243,7 @@ namespace PubMethodLibrary {
         /// <param name="findNextI">开始搜索位置, 起始索引从0开始</param>
         /// <param name="isCase">是否区分大小写</param>
         /// <returns></returns>
-        public static int getCharsIndexOf(String text, String findStr, int findNextI, Boolean isCase) {
+        public static int getCharsIndexOf(string text, string findStr, int findNextI, bool isCase) {
             int index = 0;
             // 判断匹配大小写
             if(isCase) { 
@@ -262,9 +261,23 @@ namespace PubMethodLibrary {
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static Boolean isStrChines(String str) {
+        public static bool isStrChines(string str) {
 
             return Regex.IsMatch(str, @"[\u4e00-\u9fbb]+$");
+        }
+        /// <summary>
+        /// 将字符串转化为驼峰形式
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string charsToHump(string str) { 
+            string[] splitArr = new string[]{"_", "|", "\\", "/", ":", ","}; 
+            string[] arr = str.Split(splitArr, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder retStr = new StringBuilder();
+            Array.ForEach(arr, new Action<string>(delegate(string s){ 
+                retStr.Append(s.Substring(0,1).ToUpper() + s.Substring(1,s.Length-1));
+            }));
+            return retStr.ToString();;
         }
     }
 }

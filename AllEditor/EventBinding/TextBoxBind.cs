@@ -28,12 +28,12 @@ namespace CharsToolset
         {
             try {
                 TextBox t = (TextBox)sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
                 data.Add(typeof(KeyEventArgs), downKeys);
                 data.Add(typeof(MouseEventArgs), downMouseB);
 
@@ -59,12 +59,12 @@ namespace CharsToolset
         {
             try {
                 TextBox t = (TextBox)sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
                 // 判断是否按下了左键
                 if(e.Button.Equals(MouseButtons.Left)){ 
                     /*============赋值给状态栏选中字符数===================*/
@@ -87,12 +87,12 @@ namespace CharsToolset
         {
             try {
                 TextBox t = (TextBox)sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
 
                 /*============赋值给状态栏选中字符数===================*/
                 TextStatusBarEventMet.setSelectChars(data);
@@ -114,12 +114,12 @@ namespace CharsToolset
                 setDownMoustB(e);
 
                 TextBox t = (TextBox)sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
 
                 /*============赋值给状态栏当前行列数===================*/
                 TextStatusBarEventMet.setRowColumn(data);
@@ -173,12 +173,12 @@ namespace CharsToolset
         public void mainTextBoxKeyDown(object sender, KeyEventArgs e) {
             try {
                 TextBox t = (TextBox) sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
 
                 /*============赋值给状态栏当前行列数===================*/
                 TextStatusBarEventMet.setRowColumn(data);
@@ -198,12 +198,12 @@ namespace CharsToolset
         public void mainTextBoxKeyUp(object sender, KeyEventArgs e) {
             try {
                 TextBox t = (TextBox)sender;
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
 
                 /*============赋值给状态栏当前行列数===================*/
                 TextStatusBarEventMet.setRowColumn(data);
@@ -258,12 +258,12 @@ namespace CharsToolset
         /// <param name="t"></param>
         private void textBoxkeyUpBinding(KeyEventArgs e, TextBox t) {
             try {
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
 
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
-                data.Add(typeof(ToolStrip), toolStrip);
+                data.Add(typeof(StatusStrip), toolStrip);
                 // 大写按键
                 if (e.KeyCode.Equals(Keys.CapsLock)) {
                     TextStatusBarEventMet.setCaseKey(data);

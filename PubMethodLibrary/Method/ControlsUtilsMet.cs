@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Timers;
+using System.Data;
 
 namespace PubMethodLibrary
 {
@@ -28,7 +29,7 @@ namespace PubMethodLibrary
        /// <param name="colorTop">上边框颜色</param>
        /// <param name="colorRight">右边框颜色</param>
        /// <param name="colorBottom">下边框颜色</param>
-       public static void paintConSide(Graphics gra,
+       public static void setCOntrolBorderStyle(Graphics gra,
             Rectangle rec, ButtonBorderStyle borderS,
             int leftW, int topW, int rightW, int bottomW,
             Color colorLeft, Color colorTop, Color colorRight, Color colorBottom)
@@ -50,7 +51,7 @@ namespace PubMethodLibrary
        /// <param name="rightW">右边框宽度</param>
        /// <param name="bottomW">下边框宽度</param>
        /// <param name="color">边框颜色</param>
-       public static void paintConSide(Graphics gra,
+       public static void setCOntrolBorderStyle(Graphics gra,
            Rectangle rec, ButtonBorderStyle borderS,
            int leftW, int topW, int rightW, int bottomW,
            Color color)
@@ -72,7 +73,7 @@ namespace PubMethodLibrary
        /// <param name="colorTop">上边框颜色</param>
        /// <param name="colorRight">右边框颜色</param>
        /// <param name="colorBottom">下边框颜色</param>
-       public static void paintConSide(Graphics gra,
+       public static void setCOntrolBorderStyle(Graphics gra,
            Rectangle rec, ButtonBorderStyle borderS,
            int borderW,
            Color colorLeft, Color colorTop, Color colorRight, Color colorBottom)
@@ -91,7 +92,7 @@ namespace PubMethodLibrary
        /// <param name="borderS">边框样式</param>
        /// <param name="borderW">边框宽度</param>
        /// <param name="color">边框颜色</param>
-       public static void paintConSide(Graphics gra,
+       public static void setCOntrolBorderStyle(Graphics gra,
            Rectangle rec, ButtonBorderStyle borderS,
            int borderW,
            Color color)
@@ -190,74 +191,29 @@ namespace PubMethodLibrary
         /// 生成历史纪录的Panel
         /// </summary>
         /// <param name="con">要显示记录的控件</param>
-        /// <param name="historical">历史记录的数据</param>
-        /// <param name="panelW">历史纪录Panel的宽</param>
-        /// <param name="itemH">每个记录的高</param>
-        public static Panel getHistoricalPanel(Control con, String[] historical, int panelW, int itemH) { 
-           Panel p = getHistoricalPanel(con, con.Parent.Controls, historical, con.Font, new Padding(3,0,0,1)
-               , panelW ,itemH , con.Location.X, con.Location.Y + con.Height + 1);
-            return p;
-        }
-        /// <summary>
-        /// 生成历史纪录的Panel
-        /// </summary>
-        /// <param name="con">要显示记录的控件</param>
-        /// <param name="con">历史记录放入到父容器</param>
+        /// <param name="confather">历史记录放入到父容器</param>
+        /// <param name="isClose">失去焦点关闭</param>
         /// <param name="historical">历史记录的数组</param>
-        /// <param name="font">每个历史记录的字体</param>
-        /// <param name="padding">每个历史记录的内边距</param>
         /// <param name="panelW">历史纪录Panel的宽</param>
         /// <param name="itemH">每个记录的高</param>
-        /// <param name="x">记录的X坐标</param>
-        /// <param name="y">记录的Y坐标</param>
-        public static Panel getHistoricalPanel(Control con, Control.ControlCollection confather, 
-            String[] historical, Font font, Padding padding, int panelW, int itemH, int x, int y) {
-            Panel panel = new Panel();
-            panel.Name = con.Name + "_panel";
-            // 设置外围Panel宽度和高度
-            panel.Width = panelW;
-            // 背景色
-            panel.BackColor = con.FindForm().BackColor;
-            // 边框
-            panel.BorderStyle = BorderStyle.FixedSingle;
-            // 字体
-            panel.Font = font;
+        public static Panel getHistoricalPanel(Control con, Control.ControlCollection confather, bool isClose,
+            string[] historical, int panelW, int itemH) {
+            Panel panel = null;
+            Label tempLab = null;
             // 判断历史数据是否为null或长度是否为0
-            if(historical != null && !0.Equals(historical.Length)) { 
-                foreach (String findVal in historical) { 
-                    Label itemLabel = new Label();
-                    itemLabel.AutoSize = false;
-                    // 字体
-                    itemLabel.Font = panel.Font;
-                    // 设置内边距
-                    itemLabel.Padding = padding;
-                    // 设置内部Panel宽度
-                    itemLabel.Width = panel.ClientSize.Width - (itemLabel.Padding.Left + itemLabel.Padding.Right);
-                    // 高度
-                    itemLabel.Height = itemH;
-                    // 相对位置
-                    itemLabel.Location = new Point(0, panel.Controls.Count * itemH);
-                    // 背景色
-                    itemLabel.BackColor = panel.BackColor;
+            if(historical != null && !0.Equals(historical.Length)) {
+                panel = new Panel();
+                panel.Name = con.Name + "_panel";
+                panel.Width = panelW;
+                panel.BackColor = con.FindForm().BackColor;
+                panel.BorderStyle = BorderStyle.FixedSingle;
+                panel.Font = con.Font;
+                foreach (string findVal in historical) { 
+                    tempLab = getHistoricalItem(panel, "", itemH);
                     // 文本内容
-                    itemLabel.Text = findVal;
-
-                    // 鼠标样式
-                    itemLabel.Cursor = Cursors.Hand;
-                    // 绑定鼠标移入事件
-                    itemLabel.MouseEnter += (object sender, EventArgs e) => { 
-                        Label lab = (Label)sender;
-                        lab.BackColor = ColorTranslator.FromHtml("#D8D8D8");
-                        // 设置提示
-                        new ToolTip().SetToolTip(lab, lab.Text);
-                    };
-                    // 绑定鼠标移出事件
-                    itemLabel.MouseLeave += (object sender, EventArgs e) => { 
-                        Label lab = (Label)sender;
-                        lab.BackColor = Color.White;
-                    };
+                    tempLab.Text = findVal;
                     // 绑定鼠标点击事件
-                    itemLabel.MouseClick += (object sender, MouseEventArgs e) => { 
+                    tempLab.MouseClick += (object sender, MouseEventArgs e) => { 
                         Label lab = (Label)sender;
                         // 赋值到控件
                         con.Text = lab.Text;
@@ -267,49 +223,77 @@ namespace PubMethodLibrary
                         lab.Parent.Dispose();
                     };
                     // 添加到Label中
-                    panel.Controls.Add(itemLabel);
+                    panel.Controls.Add(tempLab);
                 }
-            } else {
-                historical = new String[]{"无历史记录"};
-                Label itemLabel = new Label();
-                itemLabel.AutoSize = false;
-                // 字体
-                itemLabel.Font = panel.Font;
-                // 设置内边距
-                itemLabel.Padding = new Padding(3,0,0,1);
-                // 设置内部Panel宽度
-                itemLabel.Width = panel.ClientSize.Width  - (itemLabel.Padding.Left + itemLabel.Padding.Right);
-                // 高度
-                itemLabel.Height = itemH;
-                // 相对位置
-                itemLabel.Location = new Point(0, panel.Controls.Count * itemH);
-                // 背景色
-                itemLabel.BackColor = panel.BackColor;
-                // 文本内容
-                itemLabel.Text = "无历史记录";
-                // 添加到Label中
-                panel.Controls.Add(itemLabel);
-            }
-            // 设置panel位置
-            panel.Location = new Point(x, y);
-            // 设置Panel高度
-            if(historical.Length * itemH <= (con.FindForm().ClientSize.Height - panel.Location.Y - 2)) { 
-                panel.Height = historical.Length * itemH + 3;
-            } else {
-                panel.Height = (con.FindForm().ClientSize.Height - panel.Location.Y - 5) + 3;
-                foreach(Control c in panel.Controls) { 
-                    c.Width = c.Width - 25;
+                // 设置panel位置
+                panel.Location = new Point(con.Location.X, con.Location.Y + con.Height + 1);
+                // 设置Panel高度
+                if(panel.Controls.Count * itemH <= (con.FindForm().ClientSize.Height - panel.Location.Y - 2)) { 
+                    panel.Height = panel.Controls.Count * itemH + 2;
+                } else {
+                    panel.Height = (con.FindForm().ClientSize.Height - panel.Location.Y - 5) + 2;
+                    foreach(Control c in panel.Controls) { 
+                        c.Width = c.Width - 25;
+                    }
                 }
+                // 将控件加入到控件的父容器中
+                confather.Add(panel);
+                if(isClose) {
+                    // 绑定失去焦点事件
+                    panel.LostFocus += (object sender, EventArgs e) => {
+                        Panel p = (Panel)sender;
+                        if(!p.IsDisposed) { 
+                            p.Dispose();
+                        }
+                    };
+                }
+                // 显示Panel
+                panel.Show();
+                // 置于顶层
+                panel.BringToFront();
+                panel.Focus();
             }
-            // 将控件加入到控件的父容器中
-            confather.Add(panel);
-            // 显示Panel
-            panel.Show();
-            // 置于顶层
-            panel.BringToFront();
-            // 隐藏水平滚动条显示垂直滚动条
-            panel.AutoScroll = true;
             return panel;
+        }
+
+        /// <summary>
+        /// 创建历史记录的项
+        /// </summary>
+        private static Label getHistoricalItem(Control parent, string name, int height) { 
+            Label itemLabel = new Label();
+            itemLabel.Name = name;
+            itemLabel.BorderStyle = BorderStyle.None;
+            itemLabel.AutoSize = false;
+            itemLabel.Font = parent.Font;
+            itemLabel.Width = parent.ClientSize.Width - (parent.Padding.Left + parent.Padding.Right) - 2;
+            itemLabel.Height = height;
+            itemLabel.BackColor = parent.BackColor;
+            itemLabel.Cursor = Cursors.Hand;
+            // 相对位置
+            itemLabel.Location = new Point(0, parent.Controls.Count * height);
+            // 绑定鼠标移入事件
+            itemLabel.MouseEnter += (object sender, EventArgs e) => { 
+                Label lab = (Label)sender;
+                lab.BackColor = ColorTranslator.FromHtml("#0078D7");
+                lab.ForeColor = Color.White;
+                // 设置提示
+                new ToolTip().SetToolTip(lab, lab.Text);
+            };
+            // 绑定鼠标按下
+            itemLabel.MouseDown += (object sender, MouseEventArgs e) => {
+                Label lab = (Label)sender;
+                if(MouseButtons.Left.Equals(e.Button)) { 
+                    lab.BackColor = ColorTranslator.FromHtml("#026BBF");
+                    lab.ForeColor = Color.White;
+                }
+            };
+            // 绑定鼠标移出事件
+            itemLabel.MouseLeave += (object sender, EventArgs e) => { 
+                Label lab = (Label)sender;
+                lab.BackColor = parent.BackColor;
+                lab.ForeColor = Color.Black;
+            };
+            return itemLabel;
         }
 
         /// <summary>

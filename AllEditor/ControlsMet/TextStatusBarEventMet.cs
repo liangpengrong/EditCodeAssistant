@@ -21,7 +21,7 @@ namespace CharsToolset
         public static object setCaseMouse(Dictionary<Type , object> data) {
             // 获取控件
             TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStrip toolStrip = (ToolStrip)data[typeof(ToolStrip)];
+            StatusStrip toolStrip = (StatusStrip)data[typeof(StatusStrip)];
 
             IEnumerable<ToolStripLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripLabel>();
             // 开辟新线程执行方法
@@ -56,13 +56,13 @@ namespace CharsToolset
         {
             // 获取控件
             TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStrip toolStrip = (ToolStrip)data[typeof(ToolStrip)];
+            StatusStrip toolStrip = (StatusStrip)data[typeof(StatusStrip)];
 
-            IEnumerable<ToolStripLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripLabel>();
+            IEnumerable<ToolStripStatusLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripStatusLabel>();
             // 开辟新线程执行方法
             ControlsUtilsMet.timersEventMet(t,1, delegate{ 
-                ToolStripLabel lable = null;
-                foreach (ToolStripLabel labelItem in ieToolLabel){
+                ToolStripStatusLabel lable = null;
+                foreach (ToolStripStatusLabel labelItem in ieToolLabel){
                     if (StrutsStripDateLib.ItemName.大小写状态.Equals(labelItem.Name)){
                         lable = labelItem;
                     }
@@ -83,7 +83,7 @@ namespace CharsToolset
         public static void setRowChars(Dictionary<Type , object> data) {
             // 获取控件
             TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStrip toolStrip = (ToolStrip)data[typeof(ToolStrip)];
+            StatusStrip toolStrip = (StatusStrip)data[typeof(StatusStrip)];
 
             // 改变状态栏的总行与总字符数
             Dictionary<string, string> retDiv = new Dictionary<string, string>();
@@ -103,7 +103,7 @@ namespace CharsToolset
         {
             // 获取控件
             TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStrip toolStrip = (ToolStrip)data[typeof(ToolStrip)];
+            StatusStrip toolStrip = (StatusStrip)data[typeof(StatusStrip)];
 
             // 改变状态栏的总行与总字符数
             Dictionary<string, string> retDiv = new Dictionary<string, string>();
@@ -126,14 +126,14 @@ namespace CharsToolset
 
             // 开辟新线程执行方法
             ControlsUtilsMet.timersEventMet(t,1, delegate{ 
-                ToolStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
-                    (ToolStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
+                StatusStrip toolStrip = ControlCache.getSingletonFactory().ContainsKey(DefaultNameCof.toolStart) ?
+                    (StatusStrip)ControlCache.getSingletonFactory()[DefaultNameCof.toolStart]:null;
                 // 改变状态栏的总行与总字符数
                 Dictionary<string, int[]> retDiv = new Dictionary<string, int[]>();
                 retDiv.Add(StrutsStripDateLib.ItemName.行列数, TextBoxUtilsMet.getTextBoxRowColumn(t));
                 //获得状态栏中全部的label
-                IEnumerable<ToolStripLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripLabel>();
-                foreach (ToolStripLabel label in ieToolLabel)
+                IEnumerable<ToolStripStatusLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripStatusLabel>();
+                foreach (ToolStripStatusLabel label in ieToolLabel)
                 {
                     int[] val = null;
                     //获取传入的label名与label值的字典中的Key为该label名的value
@@ -151,11 +151,11 @@ namespace CharsToolset
         /// 根据传入的Map各状态栏中的文本赋值
         /// </summary>
         /// <param name="retDiv"></param>
-        private static void setBarLable(Dictionary<string, string> retDiv, ToolStrip toolStrip) {
+        private static void setBarLable(Dictionary<string, string> retDiv, StatusStrip toolStrip) {
 
             //获得状态栏中全部的label
-            IEnumerable<ToolStripLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripLabel>();
-            foreach (ToolStripLabel label in ieToolLabel)
+            IEnumerable<ToolStripStatusLabel> ieToolLabel = toolStrip.Items.OfType<ToolStripStatusLabel>();
+            foreach (ToolStripStatusLabel label in ieToolLabel)
             {
                 String val = null;
                 //获取传入的label名与label值的字典中的Key为该label名的value

@@ -46,15 +46,17 @@
             this.换行符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.制表符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.转化为Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写字符Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写字符Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.大写形式Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.小写形式Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.清空文本框Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.驼峰形式Item = new System.Windows.Forms.ToolStripMenuItem();
             this.rightMenuStrip.SuspendLayout();
             // 
             // rightMenuStrip
             // 
             this.rightMenuStrip.AutoSize = false;
+            this.rightMenuStrip.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rightMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.全选Item,
             this.toolStripSeparator1,
@@ -74,7 +76,7 @@
             // 全选Item
             // 
             this.全选Item.Name = "全选Item";
-            this.全选Item.Size = new System.Drawing.Size(141, 22);
+            this.全选Item.Size = new System.Drawing.Size(136, 22);
             this.全选Item.Text = "全选";
             // 
             // toolStripSeparator1
@@ -85,25 +87,25 @@
             // 剪切Item
             // 
             this.剪切Item.Name = "剪切Item";
-            this.剪切Item.Size = new System.Drawing.Size(141, 22);
+            this.剪切Item.Size = new System.Drawing.Size(136, 22);
             this.剪切Item.Text = "剪切";
             // 
             // 复制Item
             // 
             this.复制Item.Name = "复制Item";
-            this.复制Item.Size = new System.Drawing.Size(141, 22);
+            this.复制Item.Size = new System.Drawing.Size(136, 22);
             this.复制Item.Text = "复制";
             // 
             // 粘贴Item
             // 
             this.粘贴Item.Name = "粘贴Item";
-            this.粘贴Item.Size = new System.Drawing.Size(141, 22);
+            this.粘贴Item.Size = new System.Drawing.Size(136, 22);
             this.粘贴Item.Text = "粘贴";
             // 
             // 删除Item
             // 
             this.删除Item.Name = "删除Item";
-            this.删除Item.Size = new System.Drawing.Size(141, 22);
+            this.删除Item.Size = new System.Drawing.Size(136, 22);
             this.删除Item.Text = "删除";
             // 
             // toolStripSeparator2
@@ -119,7 +121,7 @@
             this.换行符Item,
             this.制表符Item});
             this.去除Item.Name = "去除Item";
-            this.去除Item.Size = new System.Drawing.Size(141, 22);
+            this.去除Item.Size = new System.Drawing.Size(136, 22);
             this.去除Item.Text = "去除";
             // 
             // 空格Item
@@ -130,7 +132,7 @@
             this.行首空格Item,
             this.行尾空格Item});
             this.空格Item.Name = "空格Item";
-            this.空格Item.Size = new System.Drawing.Size(115, 22);
+            this.空格Item.Size = new System.Drawing.Size(112, 22);
             this.空格Item.Text = "空格";
             this.空格Item.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             // 
@@ -138,64 +140,65 @@
             // 
             this.全部空格Item.BackColor = System.Drawing.SystemColors.Control;
             this.全部空格Item.Name = "全部空格Item";
-            this.全部空格Item.Size = new System.Drawing.Size(102, 22);
+            this.全部空格Item.Size = new System.Drawing.Size(100, 22);
             this.全部空格Item.Text = "全部";
             // 
             // 行首空格Item
             // 
             this.行首空格Item.BackColor = System.Drawing.SystemColors.Control;
             this.行首空格Item.Name = "行首空格Item";
-            this.行首空格Item.Size = new System.Drawing.Size(102, 22);
+            this.行首空格Item.Size = new System.Drawing.Size(100, 22);
             this.行首空格Item.Text = "行首";
             // 
             // 行尾空格Item
             // 
             this.行尾空格Item.BackColor = System.Drawing.SystemColors.Control;
             this.行尾空格Item.Name = "行尾空格Item";
-            this.行尾空格Item.Size = new System.Drawing.Size(102, 22);
+            this.行尾空格Item.Size = new System.Drawing.Size(100, 22);
             this.行尾空格Item.Text = "行尾";
             // 
             // 空行Item
             // 
             this.空行Item.BackColor = System.Drawing.SystemColors.Control;
             this.空行Item.Name = "空行Item";
-            this.空行Item.Size = new System.Drawing.Size(115, 22);
+            this.空行Item.Size = new System.Drawing.Size(112, 22);
             this.空行Item.Text = "空行";
             // 
             // 换行符Item
             // 
             this.换行符Item.BackColor = System.Drawing.SystemColors.Control;
             this.换行符Item.Name = "换行符Item";
-            this.换行符Item.Size = new System.Drawing.Size(115, 22);
+            this.换行符Item.Size = new System.Drawing.Size(112, 22);
             this.换行符Item.Text = "换行符";
             // 
             // 制表符Item
             // 
             this.制表符Item.BackColor = System.Drawing.SystemColors.Control;
             this.制表符Item.Name = "制表符Item";
-            this.制表符Item.Size = new System.Drawing.Size(115, 22);
+            this.制表符Item.Size = new System.Drawing.Size(112, 22);
             this.制表符Item.Text = "制表符";
             // 
             // 转化为Item
             // 
             this.转化为Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.大写字符Item,
-            this.小写字符Item});
+            this.大写形式Item,
+            this.小写形式Item,
+            this.驼峰形式Item});
             this.转化为Item.Name = "转化为Item";
-            this.转化为Item.Size = new System.Drawing.Size(141, 22);
+            this.转化为Item.Size = new System.Drawing.Size(136, 22);
             this.转化为Item.Text = "转化为";
             // 
-            // 大写字符Item
+            // 大写形式Item
             // 
-            this.大写字符Item.Name = "大写字符Item";
-            this.大写字符Item.Size = new System.Drawing.Size(180, 22);
-            this.大写字符Item.Text = "大写字符";
+            this.大写形式Item.Name = "大写形式Item";
+            this.大写形式Item.Size = new System.Drawing.Size(124, 22);
+            this.大写形式Item.Text = "大写形式";
             // 
-            // 小写字符Item
+            // 小写形式Item
             // 
-            this.小写字符Item.Name = "小写字符Item";
-            this.小写字符Item.Size = new System.Drawing.Size(180, 22);
-            this.小写字符Item.Text = "小写字符";
+            this.小写形式Item.Name = "小写形式Item";
+            this.小写形式Item.Size = new System.Drawing.Size(124, 22);
+            this.小写形式Item.Text = "小写形式";
             // 
             // toolStripSeparator3
             // 
@@ -205,12 +208,14 @@
             // 清空文本框Item
             // 
             this.清空文本框Item.Name = "清空文本框Item";
-            this.清空文本框Item.Size = new System.Drawing.Size(141, 22);
+            this.清空文本框Item.Size = new System.Drawing.Size(136, 22);
             this.清空文本框Item.Text = "清空文本框";
             // 
-            // TextRightMenu
+            // 驼峰形式Item
             // 
-            // this.Name = "TextRightMenu";
+            this.驼峰形式Item.Name = "驼峰形式Item";
+            this.驼峰形式Item.Size = new System.Drawing.Size(124, 22);
+            this.驼峰形式Item.Text = "驼峰形式";
             this.rightMenuStrip.ResumeLayout(false);
 
         }
@@ -234,8 +239,9 @@
         private System.Windows.Forms.ToolStripMenuItem 换行符Item;
         private System.Windows.Forms.ToolStripMenuItem 制表符Item;
         private System.Windows.Forms.ToolStripMenuItem 转化为Item;
-        private System.Windows.Forms.ToolStripMenuItem 大写字符Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写字符Item;
+        private System.Windows.Forms.ToolStripMenuItem 大写形式Item;
+        private System.Windows.Forms.ToolStripMenuItem 小写形式Item;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem 驼峰形式Item;
     }
 }

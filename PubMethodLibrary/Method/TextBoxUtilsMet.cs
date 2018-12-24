@@ -288,6 +288,22 @@ namespace PubMethodLibrary
             return null;
         }
         /// <summary>
+        /// 将文本框的内容转化为驼峰形式
+        /// </summary>
+        /// <param name="t">文本框</param>
+        /// <returns></returns>
+        public static object textToHump(TextBox t) {
+            int start = t.SelectionStart;
+            int selLen = t.SelectionLength;
+            if(t.SelectionLength > 0){
+               t.SelectedText = StringUtilsMet.charsToHump(t.SelectedText);
+            } else { 
+                t.Text = StringUtilsMet.charsToHump(t.Text);
+            }
+            t.Select(start, selLen);
+            return null;
+        }
+        /// <summary>
         /// 实现文本框插入当前日期
         /// </summary>
         /// <param name="t"></param>
@@ -295,7 +311,7 @@ namespace PubMethodLibrary
         public static object textInsertDate(TextBox t)
         {
             int start = t.SelectionStart;
-            String dateStr = MessyUtilsMet.getGenerateDate("yyyy/MM/dd HH:mm:ss");
+            string dateStr = MessyUtilsMet.getGenerateDate("yyyy/MM/dd HH:mm:ss");
             t.Text=t.Text.Insert(t.SelectionStart, dateStr);
             t.SelectionStart = start + dateStr.Length;
             return null;

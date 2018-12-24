@@ -84,9 +84,11 @@ namespace PubControlLibrary {
             if(this.button1.Name.Equals(but.Name)) {
                 if(historicalPanel == null || historicalPanel.IsDisposed) { 
                   historicalPanel = ControlsUtilsMet.getHistoricalPanel(下拉按钮_but
-                     , this.下拉按钮_pan.Parent.FindForm().Controls, history, 下拉按钮_but.Font, new Padding(3,5,0,0)
-                     , 下拉按钮_but.Width + this.button1.Width, 23
-                     , x,下拉按钮_pan.Location.Y + 下拉按钮_pan.Height + 5);
+                     , 下拉按钮_pan.Parent.FindForm().Controls
+                     , false
+                     , history
+                     , 下拉按钮_but.Width + this.button1.Width, 23);
+                    historicalPanel.Location = new Point(x, 下拉按钮_pan.Location.Y + 下拉按钮_pan.Height + 5);
                 } else {
                     historicalPanel.Dispose();
                     historicalPanel = null;

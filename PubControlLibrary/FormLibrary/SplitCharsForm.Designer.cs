@@ -23,11 +23,11 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.分列设置容器 = new System.Windows.Forms.GroupBox();
-            this.字符_textB = new System.Windows.Forms.RichTextBox();
+            this.字符_textB = new System.Windows.Forms.TextBox();
             this.字符个数_textB = new System.Windows.Forms.TextBox();
             this.字符个数_rad = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,11 +46,11 @@
             this.不包含制表符_chk = new System.Windows.Forms.CheckBox();
             this.不区分大小写_chk = new System.Windows.Forms.CheckBox();
             this.操作区容器 = new System.Windows.Forms.GroupBox();
+            this.字符_textB_old = new System.Windows.Forms.RichTextBox();
             this.分列设置容器.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.数据表格)).BeginInit();
             this.选项区容器.SuspendLayout();
-            this.操作区容器.SuspendLayout();
             this.SuspendLayout();
             // 
             // 分列设置容器
@@ -66,25 +66,21 @@
             this.分列设置容器.Controls.Add(this.制表符_chk);
             this.分列设置容器.Location = new System.Drawing.Point(8, 4);
             this.分列设置容器.Name = "分列设置容器";
-            this.分列设置容器.Size = new System.Drawing.Size(162, 289);
+            this.分列设置容器.Size = new System.Drawing.Size(150, 289);
             this.分列设置容器.TabIndex = 0;
             this.分列设置容器.TabStop = false;
             this.分列设置容器.Text = "分列设置";
             // 
             // 字符_textB
             // 
-            this.字符_textB.AcceptsTab = true;
-            this.字符_textB.AutoWordSelection = true;
-            this.字符_textB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.字符_textB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.字符_textB.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.字符_textB.Location = new System.Drawing.Point(7, 104);
+            this.字符_textB.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.字符_textB.Location = new System.Drawing.Point(8, 104);
+            this.字符_textB.MaxLength = 9999999;
+            this.字符_textB.Multiline = true;
             this.字符_textB.Name = "字符_textB";
-            this.字符_textB.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.字符_textB.Size = new System.Drawing.Size(147, 63);
-            this.字符_textB.TabIndex = 9;
-            this.字符_textB.Text = "";
-            this.字符_textB.TextChanged += new System.EventHandler(this.字符_textB_TextChanged);
+            this.字符_textB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.字符_textB.Size = new System.Drawing.Size(135, 63);
+            this.字符_textB.TabIndex = 15;
             // 
             // 字符个数_textB
             // 
@@ -92,7 +88,7 @@
             this.字符个数_textB.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.字符个数_textB.Location = new System.Drawing.Point(7, 195);
             this.字符个数_textB.Name = "字符个数_textB";
-            this.字符个数_textB.Size = new System.Drawing.Size(147, 26);
+            this.字符个数_textB.Size = new System.Drawing.Size(135, 26);
             this.字符个数_textB.TabIndex = 8;
             // 
             // 字符个数_rad
@@ -113,7 +109,7 @@
             this.groupBox1.Controls.Add(this.单个行_rad);
             this.groupBox1.Location = new System.Drawing.Point(0, 231);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(162, 58);
+            this.groupBox1.Size = new System.Drawing.Size(150, 58);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "分列格式";
@@ -202,7 +198,7 @@
             this.保留空列_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.保留空列_chk.Location = new System.Drawing.Point(8, 16);
             this.保留空列_chk.Name = "保留空列_chk";
-            this.保留空列_chk.Size = new System.Drawing.Size(148, 25);
+            this.保留空列_chk.Size = new System.Drawing.Size(136, 25);
             this.保留空列_chk.TabIndex = 7;
             this.保留空列_chk.Text = "保留空列";
             this.保留空列_chk.UseVisualStyleBackColor = true;
@@ -214,11 +210,11 @@
             this.分列_but.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.分列_but.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(94)))), ((int)(((byte)(55)))));
             this.分列_but.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(83)))), ((int)(((byte)(44)))));
-            this.分列_but.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.分列_but.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.分列_but.ForeColor = System.Drawing.Color.White;
-            this.分列_but.Location = new System.Drawing.Point(6, 18);
+            this.分列_but.Location = new System.Drawing.Point(12, 411);
             this.分列_but.Name = "分列_but";
-            this.分列_but.Size = new System.Drawing.Size(73, 27);
+            this.分列_but.Size = new System.Drawing.Size(138, 30);
             this.分列_but.TabIndex = 8;
             this.分列_but.Text = "确认分列";
             this.分列_but.UseVisualStyleBackColor = false;
@@ -226,13 +222,15 @@
             // 
             // 关闭_but
             // 
+            this.关闭_but.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.关闭_but.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.关闭_but.Location = new System.Drawing.Point(14, 413);
+            this.关闭_but.Location = new System.Drawing.Point(623, 410);
             this.关闭_but.Name = "关闭_but";
-            this.关闭_but.Size = new System.Drawing.Size(139, 30);
+            this.关闭_but.Size = new System.Drawing.Size(60, 25);
             this.关闭_but.TabIndex = 9;
             this.关闭_but.Text = "关闭窗口";
             this.关闭_but.UseVisualStyleBackColor = true;
+            this.关闭_but.Visible = false;
             this.关闭_but.Click += new System.EventHandler(this.关闭_but_Click);
             // 
             // 数据表格
@@ -241,37 +239,38 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.数据表格.BackgroundColor = System.Drawing.Color.White;
+            this.数据表格.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.数据表格.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.数据表格.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.数据表格.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.数据表格.ColumnHeadersHeight = 28;
             this.数据表格.EnableHeadersVisualStyles = false;
             this.数据表格.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
-            this.数据表格.Location = new System.Drawing.Point(176, 60);
+            this.数据表格.Location = new System.Drawing.Point(164, 60);
             this.数据表格.Name = "数据表格";
             this.数据表格.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.数据表格.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.数据表格.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.数据表格.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.数据表格.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.数据表格.RowTemplate.Height = 23;
-            this.数据表格.Size = new System.Drawing.Size(510, 382);
+            this.数据表格.Size = new System.Drawing.Size(522, 382);
             this.数据表格.TabIndex = 0;
             // 
             // 选项区容器
@@ -281,7 +280,7 @@
             this.选项区容器.Controls.Add(this.保留空列_chk);
             this.选项区容器.Location = new System.Drawing.Point(8, 299);
             this.选项区容器.Name = "选项区容器";
-            this.选项区容器.Size = new System.Drawing.Size(162, 105);
+            this.选项区容器.Size = new System.Drawing.Size(150, 105);
             this.选项区容器.TabIndex = 13;
             this.选项区容器.TabStop = false;
             this.选项区容器.Text = "选项区";
@@ -293,7 +292,7 @@
             this.不包含制表符_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.不包含制表符_chk.Location = new System.Drawing.Point(8, 72);
             this.不包含制表符_chk.Name = "不包含制表符_chk";
-            this.不包含制表符_chk.Size = new System.Drawing.Size(148, 25);
+            this.不包含制表符_chk.Size = new System.Drawing.Size(136, 25);
             this.不包含制表符_chk.TabIndex = 9;
             this.不包含制表符_chk.Text = "导出时不包含制表符";
             this.不包含制表符_chk.UseVisualStyleBackColor = true;
@@ -306,7 +305,7 @@
             this.不区分大小写_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.不区分大小写_chk.Location = new System.Drawing.Point(8, 43);
             this.不区分大小写_chk.Name = "不区分大小写_chk";
-            this.不区分大小写_chk.Size = new System.Drawing.Size(148, 25);
+            this.不区分大小写_chk.Size = new System.Drawing.Size(136, 25);
             this.不区分大小写_chk.TabIndex = 8;
             this.不区分大小写_chk.Text = "分隔符不区分大小写";
             this.不区分大小写_chk.UseVisualStyleBackColor = true;
@@ -316,19 +315,40 @@
             // 
             this.操作区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.操作区容器.Controls.Add(this.分列_but);
-            this.操作区容器.Location = new System.Drawing.Point(176, 4);
+            this.操作区容器.Location = new System.Drawing.Point(164, 4);
             this.操作区容器.Name = "操作区容器";
-            this.操作区容器.Size = new System.Drawing.Size(510, 50);
+            this.操作区容器.Size = new System.Drawing.Size(522, 50);
             this.操作区容器.TabIndex = 14;
             this.操作区容器.TabStop = false;
             this.操作区容器.Text = "操作区";
+            // 
+            // 字符_textB_old
+            // 
+            this.字符_textB_old.AcceptsTab = true;
+            this.字符_textB_old.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.字符_textB_old.BulletIndent = 2;
+            this.字符_textB_old.CausesValidation = false;
+            this.字符_textB_old.DetectUrls = false;
+            this.字符_textB_old.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.字符_textB_old.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.字符_textB_old.Location = new System.Drawing.Point(589, 412);
+            this.字符_textB_old.Name = "字符_textB_old";
+            this.字符_textB_old.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.字符_textB_old.ShortcutsEnabled = false;
+            this.字符_textB_old.Size = new System.Drawing.Size(28, 16);
+            this.字符_textB_old.TabIndex = 9;
+            this.字符_textB_old.Text = "";
+            this.字符_textB_old.Visible = false;
+            this.字符_textB_old.ZoomFactor = 0.9F;
+            this.字符_textB_old.TextChanged += new System.EventHandler(this.字符_textB_TextChanged);
             // 
             // SplitCharsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(695, 447);
+            this.Controls.Add(this.分列_but);
+            this.Controls.Add(this.字符_textB_old);
             this.Controls.Add(this.操作区容器);
             this.Controls.Add(this.关闭_but);
             this.Controls.Add(this.选项区容器);
@@ -336,8 +356,9 @@
             this.Controls.Add(this.分列设置容器);
             this.MinimizeBox = false;
             this.Name = "SplitCharsForm";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "分列字符";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SplitCharsForm_FormClosed);
             this.Load += new System.EventHandler(this.SplitOrAddChars_Load);
@@ -347,7 +368,6 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.数据表格)).EndInit();
             this.选项区容器.ResumeLayout(false);
-            this.操作区容器.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -371,8 +391,9 @@
         private System.Windows.Forms.RadioButton 字符个数_rad;
         private System.Windows.Forms.TextBox 字符个数_textB;
         private System.Windows.Forms.CheckBox 不区分大小写_chk;
-        private System.Windows.Forms.RichTextBox 字符_textB;
         private System.Windows.Forms.GroupBox 操作区容器;
         private System.Windows.Forms.CheckBox 不包含制表符_chk;
+        private System.Windows.Forms.TextBox 字符_textB;
+        private System.Windows.Forms.RichTextBox 字符_textB_old;
     }
 }

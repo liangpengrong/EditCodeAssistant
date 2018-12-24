@@ -30,6 +30,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -88,9 +107,6 @@
     <None Include="Resources\转到行.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\擦除.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\另存为.png" />
   </ItemGroup>
   <ItemGroup>
@@ -130,12 +146,6 @@
     <None Include="Resources\复制.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\裁剪.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\清空.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\转化.png" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +153,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\分列.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\裁剪.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清空.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\擦除.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

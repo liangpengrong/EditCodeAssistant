@@ -6,7 +6,7 @@ using System.Text;
 namespace PubCacheArea
 {
     /// <summary>
-    /// 缓存类型枚举
+    /// 文本框缓存类型枚举
     /// </summary>
     public enum TextCacheTypeEnum
     {

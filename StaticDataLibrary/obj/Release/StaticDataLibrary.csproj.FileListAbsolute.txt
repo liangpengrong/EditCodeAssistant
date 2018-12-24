@@ -5,3 +5,12 @@ D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\StaticDataLibrary\obj
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\StaticDataLibrary\obj\Release\StaticDataLibrary.csproj.CoreCompileInputs.cache
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\StaticDataLibrary\obj\Release\StaticDataLibrary.dll
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\StaticDataLibrary\obj\Release\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\Release\StaticDataLibrary.dll.config
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\Release\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\Release\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.Image.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.csproj.GenerateResource.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\Release\StaticDataLibrary.pdb

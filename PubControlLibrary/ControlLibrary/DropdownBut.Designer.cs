@@ -70,7 +70,7 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        public System.Windows.Forms.Panel 下拉按钮_pan;
         public System.Windows.Forms.Button 下拉按钮_but;
+        public System.Windows.Forms.Panel 下拉按钮_pan;
     }
 }

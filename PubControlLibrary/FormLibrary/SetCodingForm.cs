@@ -76,8 +76,6 @@ namespace PubControlLibrary {
             // 设置自动匹配
             this.coding_set.AutoCompleteMode = AutoCompleteMode.Suggest;
             this.coding_set.AutoCompleteSource = AutoCompleteSource.ListItems;
-            // this.coding_set.auto
-            
         }
         /// <summary>
         /// 获取下拉框要显示的编码

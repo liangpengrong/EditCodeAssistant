@@ -39,7 +39,6 @@ namespace PubMethodLibrary {
         }
         // 菜单项
         protected override void OnRenderMenuItemBackground (ToolStripItemRenderEventArgs e) {
-            e.Item.ImageAlign = ContentAlignment.MiddleRight;
             Color backC = ColorTranslator.FromHtml("#91C9F7");
             RectangleF rectF = e.Graphics.VisibleClipBounds;
             // 顶级菜单
@@ -96,7 +95,7 @@ namespace PubMethodLibrary {
             // 顶级菜单
             Rectangle rec = new Rectangle(imageRec.X-2 , imageRec.Y-2, imageRec.Width+4, imageRec.Height+4);
             if(e.Item.Selected) {
-                bru = new SolidBrush(ColorTranslator.FromHtml("#228BE2"));
+                bru = new SolidBrush(ColorTranslator.FromHtml("#4EA8F2"));
             } else { 
                 bru = new SolidBrush(ColorTranslator.FromHtml("#90C8F6"));
             }
@@ -104,9 +103,9 @@ namespace PubMethodLibrary {
             base.OnRenderItemCheck(e);
         }
         // 文本
-        protected override void OnRenderItemText (ToolStripItemTextRenderEventArgs e) { 
-            e.TextColor = Color.Black;
-
+        protected override void OnRenderItemText (ToolStripItemTextRenderEventArgs e) {
+            e.TextColor = e.Item.ForeColor;
+            e.TextFont = e.ToolStrip.Font;
             base.OnRenderItemText(e);
         }
         // 左边图像和复选框区域

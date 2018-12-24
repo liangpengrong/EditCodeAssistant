@@ -16,6 +16,8 @@ namespace CharsToolset
     {
         //定义状态栏子菜单的事件的委托
         private delegate object methodDelegate(Dictionary<Type, object> data);
+        // 默认字体
+        private Font defFont = new Font("微软雅黑", 9, FontStyle.Regular);
         // 启动窗体
         private RootDisplayForm rootDisplayForm = null;
         public TextStatusBar(RootDisplayForm rootDisplayForm)
@@ -23,29 +25,33 @@ namespace CharsToolset
             //启动窗体
             this.rootDisplayForm = rootDisplayForm;
             InitializeComponent();
-            this.addStrutsBarItem(this.statusStrip,this.itemsDateAll());//将子状态栏加载到状态栏容器中
+            // 将子状态栏加载到状态栏容器中
+            this.addStrutsBarItem(this.statusStrip,this.itemsDateAll());
         }
         /// <summary>
         /// 将子状态栏信息添加到状态栏容器中
         /// </summary>
         /// <param name="strutsBar">状态栏容器</param>
         /// <param name="itemAll">要添加的字状态栏信息</param>
-        private void addStrutsBarItem(ToolStrip strutsBar, List<string[]> itemAll)
+        private void addStrutsBarItem(StatusStrip strutsBar, List<string[]> itemAll)
         {
-            foreach(string[] strAll in itemAll)
-            {
-                ToolStripLabel label = new ToolStripLabel();
-                //分割线
-                ToolStripSeparator separator = new ToolStripSeparator();
+            strutsBar.AutoSize = false;
+            strutsBar.Padding = new Padding(0,1,0,1);
+            foreach(string[] strAll in itemAll) {
+
+                ToolStripStatusLabel label = new ToolStripStatusLabel();
+                label.Margin = new Padding(0,0,0,0);
                 label.Name = strAll[0];
                 label.Text = strAll[1];
                 label.Width = 65;
-                label.Height = strutsBar.Height-10;
+                label.Height = strutsBar.Height;
                 label.Font = strutsBar.Font;
                 label.ToolTipText = strAll[2];
                 label.AutoSize = false;
-                label.TextAlign = ContentAlignment.BottomCenter;
-
+                label.TextAlign = ContentAlignment.MiddleCenter;
+                // 分割线
+                label.BorderSides = ToolStripStatusLabelBorderSides.Right;
+                label.BorderStyle = Border3DStyle.Sunken;
                 // 绑定鼠标单击事件
                 label.MouseDown += new MouseEventHandler(toolLabelMouseDown);
                 // 绑定双击击事件
@@ -54,15 +60,12 @@ namespace CharsToolset
                 label.TextChanged += new EventHandler(toolLabelTextChanged);
                 // 鼠标移入事件
                 label.MouseEnter += (object sender, EventArgs e) =>{
-                    ToolStripLabel lab = (ToolStripLabel)sender;
+                    ToolStripStatusLabel lab = (ToolStripStatusLabel)sender;
                     lab.ToolTipText = lab.ToolTipText.Split('：')[0] + "：" + lab.Text;
                 };
                 // 启用双击事件
                 label.DoubleClickEnabled = true;
                 strutsBar.Items.Add(label);
-                separator.AutoSize = false;
-                separator.Height = strutsBar.Height;
-                strutsBar.Items.Add(separator);
             }
         }
 
@@ -87,7 +90,7 @@ namespace CharsToolset
         /// </summary>
         /// <param name="strutsbar">类型为ToolStrip状态栏</param>
         /// <returns>添加完毕的状态栏</returns>
-        public ContextMenuStrip getStrutsBarRightMenu(ToolStrip strutsbar)
+        public ContextMenuStrip getStrutsBarRightMenu(StatusStrip strutsbar)
         {
             ContextMenuStrip rigMenu = new ContextMenuStrip();
             // 使用自定义的右键菜单
@@ -95,34 +98,25 @@ namespace CharsToolset
             rigMenu.BackColor = strutsbar.BackColor;
             rigMenu.ShowItemToolTips = true;
             rigMenu.TabStop = false;
-            rigMenu.Closing +=new ToolStripDropDownClosingEventHandler(MenuItemUtilsMet.moveOutClosing);
-            foreach(ToolStripLabel stripL in strutsbar.Items.OfType<ToolStripLabel>())
+            rigMenu.Font = defFont;
+            rigMenu.Closing += new ToolStripDropDownClosingEventHandler(MenuItemUtilsMet.moveOutClosing);
+            foreach(ToolStripStatusLabel stripL in strutsbar.Items.OfType<ToolStripStatusLabel>())
             {
-                 ToolStripMenuItem item = new ToolStripMenuItem();
-                 item.Name = stripL.Name + "Item";
-                 item.AutoSize = true;
-                 item.BackColor = strutsbar.BackColor;
-                 item.Text = stripL.Name;
-                 item.CheckOnClick = false;
-                 item.Checked = stripL.Visible;
-                 item.ToolTipText = stripL.ToolTipText;
-                 item.MouseDown += new MouseEventHandler(menuItemMouseDown);
-                 rigMenu.Items.Add(item);
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Name = stripL.Name + "Item";
+                item.AutoSize = true;
+                item.BackColor = strutsbar.BackColor;
+                item.Text = stripL.Name;
+                item.CheckOnClick = true;
+                item.Checked = stripL.Visible;
+                item.ToolTipText = stripL.ToolTipText;
+                item.CheckedChanged += menuItemCheckedChanged;
+                // 将右键菜单对应的状态栏子项Name放入Tag数据中
+                item.Font = rigMenu.Font;
+                item.Tag = stripL.Name;
+                rigMenu.Items.Add(item);
             }
             return rigMenu;
-        }
-        /// <summary>
-        /// 根据是否按下指定的鼠标按键判断选项是否选中或取消选中
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="e"></param>
-        /// <param name="mouse"></param>
-        private void isMouseDownCheck(ToolStripMenuItem item,MouseEventArgs e,MouseButtons mouse)
-        {
-            if(e.Button.Equals(mouse))
-            {
-                item.Checked=!item.Checked;
-            }
         }
 
         /// <summary>
@@ -131,19 +125,11 @@ namespace CharsToolset
         /// <param name="item"></param>
         /// <param name="toolStrip"></param>
         /// <param name="addName"></param>
-        private void isLabelVisible(ToolStripMenuItem item, ToolStrip toolStrip, String addName)
+        private void isLabelVisible(ToolStripMenuItem item)
         {
-            ToolStripItemCollection itemAll = toolStrip.Items;
-            for (int i = 0, len = itemAll.Count; i < len; i++)
-            {
-                if ((itemAll[i].Name + addName).Equals(item.Name))
-                {
-                    itemAll[i].Visible = item.Checked;
-                    if (i + 1 < itemAll.Count)
-                    {
-                        itemAll[i + 1].Visible = item.Checked;
-                    }
-                }
+            if(null != item.Tag) { 
+                ToolStripItem stripItem = statusStrip.Items[item.Tag.ToString()];
+                stripItem.Visible = item.Checked;
             }
         }
         /// <summary>
@@ -152,22 +138,21 @@ namespace CharsToolset
         /// <param name="menu">需要重绘的菜单</param>
         public static void paintStrutsBarFrame(object sender, PaintEventArgs e)
         {
-            ToolStrip toolStrip = (ToolStrip)sender;
-            ControlsUtilsMet.paintConSide(e.Graphics, toolStrip.ClientRectangle
+            StatusStrip toolStrip = (StatusStrip)sender;
+            ControlsUtilsMet.setCOntrolBorderStyle(e.Graphics, toolStrip.ClientRectangle
                 , ButtonBorderStyle.Solid
                 , 0, 1, 0, 0
                 , Color.FromArgb(160, 160, 160));
         }
         /// <summary>
-        /// 右键菜单选项的鼠标点击事件
+        /// 右键菜单选项的选项事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void menuItemMouseDown(object sender, MouseEventArgs e)
+        public void menuItemCheckedChanged(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            isMouseDownCheck(item,e,MouseButtons.Left);//判断选择状态
-            isLabelVisible(item, this.statusStrip, "Item");
+            isLabelVisible(item);
         }
         /// <summary>
         /// 状态栏的鼠标点击事件对应关系
@@ -186,7 +171,7 @@ namespace CharsToolset
         /// <param name="e"></param>
         private void toolLabelMouseDown(object sender, MouseEventArgs e)
         {
-            ToolStripLabel lable = (ToolStripLabel)sender;
+            ToolStripStatusLabel lable = (ToolStripStatusLabel)sender;
 
             List<TextBox> textList = new List<TextBox>();
             ControlsUtilsMet.getAllControlByType<TextBox>(textList,ControlCache.getSingletonCon(DefaultNameCof.tabContent).Controls);
@@ -200,7 +185,7 @@ namespace CharsToolset
                 {
                     Dictionary<Type, object> data = new Dictionary<Type, object>();
                     data.Add(typeof(TextBox), textBox);
-                    data.Add(typeof(ToolStrip), this.statusStrip);
+                    data.Add(typeof(StatusStrip), this.statusStrip);
 
                     this.statusStrip.Invoke(myDelegate,new object[]{data});
                 }
@@ -242,7 +227,7 @@ namespace CharsToolset
             {
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), textBox);
-                data.Add(typeof(ToolStrip), this.statusStrip);
+                data.Add(typeof(StatusStrip), this.statusStrip);
 
                 this.statusStrip.Invoke(myDelegate,new object[]{data});
             }

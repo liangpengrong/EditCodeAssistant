@@ -96,3 +96,5 @@ D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.dll
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.pdb
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.SetCodingForm.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.AddCharsForm.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubControlLibrary\obj\Debug\PubControlLibrary.ExportComBox.resources
