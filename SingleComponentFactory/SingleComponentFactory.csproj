@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF82CDA9-0E9C-42DC-820F-EA82D331F2AD}</ProjectGuid>
+    <ProjectGuid>{520BCFA1-84E8-46E2-B27D-E62363324E6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProgramTopMenu</RootNamespace>
-    <AssemblyName>ProgramTopMenu</AssemblyName>
+    <RootNamespace>SingleFormFactory</RootNamespace>
+    <AssemblyName>SingleFormFactory</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,20 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventMethod\PublicEventMet.cs" />
-    <Compile Include="EventMethod\TopMenuEventMet.cs" />
+    <Compile Include="Control\InitSingleControl.cs" />
+    <Compile Include="Form\InitSingleForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopMenuContainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TopMenuContainer.Designer.cs">
-      <DependentUpon>TopMenuContainer.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TopMenuContainer.resx">
-      <DependentUpon>TopMenuContainer.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Form\SingleFormFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CacheFactory\CacheFactory.csproj">
@@ -65,10 +55,6 @@
     <ProjectReference Include="..\ComponentLibrary\ComponentLibrary.csproj">
       <Project>{e25e8869-092d-489c-99a2-1e083efbf27b}</Project>
       <Name>ComponentLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProSetUpForm\ProgramOption.csproj">
-      <Project>{cac569d0-5a26-40f0-8d76-1ccc0ca99055}</Project>
-      <Name>ProgramOption</Name>
     </ProjectReference>
     <ProjectReference Include="..\PubMethodLibrary\PublicMethodLibrary.csproj">
       <Project>{9d75fb53-c7d9-4a61-bd9a-e7495900e854}</Project>

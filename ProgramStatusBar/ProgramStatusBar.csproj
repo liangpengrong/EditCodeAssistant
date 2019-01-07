@@ -57,11 +57,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PubCacheArea\CacheFactory.csproj">
+    <ProjectReference Include="..\CacheFactory\CacheFactory.csproj">
       <Project>{a7758def-11a3-408a-ae4a-5f8271bb604b}</Project>
       <Name>CacheFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubControlLibrary\ComponentLibrary.csproj">
+    <ProjectReference Include="..\ComponentLibrary\ComponentLibrary.csproj">
       <Project>{e25e8869-092d-489c-99a2-1e083efbf27b}</Project>
       <Name>ComponentLibrary</Name>
     </ProjectReference>
@@ -69,7 +69,7 @@
       <Project>{9d75fb53-c7d9-4a61-bd9a-e7495900e854}</Project>
       <Name>PublicMethodLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SingleFormFactory\SingleComponentFactory.csproj">
+    <ProjectReference Include="..\SingleComponentFactory\SingleComponentFactory.csproj">
       <Project>{520bcfa1-84e8-46e2-b27d-e62363324e6c}</Project>
       <Name>SingleComponentFactory</Name>
     </ProjectReference>
