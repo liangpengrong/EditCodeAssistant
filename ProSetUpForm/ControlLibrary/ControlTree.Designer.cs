@@ -1,4 +1,4 @@
-﻿namespace ProSetUpForm.ControlLibrary
+﻿namespace ProgramOption
 {
     partial class ControlTree
     {

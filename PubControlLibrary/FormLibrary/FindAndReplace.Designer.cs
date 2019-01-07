@@ -1,4 +1,4 @@
-﻿namespace PubControlLibrary
+﻿namespace ComponentLibrary
 {
     partial class FindAndReplace
     {
@@ -64,6 +64,8 @@
             // 
             // 查找内容T
             // 
+            this.查找内容T.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.查找内容T.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.查找内容T.Location = new System.Drawing.Point(82, 27);
             this.查找内容T.MaxLength = 99999999;
@@ -90,6 +92,8 @@
             // 
             // 替换内容T
             // 
+            this.替换内容T.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.替换内容T.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.替换内容T.Location = new System.Drawing.Point(82, 80);
             this.替换内容T.MaxLength = 99999999;
@@ -172,18 +176,20 @@
             // 
             // 选项G
             // 
+            this.选项G.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.选项G.Controls.Add(this.区分大小写C);
             this.选项G.Controls.Add(this.到达末尾C);
-            this.选项G.Location = new System.Drawing.Point(125, 233);
+            this.选项G.Location = new System.Drawing.Point(128, 119);
             this.选项G.Name = "选项G";
-            this.选项G.Size = new System.Drawing.Size(192, 115);
+            this.选项G.Size = new System.Drawing.Size(192, 107);
             this.选项G.TabIndex = 5;
             this.选项G.TabStop = false;
             this.选项G.Text = "选项";
             // 
             // 区分大小写C
             // 
-            this.区分大小写C.Location = new System.Drawing.Point(20, 72);
+            this.区分大小写C.Location = new System.Drawing.Point(20, 66);
             this.区分大小写C.Name = "区分大小写C";
             this.区分大小写C.Size = new System.Drawing.Size(135, 30);
             this.区分大小写C.TabIndex = 1;
@@ -194,7 +200,7 @@
             // 
             // 到达末尾C
             // 
-            this.到达末尾C.Location = new System.Drawing.Point(20, 30);
+            this.到达末尾C.Location = new System.Drawing.Point(20, 24);
             this.到达末尾C.Name = "到达末尾C";
             this.到达末尾C.Size = new System.Drawing.Size(135, 30);
             this.到达末尾C.TabIndex = 0;
@@ -205,7 +211,8 @@
             // 
             // 查找B
             // 
-            this.查找B.Location = new System.Drawing.Point(125, 131);
+            this.查找B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.查找B.Location = new System.Drawing.Point(128, 252);
             this.查找B.Name = "查找B";
             this.查找B.Size = new System.Drawing.Size(90, 35);
             this.查找B.TabIndex = 6;
@@ -215,7 +222,8 @@
             // 
             // 替换B
             // 
-            this.替换B.Location = new System.Drawing.Point(227, 131);
+            this.替换B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.替换B.Location = new System.Drawing.Point(230, 252);
             this.替换B.Name = "替换B";
             this.替换B.Size = new System.Drawing.Size(90, 35);
             this.替换B.TabIndex = 7;
@@ -225,7 +233,8 @@
             // 
             // 全部替换B
             // 
-            this.全部替换B.Location = new System.Drawing.Point(125, 179);
+            this.全部替换B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.全部替换B.Location = new System.Drawing.Point(128, 300);
             this.全部替换B.Name = "全部替换B";
             this.全部替换B.Size = new System.Drawing.Size(90, 35);
             this.全部替换B.TabIndex = 8;
@@ -235,7 +244,8 @@
             // 
             // 关闭B
             // 
-            this.关闭B.Location = new System.Drawing.Point(227, 179);
+            this.关闭B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.关闭B.Location = new System.Drawing.Point(230, 300);
             this.关闭B.Name = "关闭B";
             this.关闭B.Size = new System.Drawing.Size(90, 35);
             this.关闭B.TabIndex = 9;
@@ -245,6 +255,7 @@
             // 
             // 查找历史B
             // 
+            this.查找历史B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.查找历史B.BackColor = System.Drawing.Color.Transparent;
             this.查找历史B.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
             this.查找历史B.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -263,6 +274,7 @@
             // 
             // 替换历史B
             // 
+            this.替换历史B.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.替换历史B.BackColor = System.Drawing.Color.Transparent;
             this.替换历史B.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
             this.替换历史B.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -297,8 +309,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.查找内容T);
             this.Controls.Add(this.查找内容L);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FindAndReplace";
             this.ShowIcon = false;

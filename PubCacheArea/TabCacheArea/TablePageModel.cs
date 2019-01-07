@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PubCacheArea {
+namespace CacheFactory {
     /// <summary>
     /// 选项卡缓存对象
     /// </summary>

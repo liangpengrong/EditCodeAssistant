@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PubCacheArea
+namespace CacheFactory
 {
     /// <summary>
     /// 文本框缓存类型枚举

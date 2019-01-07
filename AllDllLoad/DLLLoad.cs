@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 
 namespace AllDllLoad
 {
@@ -16,34 +16,17 @@ namespace AllDllLoad
         /// 空产构造函数
         /// </summary>
         public DLLLoad(){}
-        //实例化MiscellaneousUtils
-        private MessyUtilsMet messyUtilsMet = new MessyUtilsMet();
-        //实例化WindowsApiUtils
-        private WinApiUtilsMet winApiUtilsMet = new WinApiUtilsMet();
-        //实例化MenuItemAop
-        private MenuItemUtilsMet menuItemUtilsMet = new MenuItemUtilsMet();
         /// <summary>
         /// 封装实例化后的MenuItemAop
         /// </summary>
-        public MenuItemUtilsMet MenuItemUtilsMet
-        {
-            get { return menuItemUtilsMet; }
-            set { menuItemUtilsMet = value; }
-        }
+        public MenuItemUtilsMet MenuItemUtilsMet { get; set; } = new MenuItemUtilsMet();
         /// <summary>
         /// 封装实例化后的WindowsApiUtils
         /// </summary>
-        public WinApiUtilsMet WinApiUtilsMet
-        {
-            get { return winApiUtilsMet; }
-            set { winApiUtilsMet = value; }
-        }
+        public WinApiUtilsMet WinApiUtilsMet { get; set; } = new WinApiUtilsMet();
         /// <summary>
         /// 封装实例化后的MiscellaneousUtils
         /// </summary>
-        public MessyUtilsMet MessyUtilsMet
-        {
-            get { return messyUtilsMet; }
-        }
+        public MessyUtilsMet MessyUtilsMet { get; } = new MessyUtilsMet();
     }
 }

@@ -53,7 +53,7 @@
     <StartupObject>CharsToolset.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\编辑器32x32.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\编辑器128x128.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -72,18 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlsMet\PublicEventMet.cs" />
-    <Compile Include="ControlsMet\TextBoxEventMet.cs" />
-    <Compile Include="ControlsMet\TextStatusBarEventMet.cs" />
-    <Compile Include="ControlsMet\TopMenuEventMet.cs" />
     <Compile Include="Configuration\Program.cs" />
-    <Compile Include="Controls\TextStatusBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TextStatusBar.Designer.cs">
-      <DependentUpon>TextStatusBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EventBinding\TextBoxBind.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootDisplayForm.cs">
       <SubType>Form</SubType>
@@ -91,15 +80,6 @@
     <Compile Include="RootDisplayForm.Designer.cs">
       <DependentUpon>RootDisplayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TopMenuContainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TopMenuContainer.Designer.cs">
-      <DependentUpon>TopMenuContainer.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Controls\TextStatusBar.resx">
-      <DependentUpon>TextStatusBar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -112,9 +92,6 @@
     </Compile>
     <EmbeddedResource Include="RootDisplayForm.resx">
       <DependentUpon>RootDisplayForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TopMenuContainer.resx">
-      <DependentUpon>TopMenuContainer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
@@ -130,43 +107,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AllDllLoad\AllDllLoad.csproj">
-      <Project>{2B9F39E0-DD4B-41C3-A84B-2B0F567BE952}</Project>
-      <Name>AllDllLoad</Name>
+    <ProjectReference Include="..\ProgramMainTextBox\ProgramMainTextBox.csproj">
+      <Project>{81bad683-5f6a-4017-9705-8c99481254c6}</Project>
+      <Name>ProgramMainTextBox</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ProSetUpForm\ProSetUpForm.csproj">
+    <ProjectReference Include="..\ProgramStatusBar\ProgramStatusBar.csproj">
+      <Project>{b9c31e22-7c2b-4a69-872c-46ca3084dc09}</Project>
+      <Name>ProgramStatusBar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProgramTopMenu\ProgramTopMenu.csproj">
+      <Project>{ff82cda9-0e9c-42dc-820f-ea82d331f2ad}</Project>
+      <Name>ProgramTopMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProSetUpForm\ProgramOption.csproj">
       <Project>{CAC569D0-5A26-40F0-8D76-1CCC0CA99055}</Project>
-      <Name>ProSetUpForm</Name>
+      <Name>ProgramOption</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubCacheArea\PubCacheArea.csproj">
+    <ProjectReference Include="..\PubCacheArea\CacheFactory.csproj">
       <Project>{a7758def-11a3-408a-ae4a-5f8271bb604b}</Project>
-      <Name>PubCacheArea</Name>
+      <Name>CacheFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubControlLibrary\PubControlLibrary.csproj">
+    <ProjectReference Include="..\PubControlLibrary\ComponentLibrary.csproj">
       <Project>{E25E8869-092D-489C-99A2-1E083EFBF27B}</Project>
-      <Name>PubControlLibrary</Name>
+      <Name>ComponentLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubMethodLibrary\PubMethodLibrary.csproj">
+    <ProjectReference Include="..\PubMethodLibrary\PublicMethodLibrary.csproj">
       <Project>{9D75FB53-C7D9-4A61-BD9A-E7495900E854}</Project>
-      <Name>PubMethodLibrary</Name>
+      <Name>PublicMethodLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubStaticUtils\PubStaticUtils.csproj">
-      <Project>{ef9ded0b-3118-44a9-81f3-e6cc78cd270e}</Project>
-      <Name>PubStaticUtils</Name>
+    <ProjectReference Include="..\SingleFormFactory\SingleComponentFactory.csproj">
+      <Project>{520bcfa1-84e8-46e2-b27d-e62363324e6c}</Project>
+      <Name>SingleComponentFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\StaticDataLibrary\StaticDataLibrary.csproj">
       <Project>{5E9C94E5-88B7-4928-963D-6D25237F4AD9}</Project>
       <Name>StaticDataLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\编辑器32x32.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -177,6 +157,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\调整大小.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器32x32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器512x512.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器64x64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器128x128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器256x256.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑器16x16.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

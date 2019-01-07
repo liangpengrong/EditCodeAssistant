@@ -1,0 +1,13 @@
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Release\ProSetUpForm.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Release\ProSetUpForm.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Release\PublicMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Release\PublicMethodLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.ControlTree.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProSetUpForm.Properties.Resources.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.SetUpMain.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.csproj.GenerateResource.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProgramOption.csproj.CopyComplete
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProSetUpForm.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Release\ProSetUpForm.pdb

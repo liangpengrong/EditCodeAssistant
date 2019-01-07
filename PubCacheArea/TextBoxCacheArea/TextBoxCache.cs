@@ -1,11 +1,11 @@
-﻿using PubCacheArea;
+﻿using CacheFactory;
 using System;
 using System.Collections.Generic;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 using System.Windows.Forms;
 using StaticDataLibrary;
 
-namespace PubCacheArea
+namespace CacheFactory
 {
     /// <summary>
     /// 文本框缓存类
@@ -59,7 +59,7 @@ namespace PubCacheArea
         /// <param name="textM"></param>
         /// <returns></returns>
         private static List<TextBoxCacheModel> containsKeyAddMet(TextBoxCacheModel textM) { 
-            String key = textM.TextBName;
+            string key = textM.TextBName;
             List<TextBoxCacheModel> retList = new List<TextBoxCacheModel>();
             // 得到该文本框对应的缓存实体集合
             cacheFactory.TryGetValue(key, out retList);
@@ -82,7 +82,7 @@ namespace PubCacheArea
         /// <param name="mous"></param>
         /// <returns></returns>
         private static Boolean isAddCasche(TextBox t) {
-            Dictionary<String, object> tag = TextBoxUtilsMet.getDicTextTag(t);
+            Dictionary<string, object> tag = TextBoxUtilsMet.getDicTextTag(t);
             if(tag.ContainsKey(TextBoxTagKey.textIsCancel)) {
                 // 获取Tag数据中的撤销状态
                 bool cancel = (bool)tag[TextBoxTagKey.textIsCancel];
@@ -110,7 +110,7 @@ namespace PubCacheArea
         /// 刷新缓存索引
         /// </summary>
         private static void refreshCacheIndex(TextBox t) {
-            String key = t.Name;
+            string key = t.Name;
             if(cacheFactory.ContainsKey(key) && cacheIndexs.ContainsKey(key)) {
                 int index = cacheIndexs[key];
                 List<TextBoxCacheModel> listMod = cacheFactory[key];
@@ -133,7 +133,7 @@ namespace PubCacheArea
         /// <returns></returns>
         private static int synchronizeIndex(TextBox t) {
             int index = 0;
-            String key = t.Name;
+            string key = t.Name;
             if(cacheFactory.ContainsKey(key) && cacheFactory[key] != null) {
                 List<TextBoxCacheModel> listMod = cacheFactory[key];
                 index = listMod.Count == 0? 0 : listMod.Count - 1;
@@ -156,7 +156,7 @@ namespace PubCacheArea
         /// <returns></returns>
         private static TextBoxCacheModel creatTextModel(TextBox t, KeyEventArgs keys, MouseEventArgs mous){ 
             TextBoxCacheModel textM = new TextBoxCacheModel();
-            String key = t.Name;
+            string key = t.Name;
             textM.TextBName = t.Name;
             // 创建时间
             textM.CreateTime = DateTime.Now.ToString();
@@ -244,8 +244,8 @@ namespace PubCacheArea
         /// <returns></returns>
         private static TextCacheTypeEnum cacheTypeStrategy(TextBox t, TextBoxCacheModel upMod) {
             if(upMod == null) return TextCacheTypeEnum.插入;
-            String text = t.Text;
-            String upText = upMod.Text;
+            string text = t.Text;
+            string upText = upMod.Text;
             if(null == upText || "".Equals(upText)) { 
                 return TextCacheTypeEnum.插入;
             }
@@ -284,7 +284,7 @@ namespace PubCacheArea
         /// <param name="t">要撤销的文本框</param>
         public static void cancelCache(TextBox t) {
             t.ClearUndo();
-            String key = t.Name;
+            string key = t.Name;
             if(cacheFactory.ContainsKey(key) && cacheIndexs.ContainsKey(key)) {
                 int index = cacheIndexs[key];
                 List<TextBoxCacheModel> listMod = cacheFactory[key];
@@ -317,7 +317,7 @@ namespace PubCacheArea
         /// <param name="t"></param>
         public static void restoreCache(TextBox t) {
             t.ClearUndo();
-            String key = t.Name;
+            string key = t.Name;
             if(cacheFactory.ContainsKey(key) && cacheIndexs.ContainsKey(key)) {
                 int index = cacheIndexs[key];
                 List<TextBoxCacheModel> listMod = cacheFactory[key];
@@ -346,7 +346,7 @@ namespace PubCacheArea
         /// </summary>
         /// <param name="t"></param>
         public static void saveFocusTextBox(TextBox t) { 
-            String key = t.FindForm().Name;
+            string key = t.FindForm().Name;
             if(focusTextBox.ContainsKey(key)) { 
                 focusTextBox[key] = t;
             } else { 
@@ -357,7 +357,7 @@ namespace PubCacheArea
         /// 获取文本框缓存工厂
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<String,List<TextBoxCacheModel>> getCacheFactory(){
+        public static Dictionary<string,List<TextBoxCacheModel>> getCacheFactory(){
             return cacheFactory;
         }
         /// <summary>

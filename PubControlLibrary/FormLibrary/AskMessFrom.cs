@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PubControlLibrary {
+namespace ComponentLibrary {
+    /// <summary>
+    /// 消息提示窗体
+    /// </summary>
     public partial class AskMessFrom : Form {
         public AskMessFrom() {
             InitializeComponent();

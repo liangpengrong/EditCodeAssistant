@@ -7,17 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using PublicMethodLibrary;
 
-namespace PubControlLibrary {
+namespace ComponentLibrary {
+    /// <summary>
+    /// 疑问消息提示控件
+    /// </summary>
     public partial class PromptMessage : Component {
         /// <summary>
         /// 消息控件
         /// </summary>
-        public PromptMessage(String mess){
+        public PromptMessage(string mess){
             InitializeComponent();
         }
 
-        public static Button getMessBut(String name, String mess) { 
+        public static Button getMessBut(string name, string mess) { 
             Button but = new Button();
             but.Name = name;
             but.Size = new Size(15,15);
@@ -34,7 +38,7 @@ namespace PubControlLibrary {
             // 鼠标移入事件
             but.MouseEnter += (object sender, EventArgs e) =>{ 
                 Button  b = (Button)sender;
-                ToolTip toolTip = PubMethodLibrary.ControlsUtilsMet.getControlMessTip(b, mess,
+                ToolTip toolTip = ControlsUtilsMet.getControlMessTip(b, mess,
                 but.Width +2, -4, 10000, Color.White, Color.Black);
                 b.Tag = toolTip;
             };

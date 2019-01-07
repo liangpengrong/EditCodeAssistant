@@ -6,10 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 using StaticDataLibrary;
 
-namespace PubControlLibrary {
+namespace ComponentLibrary {
+    /// <summary>
+    /// 设置编码窗体
+    /// </summary>
     public partial class SetCodingForm : Form {
         // 要操作的文本框
         private TextBox textBox;
@@ -123,7 +126,7 @@ namespace PubControlLibrary {
 
 
             //byte[] codingByte = coding.GetBytes(text);
-            //String a= coding.GetString(codingByte);
+            //string a= coding.GetString(codingByte);
             //textBox.Text = coding.GetString(codingByte);
             // 恢复文本框的起始位置和选中长度
             textBox.SelectionStart = index;

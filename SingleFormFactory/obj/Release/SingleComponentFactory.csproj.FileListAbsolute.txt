@@ -1,0 +1,16 @@
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\SingleFormFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\SingleFormFactory.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\CacheFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\ComponentLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\PublicMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\CacheFactory.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\ComponentLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\PublicMethodLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Release\StaticDataLibrary.dll.config
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Release\SingleComponentFactory.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Release\SingleComponentFactory.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Release\SingleComponentFactory.csproj.CopyComplete
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Release\SingleFormFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Release\SingleFormFactory.pdb

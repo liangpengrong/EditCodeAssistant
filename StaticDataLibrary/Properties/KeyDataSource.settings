@@ -2,31 +2,31 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="StaticDataLibrary.Properties" GeneratedClassName="KeyDataSource">
   <Profiles />
   <Settings>
-    <Setting Name="打开" Type="System.String" Scope="Application">
+    <Setting Name="打开" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,79</Value>
     </Setting>
-    <Setting Name="保存" Type="System.String" Scope="Application">
+    <Setting Name="保存" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,83</Value>
     </Setting>
-    <Setting Name="另存为" Type="System.String" Scope="Application">
+    <Setting Name="另存为" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,16,88</Value>
     </Setting>
-    <Setting Name="用记事本打开" Type="System.String" Scope="Application">
+    <Setting Name="用记事本打开" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,79,78</Value>
     </Setting>
-    <Setting Name="剪切" Type="System.String" Scope="Application">
+    <Setting Name="剪切" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,88</Value>
     </Setting>
-    <Setting Name="复制" Type="System.String" Scope="Application">
+    <Setting Name="复制" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,67</Value>
     </Setting>
-    <Setting Name="粘贴" Type="System.String" Scope="Application">
+    <Setting Name="粘贴" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,86</Value>
     </Setting>
-    <Setting Name="删除" Type="System.String" Scope="Application">
+    <Setting Name="删除" Type="System.string" Scope="Application">
       <Value Profile="(Default)">46</Value>
     </Setting>
-    <Setting Name="全选" Type="System.String" Scope="Application">
+    <Setting Name="全选" Type="System.string" Scope="Application">
       <Value Profile="(Default)">17,65</Value>
     </Setting>
   </Settings>

@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using PubMethodLibrary;
-using PubControlLibrary;
+using PublicMethodLibrary;
+using ComponentLibrary;
 using System.Windows.Forms;
 
-namespace PubControlLibrary
+namespace ComponentLibrary
 {
+    /// <summary>
+    /// 查找替换窗体
+    /// </summary>
     public partial class FindAndReplace : Form
     {
         // 启动主窗体
@@ -28,7 +31,7 @@ namespace PubControlLibrary
         // 为选定内容时选定内容的起始位置
         private int selectStatrtI = 0;
         // 要操作的文本
-        private String text = "";
+        private string text = "";
         // 向上搜索还是向下搜索
         private int isUpOrDown = 1;
         // 是否需要重置查询方法
@@ -40,9 +43,9 @@ namespace PubControlLibrary
         // 匹配大小写
         private Boolean isCass = false;
         // 查找的字符串
-        private String findChars = "";
+        private string findChars = "";
         // 替换的字符串
-        private String repChars = "";
+        private string repChars = "";
         // 搜索字符串出现的次数
         private int findIndex = -1;
         // 所有匹配项的索引
@@ -108,9 +111,9 @@ namespace PubControlLibrary
         /// </summary>
         private void middleForm() { 
             // 根据父窗体居中
-            this.Location = PubMethodLibrary.FormUtislMet.middleForm(this,rootDisplayForm);
+            this.Location = FormUtislMet.middleForm(this,rootDisplayForm);
             // 获取当前屏幕分辨率
-            int[] wh = PubMethodLibrary.MessyUtilsMet.getResolvingpower();
+            int[] wh = MessyUtilsMet.getResolvingpower();
             
             int w = rootDisplayForm.Location.X+rootDisplayForm.Width;
             if(w + this.Width <= wh[0]) {
@@ -208,7 +211,7 @@ namespace PubControlLibrary
         private void isTextChangMet() {
             // 判断查找范围是当前文本
             if(isTextOrSelectT == 0 && this.当前文档R.Enabled) { 
-                String s = textBox.Text;
+                string s = textBox.Text;
                 // 判断当前文本框的内容是否不等于要判断的内容
                 if(!text.Equals(s)) { 
                     text = s;
@@ -280,7 +283,7 @@ namespace PubControlLibrary
         /// <param name="findChars">要遍历的字符串</param>
         /// <param name="findNextI">下一个起始位置</param>
         /// <param name="isCase">是否匹配大小写</param>
-        private List<int> findOutIntArrMet(String text, String findChars, Boolean isCase) {
+        private List<int> findOutIntArrMet(string text, string findChars, Boolean isCase) {
             List<int> subIndex = new List<int>();
             int ii = isFindCaseMet(text, findChars, 0, isCase);
             while(ii >= 0 && ii < text.Length)
@@ -295,7 +298,7 @@ namespace PubControlLibrary
         /// 匹配规则的判断方法
         /// </summary>
         /// <returns></returns>
-        private int isFindCaseMet(String text, String findStr, int findNextI, Boolean isCase) {
+        private int isFindCaseMet(string text, string findStr, int findNextI, Boolean isCase) {
             int index = 0;
             // 判断匹配大小写
             if(isCase) { 
@@ -489,12 +492,12 @@ namespace PubControlLibrary
         private void repAllMet() {
             // 执行验证
             if(!repCheckMet()) return;
-            String tempStr  = "";
+            string tempStr  = "";
             // 当前文档
             if(isTextOrSelectT == 0) { 
               tempStr = textBox.Text;
               // 是否区分大小写
-              textBox.Text = PubMethodLibrary.StringUtilsMet.repCaseText(textBox.Text,findChars,repChars,isCass);
+              textBox.Text = StringUtilsMet.repCaseText(textBox.Text,findChars,repChars,isCass);
             }
             //选中内容
             if(isTextOrSelectT == 1) {
@@ -502,7 +505,7 @@ namespace PubControlLibrary
               // 记录文本框起始选中位置
               int index = textBox.SelectionStart;
               // 是否区分大小写
-              String s = StringUtilsMet.repCaseText(textBox.SelectedText,findChars,repChars,isCass);
+              string s = StringUtilsMet.repCaseText(textBox.SelectedText,findChars,repChars,isCass);
               // 将文本框的选中内容替换为替换后的内容
               textBox.SelectedText = s;
               // 将替换后的内容选中
@@ -519,8 +522,8 @@ namespace PubControlLibrary
         /// 替换成功弹出提示消息
         /// </summary>
         /// <returns></returns>
-        private void repMessShow(String text, String findChars, Boolean isCase) { 
-            String tempText = text;
+        private void repMessShow(string text, string findChars, Boolean isCase) { 
+            string tempText = text;
             int count =  StringUtilsMet.getIndexOfAllCount(tempText, findChars, isCase);
             MessageBox.Show("已成功替换 "+count+" 处");
         }
@@ -528,8 +531,8 @@ namespace PubControlLibrary
         /// 设置当前索引和总共的索引
         /// </summary>
         private void setCurrentLab() {
-            String currentStr = "";
-            String thisText = this.Text.Split('_')[0];
+            string currentStr = "";
+            string thisText = this.Text.Split('_')[0];
             if(text.Length ==0 || 查找内容T.TextLength == 0) { 
                 currentStr = "(无结果)";
             } else { 
@@ -718,7 +721,7 @@ namespace PubControlLibrary
             if(lineIndex >= 0 && t.TextLength > 0) {
                 // 获得含有换行符的个数
                 int lineCount = t.Text.Split(new string[]{Environment.NewLine}, StringSplitOptions.None).Length - 1;
-                String tipVal = "当前输入的内容含有 "+lineCount+" 个换行符";
+                string tipVal = "当前输入的内容含有 "+lineCount+" 个换行符";
                 if(this.查找内容T.Name.Equals(t.Name)) {
                     findToolTip = textTip(t, tipVal, x, y, time);
                 }
@@ -754,7 +757,7 @@ namespace PubControlLibrary
         /// <param name="y"></param>
         /// <param name="time"></param>
         /// <returns></returns>
-        private ToolTip textTip(TextBox t, String tipVal, int x, int y, int time) { 
+        private ToolTip textTip(TextBox t, string tipVal, int x, int y, int time) { 
             ToolTip toolTip = ControlsUtilsMet.getControlMessTip(t,tipVal,x,y,time,
                 ColorTranslator.FromHtml("#E7D5D5"), Color.Black);
             return toolTip;
@@ -764,7 +767,7 @@ namespace PubControlLibrary
         /// 追加到查找历史中
         /// </summary>
         /// <param name="text"></param>
-        private void addFindHistorical(String text) {
+        private void addFindHistorical(string text) {
             // 当历史集合长度不为0并且上一个历史不等于当前历史
             if(findHistorical.Count.Equals(0) && text.Length > 0) { 
                 findHistorical.Add(text);
@@ -778,7 +781,7 @@ namespace PubControlLibrary
         /// 追加到替换历史中
         /// </summary>
         /// <param name="text"></param>
-        private void addRepHistorical(String text) { 
+        private void addRepHistorical(string text) { 
             // 当历史集合长度不为0并且上一个历史不等于当前历史
             if(repHistorical.Count.Equals(0)) { 
                 repHistorical.Add(text);

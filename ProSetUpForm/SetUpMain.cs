@@ -5,10 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 using System.Windows.Forms;
 
-namespace ProSetUpForm
+namespace ProgramOption
 {
     public partial class SetUpMain : Form
     {
@@ -56,7 +56,7 @@ namespace ProSetUpForm
         /// </summary>
         /// <returns></returns>
         private TreeView initTreeView() { 
-            TreeView tree = new global::ProSetUpForm.ControlLibrary.ControlTree().treeView;
+            TreeView tree = new ControlTree().treeView;
             // 字体
             Font font = new Font(FontFamily.GenericSerif, 10, FontStyle.Regular);
             tree.Font = font;
@@ -75,7 +75,7 @@ namespace ProSetUpForm
         /// </summary>
         /// <returns></returns>
         private Panel initControlPanel() { 
-            Panel panel = new global::ProSetUpForm.ControlLibrary.ControlTree().ControPanel;
+            Panel panel = new ControlTree().ControPanel;
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.Location = new Point(treeView.Location.X+treeView.Width-1,0);
             panel.Size = new Size(600, treeView.Height);

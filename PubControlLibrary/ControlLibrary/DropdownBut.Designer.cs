@@ -1,4 +1,4 @@
-﻿namespace PubControlLibrary {
+﻿namespace ComponentLibrary {
     partial class DropdownBut {
         /// <summary>
         /// 必需的设计器变量。

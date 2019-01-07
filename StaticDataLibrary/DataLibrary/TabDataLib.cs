@@ -13,10 +13,10 @@ namespace StaticDataLibrary
         /// <summary>
         /// 标签的默认Name
         /// </summary>
-        public const String pageNameDef = "page";
+        public const string pageNameDef = "page";
         /// <summary>
         /// 标签的文本内容
         /// </summary>
-        public const String pageText = "NewText";
+        public const string pageText = "NewText";
     }
 }

@@ -1,0 +1,12 @@
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\obj\x86\Release\PubCacheArea.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\PubCacheArea.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\PubCacheArea.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\PubMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\PubMethodLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\bin\x86\Release\StaticDataLibrary.dll.config
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\obj\x86\Release\PubCacheArea.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\obj\x86\Release\PubCacheArea.csproj.CopyComplete
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\obj\x86\Release\PubCacheArea.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\PubCacheArea\obj\x86\Release\PubCacheArea.pdb

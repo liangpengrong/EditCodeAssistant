@@ -6,9 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 
-namespace ProSetUpForm.ControlLibrary
+namespace ProgramOption
 {
     public partial class ControlTree : UserControl
     {

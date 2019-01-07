@@ -1,4 +1,4 @@
-﻿namespace PubControlLibrary {
+﻿namespace ComponentLibrary {
     partial class SplitCharsForm {
         /// <summary>
         /// Required designer variable.
@@ -23,9 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.分列设置容器 = new System.Windows.Forms.GroupBox();
             this.字符_textB = new System.Windows.Forms.TextBox();
             this.字符个数_textB = new System.Windows.Forms.TextBox();
@@ -41,7 +38,6 @@
             this.保留空列_chk = new System.Windows.Forms.CheckBox();
             this.分列_but = new System.Windows.Forms.Button();
             this.关闭_but = new System.Windows.Forms.Button();
-            this.数据表格 = new System.Windows.Forms.DataGridView();
             this.选项区容器 = new System.Windows.Forms.GroupBox();
             this.不包含制表符_chk = new System.Windows.Forms.CheckBox();
             this.不区分大小写_chk = new System.Windows.Forms.CheckBox();
@@ -49,7 +45,6 @@
             this.字符_textB_old = new System.Windows.Forms.RichTextBox();
             this.分列设置容器.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.数据表格)).BeginInit();
             this.选项区容器.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -224,7 +219,7 @@
             // 
             this.关闭_but.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.关闭_but.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.关闭_but.Location = new System.Drawing.Point(623, 410);
+            this.关闭_but.Location = new System.Drawing.Point(623, 400);
             this.关闭_but.Name = "关闭_but";
             this.关闭_but.Size = new System.Drawing.Size(60, 25);
             this.关闭_but.TabIndex = 9;
@@ -232,46 +227,6 @@
             this.关闭_but.UseVisualStyleBackColor = true;
             this.关闭_but.Visible = false;
             this.关闭_but.Click += new System.EventHandler(this.关闭_but_Click);
-            // 
-            // 数据表格
-            // 
-            this.数据表格.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.数据表格.BackgroundColor = System.Drawing.Color.White;
-            this.数据表格.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.数据表格.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.数据表格.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.数据表格.ColumnHeadersHeight = 28;
-            this.数据表格.EnableHeadersVisualStyles = false;
-            this.数据表格.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
-            this.数据表格.Location = new System.Drawing.Point(164, 60);
-            this.数据表格.Name = "数据表格";
-            this.数据表格.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.数据表格.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(198)))), ((int)(((byte)(181)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            this.数据表格.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.数据表格.RowTemplate.Height = 23;
-            this.数据表格.Size = new System.Drawing.Size(522, 382);
-            this.数据表格.TabIndex = 0;
             // 
             // 选项区容器
             // 
@@ -331,7 +286,7 @@
             this.字符_textB_old.DetectUrls = false;
             this.字符_textB_old.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.字符_textB_old.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.字符_textB_old.Location = new System.Drawing.Point(589, 412);
+            this.字符_textB_old.Location = new System.Drawing.Point(517, 398);
             this.字符_textB_old.Name = "字符_textB_old";
             this.字符_textB_old.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.字符_textB_old.ShortcutsEnabled = false;
@@ -347,12 +302,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(695, 447);
-            this.Controls.Add(this.分列_but);
             this.Controls.Add(this.字符_textB_old);
-            this.Controls.Add(this.操作区容器);
+            this.Controls.Add(this.分列_but);
             this.Controls.Add(this.关闭_but);
+            this.Controls.Add(this.操作区容器);
             this.Controls.Add(this.选项区容器);
-            this.Controls.Add(this.数据表格);
             this.Controls.Add(this.分列设置容器);
             this.MinimizeBox = false;
             this.Name = "SplitCharsForm";
@@ -366,7 +320,6 @@
             this.分列设置容器.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.数据表格)).EndInit();
             this.选项区容器.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -385,7 +338,6 @@
         private System.Windows.Forms.CheckBox 保留空列_chk;
         private System.Windows.Forms.Button 分列_but;
         private System.Windows.Forms.Button 关闭_but;
-        private System.Windows.Forms.DataGridView 数据表格;
         private System.Windows.Forms.GroupBox 选项区容器;
         private System.Windows.Forms.RadioButton 字符_rad;
         private System.Windows.Forms.RadioButton 字符个数_rad;

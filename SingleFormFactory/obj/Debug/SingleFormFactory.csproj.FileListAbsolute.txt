@@ -1,0 +1,16 @@
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\SingleFormFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\SingleFormFactory.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\CacheFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\PublicMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\CacheFactory.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\PublicMethodLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\StaticDataLibrary.dll.config
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Debug\SingleFormFactory.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Debug\SingleFormFactory.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Debug\SingleFormFactory.csproj.CopyComplete
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Debug\SingleFormFactory.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\obj\Debug\SingleFormFactory.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\ComponentLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\SingleFormFactory\bin\Debug\ComponentLibrary.pdb

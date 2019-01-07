@@ -35,7 +35,7 @@ namespace StaticDataLibrary {
         /// <summary>
         /// 顶部菜单默认命名
         /// </summary>
-        public const string topMent = "topMenuStrip";
+        public const string topMenu = "topMenuStrip";
         /// <summary>
         /// 默认标签容器命名
         /// </summary>
@@ -44,5 +44,9 @@ namespace StaticDataLibrary {
         /// 调整大小角标的命名
         /// </summary>
         public const string sizeSubscript = "sizeSubscript";
+        /// <summary>
+        /// 默认文本框右键菜单命名
+        /// </summary>
+        public const string textRightMenu = "textRightMenu";
     }
 }

@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PubMethodLibrary\PubMethodLibrary.csproj">
+    <ProjectReference Include="..\PubMethodLibrary\PublicMethodLibrary.csproj">
       <Project>{9D75FB53-C7D9-4A61-BD9A-E7495900E854}</Project>
-      <Name>PubMethodLibrary</Name>
+      <Name>PublicMethodLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

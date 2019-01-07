@@ -1,4 +1,4 @@
-﻿using PubMethodLibrary;
+﻿using PublicMethodLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,8 +9,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace PubControlLibrary
+namespace ComponentLibrary
 {
+    /// <summary>
+    /// 字符统计窗体
+    /// </summary>
     public partial class CharsStatistics : Form
     {
         // 要查看的文本框
@@ -26,12 +29,12 @@ namespace PubControlLibrary
         // 复选框默认的大小
         private int[] chkBDefSize = new int[]{75,25};
 
-        private String 字符总数TName = "字符总数T";
-        private String 字数BJ换行符TName = "字数BJ换行符T";
-        private String 字数BJ空格TName = "字数BJ空格T";
-        private String 行数TName = "行数T";
-        private String 非中文数TName = "非中文数T";
-        private String 中文数TName = "中文数T";
+        private string 字符总数TName = "字符总数T";
+        private string 字数BJ换行符TName = "字数BJ换行符T";
+        private string 字数BJ空格TName = "字数BJ空格T";
+        private string 行数TName = "行数T";
+        private string 非中文数TName = "非中文数T";
+        private string 中文数TName = "中文数T";
         public CharsStatistics(TextBox textBox)
         {
             this.textBox = textBox;
@@ -52,7 +55,7 @@ namespace PubControlLibrary
             // 将标签和文本框放入信息栏中并调整标签文本框位置和信息栏的大小
             labAndTextLayout(conList);
             // 获取文本框与值的对应关系
-            Dictionary<String,String> nameAndVal = getTextNameValDic(textBox.Text);
+            Dictionary<string,string> nameAndVal = getTextNameValDic(textBox.Text);
             // 根据传入的文本框name和值的对应关系给文本框赋值
             textBoxAssignment(nameAndVal);
             // 调整窗口大小
@@ -82,14 +85,14 @@ namespace PubControlLibrary
         private void Chk1_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox chkTemp = (CheckBox)sender;
-            String t = textBox.Text;
+            string t = textBox.Text;
             if(chkTemp.Checked) { 
                 t = textBox.SelectedText;
             } else{ 
                 t = textBox.Text;
             }
             // 获取文本框与值的对应关系
-            Dictionary<String,String> nameAndVal = getTextNameValDic(t);
+            Dictionary<string,string> nameAndVal = getTextNameValDic(t);
             // 根据传入的文本框name和值的对应关系给文本框赋值
             textBoxAssignment(nameAndVal);
         }
@@ -99,16 +102,16 @@ namespace PubControlLibrary
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private  Dictionary<String,String> getTextNameValDic(String text) { 
+        private  Dictionary<string,string> getTextNameValDic(string text) { 
             // 文本框对应的文本框
-            String 字符总数 = text.Length.ToString();
-            String 字符数不计空格 = text.Replace(" ", "").Replace(" ", "").Length.ToString();
-            String 字符数不计换行符 = text.Replace(Environment.NewLine, "").Length.ToString();
-            String 行数 = text.Length == 0?"0" : PubMethodLibrary.TextBoxUtilsMet.getTextBoxTotalRow(text).ToString();
-            String 非中文数 = Regex.Replace(text,@"[\u4e00-\u9fa5]","").Length.ToString();
-            String 中文数 = (text.Length - int.Parse(非中文数)).ToString();
+            string 字符总数 = text.Length.ToString();
+            string 字符数不计空格 = text.Replace(" ", "").Replace(" ", "").Length.ToString();
+            string 字符数不计换行符 = text.Replace(Environment.NewLine, "").Length.ToString();
+            string 行数 = text.Length == 0?"0" : TextBoxUtilsMet.getTextBoxTotalRow(text).ToString();
+            string 非中文数 = Regex.Replace(text,@"[\u4e00-\u9fa5]","").Length.ToString();
+            string 中文数 = (text.Length - int.Parse(非中文数)).ToString();
 
-            Dictionary<String,String> nameAndVal = new Dictionary<string, string>();
+            Dictionary<string,string> nameAndVal = new Dictionary<string, string>();
             nameAndVal.Add(字符总数TName, 字符总数);
             nameAndVal.Add(字数BJ换行符TName, 字符数不计换行符);
             nameAndVal.Add(字数BJ空格TName, 字符数不计空格);
@@ -122,12 +125,12 @@ namespace PubControlLibrary
         /// 根据传入的文本框name和值的对应关系给文本框赋值
         /// </summary>
         /// <param name="nameAndVal"></param>
-        private void textBoxAssignment(Dictionary<String,String> nameAndVal){
-            Dictionary<String,String> dic = nameAndVal;
-            foreach(KeyValuePair<String,String> kvp in dic){
-                String name = kvp.Key;
-                String textVal = kvp.Value;
-                Control con = PubMethodLibrary.ControlsUtilsMet.getControlByName(统计信息G.Controls, name);
+        private void textBoxAssignment(Dictionary<string,string> nameAndVal){
+            Dictionary<string,string> dic = nameAndVal;
+            foreach(KeyValuePair<string,string> kvp in dic){
+                string name = kvp.Key;
+                string textVal = kvp.Value;
+                Control con = ControlsUtilsMet.getControlByName(统计信息G.Controls, name);
                 con.Text = textVal;
             }
         }
@@ -137,7 +140,7 @@ namespace PubControlLibrary
         /// <param name="name">NAME</param>
         /// <param name="val">文本</param>
         /// <returns></returns>
-        private Label getTempLab(String name, String val) { 
+        private Label getTempLab(string name, string val) { 
             Label label = new Label();
             label.Name = name;
             label.Text = val;
@@ -153,7 +156,7 @@ namespace PubControlLibrary
         /// <param name="name">NAME</param>
         /// <param name="val">文本</param>
         /// <returns></returns>
-        private TextBox getTempTextB(String name, String val) { 
+        private TextBox getTempTextB(string name, string val) { 
             TextBox textBox = new TextBox();
             textBox.Name = name;
             textBox.Size = new Size(textBDefSize[0], textBDefSize[1]);
@@ -165,13 +168,13 @@ namespace PubControlLibrary
             textBox.BackColor = Color.White;
             textBox.TabStop = false;
             textBox.MouseDown += (object sender, MouseEventArgs e)=>{
-                PubMethodLibrary.WinApiUtilsMet.HideCaret(((TextBox)sender).Handle);
+                WinApiUtilsMet.HideCaret(((TextBox)sender).Handle);
             };
             textBox.BorderStyle = BorderStyle.None;
             return textBox;
         }
 
-        private CheckBox getTempCheckB(String name, String val){ 
+        private CheckBox getTempCheckB(string name, string val){ 
             CheckBox cheB = new CheckBox();
             cheB.Name = name;
             cheB.Text = val;

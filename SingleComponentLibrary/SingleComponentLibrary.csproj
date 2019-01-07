@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{51B5B5FB-2D84-49F6-A685-A0C6A59644C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SingleComponentLibrary</RootNamespace>
+    <AssemblyName>SingleComponentLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Component\MainTextBoxTemplate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Component\MainTextBoxTemplate.Designer.cs">
+      <DependentUpon>MainTextBoxTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Component\TextStatusBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Component\TextStatusBar.Designer.cs">
+      <DependentUpon>TextStatusBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Component\TopMenuContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Component\TopMenuContainer.Designer.cs">
+      <DependentUpon>TopMenuContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventMethod\PublicEventMet.cs" />
+    <Compile Include="EventMethod\TextBoxBind.cs" />
+    <Compile Include="EventMethod\TextBoxEventMet.cs" />
+    <Compile Include="EventMethod\TextStatusBarEventMet.cs" />
+    <Compile Include="EventMethod\TopMenuEventMet.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PubCacheArea\CacheFactory.csproj">
+      <Project>{a7758def-11a3-408a-ae4a-5f8271bb604b}</Project>
+      <Name>CacheFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PubMethodLibrary\PublicMethodLibrary.csproj">
+      <Project>{9d75fb53-c7d9-4a61-bd9a-e7495900e854}</Project>
+      <Name>PublicMethodLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StaticDataLibrary\StaticDataLibrary.csproj">
+      <Project>{5e9c94e5-88b7-4928-963d-6d25237f4ad9}</Project>
+      <Name>StaticDataLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Component\MainTextBoxTemplate.resx">
+      <DependentUpon>MainTextBoxTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Component\TextStatusBar.resx">
+      <DependentUpon>TextStatusBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Component\TopMenuContainer.resx">
+      <DependentUpon>TopMenuContainer.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

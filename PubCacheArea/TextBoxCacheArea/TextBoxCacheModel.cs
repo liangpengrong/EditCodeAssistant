@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PubCacheArea
+namespace CacheFactory
 {
     /// <summary>
     /// 文本框缓存对象

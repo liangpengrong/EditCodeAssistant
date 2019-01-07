@@ -1,4 +1,4 @@
-﻿namespace ProSetUpForm
+﻿namespace ProgramOption
 {
     partial class SetUpMain
     {

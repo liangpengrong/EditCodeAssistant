@@ -1,4 +1,4 @@
-﻿namespace PubControlLibrary {
+﻿namespace ComponentLibrary {
     partial class AskMessFrom {
         /// <summary>
         /// Required designer variable.
@@ -51,7 +51,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::PubControlLibrary.Properties.Resources.警告;
+            this.pictureBox1.Image = Properties.Resources.警告;
             this.pictureBox1.Location = new System.Drawing.Point(18, 16);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);

@@ -1,4 +1,4 @@
-﻿using PubMethodLibrary;
+﻿using PublicMethodLibrary;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,10 @@ using System.Management;
 using System.Text;
 using System.Windows.Forms;
 using StaticDataLibrary;
-namespace PubControlLibrary {
+namespace ComponentLibrary {
+    /// <summary>
+    /// 关于窗体
+    /// </summary>
     public partial class ThereofForm : Form {
         public ThereofForm() {
             InitializeComponent();
@@ -36,7 +39,7 @@ namespace PubControlLibrary {
         /// </summary>
         /// <returns></returns>
         private void setVersion() { 
-            String version = "CharsToolSet 2018"+Environment.NewLine
+            string version = "CharsToolSet 2018"+Environment.NewLine
                 + "版本：1.0.2"+Environment.NewLine
                 + "内部修订版本：1.0.0.2"+Environment.NewLine
                 + "此应用是基于C#和.NET Framework 4.0开发，"
@@ -78,11 +81,11 @@ namespace PubControlLibrary {
         /// <summary>
         /// 设置程序的系统信息
         /// </summary>
-        private String getSystemMess() {
+        private string getSystemMess() {
             StringBuilder strB = new StringBuilder();
             string machineName = Environment.MachineName + Environment.NewLine;
             string servicePack = Environment.OSVersion.ServicePack + Environment.NewLine;
-            String osVersionName = GetOsVersion()+servicePack+ Environment.NewLine;
+            string osVersionName = GetOsVersion()+servicePack+ Environment.NewLine;
             string userName = Environment.UserName+ Environment.NewLine;
             string domainName = Environment.UserDomainName+ Environment.NewLine;
             string tickCount = (Environment.TickCount / 1000).ToString() + "s"+ Environment.NewLine;
@@ -93,7 +96,7 @@ namespace PubControlLibrary {
             string platform = Environment.OSVersion.Platform.ToString()+ Environment.NewLine;
             bool is64Os = Environment.Is64BitOperatingSystem;
             bool is64Process = Environment.Is64BitProcess;
-            String ram = GetPhisicalMemory().ToString()+"MB"+Environment.NewLine;
+            string ram = GetPhisicalMemory().ToString()+"MB"+Environment.NewLine;
             string currDir = Environment.CurrentDirectory+ Environment.NewLine;
             string cmdLine = Environment.CommandLine+ Environment.NewLine;
             string[] drives = Environment.GetLogicalDrives();
@@ -112,7 +115,7 @@ namespace PubControlLibrary {
                 .Append("命令行："+cmdLine)
                 .Append("内存："+ram)
                 .Append("域名称："+servicePack)
-                .Append("盘符："+String.Join("  ", drives));
+                .Append("盘符："+string.Join("  ", drives));
             return strB.ToString();
         }
 
@@ -176,7 +179,7 @@ namespace PubControlLibrary {
         /// <param name="ver"></param>
         /// <returns></returns>
         private string GetOsVersion() {
-            String str = "未知";
+            string str = "未知";
             switch (Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor)
             {
                 case "5.0" :

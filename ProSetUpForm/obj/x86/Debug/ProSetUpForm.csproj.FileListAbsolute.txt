@@ -42,10 +42,6 @@ D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\ProSetUpForm\bin\Debu
 D:\WorkFiles\VisualStudio2017Works\Projects\org.lpr.editor\ProSetUpForm\obj\x86\Debug\ProSetUpForm.dll
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\ProSetUpForm.dll
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\ProSetUpForm.pdb
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PubMethodLibrary.dll
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PubStaticUtils.dll
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PubMethodLibrary.pdb
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PubStaticUtils.pdb
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.csprojAssemblyReference.cache
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.ControlLibrary.ControlTree.resources
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.Properties.Resources.resources
@@ -55,3 +51,5 @@ D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\P
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.csproj.CopyComplete
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.dll
 D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\obj\x86\Debug\ProSetUpForm.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PublicMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\ProSetUpForm\bin\Debug\PublicMethodLibrary.pdb

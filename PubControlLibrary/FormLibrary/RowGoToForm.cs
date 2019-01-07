@@ -1,4 +1,4 @@
-﻿using PubMethodLibrary;
+﻿using PublicMethodLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,8 +9,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace PubControlLibrary
+namespace ComponentLibrary
 {
+    /// <summary>
+    /// 转到行窗体
+    /// </summary>
     public partial class RowGoToForm : Form
     {
         // 是否验证通过
@@ -75,7 +78,7 @@ namespace PubControlLibrary
                 return;
             }
             // 获得当前文本框的行数组
-            String[] lineArr = textBox.Lines;
+            string[] lineArr = textBox.Lines;
             // 要选择的行的起始位置
             int rowIndex = 0;
             // 要选择行的长度
@@ -83,7 +86,7 @@ namespace PubControlLibrary
             for(long i = 0, len = lineArr.Length; i < len; i++) {
                 if(i.Equals(goTextLings - 1)) break;
                 // 将当前行的文本加上换行符
-                String s = lineArr[i] + Environment.NewLine;
+                string s = lineArr[i] + Environment.NewLine;
                 rowIndex = rowIndex + s.Length;
             }
             selectI = lineArr[goTextLings - 1].Length;
@@ -120,7 +123,7 @@ namespace PubControlLibrary
         /// </summary>
         /// <param name="c"></param>
         /// <param name="mes"></param>
-        private void errorMes(Control c, String mes){ 
+        private void errorMes(Control c, string mes){ 
             this.errorProvider.SetError(c, mes);
             this.errorProvider.SetIconAlignment(c,ErrorIconAlignment.MiddleRight);
             this.errorProvider.SetIconPadding(c, -20);

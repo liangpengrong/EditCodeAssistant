@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using  System.Drawing;
-using PubMethodLibrary;
+using System.Drawing;
+using PublicMethodLibrary;
 
-namespace PubControlLibrary {
+namespace ComponentLibrary {
     /// <summary>
     /// 下拉按钮
     /// </summary>
@@ -28,7 +28,7 @@ namespace PubControlLibrary {
         /// <param name="history">历史纪录</param>
         /// <param name="text">按钮文本</param>
         /// <param name="name">按钮Name</param>
-        public DropdownBut(String[] history){
+        public DropdownBut(string[] history){
             this.history = history;
             InitializeComponent();
             assembleBut();

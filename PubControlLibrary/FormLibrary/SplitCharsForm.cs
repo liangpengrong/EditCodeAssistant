@@ -5,19 +5,18 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using PubMethodLibrary;
+using PublicMethodLibrary;
 using System.Windows.Forms;
 
-namespace PubControlLibrary {
+namespace ComponentLibrary {
+    /// <summary>
+    /// 分列窗体
+    /// </summary>
     public partial class SplitCharsForm : Form {
         /// <summary>
         /// 存放数据的数据表格
         /// </summary>
         private DataGridView mainDataGridView;
-        /// <summary>
-        /// 存放当前鼠标所在单元格
-        /// </summary>
-        private DataGridViewCell mouseCell = null;
 
         /// <summary>
         /// 要操作的文本框
@@ -26,7 +25,7 @@ namespace PubControlLibrary {
         /// <summary>
         /// 要操作的字符串
         /// </summary>
-        private String text;
+        private string text;
         /// <summary>
         /// 单行还是全部的文本
         /// </summary>
@@ -50,7 +49,7 @@ namespace PubControlLibrary {
         /// <summary>
         /// 分隔符的集合
         /// </summary>
-        private String[] separatorArr = null;
+        private string[] separatorArr = null;
         /// <summary>
         /// 索引分隔符的集合
         /// </summary>
@@ -108,10 +107,10 @@ namespace PubControlLibrary {
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private String[][] initRowColuArr(String text) { 
+        private string[][] initRowColuArr(string text) { 
             // 将字符串按照换行符和制表符分割为行列的形式
-            String[][] rowColuArr = PubMethodLibrary.StringUtilsMet.splitStrToArr(text
-                ,new String[]{ Environment.NewLine }, new String[]{ "\t" }
+            string[][] rowColuArr = StringUtilsMet.splitStrToArr(text
+                ,new string[]{ Environment.NewLine }, new string[]{ "\t" }
                 , true ,true, true, true);
 
             return rowColuArr;
@@ -120,52 +119,31 @@ namespace PubControlLibrary {
         /// 读取字符串按照制表符分列换行符分行放入数据表格中
         /// </summary>
         /// <param name="text">要操作的字符串</param>
-        private void readTextSetDataView(String[][] rowColuArr) {
+        private void readTextSetDataView(string[][] rowColuArr) {
             // 判断要操作的字符串不为null和''
             if(rowColuArr == null || 0.Equals(rowColuArr.Length)) return;
-            // 清空表格的行
-            mainDataGridView.Rows.Clear();
-            // 清空表格的列
-            mainDataGridView.Columns.Clear();
+            // 要绑定的数据源
+            DataTable dt = new DataTable();
+            mainDataGridView.SelectAll();
+            mainDataGridView.ClearSelection();
+            DataRow dr = null;
             // 获取列最大的值
             int maxColu = rowColuArr.Max(x=>x.Length);
-            // 创建列头
-            for (int i = 0; i < maxColu; i++) {
-                mainDataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                // 添加列头并且返回添加的索引
-                int index = mainDataGridView.Columns.Add("列" + (i + 1), "列" + (i + 1));
-                // 不包含排序
-                mainDataGridView.Columns[index].SortMode = DataGridViewColumnSortMode.NotSortable;
-                // 设置列的宽度
-                // mainDataGridView.Columns[index].Width = getMaxColumnWidth(rowColuArr);
-                mainDataGridView.Columns[index].Width = cellDefWidth;
+            // 生成列标题
+            // dt.Columns.Clear();
+            for(int i = 0; i < maxColu; i++) {
+                dt.Columns.Add((i+1)+"列", typeof(string));
             }
-            // 先生成空行
-            mainDataGridView.Rows.Add(rowColuArr.Length > 1 ? rowColuArr.Length : 1);
-            // 判断生成空行最大的数对应的宽度
-            int rowHandW = (int)CreateGraphics().MeasureString((rowColuArr.Length - 1).ToString() , mainDataGridView.Font).Width;
-            // 行头宽度
-            mainDataGridView.RowHeadersWidth = rowHandW + 40;
-            // 往单元格里放数据
-            for (int i = 0, rowLen = rowColuArr.Length; i < rowLen; i++) {
+            for(int i = 0; i < rowColuArr.Length; i++) {
+                dr = dt.NewRow();
                 // 获取当前行的列
-                String[] colArr = rowColuArr[i];
-                //将序列赋值给行头
-                mainDataGridView.Rows[i].HeaderCell.Value = (i + 1).ToString();
-                // 循环添加当前行的列
-                for (int j = 0, colLen = colArr.Length; j < colLen; j++)
-                {
-                    String colVal  = colArr[j];
-                    //将集合某个对应元素内容赋值给单元格
-                    mainDataGridView.Rows[i].Cells[j].Value = colVal;
-                    //将集合某个对应元素内容赋值给单元格提示
-                    mainDataGridView.Rows[i].Cells[j].ToolTipText = colVal;
-                    // 设置单元格的宽
-                    //if(i == 0) mainDataGridView.Columns[j].Width = cellDefWidth;
-                }
-                // 设置单元格的高
-                mainDataGridView.Rows[i].Height = cellDefHeight;
+                string[] colArr = rowColuArr[i];
+                for(int j = 0; j < colArr.Length; j++) { 
+                    dr[j] = colArr[j];
+                } 
+                dt.Rows.Add(dr);
             }
+            mainDataGridView.DataSource = dt;
             // 确定窗体的大小
             defineFormSize(rowColuArr);
         }
@@ -175,10 +153,10 @@ namespace PubControlLibrary {
         /// </summary>
         /// <param name="rowColuArr"></param>
         /// <returns></returns>
-        private int getMaxColumnWidth(String[][] rowColuArr) { 
+        private int getMaxColumnWidth(string[][] rowColuArr) { 
             List<int> intList = new List<int>();
-            foreach(String[] strArr1 in rowColuArr) {
-                foreach(String str1 in strArr1) { 
+            foreach(string[] strArr1 in rowColuArr) {
+                foreach(string str1 in strArr1) { 
                    intList.Add( (int)CreateGraphics().MeasureString(str1 , mainDataGridView.Font).Width);
                 }
             }
@@ -221,7 +199,7 @@ namespace PubControlLibrary {
         /// 确定窗体的大小
         /// </summary>
         /// <param name="rowColuArr">生成表格说使用的数据</param>
-        private void defineFormSize(String[][] rowColuArr){
+        private void defineFormSize(string[][] rowColuArr){
             int cellWidth = mainDataGridView.Rows[0].Cells[0].Size.Width;
             // 数据表格在窗体中所占的宽
             int dataViewW = mainDataGridView.Location.X + mainDataGridView.RowHeadersWidth + (cellWidth * rowColuArr.Max(x=>x.Length));
@@ -243,7 +221,7 @@ namespace PubControlLibrary {
             } else{ 
                 Height = (Height - ClientSize.Height) + dataViewH + 15;    
             }
-            MinimumSize = new Size(Width, Height);
+            // MinimumSize = new Size(Width, Height);
         }
         /// <summary>
         /// 调节窗体的位置
@@ -272,22 +250,22 @@ namespace PubControlLibrary {
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private String[] addSeparatorArr() {
-            List<String> separatorList = new List<string>();
+        private string[] addSeparatorArr() {
+            List<string> separatorList = new List<string>();
             // 判断复选框
             if(制表符_chk.Checked) separatorList.Add("\t");
             if(分号_chk.Checked) separatorList.Add(";");
             if(冒号_chk.Checked) separatorList.Add(":");
             if(空格_chk.Checked) separatorList.Add(" ");
             // 判断其他文本框
-            String splitChars = 字符_textB.Text;
+            string splitChars = 字符_textB.Text;
             if(splitChars.IndexOf("\\,") >= 0) separatorList.Add(",");
             if(splitChars.IndexOf("\\\\") >= 0) separatorList.Add("\\");
             // 将字符文本框中的文本添加到分隔符集合中
             if(splitChars != null && !"".Equals(splitChars) && 1.Equals(isCharsOrCharIndex)) {
-                String[] tempArr;
-                tempArr = splitChars.Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries);
-                foreach(String s in tempArr) {
+                string[] tempArr;
+                tempArr = splitChars.Split(new string[]{","}, StringSplitOptions.RemoveEmptyEntries);
+                foreach(string s in tempArr) {
                     if( !separatorList.Contains(s) && s.Length >0) { 
                         separatorList.Add(s);
                     }
@@ -303,12 +281,12 @@ namespace PubControlLibrary {
         /// <returns></returns>
         private int[] addIndexArr() {
             try { 
-                String splitChars = 字符个数_textB.Text;
+                string splitChars = 字符个数_textB.Text;
                 // 将字符串按逗号分割
-                String[] tempStrArr = splitChars.Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries);
+                string[] tempStrArr = splitChars.Split(new string[]{","}, StringSplitOptions.RemoveEmptyEntries);
                 // 将字符串数组转化为int数组并赋值全局变量
                 var tempList = new List<int>();
-                foreach(String s in tempStrArr) {
+                foreach(string s in tempStrArr) {
                     try { tempList.Add(Convert.ToInt32(s));} catch { }
                    // 将字符串转化为int
                    
@@ -328,15 +306,15 @@ namespace PubControlLibrary {
         /// <summary>
         /// 字符分列的执行方法
         /// </summary>
-        private String[][] charsSplitMethod(){
+        private string[][] charsSplitMethod(){
             // 获取分隔符集合
             addSeparatorArr();
             // 初始化要填充到表格中的数据
-            String[][] rowColArr = null;
+            string[][] rowColArr = null;
             // 判断是单行还是全部文本的执行方法
             isSinglelineOrAllMet();
             // 执行分列
-            rowColArr = StringUtilsMet.splitStrToArr(text, new String[]{Environment.NewLine}
+            rowColArr = StringUtilsMet.splitStrToArr(text, new string[]{Environment.NewLine}
                 , separatorArr, true, isNone, true, isSensitive);
             return rowColArr;
         }
@@ -344,20 +322,20 @@ namespace PubControlLibrary {
         /// 字符索引分列的执行方法
         /// </summary>
         /// <returns></returns>
-        private String[][] charsIndexSplitMethod(){
+        private string[][] charsIndexSplitMethod(){
             // 获取分隔符集合
             addIndexArr();
             // 初始化要填充到表格中的数据
-            String[][] rowColArr = null;
+            string[][] rowColArr = null;
             // 判断是单行还是全部文本的执行方法
             isSinglelineOrAllMet();
             // 执行分列
-            String[] tempArr = StringUtilsMet.splitStrToArr(text, new String[]{Environment.NewLine}
+            string[] tempArr = StringUtilsMet.splitStrToArr(text, new string[]{Environment.NewLine}
             ,isNone, true);
             rowColArr = new string[tempArr.Length][];
             for(int i = 0, len = tempArr.Length; i< len; i++) { 
-                String s = tempArr[i];
-                String[] tempArr2 = StringUtilsMet.splitStrToArr(s, indexArr, isNone, false);
+                string s = tempArr[i];
+                string[] tempArr2 = StringUtilsMet.splitStrToArr(s, indexArr, isNone, false);
                 rowColArr[i] = tempArr2;
             }
             return rowColArr;
@@ -395,26 +373,13 @@ namespace PubControlLibrary {
         /// 初始化数据表格配置
         /// </summary>
         private void initDataViewConf() {
-            MyDataTable dataTable = new MyDataTable();
+            DataTableTemplate dataTable = new DataTableTemplate();
             dataTable.cellDefHeight = cellDefHeight;
             dataTable.cellDefWidth = cellDefWidth;
             dataTable.colHeadersHeight = colHeadersHeight;
-            Point point = 数据表格.Location;
-            Size size = 数据表格.Size;
-            string name = 数据表格.Name;
-
             DataGridView dataView = dataTable.数据表格;
-            dataView.Name = name;
-            dataView.Location = point;
-            dataView.Size = 数据表格.Size;
-            // 设置单元格移入事件
-            dataView.CellMouseEnter += (object sender, DataGridViewCellEventArgs e) =>{ 
-                DataGridView data = (DataGridView)sender;
-                if(e.ColumnIndex != -1 && e.RowIndex != -1) { 
-                    mouseCell = data.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                }
-            };
-            数据表格.Dispose();
+            dataView.Name = DateTime.Now.Ticks.ToString()+"DataGridView";
+            dataView.Location = new Point(操作区容器.Location.X, 操作区容器.Height + 操作区容器.Location.Y + 7);
             Controls.Add(dataView);
             mainDataGridView = dataView;
         }

@@ -1,0 +1,15 @@
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\StaticComponentLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\StaticComponentLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\PublicMethodLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\StaticDataLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\PublicMethodLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\StaticDataLibrary.pdb
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\bin\Debug\StaticDataLibrary.dll.config
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.csprojAssemblyReference.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.TextRightMenu.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.Properties.Resources.resources
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.csproj.GenerateResource.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.csproj.CoreCompileInputs.cache
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.csproj.CopyComplete
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.dll
+D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticControlLibrary\obj\Debug\StaticComponentLibrary.pdb

@@ -1,4 +1,4 @@
-﻿namespace PubControlLibrary
+﻿namespace ComponentLibrary
 {
     partial class CharsStatistics
     {
