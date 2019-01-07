@@ -1,9 +1,0 @@
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\x86\Debug\StaticDataLibrary.dll.config
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\x86\Debug\StaticDataLibrary.dll
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\bin\x86\Debug\StaticDataLibrary.pdb
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.csprojAssemblyReference.cache
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.Image.resources
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.csproj.GenerateResource.cache
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.csproj.CoreCompileInputs.cache
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.dll
-D:\WorkFiles\GitWorks\https.github.com\CharsToolSet\StaticDataLibrary\obj\x86\Debug\StaticDataLibrary.pdb
