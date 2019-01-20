@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0BBB23B0-D8C4-4735-9FB2-48AD897A364A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CacheLibrary\ControlCache\ControlCache.cs" />
+    <Compile Include="CacheLibrary\FormCache\FormCache.cs" />
+    <Compile Include="CacheLibrary\OperateCache\DataViewOperateCache\DataCacheTypeEnum.cs" />
+    <Compile Include="CacheLibrary\OperateCache\DataViewOperateCache\DataViewCache.cs" />
+    <Compile Include="CacheLibrary\OperateCache\DataViewOperateCache\DataViewCacheModel.cs" />
+    <Compile Include="CacheLibrary\OperateCache\TextBoxOperateCache\TextBoxCache.cs" />
+    <Compile Include="CacheLibrary\OperateCache\TextBoxOperateCache\TextBoxCacheModel.cs" />
+    <Compile Include="CacheLibrary\OperateCache\TextBoxOperateCache\TextCacheTypeEnum.cs" />
+    <Compile Include="ImageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DefaultData\DataLibrary\DefaultNameCof.cs" />
+    <Compile Include="DefaultData\DataLibrary\KeyCodeDataLib.cs" />
+    <Compile Include="DefaultData\DataLibrary\MainFormDataLib.cs" />
+    <Compile Include="DefaultData\DataLibrary\StrutsStripDataLib.cs" />
+    <Compile Include="DefaultData\DataLibrary\TabControlDataLib.cs" />
+    <Compile Include="DefaultData\DataLibrary\TabDataLib.cs" />
+    <Compile Include="DefaultData\DataLibrary\TextBoxDataLib.cs" />
+    <Compile Include="StaticMethod\Inter\MenuItemAopInter.cs" />
+    <Compile Include="StaticMethod\Method\Utils\ApplicationExc.cs" />
+    <Compile Include="StaticMethod\Method\Utils\ControlsUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\FileUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\FormUtislMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\MenuItemUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\MessyUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\StringUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\TextBoxUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\WinApiUtilsMet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StaticMethod\Method\ControlMethod\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ImageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\保存.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\擦除.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\裁剪.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\查找替换.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\撤销.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\打开.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分列.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\复制.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\关于.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\记事本.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\另存为.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清空.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\去除.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\全选_反相.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\删除.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\删除del.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\设置.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\统计.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\退出.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\粘贴.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\重做.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\转到行.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\转化.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\字体.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

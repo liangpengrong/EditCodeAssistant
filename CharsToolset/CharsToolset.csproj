@@ -53,10 +53,28 @@
     <StartupObject>CharsToolset.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\编辑器128x128.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\编辑器32x32.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -107,41 +125,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CacheFactory\CacheFactory.csproj">
-      <Project>{a7758def-11a3-408a-ae4a-5f8271bb604b}</Project>
-      <Name>CacheFactory</Name>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{0bbb23b0-d8c4-4735-9fb2-48ad897a364a}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ComponentLibrary\ComponentLibrary.csproj">
-      <Project>{e25e8869-092d-489c-99a2-1e083efbf27b}</Project>
-      <Name>ComponentLibrary</Name>
+    <ProjectReference Include="..\UI\UI.csproj">
+      <Project>{c7550d1c-e3f1-4bbd-8281-ab122822486c}</Project>
+      <Name>UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ProgramMainTextBox\ProgramMainTextBox.csproj">
-      <Project>{81bad683-5f6a-4017-9705-8c99481254c6}</Project>
-      <Name>ProgramMainTextBox</Name>
+    <ProjectReference Include="..\UI_OptionForm\UI_OptionForm.csproj">
+      <Project>{6a6fe15a-6249-4156-94ca-2d2b372ac0a0}</Project>
+      <Name>UI_OptionForm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ProgramStatusBar\ProgramStatusBar.csproj">
-      <Project>{b9c31e22-7c2b-4a69-872c-46ca3084dc09}</Project>
-      <Name>ProgramStatusBar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProgramTopMenu\ProgramTopMenu.csproj">
-      <Project>{ff82cda9-0e9c-42dc-820f-ea82d331f2ad}</Project>
-      <Name>ProgramTopMenu</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProSetUpForm\ProgramOption.csproj">
-      <Project>{CAC569D0-5A26-40F0-8D76-1CCC0CA99055}</Project>
-      <Name>ProgramOption</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PubMethodLibrary\PublicMethodLibrary.csproj">
-      <Project>{9D75FB53-C7D9-4A61-BD9A-E7495900E854}</Project>
-      <Name>PublicMethodLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SingleComponentFactory\SingleComponentFactory.csproj">
-      <Project>{520bcfa1-84e8-46e2-b27d-e62363324e6c}</Project>
-      <Name>SingleComponentFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StaticDataLibrary\StaticDataLibrary.csproj">
-      <Project>{5E9C94E5-88B7-4928-963D-6D25237F4AD9}</Project>
-      <Name>StaticDataLibrary</Name>
+    <ProjectReference Include="..\UI_TopMenuBar\UI_TopMenuBar.csproj">
+      <Project>{df340f26-bb3f-4293-8c42-b11d9fa326a4}</Project>
+      <Name>UI_TopMenuBar</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C7550D1C-E3F1-4BBD-8281-AB122822486C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UI</RootNamespace>
+    <AssemblyName>UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ComponentLibrary\ControlLibrary\AddPageButton.cs" />
+    <Compile Include="ComponentLibrary\ControlLibrary\DataTableTemplate.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\DataTableTemplate.Designer.cs">
+      <DependentUpon>DataTableTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\DropdownBut.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\DropdownBut.Designer.cs">
+      <DependentUpon>DropdownBut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\ExportComBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\ExportComBox.Designer.cs">
+      <DependentUpon>ExportComBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\PromptMessage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\PromptMessage.Designer.cs">
+      <DependentUpon>PromptMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.Designer.cs">
+      <DependentUpon>TextRightMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlMethod\DataGridViewUtilMet.cs" />
+    <Compile Include="ComponentLibrary\FormLibrary\AddCharsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\AddCharsForm.Designer.cs">
+      <DependentUpon>AddCharsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\AskMessFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\AskMessFrom.Designer.cs">
+      <DependentUpon>AskMessFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\CharsStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\CharsStatistics.Designer.cs">
+      <DependentUpon>CharsStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\FindAndReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\FindAndReplace.Designer.cs">
+      <DependentUpon>FindAndReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\RowGoToForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\RowGoToForm.Designer.cs">
+      <DependentUpon>RowGoToForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\SetCodingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\SetCodingForm.Designer.cs">
+      <DependentUpon>SetCodingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\SplitCharsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\SplitCharsForm.Designer.cs">
+      <DependentUpon>SplitCharsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\ThereofForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentLibrary\FormLibrary\ThereofForm.Designer.cs">
+      <DependentUpon>ThereofForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\CacheTextBoxBind.cs" />
+    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\MainTextBoxBind.cs" />
+    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\TextBoxBindStatusBarEvent.cs" />
+    <Compile Include="ControlEventLibrary\PublicEventMet.cs" />
+    <Compile Include="ControlEventLibrary\StatusBarEvent\TextStatusBarEvent\TextStatusBarEventMet.cs" />
+    <Compile Include="ControlEventLibrary\TextBoxEvent\MainTextBoxEventMet.cs" />
+    <Compile Include="ControlEventLibrary\TextBoxEvent\TextBoxEventTypeEnum.cs" />
+    <Compile Include="ControlRedraw\RightStripRenderer.cs" />
+    <Compile Include="ControlRedraw\TopMenuRenderer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusBarLibrary\TextStatusBar.cs" />
+    <Compile Include="TabContentLibrary\MainTabContent\MainTabContent.cs" />
+    <Compile Include="TabContentLibrary\MainTabContent\MainTabControlUtils.cs" />
+    <Compile Include="TextBoxLibrary\CacheTextBoxTemplate.cs" />
+    <Compile Include="TextBoxLibrary\MainTextBoxTemplate.cs" />
+    <Compile Include="ToolStripContainerLibrary\MainToolStripContainer.cs" />
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\DataTableTemplate.resx">
+      <DependentUpon>DataTableTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\DropdownBut.resx">
+      <DependentUpon>DropdownBut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\ExportComBox.resx">
+      <DependentUpon>ExportComBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\PromptMessage.resx">
+      <DependentUpon>PromptMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.resx">
+      <DependentUpon>TextRightMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\AddCharsForm.resx">
+      <DependentUpon>AddCharsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\AskMessFrom.resx">
+      <DependentUpon>AskMessFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\CharsStatistics.resx">
+      <DependentUpon>CharsStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\FindAndReplace.resx">
+      <DependentUpon>FindAndReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\RowGoToForm.resx">
+      <DependentUpon>RowGoToForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\SetCodingForm.resx">
+      <DependentUpon>SetCodingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\SplitCharsForm.resx">
+      <DependentUpon>SplitCharsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\ThereofForm.resx">
+      <DependentUpon>ThereofForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{0bbb23b0-d8c4-4735-9fb2-48ad897a364a}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core_Config\Core_Config.csproj">
+      <Project>{f957c230-0f57-4cb4-9884-17d3d29c8746}</Project>
+      <Name>Core_Config</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ComponentLibrary\FormMethod\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\警告.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\疑问.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
