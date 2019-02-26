@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_OptionForm", "UI_OptionF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core_Config", "Core_Config\Core_Config.csproj", "{F957C230-0F57-4CB4-9884-17D3D29C8746}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CharsToolsetSetup", "CharsToolsetSetup\CharsToolsetSetup.vdproj", "{52AB50C9-7C15-449A-8D1C-11D8894A2776}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,12 +97,6 @@ Global
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|x86.ActiveCfg = Release|Any CPU
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|x86.Build.0 = Release|Any CPU
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Debug|Any CPU.ActiveCfg = Debug
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Debug|x86.ActiveCfg = Debug
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Release|Any CPU.ActiveCfg = Release
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Release|Mixed Platforms.ActiveCfg = Release
-		{52AB50C9-7C15-449A-8D1C-11D8894A2776}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
