@@ -9,7 +9,7 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
     /// <summary>
     /// 文本框缓存类
     /// </summary>
-    public class TextBoxCache
+    public static class TextBoxCache
     {
         /// <summary>
         /// 存放文本框缓存的缓存工厂
@@ -20,9 +20,9 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
         /// </summary>
         private static Dictionary<string, int> cacheIndexs = new Dictionary<string, int>();
         /// <summary>
-        /// 指定窗口获得焦点的文本框
+        /// 将要操作的文本框
         /// </summary>
-        private static Dictionary<string, TextBox> focusTextBox = new Dictionary<string, TextBox>();
+        public static TextBox UpOperatingTextBox { get; set; } = null;
 
         /// <summary>
         /// 将文本框的内容追加到缓冲区
@@ -46,6 +46,7 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
                 cacheFactory[key] = modelArr;
             } else {
                 List<TextBoxCacheModel> modelArr = new List<TextBoxCacheModel>();
+                modelArr.Add(TextBoxCacheModel.getDefaultModel(textM.TextBName));
                 modelArr.Add(textM);
                 cacheFactory.Add(key, modelArr);
             }
@@ -215,6 +216,10 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
             if (WinApiUtilsMet.GetAsyncKeyState(0x02) > 0|| WinApiUtilsMet.GetAsyncKeyState(0x01) > 0) {
                 modList.Add(textM);
                 return modList;
+            } else {
+                if(textM.Text == null || textM.Text.Equals("")) { 
+                    return modList;
+                }    
             }
             ///*======================按键判断===========================*/
             // 判断键盘按键是否和上一个缓存一样并且不是按下了ctrl+v, delete
@@ -333,32 +338,11 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
             t.ScrollToCaret();
         }
         /// <summary>
-        /// 将文本框保存到焦点文本框中
-        /// </summary>
-        /// <param name="t"></param>
-        public static void saveFocusTextBox(TextBox textBox) {
-            if(textBox != null && textBox.FindForm() != null) { 
-                string key = textBox.FindForm().Name;
-                if(focusTextBox.ContainsKey(key)) { 
-                    focusTextBox[key] = textBox;
-                } else { 
-                    focusTextBox.Add(key, textBox);
-                }
-            }
-            
-        }
-        /// <summary>
         /// 获取文本框缓存工厂
         /// </summary>
         /// <returns></returns>
         public static Dictionary<string,List<TextBoxCacheModel>> getCacheFactory(){
             return cacheFactory;
-        }
-        /// <summary>
-        /// 指定窗口获得焦点的文本框
-        /// </summary>
-        public static Dictionary<string, TextBox> getFocusTextBox(){ 
-            return focusTextBox;
         }
 
     }

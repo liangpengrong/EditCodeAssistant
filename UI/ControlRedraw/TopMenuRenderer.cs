@@ -12,7 +12,7 @@ namespace Core.StaticMethod.Method.Redraw {
     /// </summary>
     public class TopMenuRenderer : ToolStripRenderer{
         // 整个背景色
-        private Color backColor = ColorTranslator.FromHtml("#fff");
+        // private Color backColor = ColorTranslator.FromHtml("#fff");
         // 菜单项选中背景色
         private Color selectColor = ColorTranslator.FromHtml("#91C9F7");
         // 复选框背景色
@@ -22,7 +22,7 @@ namespace Core.StaticMethod.Method.Redraw {
 
         // 整个背景
         protected override void OnRenderToolStripBackground (ToolStripRenderEventArgs e) {
-            Brush b = new SolidBrush(backColor);
+            Brush b = new SolidBrush(e.BackColor);
             RectangleF rectF = e.Graphics.ClipBounds;
             e.Graphics.FillRectangle(b, rectF);
             base.OnRenderToolStripBackground(e);
@@ -135,7 +135,7 @@ namespace Core.StaticMethod.Method.Redraw {
         }
         // 左边图像和复选框区域
         protected override void OnRenderImageMargin (ToolStripRenderEventArgs e) {
-            Brush b = new SolidBrush(backColor);
+            Brush b = new SolidBrush(e.BackColor);
             e.Graphics.FillRectangle(b,e.AffectedBounds);
             base.OnRenderImageMargin(e);
         }

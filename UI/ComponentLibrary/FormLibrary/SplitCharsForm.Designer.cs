@@ -41,9 +41,11 @@
             this.不包含制表符_chk = new System.Windows.Forms.CheckBox();
             this.不区分大小写_chk = new System.Windows.Forms.CheckBox();
             this.操作区容器 = new System.Windows.Forms.GroupBox();
+            this.表格内容_label = new System.Windows.Forms.Label();
             this.分列设置容器.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.选项区容器.SuspendLayout();
+            this.操作区容器.SuspendLayout();
             this.SuspendLayout();
             // 
             // 分列设置容器
@@ -199,15 +201,16 @@
             // 
             // 分列_but
             // 
+            this.分列_but.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.分列_but.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(94)))), ((int)(((byte)(55)))));
             this.分列_but.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.分列_but.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(94)))), ((int)(((byte)(55)))));
             this.分列_but.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(83)))), ((int)(((byte)(44)))));
             this.分列_but.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.分列_but.ForeColor = System.Drawing.Color.White;
-            this.分列_but.Location = new System.Drawing.Point(12, 411);
+            this.分列_but.Location = new System.Drawing.Point(442, 16);
             this.分列_but.Name = "分列_but";
-            this.分列_but.Size = new System.Drawing.Size(138, 30);
+            this.分列_but.Size = new System.Drawing.Size(70, 25);
             this.分列_but.TabIndex = 8;
             this.分列_but.Text = "确认分列";
             this.分列_but.UseVisualStyleBackColor = false;
@@ -215,6 +218,8 @@
             // 
             // 选项区容器
             // 
+            this.选项区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.选项区容器.Controls.Add(this.不包含制表符_chk);
             this.选项区容器.Controls.Add(this.不区分大小写_chk);
             this.选项区容器.Controls.Add(this.保留空列_chk);
@@ -255,6 +260,8 @@
             // 
             this.操作区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.操作区容器.Controls.Add(this.表格内容_label);
+            this.操作区容器.Controls.Add(this.分列_but);
             this.操作区容器.Location = new System.Drawing.Point(164, 4);
             this.操作区容器.Name = "操作区容器";
             this.操作区容器.Size = new System.Drawing.Size(522, 50);
@@ -262,12 +269,20 @@
             this.操作区容器.TabStop = false;
             this.操作区容器.Text = "操作区";
             // 
+            // 表格内容_label
+            // 
+            this.表格内容_label.AutoSize = true;
+            this.表格内容_label.Location = new System.Drawing.Point(12, 24);
+            this.表格内容_label.Name = "表格内容_label";
+            this.表格内容_label.Size = new System.Drawing.Size(65, 12);
+            this.表格内容_label.TabIndex = 9;
+            this.表格内容_label.Text = "表格内容：";
+            // 
             // SplitCharsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(695, 447);
-            this.Controls.Add(this.分列_but);
+            this.ClientSize = new System.Drawing.Size(695, 407);
             this.Controls.Add(this.操作区容器);
             this.Controls.Add(this.选项区容器);
             this.Controls.Add(this.分列设置容器);
@@ -277,13 +292,14 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "分列字符";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SplitCharsForm_FormClosed);
             this.Load += new System.EventHandler(this.SplitOrAddChars_Load);
             this.分列设置容器.ResumeLayout(false);
             this.分列设置容器.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.选项区容器.ResumeLayout(false);
+            this.操作区容器.ResumeLayout(false);
+            this.操作区容器.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -308,5 +324,6 @@
         private System.Windows.Forms.GroupBox 操作区容器;
         private System.Windows.Forms.CheckBox 不包含制表符_chk;
         private System.Windows.Forms.TextBox 字符_textB;
+        private System.Windows.Forms.Label 表格内容_label;
     }
 }

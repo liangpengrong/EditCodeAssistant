@@ -17,11 +17,15 @@ namespace Core_Config.ConfigData.ControlConfig {
         /// <summary>
         /// 是否显示删除按钮
         /// </summary>
-        public static bool IS_SHOW_DEL_BUTTON = true; 
+        public static bool IS_SHOW_DEL_BUTTON = true;
+        /// <summary>
+        /// 删除是否询问
+        /// </summary>
+        public static bool IS_DEL_ASK = false; 
         /// <summary>
         /// 按下滚轮是否关闭标签
         /// </summary>
-        public static bool IS_CLICK_MIDDLE_DEL_PAGE = false;
+        public static bool IS_CLICK_MIDDLE_DEL_PAGE = true;
         /// <summary>
         /// 关闭标签后向(左-0 右-1)显示标签 
         /// </summary>

@@ -52,15 +52,20 @@
             this.时间日期Item = new System.Windows.Forms.ToolStripMenuItem();
             this.工具Item = new System.Windows.Forms.ToolStripMenuItem();
             this.分列Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.添加字符Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除字符Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.代码工具Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.代码工具_java_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.代码工具_java_字段转实体类 = new System.Windows.Forms.ToolStripMenuItem();
             this.首选项Item = new System.Windows.Forms.ToolStripMenuItem();
             this.查看Item = new System.Windows.Forms.ToolStripMenuItem();
             this.自动换行Item = new System.Windows.Forms.ToolStripMenuItem();
             this.状态栏Item = new System.Windows.Forms.ToolStripMenuItem();
             this.字体Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字体_设置字体Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字体_恢复默认Item = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助Item = new System.Windows.Forms.ToolStripMenuItem();
             this.关于Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.添加字符Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.删除字符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,88 +160,88 @@
             // 撤销Item
             // 
             this.撤销Item.Name = "撤销Item";
-            this.撤销Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.撤销Item.Size = new System.Drawing.Size(199, 22);
+            this.撤销Item.ShortcutKeyDisplayString = "Ctrl+Z";
+            this.撤销Item.Size = new System.Drawing.Size(185, 22);
             this.撤销Item.Text = "撤销";
             // 
             // 恢复Item
             // 
             this.恢复Item.Name = "恢复Item";
-            this.恢复Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.恢复Item.Size = new System.Drawing.Size(199, 22);
+            this.恢复Item.ShortcutKeyDisplayString = "Ctrl+Y";
+            this.恢复Item.Size = new System.Drawing.Size(185, 22);
             this.恢复Item.Text = "恢复";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(182, 6);
             // 
             // 剪切Item
             // 
             this.剪切Item.Name = "剪切Item";
             this.剪切Item.ShortcutKeyDisplayString = "Ctrl+X";
-            this.剪切Item.Size = new System.Drawing.Size(199, 22);
+            this.剪切Item.Size = new System.Drawing.Size(185, 22);
             this.剪切Item.Text = "剪切";
             // 
             // 复制Item
             // 
             this.复制Item.Name = "复制Item";
             this.复制Item.ShortcutKeyDisplayString = "Ctrl+C";
-            this.复制Item.Size = new System.Drawing.Size(199, 22);
+            this.复制Item.Size = new System.Drawing.Size(185, 22);
             this.复制Item.Text = "复制";
             // 
             // 粘贴Item
             // 
             this.粘贴Item.Name = "粘贴Item";
             this.粘贴Item.ShortcutKeyDisplayString = "Ctrl+V";
-            this.粘贴Item.Size = new System.Drawing.Size(199, 22);
+            this.粘贴Item.Size = new System.Drawing.Size(185, 22);
             this.粘贴Item.Text = "粘贴";
             // 
             // 删除Item
             // 
             this.删除Item.Name = "删除Item";
             this.删除Item.ShortcutKeyDisplayString = "DELETE";
-            this.删除Item.Size = new System.Drawing.Size(199, 22);
+            this.删除Item.Size = new System.Drawing.Size(185, 22);
             this.删除Item.Text = "删除";
             // 
             // 全选Item
             // 
             this.全选Item.Name = "全选Item";
             this.全选Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.全选Item.Size = new System.Drawing.Size(199, 22);
+            this.全选Item.Size = new System.Drawing.Size(185, 22);
             this.全选Item.Text = "全选";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(196, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
             // 
             // 查找替换Item
             // 
             this.查找替换Item.Name = "查找替换Item";
-            this.查找替换Item.ShortcutKeyDisplayString = "Ctrl+F/H";
-            this.查找替换Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.查找替换Item.Size = new System.Drawing.Size(199, 22);
+            this.查找替换Item.ShortcutKeyDisplayString = "Ctrl+F";
+            this.查找替换Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.查找替换Item.Size = new System.Drawing.Size(185, 22);
             this.查找替换Item.Text = "查找/替换";
             // 
             // 转到行Item
             // 
             this.转到行Item.Name = "转到行Item";
             this.转到行Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.转到行Item.Size = new System.Drawing.Size(199, 22);
+            this.转到行Item.Size = new System.Drawing.Size(185, 22);
             this.转到行Item.Text = "转到行";
             // 
             // 统计字符Item
             // 
             this.统计字符Item.Name = "统计字符Item";
-            this.统计字符Item.Size = new System.Drawing.Size(199, 22);
+            this.统计字符Item.Size = new System.Drawing.Size(185, 22);
             this.统计字符Item.Text = "统计字符";
             // 
             // 时间日期Item
             // 
             this.时间日期Item.Name = "时间日期Item";
             this.时间日期Item.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.时间日期Item.Size = new System.Drawing.Size(199, 22);
+            this.时间日期Item.Size = new System.Drawing.Size(185, 22);
             this.时间日期Item.Text = "时间/日期";
             this.时间日期Item.Visible = false;
             // 
@@ -246,6 +251,7 @@
             this.分列Item,
             this.添加字符Item,
             this.删除字符Item,
+            this.代码工具Item,
             this.首选项Item});
             this.工具Item.Name = "工具Item";
             this.工具Item.Size = new System.Drawing.Size(46, 20);
@@ -254,13 +260,47 @@
             // 分列Item
             // 
             this.分列Item.Name = "分列Item";
-            this.分列Item.Size = new System.Drawing.Size(180, 22);
+            this.分列Item.Size = new System.Drawing.Size(128, 22);
             this.分列Item.Text = "分列";
+            // 
+            // 添加字符Item
+            // 
+            this.添加字符Item.Name = "添加字符Item";
+            this.添加字符Item.Size = new System.Drawing.Size(128, 22);
+            this.添加字符Item.Text = "添加字符";
+            // 
+            // 删除字符Item
+            // 
+            this.删除字符Item.Name = "删除字符Item";
+            this.删除字符Item.Size = new System.Drawing.Size(128, 22);
+            this.删除字符Item.Text = "删除字符";
+            // 
+            // 代码工具Item
+            // 
+            this.代码工具Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.代码工具_java_Item});
+            this.代码工具Item.Name = "代码工具Item";
+            this.代码工具Item.Size = new System.Drawing.Size(128, 22);
+            this.代码工具Item.Text = "代码工具";
+            // 
+            // 代码工具_java_Item
+            // 
+            this.代码工具_java_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.代码工具_java_字段转实体类});
+            this.代码工具_java_Item.Name = "代码工具_java_Item";
+            this.代码工具_java_Item.Size = new System.Drawing.Size(104, 22);
+            this.代码工具_java_Item.Text = "JAVA";
+            // 
+            // 代码工具_java_字段转实体类
+            // 
+            this.代码工具_java_字段转实体类.Name = "代码工具_java_字段转实体类";
+            this.代码工具_java_字段转实体类.Size = new System.Drawing.Size(154, 22);
+            this.代码工具_java_字段转实体类.Text = "字段转实体类";
             // 
             // 首选项Item
             // 
             this.首选项Item.Name = "首选项Item";
-            this.首选项Item.Size = new System.Drawing.Size(180, 22);
+            this.首选项Item.Size = new System.Drawing.Size(128, 22);
             this.首选项Item.Text = "首选项";
             // 
             // 查看Item
@@ -278,7 +318,7 @@
             this.自动换行Item.AutoToolTip = true;
             this.自动换行Item.CheckOnClick = true;
             this.自动换行Item.Name = "自动换行Item";
-            this.自动换行Item.Size = new System.Drawing.Size(128, 22);
+            this.自动换行Item.Size = new System.Drawing.Size(180, 22);
             this.自动换行Item.Text = "自动换行";
             // 
             // 状态栏Item
@@ -288,14 +328,29 @@
             this.状态栏Item.CheckOnClick = true;
             this.状态栏Item.CheckState = System.Windows.Forms.CheckState.Checked;
             this.状态栏Item.Name = "状态栏Item";
-            this.状态栏Item.Size = new System.Drawing.Size(128, 22);
+            this.状态栏Item.Size = new System.Drawing.Size(180, 22);
             this.状态栏Item.Text = "状态栏";
             // 
             // 字体Item
             // 
+            this.字体Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.字体_设置字体Item,
+            this.字体_恢复默认Item});
             this.字体Item.Name = "字体Item";
-            this.字体Item.Size = new System.Drawing.Size(128, 22);
-            this.字体Item.Text = "字体..";
+            this.字体Item.Size = new System.Drawing.Size(180, 22);
+            this.字体Item.Text = "字体";
+            // 
+            // 字体_设置字体Item
+            // 
+            this.字体_设置字体Item.Name = "字体_设置字体Item";
+            this.字体_设置字体Item.Size = new System.Drawing.Size(180, 22);
+            this.字体_设置字体Item.Text = "设置字体..";
+            // 
+            // 字体_恢复默认Item
+            // 
+            this.字体_恢复默认Item.Name = "字体_恢复默认Item";
+            this.字体_恢复默认Item.Size = new System.Drawing.Size(180, 22);
+            this.字体_恢复默认Item.Text = "恢复默认";
             // 
             // 帮助Item
             // 
@@ -310,18 +365,6 @@
             this.关于Item.Name = "关于Item";
             this.关于Item.Size = new System.Drawing.Size(116, 22);
             this.关于Item.Text = "关于..";
-            // 
-            // 添加字符Item
-            // 
-            this.添加字符Item.Name = "添加字符Item";
-            this.添加字符Item.Size = new System.Drawing.Size(180, 22);
-            this.添加字符Item.Text = "添加字符";
-            // 
-            // 删除字符Item
-            // 
-            this.删除字符Item.Name = "删除字符Item";
-            this.删除字符Item.Size = new System.Drawing.Size(180, 22);
-            this.删除字符Item.Text = "删除字符";
             // 
             // TopMenuContainer
             // 
@@ -371,5 +414,10 @@
         private System.Windows.Forms.ToolStripMenuItem 退出Item;
         private System.Windows.Forms.ToolStripMenuItem 添加字符Item;
         private System.Windows.Forms.ToolStripMenuItem 删除字符Item;
+        private System.Windows.Forms.ToolStripMenuItem 代码工具Item;
+        private System.Windows.Forms.ToolStripMenuItem 代码工具_java_Item;
+        private System.Windows.Forms.ToolStripMenuItem 代码工具_java_字段转实体类;
+        private System.Windows.Forms.ToolStripMenuItem 字体_设置字体Item;
+        private System.Windows.Forms.ToolStripMenuItem 字体_恢复默认Item;
     }
 }

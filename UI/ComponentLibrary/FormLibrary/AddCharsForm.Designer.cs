@@ -248,6 +248,7 @@
             this.Controls.Add(this.tab容器);
             this.Controls.Add(this.选项区容器);
             this.DoubleBuffered = true;
+            this.KeyPreview = true;
             this.MinimizeBox = false;
             this.Name = "AddCharsForm";
             this.ShowIcon = false;

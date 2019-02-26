@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -11,13 +12,21 @@ namespace Core.DefaultData.DataLibrary
     public static class TextBoxDataLibcs
     { 
         /// <summary>
-        /// 文本框的默认命名
-        /// </summary>
-        public const string TEXTBOX_NAME_DEF = "mainTextB";
-        /// <summary>
         /// 文本框的默认编码
         /// </summary>
-        public static Encoding TEXTBOX_ECODING_DEF { get => Encoding.UTF8; }
+        public static readonly Encoding TEXTBOX_ECODING_DEF = Encoding.UTF8;
+        /// <summary>
+        /// 文本框的默认自动换行
+        /// </summary>
+        public static readonly bool TEXTBOX_AUTO_WRAP_DEF = false;
+        /// <summary>
+        /// 文本框的默认字体
+        /// </summary>
+        public static readonly Font TEXTBOX_FONT_DEF = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+        /// <summary>
+        /// 文本框默认只读状态
+        /// </summary>
+        public const bool TEXTBOX_READ_ONLY_DEF = false;
     }
     /// <summary>
     /// 文本框Tag数据的Key

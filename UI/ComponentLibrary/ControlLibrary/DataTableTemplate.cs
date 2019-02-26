@@ -9,17 +9,20 @@ using System.Drawing;
 using Core.StaticMethod.Method.Redraw;
 using Core.CacheLibrary.OperateCache.DataViewOperateCache;
 using UI.ComponentLibrary.ControlMethod;
+using Core.StaticMethod.Inter;
+using UI.ComponentLibrary.ControlLibrary.RightMenu;
 
 namespace UI.ComponentLibrary.ControlLibrary {
     /// <summary>
     /// 数据表格模板
     /// </summary>
     public partial class DataTableTemplate : Component{
-        public DataTableTemplate() {
+        private DataTableTemplate(int cellHeight, int colHeadersHeight, 
+            Color selCellHeadBack, Color selCellHeadFontC) {
             // 初始化控件
             InitializeComponent();
             // 加载数据表格配置
-            dataViewConfig();
+            dataViewConfig(cellHeight, colHeadersHeight, selCellHeadBack, selCellHeadFontC);
         }
         /// <summary>
         /// 存放当前鼠标所在单元格
@@ -28,24 +31,24 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <summary>
         /// 单元格默认宽度
         /// </summary>
-        public int cellDefWidth = 100;
+        private const int cellDefWidth = 100;
         /// <summary>
         /// 单元格默认高度
         /// </summary>
-        public int cellDefHeight = 25;
+        private const int cellDefHeight = 25;
         /// <summary>
         /// 列标题的默认高度
         /// </summary>
-        public int colHeadersHeight = 20;
+        private const int colDefHeadersHeight = 20;
         
         /// <summary>
         /// 选中单元格的标题的背景色
         /// </summary>
-        public Color selCellHeadBack = ColorTranslator.FromHtml("#6CADE1");
+        private Color selDefCellHeadBack = ColorTranslator.FromHtml("#6CADE1");
         /// <summary>
         /// 选中单元格的标题的前景色
         /// </summary>
-        public Color selCellHeadFontC = Color.Black;
+        private Color selDefCellHeadFontC = Color.Black;
 
         // 点击的单元格的列
         private int clickColIndex = 0;
@@ -73,7 +76,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <summary>
         /// 数据表格的配置
         /// </summary>
-        private void dataViewConfig() {
+        private void dataViewConfig(int cellHeight, int colHeadersHeight, Color selCellHeadBack, Color selCellHeadFontC) {
             // 边框
             数据表格.BorderStyle = BorderStyle.None;
             数据表格.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -84,12 +87,21 @@ namespace UI.ComponentLibrary.ControlLibrary {
             数据表格.StandardTab = false;
             数据表格.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
             数据表格.AllowUserToAddRows = false;
+            数据表格.ShowCellToolTips = true;
+
+            数据表格.RowTemplate.Height = cellHeight;
+            数据表格.AllowUserToAddRows = false;
+            数据表格.AllowUserToDeleteRows = false;
+            数据表格.AllowUserToOrderColumns = false;
+            数据表格.AllowUserToResizeColumns = true;
+            数据表格.AllowUserToResizeRows = true;
             数据表格.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
             数据表格.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
             数据表格.ShowCellToolTips = true;
-
+            数据表格.Name = DateTime.Now.Ticks.ToString()+"_DataGridView";
             // 列头的高
-            数据表格.ColumnHeadersHeight = colHeadersHeight;
+            数据表格.ColumnHeadersHeight = colHeadersHeight != -1? colHeadersHeight : colDefHeadersHeight;
+            
             // 默认单元格样式背景色
             数据表格.RowsDefaultCellStyle.BackColor = Color.White;
             // 默认单元格样式前景色
@@ -99,14 +111,15 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 默认单元格样式选中前景色
             数据表格.RowsDefaultCellStyle.SelectionForeColor = Color.White;
             // 默认选中单元格的列标题背景色
-            数据表格.ColumnHeadersDefaultCellStyle.SelectionBackColor = selCellHeadBack;
+            数据表格.ColumnHeadersDefaultCellStyle.SelectionBackColor = selCellHeadBack != Color.Empty ? selCellHeadBack : this.selDefCellHeadBack;
             // 默认选中单元格的列标题前景色
-            数据表格.ColumnHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC;
+            数据表格.ColumnHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC != Color.Empty ? selCellHeadFontC : this.selDefCellHeadFontC;
             // 默认选中单元格的行标题背景色
-            数据表格.RowHeadersDefaultCellStyle.SelectionBackColor = selCellHeadBack;
+            数据表格.RowHeadersDefaultCellStyle.SelectionBackColor = selCellHeadBack != Color.Empty ? selCellHeadBack : this.selDefCellHeadBack;
             // 默认选中单元格的行标题前景色
-            数据表格.RowHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC;
-
+            数据表格.RowHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC != Color.Empty ? selCellHeadFontC : this.selDefCellHeadFontC;
+            // 行标题单元格内容左对齐
+            数据表格.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
             // 绑定单元格鼠标按下事件
             数据表格.CellMouseDown += 数据表格_CellMouseDown;
             数据表格.CellMouseUp += 数据表格_CellMouseUp;
@@ -125,8 +138,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 绑定销毁事件
             数据表格.Disposed += 数据表格_Disposed;
             // 绑定右键菜单并使用自定义的样式
-            数据表格.ContextMenuStrip = table_rightStrip;
-            table_rightStrip.Renderer = new RightStripRenderer();
+            DataGridViewRightMenu.bindingDataGridView(数据表格);
         }
 
         /// <summary>
@@ -154,8 +166,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
             EditMode editMode = null;
             if(cell != null) {
                 editMode = new EditMode();
-                editMode.BeforeText = selectCell.Where(tempcell=> 
-                   cell.RowIndex.Equals(tempcell.Key[0]) &&cell.ColumnIndex.Equals(tempcell.Key[1])).ToArray()[0].Value;
+                // 获取该单元格的上一个修改内容
+                KeyValuePair<int[],string>[] selCellVals = selectCell.Where(tempcell=> 
+                   cell.RowIndex.Equals(tempcell.Key[0]) && cell.ColumnIndex.Equals(tempcell.Key[1])).ToArray();
+                if(selCellVals != null && selCellVals.Length > 0) { 
+                    editMode.BeforeText = selCellVals[0].Value;
+                }
                 editMode.EndText = cell.Value.ToString();
                 editMode.RowIndex = cell.RowIndex;
                 editMode.ColumnIndex = cell.ColumnIndex;
@@ -184,7 +200,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 index = row.Index;
             } else if(col != null) { // 判断为列
                 sizeType = 1;
-                beforeSize = sizeColSize.Where( tempcol => tempcol.Key.Equals(col.Index)).ToArray()[0].Value;
+                if (sizeColSize != null && sizeColSize.Count > 0) { 
+                    beforeSize = sizeColSize.Where( tempcol => tempcol.Key.Equals(col.Index)).ToArray()[0].Value;
+                }
                 endSize = col.HeaderCell.Size;
                 index = col.Index;
             }
@@ -248,7 +266,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 // 改变提示文本
                 DataGridViewCell cell = view.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 string beforeText = cell.ToolTipText;
-                cell.ToolTipText = cell.Value == null ? null : cell.Value.ToString();
+                cell.ToolTipText = cell.Value != null ? cell.Value.ToString() : null;
                 // 记录到缓冲区
                 if(数据表格.Focused && !isCancel && !isRestore) {
                     setCacheByEdit(cell);
@@ -328,45 +346,16 @@ namespace UI.ComponentLibrary.ControlLibrary {
         }
         // 表格销毁事件
         private void 数据表格_Disposed(object sender, EventArgs e) {
-            Console.WriteLine("asd");
             DataGridView data = (DataGridView)sender;
             DataViewCache.removeCacheFactory(data.Name);
         }
-        /// <summary>
-        /// 右键菜单鼠标点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rightStripMenuItem_MouseDown(object sender, MouseEventArgs e) {
-            ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            if(复制全部Item.Equals(item)) { 
-                Clipboard.SetDataObject(DataGridViewUtilMet.getDatatabelSelText(数据表格, true), true);
-            }
-            if(复制选中Item.Equals(item)) { 
-                Clipboard.SetDataObject(DataGridViewUtilMet.getDatatabelSelText(数据表格, false), true);
-            }
-            if(导出到记事本Item.Equals(item)) { 
-                DataGridViewUtilMet.exportNotepad(数据表格, true);
-            }
-            if(导出到Excel_Item.Equals(item)) { 
-                DataGridViewUtilMet.exportExcel(数据表格, true);
-            }
-            if(选中此列Item.Equals(item)) {
-                if(mouseCell != null) { 
-                    // 全选某列
-                    数据表格.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
-                    数据表格.Columns[mouseCell.ColumnIndex].HeaderCell.SortGlyphDirection = SortOrder.None;
 
-                    mouseCell.OwningColumn.Selected = true;
-                    }
-            }
-            if(选中此行Item.Equals(item)) {
-                if(mouseCell != null) { 
-                    // 全选某行
-                    数据表格.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-                    mouseCell.OwningRow.Selected = true;
-                }
-            }
+        public static DataGridView GetDataGridViewTempl(int cellHeight, int colHeadersHeight, 
+            Color selCellHeadBack, Color selCellHeadFontC) {
+            DataTableTemplate dataTable = new DataTableTemplate(cellHeight, colHeadersHeight, 
+            selCellHeadBack, selCellHeadFontC);
+            DataGridView dataView = dataTable.数据表格;
+            return dataView;
         }
     }
 }

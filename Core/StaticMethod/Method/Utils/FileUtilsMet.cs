@@ -26,17 +26,14 @@ namespace Core.StaticMethod.Method.Utils
             public static string read(string fileUrl, Encoding encoding)
             {
                 string str = "";
-                try
-                {
+                try {
                     fileStream = new FileStream(fileUrl, FileMode.Open);
                     streamReader = new StreamReader(fileStream, encoding);
                     str = streamReader.ReadToEnd();
                     streamReader.Close();
                     fileStream.Close();
-                }
-                catch (IOException e)
-                {
-                    System.Console.WriteLine(e.ToString());
+                } catch (IOException e) {
+                    Console.WriteLine(e.ToString());
                 }
                 return str;
             }
@@ -49,8 +46,7 @@ namespace Core.StaticMethod.Method.Utils
             public static List<string> rowRead(string fileUrl, Encoding encoding)
             {
                 List<string> rowList = new List<string>();
-                try
-                {
+                try {
                     fileStream = new FileStream(fileUrl, FileMode.Open, FileAccess.Read);
                     streamReader = new StreamReader(fileStream, encoding);
                     streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -64,9 +60,9 @@ namespace Core.StaticMethod.Method.Utils
                     streamReader.Close();
                     fileStream.Close();
                 }
-                catch (IOException e)
-                {
-                    System.Console.WriteLine(e.ToString());//打印错误信息
+                catch (IOException e) {
+                    // 打印错误信息
+                    Console.WriteLine(e.ToString());
                     return rowList;
                 }
                 return rowList;

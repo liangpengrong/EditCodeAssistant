@@ -36,5 +36,20 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
         /// 文本框的Name
         /// </summary>
         public string TextBName { get; set; }
+
+        /// <summary>
+        /// 生成一个默认的实体类
+        /// </summary>
+        /// <returns></returns>
+        public static TextBoxCacheModel getDefaultModel(string name) { 
+            TextBoxCacheModel textBoxCache = new TextBoxCacheModel();
+            textBoxCache.SelectStart = 0;
+            textBoxCache.SelectLegth = 0;
+            textBoxCache.Text = "";
+            textBoxCache.TextType = TextCacheTypeEnum.NONE;
+            textBoxCache.CreateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            textBoxCache.TextBName = name;
+            return textBoxCache;
+        }
     }
 }

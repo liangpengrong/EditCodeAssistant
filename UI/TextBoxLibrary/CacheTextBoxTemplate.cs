@@ -33,23 +33,23 @@ namespace ProgramTextBoxLibrary {
         private static void textDefaultEventBinding(TextBox textB) { 
             CacheTextBoxBind fromDelegate = new CacheTextBoxBind();
             // 绑定文本改变事件
-            textB.TextChanged += fromDelegate.mainTextBoxChanged;
+            textB.TextChanged += fromDelegate.textBoxChanged;
             // 绑定鼠标移过事件
-            textB.MouseMove += fromDelegate.mainTextBoxMouseMove;
+            textB.MouseMove += fromDelegate.textBoxMouseMove;
             // 绑定鼠标在组件内并释放鼠标按键事件
-            textB.MouseUp += fromDelegate.mainTextBoxMouseUp;
+            textB.MouseUp += fromDelegate.textBoxMouseUp;
             // 绑定鼠标在组件内并按下鼠标事件
-            textB.MouseDown += fromDelegate.mainTextBoxMouseDown;
+            textB.MouseDown += fromDelegate.textBoxMouseDown;
             // 鼠标移入事件
-            textB.MouseEnter += fromDelegate.mainTextBoxMouseEnter;
+            textB.MouseEnter += fromDelegate.textBoxMouseEnter;
             // 绑定键盘按下事件
-            textB.KeyDown += fromDelegate.mainTextBoxKeyDown;
+            textB.KeyDown += fromDelegate.textBoxKeyDown;
             // 绑定键盘松开事件
-            textB.KeyUp += fromDelegate.mainTextBoxKeyUp;
+            textB.KeyUp += fromDelegate.textBoxKeyUp;
             // 绑定控件启用事件
-            textB.Enter += fromDelegate.mainTextBoxEnter;
+            textB.Enter += fromDelegate.textBoxEnter;
             // 绑定控件获得焦点事件
-            textB.GotFocus += fromDelegate.mainTextBoxGotFocus;
+            textB.GotFocus += fromDelegate.textBoxGotFocus;
         }
         /// <summary>
         /// 文本框的默认配置，用来设置主要文本框的启动状态
@@ -57,7 +57,7 @@ namespace ProgramTextBoxLibrary {
         private static void textDefaultConfig(TextBox textB) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             // 文本框姓名
-            textB.Name = TextBoxDataLibcs.TEXTBOX_NAME_DEF + timeStr;
+            textB.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF) + timeStr;
             textB.TabStop = true;
             textB.AllowDrop = true;
             textB.BorderStyle = BorderStyle.None;

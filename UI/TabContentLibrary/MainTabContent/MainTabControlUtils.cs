@@ -70,8 +70,8 @@ namespace UI.TabContentLibrary.MainTabContent {
             for(int i=0,len=tab.TabCount; i<len;i++) {
                 TabPage page = tab.TabPages[i];
                 Dictionary<string,object> tag = ControlsUtilsMet.getControlTagToDic(page);
-                if(tag != null && tag.ContainsKey(TabControlDataLib.DEF_BUTTON_TAG_KEY) && tab.TabCount > 0) { 
-                    Control con = (Control) tag[TabControlDataLib.DEF_BUTTON_TAG_KEY];
+                if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)) && tab.TabCount > 0) { 
+                    Control con = (Control) tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
                     // 确定关闭按钮的位置
                     itemW = tab.GetTabRect(i).Width;
                     itemH = tab.GetTabRect(i).Height;
@@ -103,8 +103,8 @@ namespace UI.TabContentLibrary.MainTabContent {
                     }
                     // 移除page标签所带有的删除按钮
                     Dictionary<string,object> tag = ControlsUtilsMet.getControlTagToDic(tabPage);
-                    if(tag != null && tag.ContainsKey(TabControlDataLib.DEF_BUTTON_TAG_KEY)) { 
-                        Control con = (Control)tag[TabControlDataLib.DEF_BUTTON_TAG_KEY];
+                    if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
+                        Control con = (Control)tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
                         if(con != null && !con.IsDisposed) { 
                             con.Dispose();
                         }
@@ -183,8 +183,8 @@ namespace UI.TabContentLibrary.MainTabContent {
             Control retCon = null;
             if(tabPage != null) { 
                 Dictionary<string,object> tag = ControlsUtilsMet.getControlTagToDic(tabPage);
-                if(tag != null && tag.ContainsKey(TabControlDataLib.DEF_BUTTON_TAG_KEY)) { 
-                    retCon = (Control)tag[TabControlDataLib.DEF_BUTTON_TAG_KEY];
+                if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
+                    retCon = (Control)tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
                 }
             }
             return retCon;

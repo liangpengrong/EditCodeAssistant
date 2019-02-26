@@ -12,6 +12,7 @@ using Core.StaticMethod.Method.Redraw;
 using Core.StaticMethod.Method.Utils;
 using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
+using UI.ComponentLibrary.ControlMethod;
 
 namespace UI.ComponentLibrary.ControlLibrary.RightMenu
 {
@@ -19,13 +20,12 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
     {
         private TextRightMenu() { 
             InitializeComponent();
-            //MenuItemUtilsMet.fontCentered(this.rightMenuStrip.Items);//使右键菜单文本居中显示
             menuDefaultConfig(); //加载右键菜单默认配置
         }
         // 用来弹出右键菜单的文本框
         private TextBox menuSourceTextBox = null;
         // 定义右键菜单的执行方法的委托
-        private delegate object methodDelegate(TextBox t);
+        private delegate object methodDelegate(Dictionary<Type , object> data);
         // 右键菜单的背景色
         public Color allBackColor = Color.White;
         // 右键菜单项的宽
@@ -36,44 +36,25 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// <summary>
         /// 判断文本框的右键菜单那些需要禁用那些需要启用
         /// </summary>
-        private void isMenuEnabled()
-        {
-            try
-            {
-                TextBox t = menuSourceTextBox;
-                this.isMenuTextNull(t);
-                // 判断粘贴板内容是否为空
-                this.粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length);
-                this.删除Item.Enabled = !t.SelectionLength.Equals(0);
-            }catch(InvalidCastException ie){//强制类型转化异常
-                MessageBox.Show(ie.ToString());
-            }
-        }
-        /// <summary>
-        /// 判断文本框内容为空时需要隐藏的右键菜单选项
-        /// </summary>
-        /// <param name="t">判断的文本框</param>
-        /// <param name="l">需要隐藏的右键菜单选项</param>
-        /// <returns>方法执行完毕返回的信息</returns>
-        private string isMenuTextNull(TextBox t)
-        {
-            // 在文本框为空时需要停用的Item
-            List<ToolStripMenuItem> listNull = new List<ToolStripMenuItem>();
-            listNull.Add(this.复制Item);
-            listNull.Add(this.全选Item);
-            listNull.Add(this.剪切Item);
-            listNull.Add(this.删除Item);
-            listNull.Add(this.去除Item);
-            listNull.Add(this.清空文本框Item);
-            listNull.Add(this.转化为Item);
-            if (t != null) {
-                foreach (ToolStripMenuItem tool in listNull)
-                {
-                    tool.Enabled = !t.TextLength.Equals(0);
+        private void isMenuEnabled() {
+            TextBox t = menuSourceTextBox;
+            try {
+                if (t != null) {
+                    全选Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    剪切Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    复制Item.Enabled = !0.Equals(t.TextLength);
+                    粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length) && !t.ReadOnly;
+                    删除Item.Enabled = !t.SelectionLength.Equals(0) && !t.ReadOnly;
+                    去除Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    转化为Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    清空文本框Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                } else { 
+                    // 文本框NUll时禁用右键菜单
+                    rightMenuStrip.Enabled = !(t == null);
+                    // MessageBox.Show("右键菜单绑定的文本框为null");
                 }
-                return null;
-            } else {
-                return "文本框为null";
+            } catch(Exception ie){
+                MessageBox.Show(ie.ToString());
             }
         }
         /// <summary>
@@ -82,18 +63,20 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void rightMenuStrip_Opening(object sender, CancelEventArgs e)
-        {//右键菜单的弹出事件
-            //将右键菜单的源控件赋值给全局变量SourceControl
-            menuSourceTextBox = (TextBox)((ContextMenuStrip)sender).SourceControl;
-            this.isMenuEnabled();//判断哪些选项需要隐藏
+        private void rightMenuStrip_Opening(object sender, CancelEventArgs e) {
+            // 将右键菜单的源控件赋值给全局变量SourceControl
+            Control obj = ((ContextMenuStrip)sender).SourceControl;
+            if(obj is TextBox) { 
+                menuSourceTextBox = (TextBox)obj;
+            }
+            // 判断哪些选项需要隐藏
+            isMenuEnabled();
         }
         /// <summary>
         /// 右键菜单的默认配置
         /// </summary>
-        private void menuDefaultConfig()
-        {
-            rightMenuStrip.Name = DefaultNameCof.TEXT_RIGHT_MENU;
+        private void menuDefaultConfig() {
+            rightMenuStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU);
             // 使用自定义的样式
             rightMenuStrip.Renderer = new RightStripRenderer();
             // 设置不具有Tab焦点
@@ -106,9 +89,9 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             rightMenuStrip.ShowCheckMargin = false;
             //显示信息提示
             rightMenuStrip.ShowItemToolTips = true;
-            foreach (ToolStripMenuItem tool in this.rightMenuStrip.Items.OfType<ToolStripMenuItem>())
-            {//遍历右键菜单下所有的一级ToolStripMenuItem选项
-                new MenuItemUtilsMet().isDownItemAop(tool, this);
+            // 遍历右键菜单下所有的一级ToolStripMenuItem选项
+            foreach (ToolStripMenuItem tool in rightMenuStrip.Items.OfType<ToolStripMenuItem>()) {
+                ToolStripUtilsMet.isDownItemAop(tool, this);
             }
             // 调整右键菜单配置
             menuConfig();
@@ -162,22 +145,23 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// 当右键菜单无子项时的执行方法
         /// </summary>
         public void noDownItem(ToolStripMenuItem tool)
-        {
-            tool.Click += new EventHandler(this.MenuItem_Click);//为所有的子选项的选项绑定总的点击事件
+        {   
+            // 为所有的子选项的选项绑定总的点击事件
+            tool.Click += new EventHandler(this.MenuItem_Click);
         }
         /// <summary>
         /// 全部右键菜单的执行方法
         /// </summary>
         public void allItem(ToolStripMenuItem tool)
         {
-            if (this.allBackColor == null)
-            {
+            // 设置背景色
+            if (allBackColor == null){
                 tool.BackColor = Color.White;//设置所有的选项背景色为白色
-            }
-            else 
-            {
+            } else {
                 tool.BackColor = allBackColor;//设置所有的选项背景色为指定颜色
             }
+            // 设置每项的Name
+            tool.Name = getItemNameDic(tool);
         }
         /// <summary>
         /// 右键菜单选项的总绑定类，执行选项name对应的绑定类
@@ -190,19 +174,18 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             {
                 // 将object强制转化为右键菜单选项
                 ToolStripMenuItem tool = (ToolStripMenuItem)sender;
-                // 获取弹出右键菜单的控件并强制转化为文本框
-                TextBox textB = menuSourceTextBox;
+                Dictionary<Type, object> data = new Dictionary<Type, object>();
+                data.Add(typeof(TextBox), menuSourceTextBox);
                 foreach (KeyValuePair<string, Delegate> kvp in this.eventBinding())
                 {//遍历对应关系字典
                     if(kvp.Key.Equals(tool.Name))
                     {//判断当前点击的选项名是否与关系字典中的选项名对应，对应则执行关系字典中的对应方法
                         if (rightMenuStrip.IsHandleCreated)
                         {//判断当前控件是否有与其关联的句柄
-                            rightMenuStrip.Invoke(kvp.Value, new object[] {textB});
+                            rightMenuStrip.Invoke(kvp.Value, new object[] {data});
                         }
                     }
                 }
-                //dLLLoad.TextBoxUtilsMet.textFixStartIndex(t, TextBoxDataLibcs.ExpTextLength, TextBoxDataLibcs.ExpStartIndex);//确定文本框光标位置
             }
             catch (InvalidCastException ie)
             {//强制类型转化异常
@@ -218,30 +201,42 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         private Dictionary<string, Delegate> eventBinding()
         {
             Dictionary<string, Delegate> toolBindingDic = new Dictionary<string, Delegate>();
-            toolBindingDic.Add(this.全选Item.Name, new methodDelegate(TextBoxUtilsMet.textAllSelect));
-            toolBindingDic.Add(this.剪切Item.Name, new methodDelegate(TextBoxUtilsMet.textSelectCut));
-            toolBindingDic.Add(this.复制Item.Name,new methodDelegate(TextBoxUtilsMet.textCopy));
-            toolBindingDic.Add(this.粘贴Item.Name, new methodDelegate(TextBoxUtilsMet.textPaste));
-            toolBindingDic.Add(this.删除Item.Name, new methodDelegate(TextBoxUtilsMet.textSelectDelect));
-            toolBindingDic.Add(this.全部空格Item.Name, new methodDelegate(TextBoxUtilsMet.textDelSpace));
-            toolBindingDic.Add(this.行首空格Item.Name, new methodDelegate(TextBoxUtilsMet.textDelRowFirstSpace));
-            toolBindingDic.Add(this.行尾空格Item.Name, new methodDelegate(TextBoxUtilsMet.textDelRowTailSpace));
-            toolBindingDic.Add(this.空行Item.Name, new methodDelegate(TextBoxUtilsMet.textDelBlankLine));
-            toolBindingDic.Add(this.换行符Item.Name, new methodDelegate(TextBoxUtilsMet.textPlaceNewline));
-            toolBindingDic.Add(this.制表符Item.Name, new methodDelegate(TextBoxUtilsMet.textPlaceTabs));
-            toolBindingDic.Add(this.清空文本框Item.Name, new methodDelegate(TextBoxUtilsMet.textClear));
-            toolBindingDic.Add(this.大写形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToUpper));
-            toolBindingDic.Add(this.小写形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToLower));
-            toolBindingDic.Add(this.驼峰形式Item.Name, new methodDelegate(TextBoxUtilsMet.textToHump));
+            toolBindingDic.Add(this.全选Item.Name, new methodDelegate(TextRightMenuMet.全选ItemMethod));
+            toolBindingDic.Add(this.剪切Item.Name, new methodDelegate(TextRightMenuMet.剪切ItemMethod));
+            toolBindingDic.Add(this.复制Item.Name,new methodDelegate(TextRightMenuMet.复制ItemMethod));
+            toolBindingDic.Add(this.粘贴Item.Name, new methodDelegate(TextRightMenuMet.粘贴ItemMethod));
+            toolBindingDic.Add(this.删除Item.Name, new methodDelegate(TextRightMenuMet.删除ItemMethod));
+            toolBindingDic.Add(this.全部空格Item.Name, new methodDelegate(TextRightMenuMet.全部空格ItemMethod));
+            toolBindingDic.Add(this.行首空格Item.Name, new methodDelegate(TextRightMenuMet.行首空格ItemMethod));
+            toolBindingDic.Add(this.行尾空格Item.Name, new methodDelegate(TextRightMenuMet.行尾空格ItemMethod));
+            toolBindingDic.Add(this.空行Item.Name, new methodDelegate(TextRightMenuMet.空行ItemMethod));
+            toolBindingDic.Add(this.换行符Item.Name, new methodDelegate(TextRightMenuMet.换行符ItemMethod));
+            toolBindingDic.Add(this.制表符Item.Name, new methodDelegate(TextRightMenuMet.制表符ItemMethod));
+            toolBindingDic.Add(this.清空文本框Item.Name, new methodDelegate(TextRightMenuMet.清空文本框ItemMethod));
+
+            toolBindingDic.Add(this.大写形式_全部_Item.Name, new methodDelegate(TextRightMenuMet.大写形式_全部_ItemMethod));
+            toolBindingDic.Add(this.大写形式_行首_Item.Name, new methodDelegate(TextRightMenuMet.大写形式_行首_ItemMethod));
+            toolBindingDic.Add(this.大写形式_行尾_Item.Name, new methodDelegate(TextRightMenuMet.大写形式_行尾_ItemMethod));
+            toolBindingDic.Add(this.大写形式_自定义_Item.Name, new methodDelegate(TextRightMenuMet.大写形式_自定义_ItemMethod));
+
+            toolBindingDic.Add(this.小写形式_全部_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_全部_ItemMethod));
+            toolBindingDic.Add(this.小写形式_行首_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_行首_ItemMethod));
+            toolBindingDic.Add(this.小写形式_行尾_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_行尾_ItemMethod));
+            toolBindingDic.Add(this.小写形式_自定义_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_自定义_ItemMethod));
+
+            toolBindingDic.Add(this.驼峰形式_大写_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_大写_ItemMethod));
+            toolBindingDic.Add(this.驼峰形式_小写_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_小写_ItemMethod));
             return toolBindingDic;
+
+
         }
         /// <summary>
         /// 右键菜单项对应Image的字典
         /// </summary>
         /// <returns></returns>
-        private System.Drawing.Image getItemImageDic(string name) { 
+        private Image getItemImageDic(string name) { 
             
-            Dictionary<string, System.Drawing.Image> toolImageDic = new Dictionary<string, System.Drawing.Image>();
+            Dictionary<string, Image> toolImageDic = new Dictionary<string, System.Drawing.Image>();
             toolImageDic.Add(this.全选Item.Name, Core.ImageResource.全选_反相);
             toolImageDic.Add(this.剪切Item.Name, Core.ImageResource.裁剪);
             toolImageDic.Add(this.复制Item.Name, Core.ImageResource.复制);
@@ -258,14 +253,68 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             }
         }
         /// <summary>
+        /// 右键菜单项对应Name的字典
+        /// </summary>
+        /// <returns></returns>
+        private string getItemNameDic(ToolStripMenuItem item) { 
+            Dictionary<ToolStripMenuItem, string> toolImageDic = new Dictionary<ToolStripMenuItem, string>();
+            toolImageDic.Add(this.全选Item, MainTextBRightMenuDataLib.ItemDataLib.全选_ITEM_NAME);
+            toolImageDic.Add(this.剪切Item, MainTextBRightMenuDataLib.ItemDataLib.剪切_ITEM_NAME);
+            toolImageDic.Add(this.复制Item, MainTextBRightMenuDataLib.ItemDataLib.复制_ITEM_NAME);
+            toolImageDic.Add(this.粘贴Item, MainTextBRightMenuDataLib.ItemDataLib.粘贴_ITEM_NAME);
+            toolImageDic.Add(this.删除Item, MainTextBRightMenuDataLib.ItemDataLib.删除_ITEM_NAME);
+            toolImageDic.Add(this.去除Item, MainTextBRightMenuDataLib.ItemDataLib.去除_ITEM_NAME);
+            toolImageDic.Add(this.转化为Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_ITEM_NAME);
+            toolImageDic.Add(this.清空文本框Item, MainTextBRightMenuDataLib.ItemDataLib.清空文本框_ITEM_NAME);
+
+            toolImageDic.Add(this.空格Item, MainTextBRightMenuDataLib.ItemDataLib.空格_ITEM_NAME);
+            toolImageDic.Add(this.全部空格Item, MainTextBRightMenuDataLib.ItemDataLib.空格_ITEM_NAME);
+            toolImageDic.Add(this.行首空格Item, MainTextBRightMenuDataLib.ItemDataLib.行首空格_ITEM_NAME);
+            toolImageDic.Add(this.行尾空格Item, MainTextBRightMenuDataLib.ItemDataLib.行尾空格_ITEM_NAME);
+            toolImageDic.Add(this.空行Item, MainTextBRightMenuDataLib.ItemDataLib.空行_ITEM_NAME);
+            toolImageDic.Add(this.换行符Item, MainTextBRightMenuDataLib.ItemDataLib.换行符_ITEM_NAME);
+            toolImageDic.Add(this.制表符Item, MainTextBRightMenuDataLib.ItemDataLib.制表符_ITEM_NAME);
+
+            toolImageDic.Add(this.大写形式Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_ITEM_NAME);
+            toolImageDic.Add(this.大写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_全部_ITEM_NAME);
+            toolImageDic.Add(this.大写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_行首_ITEM_NAME);
+            toolImageDic.Add(this.大写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_行尾_ITEM_NAME);
+            toolImageDic.Add(this.大写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_自定义_ITEM_NAME);
+
+            toolImageDic.Add(this.小写形式Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_ITEM_NAME);
+            toolImageDic.Add(this.小写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_全部_ITEM_NAME);
+            toolImageDic.Add(this.小写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_行首_ITEM_NAME);
+            toolImageDic.Add(this.小写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_行尾_ITEM_NAME);
+            toolImageDic.Add(this.小写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_自定义_ITEM_NAME);
+
+            toolImageDic.Add(this.驼峰形式Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_ITEM_NAME);
+            toolImageDic.Add(this.驼峰形式_大写_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_首字母大写_ITEM_NAME);
+            toolImageDic.Add(this.驼峰形式_小写_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_首字母小写_ITEM_NAME);
+
+            if (toolImageDic.ContainsKey(item)) { 
+                return toolImageDic[item];
+            } else { 
+                return "";    
+            }
+        }
+        /// <summary>
         /// 获取右键菜单
         /// </summary>
         /// <returns></returns>
-        public static ContextMenuStrip getTextRightMenu() { 
-            Control con = ControlCache.getSingletonCache(DefaultNameCof.TEXT_RIGHT_MENU);
+        public static ContextMenuStrip getTextRightMenu1() { 
+            TextRightMenu textRightMenu = new TextRightMenu();
+            ControlCacheFactory.addSingletonCache(textRightMenu.rightMenuStrip);
+            return textRightMenu.rightMenuStrip;
+        }
+        /// <summary>
+        /// 获取单例的右键菜单
+        /// </summary>
+        /// <returns></returns>
+        public static ContextMenuStrip getSingleTextRightMenu() { 
+            Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TEXT_RIGHT_MENU);
             if(con == null) {
                 TextRightMenu textRightMenu = new TextRightMenu();
-                ControlCache.addSingletonCache(textRightMenu.rightMenuStrip);
+                ControlCacheFactory.addSingletonCache(textRightMenu.rightMenuStrip);
                 return textRightMenu.rightMenuStrip;
             } else { 
                 return (ContextMenuStrip)con;
@@ -277,7 +326,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// <param name="t"></param>
         public static void bindingTextBox(TextBox t) {
             if(t != null) {
-                t.ContextMenuStrip = getTextRightMenu();
+                t.ContextMenuStrip = getSingleTextRightMenu();
             }
         }
     }

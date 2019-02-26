@@ -1,5 +1,6 @@
 ﻿using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,10 +16,10 @@ namespace UI.ToolStripContainerLibrary {
         /// <returns></returns>
         public static ToolStripContainer initToolStripContainer() { 
             ToolStripContainer stripContainer = null;
-            Control con = ControlCache.getSingletonCache(DefaultNameCof.MAIN_CONTAINER);
+            Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.MAIN_CONTAINER);
             if(con == null) {
                 stripContainer = new ToolStripContainer();
-                stripContainer.Name = DefaultNameCof.MAIN_CONTAINER;
+                stripContainer.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER);
                 stripContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
                 stripContainer.Dock = DockStyle.None;
                 // 设置不被焦点选中
@@ -26,7 +27,7 @@ namespace UI.ToolStripContainerLibrary {
                 // 容器的大小
                 stripContainer.Size = new Size(1,1);
                 stripContainer.Location = new Point(1,1);
-                ControlCache.addSingletonCache(stripContainer);
+                ControlCacheFactory.addSingletonCache(stripContainer);
             } else { 
                 stripContainer = (ToolStripContainer)con;
             }

@@ -10,6 +10,8 @@ using Ui.ControlEventLibrary;
 using Core.CacheLibrary.ControlCache;
 using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
+using Core_Config.ConfigData.ControlConfig;
+using System.Drawing;
 
 namespace UI_TopMenuBar.TopMenuEvent
 {
@@ -33,9 +35,13 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// <returns>返回该对话框</returns>
         public static object openFileMethod(Dictionary<Type , object> data)
         {
-            // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            PublicEventMet.openFileMethod(t);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                // 获取文本框
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                PublicEventMet.openFileMethod(t);
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -44,10 +50,18 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// <param name="t"></param>
         /// <param name="keys"></param>
         public static object cancelTextBoxCache (Dictionary<Type, object> data){
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            // 将文本框置于撤销状态
-            TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
-            TextBoxCache.cancelCache(t);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                // 非只读状态才能撤销
+                if (!t.ReadOnly) { 
+                    // 将文本框置于撤销状态
+                    TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
+                    TextBoxCache.cancelCache(t);
+                }
+                
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -55,10 +69,18 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// </summary>
         /// <param name="t"></param>
         public static object restoreTextBoxCache(Dictionary<Type, object> data){
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            // 将文本框置于恢复状态
-            TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
-            TextBoxCache.restoreCache(t);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                // 非只读状态才能恢复
+                if (!t.ReadOnly) { 
+                    // 将文本框置于恢复状态
+                    TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
+                    TextBoxCache.restoreCache(t);
+                }
+                
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -69,8 +91,12 @@ namespace UI_TopMenuBar.TopMenuEvent
         public static object saveFileMethod(Dictionary<Type , object> data)
         {
             // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            PublicEventMet.saveFileMethod(t);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                PublicEventMet.saveFileMethod(t);
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -80,32 +106,58 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// <returns></returns>
         public static object saveOrSaveas(Dictionary<Type , object> data)
         {
-            // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            // 定义初始化的路径
-            object path = null;
-            TextBoxUtilsMet.getDicTextTag(t).TryGetValue(TextBoxTagKey.SAVE_FILE_PATH, out path);//赋值路径
-            if (path!=null&&FileUtilsMet.isFileUrl(path.ToString()))//判断路径是否存在
-            {
-                if (path.ToString().Split('.')[path.ToString().Split('.').Length - 1].ToLower().Equals("txt"))
-                {//判断文件后缀名是否为txt格式
-                    if (MessageBox.Show(
-                         "该文件为本地文件,确定要保存并覆盖吗？"
-                         + System.Environment.NewLine
-                         + "文件路径为：" + path
-                        , "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        FileUtilsMet.FileWrite.writeFile(t.Tag.ToString()//调用方法写入文件内容
-                            , t.Text//获取选中标签中的主文本框的值
-                            , Encoding.Default);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                // 获取文本框
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                // 定义初始化的路径
+                object path = null;
+                TextBoxUtilsMet.getDicTextTag(t).TryGetValue(TextBoxTagKey.SAVE_FILE_PATH, out path);//赋值路径
+                if (path!=null&&FileUtilsMet.isFileUrl(path.ToString()))//判断路径是否存在
+                {
+                    if (path.ToString().Split('.')[path.ToString().Split('.').Length - 1].ToLower().Equals("txt"))
+                    {//判断文件后缀名是否为txt格式
+                        if (MessageBox.Show(
+                             "该文件为本地文件,确定要保存并覆盖吗？"
+                             + System.Environment.NewLine
+                             + "文件路径为：" + path
+                            , "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            FileUtilsMet.FileWrite.writeFile(t.Tag.ToString()//调用方法写入文件内容
+                                , t.Text//获取选中标签中的主文本框的值
+                                , Encoding.Default);
+                        }
+                    } else {
+                        MessageBox.Show("只保存TXT格式的文件");
                     }
-                } else {
-                    MessageBox.Show("只保存TXT格式的文件");
                 }
+                else{
+                    saveFileMethod(data);
+                }
+            } else { 
+                MessageBox.Show("无法获取文本框");    
             }
-            else{
-                saveFileMethod(data);
-            }
+            
+            return null;
+        }
+        /// <summary>
+        /// 恢复文本框默认字体
+        /// </summary>
+        /// <returns></returns>
+        public static object textBoxFontReset(Dictionary<Type , object> data) { 
+            ControlsUtilsMet.showAskMessBox("是否恢复全部文本框的默认字体", "恢复默认字体",
+            delegate { 
+                MainTextBConfig.TEXTBOX_FONT = TextBoxDataLibcs.TEXTBOX_FONT_DEF;
+                // 获取tab容器中的全部的主文本框
+                TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
+                if(textAll != null) {
+                    foreach(TextBox textB in textAll) {
+                        if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                            // 设置字体
+                            textB.Font = TextBoxDataLibcs.TEXTBOX_FONT_DEF;
+                        }
+                    }
+                }
+            }, null);
             return null;
         }
         /// <summary>
@@ -113,20 +165,53 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// </summary>
         /// <returns></returns>
         public static object fontDialogMethod(Dictionary<Type , object> data) {
-            // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            PublicEventMet.fontDialogMethod(t);
+            // 判断是否存在文本框
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                object obj = PublicEventMet.fontDialogMethod(t);
+                if(obj != null && obj is Dictionary<string, object>) { 
+                    Dictionary<string, object> dic = (Dictionary<string, object>)obj;
+                    // 获取字体设置对话框
+                    FontDialog fontD = dic.ContainsKey("1") && dic["1"] is FontDialog? (FontDialog)dic["1"] : null;
+                    // 是否点击了确定
+                    DialogResult ok = dic.ContainsKey("2") && dic["2"] is DialogResult? (DialogResult)dic["2"] : DialogResult.None;
+                    if(DialogResult.OK.Equals(ok) && fontD !=  null) {
+                        // 询问是否将该字体应用到全部的文本框
+                        ControlsUtilsMet.showAskMessBox("是否将该字体应用到全部的文本框中", "设置字体", 
+                        delegate{ 
+                            MainTextBConfig.TEXTBOX_FONT = fontD.Font;
+                            // 获取tab容器中的全部的主文本框
+                            TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
+                            if(textAll != null) {
+                                foreach(TextBox textB in textAll) {
+                                    if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                                        // 设置字体
+                                        textB.Font = fontD.Font;
+                                    }
+                                }
+                            }
+                        }, null);
+                    }
+                }
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;    
         }
-                /// <summary>
+
+        /// <summary>
         /// 实现用记事本打开文本框内容
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
         public static object notepadOpenFile(Dictionary<Type , object> data) {
             // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            FileUtilsMet.turnOnNotepad(t.Text);
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                FileUtilsMet.turnOnNotepad(t.Text);
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -136,11 +221,26 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// <returns></returns>
         public static object isAutoLine(Dictionary<Type , object> data) { 
             // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
-            // 设置状态栏显示与隐藏
-            bool check = item.Checked;
-            t.WordWrap = check;
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
+                // 设置状态栏显示与隐藏
+                bool check = item.Checked;
+                t.WordWrap = check;
+                MainTextBConfig.AUTO_WORDWRAP = check;
+                // 获取tab容器中的全部的主文本框
+                TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
+                if(textAll != null) {
+                    foreach(TextBox textB in textAll) {
+                        if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                            // 设置自动换行
+                            textB.WordWrap = check;
+                        }
+                    }
+                }
+            } else { 
+                MessageBox.Show("无法获取文本框");    
+            }
             return null;
         }
         /// <summary>
@@ -150,27 +250,29 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// <returns></returns>
         public static object isStartBarDisplay(Dictionary<Type , object> data) {
             // 获取文本框
-            TextBox t = (TextBox)data[typeof(TextBox)];
-            ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
-            // 全局单例控件工厂
-            Dictionary<string, Control> single = ControlCache.getSingletonCache();
-            if(single.ContainsKey(DefaultNameCof.TOOL_START) && single.ContainsKey(DefaultNameCof.TAB_CONTENT)) { 
-                // 状态栏
-                Control toolStrip = single[DefaultNameCof.TOOL_START];
-                // 标签容器的父容器
-                Control tabParent = single[DefaultNameCof.MAIN_CONTAINER];
-                // 设置状态栏显示与隐藏
-                bool check = item.Checked;
-                toolStrip.Visible = check;
-                // 调整标签容器的位置
-                if(check) { 
-                    tabParent.Height = tabParent.Height - toolStrip.Height;
-                } else {
-                    tabParent.Height = tabParent.Height + toolStrip.Height;
+            if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
+                ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
+                // 全局单例控件工厂
+                Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
+                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
+                    // 状态栏
+                    Control toolStrip = single[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)];
+                    // 标签容器的父容器
+                    Control tabParent = single[EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER)];
+                    // 设置状态栏显示与隐藏
+                    bool check = item.Checked;
+                    toolStrip.Visible = check;
+                    // 调整标签容器的位置
+                    if(check) { 
+                        tabParent.Height = tabParent.Height - toolStrip.Height;
+                    } else {
+                        tabParent.Height = tabParent.Height + toolStrip.Height;
+                    }
                 }
+            } else { 
+                MessageBox.Show("无法获取文本框");    
             }
             return null;
         }
-        
     }
 }

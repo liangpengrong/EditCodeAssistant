@@ -63,6 +63,16 @@ namespace Core {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap 代码 {
+            get {
+                object obj = ResourceManager.GetObject("代码", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap 保存 {
             get {
                 object obj = ResourceManager.GetObject("保存", resourceCulture);

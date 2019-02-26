@@ -1,5 +1,6 @@
 ﻿using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,7 +18,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Panel but = new Panel();
             // 初始背景色
             Color backColor = Color.White;
-            but.Name = DefaultNameCof.ADD_PAGE_BUTTON;
+            but.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_PAGE_BUTTON);
             but.TabStop = false;
             but.Size = new Size(14,14);
             but.Anchor = AnchorStyles.Left | AnchorStyles.Top;
@@ -49,10 +50,10 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public static Panel initSingleMainAddPageButton() { 
             Panel panel = null;
-            Control con = ControlCache.getSingletonCache(DefaultNameCof.ADD_PAGE_BUTTON);
+            Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON);
             if(con == null || !(con is Panel)) {
                 panel = initMainAddPageButton();
-                ControlCache.addSingletonCache(panel);
+                ControlCacheFactory.addSingletonCache(panel);
             } else { 
                 panel = (Panel)con;
             }

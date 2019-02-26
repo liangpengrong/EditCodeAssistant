@@ -47,7 +47,7 @@ namespace Ui.ControlEventLibrary {
                 PublicEventMet.monitorFileShowMess(openFile.FileName, t);
                 t.Focus();
             }
-            return null;
+            return openFile;
         }
 
         /// <summary>
@@ -71,13 +71,14 @@ namespace Ui.ControlEventLibrary {
                 // 监听文件变化并弹窗提醒
                 monitorFileShowMess(newSaveFile.FileName, t);
             }
-            return null;
+            return newSaveFile;
         }
         /// <summary>
         /// 实例化字体对话框
         /// </summary>
         /// <returns></returns>
         public static object fontDialogMethod(TextBox t) {
+            Dictionary<string, object> retDic = new Dictionary<string, object>();
             FontDialog fontD = new FontDialog();
             fontD.AllowSimulations = true;
             fontD.AllowVectorFonts = true;
@@ -86,17 +87,20 @@ namespace Ui.ControlEventLibrary {
             fontD.Font = t.Font;
             fontD.ShowApply = true;
             fontD.ShowEffects = false;
-
+            if(!retDic.ContainsKey("1")) retDic.Add("1", fontD);
             // 判断是否点击了应用
             fontD.Apply += (object sender, EventArgs e) =>{
-               t.Font = fontD.Font; 
+                t.Font = fontD.Font;
+                if(!retDic.ContainsKey("2")) retDic.Add("2", DialogResult.OK);
+                
             };
             DialogResult dialogResult = fontD.ShowDialog();
             // 判断是否点击确定
             if(dialogResult == DialogResult.OK) {
-               t.Font = fontD.Font;
+                t.Font = fontD.Font;
+                if(!retDic.ContainsKey("2"))  retDic.Add("2", DialogResult.OK);
             }
-            return null;    
+            return retDic;    
         }
         /// <summary>
         /// 监听文件变化并弹出提示框提示重新加载或另存为

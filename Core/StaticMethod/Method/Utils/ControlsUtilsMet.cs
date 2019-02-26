@@ -12,180 +12,190 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于控件集的工具类
     /// </summary>
-   public static class ControlsUtilsMet
-   {
+    public static class ControlsUtilsMet
+    {
        
-       /// <summary>
-       /// 以不同颜色重写控件不同宽度的相同样式的边框
-       /// </summary>
-       /// <param name="gra">要画图的矩形区域</param>
-       /// <param name="rec">表示矩形的位置和大小</param>
-       /// <param name="borderS">边框样式</param>
-       /// <param name="leftW">左边框宽度</param>
-       /// <param name="topW">上边框宽度</param>
-       /// <param name="rightW">右边框宽度</param>
-       /// <param name="bottomW">下边框宽度</param>
-       /// <param name="colorLeft">左边框颜色</param>
-       /// <param name="colorTop">上边框颜色</param>
-       /// <param name="colorRight">右边框颜色</param>
-       /// <param name="colorBottom">下边框颜色</param>
-       public static void setCOntrolBorderStyle(Graphics gra,
+        /// <summary>
+        /// 以不同颜色重写控件不同宽度的相同样式的边框
+        /// </summary>
+        /// <param name="gra">要画图的矩形区域</param>
+        /// <param name="rec">表示矩形的位置和大小</param>
+        /// <param name="borderS">边框样式</param>
+        /// <param name="leftW">左边框宽度</param>
+        /// <param name="topW">上边框宽度</param>
+        /// <param name="rightW">右边框宽度</param>
+        /// <param name="bottomW">下边框宽度</param>
+        /// <param name="colorLeft">左边框颜色</param>
+        /// <param name="colorTop">上边框颜色</param>
+        /// <param name="colorRight">右边框颜色</param>
+        /// <param name="colorBottom">下边框颜色</param>
+        public static void setControlBorderStyle(Graphics gra,
             Rectangle rec, ButtonBorderStyle borderS,
             int leftW, int topW, int rightW, int bottomW,
-            Color colorLeft, Color colorTop, Color colorRight, Color colorBottom)
-       {
-           ControlPaint.DrawBorder(gra, rec,
-           colorLeft, leftW, borderS, //左边
-           colorTop, topW, borderS, //上边
-           colorRight, rightW, borderS, //右边
-           colorBottom, bottomW, borderS);//底边
-       }
-       /// <summary>
-       /// 以固定颜色重写控件不同宽度的相同样式的边框
-       /// </summary>
-       /// <param name="gra">要画图的矩形区域</param>
-       /// <param name="rec">表示矩形的位置和大小</param>
-       /// <param name="borderS">边框样式</param>
-       /// <param name="leftW">左边框宽度</param>
-       /// <param name="topW">上边框宽度</param>
-       /// <param name="rightW">右边框宽度</param>
-       /// <param name="bottomW">下边框宽度</param>
-       /// <param name="color">边框颜色</param>
-       public static void setCOntrolBorderStyle(Graphics gra,
-           Rectangle rec, ButtonBorderStyle borderS,
-           int leftW, int topW, int rightW, int bottomW,
-           Color color)
-       {
-           ControlPaint.DrawBorder(gra, rec,
-           color, leftW, borderS, //左边
-           color, topW, borderS, //上边
-           color, rightW, borderS, //右边
-           color, bottomW, borderS);//底边
-       }
-       /// <summary>
-       /// 以不同颜色重写控件相同同宽度的相同样式的边框
-       /// </summary>
-       /// <param name="gra">要画图的矩形区域</param>
-       /// <param name="rec">表示矩形的位置和大小</param>
-       /// <param name="borderS">边框样式</param>
-       /// <param name="borderW">边框宽度</param>
-       /// <param name="colorLeft">左边框颜色</param>
-       /// <param name="colorTop">上边框颜色</param>
-       /// <param name="colorRight">右边框颜色</param>
-       /// <param name="colorBottom">下边框颜色</param>
-       public static void setCOntrolBorderStyle(Graphics gra,
-           Rectangle rec, ButtonBorderStyle borderS,
-           int borderW,
-           Color colorLeft, Color colorTop, Color colorRight, Color colorBottom)
-       {
-           ControlPaint.DrawBorder(gra, rec,
-           colorLeft, borderW, borderS, //左边
-           colorTop, borderW, borderS, //上边
-           colorRight, borderW, borderS, //右边
-           colorBottom, borderW, borderS);//底边
-       }
-       /// <summary>
-       /// 以相同同颜色重写控件相同宽度的相同样式的边框
-       /// </summary>
-       /// <param name="gra">要画图的矩形区域</param>
-       /// <param name="rec">表示矩形的位置和大小</param>
-       /// <param name="borderS">边框样式</param>
-       /// <param name="borderW">边框宽度</param>
-       /// <param name="color">边框颜色</param>
-       public static void setCOntrolBorderStyle(Graphics gra,
-           Rectangle rec, ButtonBorderStyle borderS,
-           int borderW,
-           Color color)
-       {
-           ControlPaint.DrawBorder(gra, rec,
-           color, borderW, borderS, //左边
-           color, borderW, borderS, //上边
-           color, borderW, borderS, //右边
-           color, borderW, borderS);//底边
-       }
-       /// <summary>
-       /// 获取指定控件集中的指定姓名的控件
-       /// </summary>
-       /// <param name="tab">指定的控件集</param>
-       /// <param name="cName">指定的控件姓名</param>
-       /// <returns>获得的控件，如果没获得，则返回null</returns>
-       public static Control getControlByName(Control.ControlCollection cAll, string cName)
-       {
-           Control control = null;
-           foreach (Control con in cAll)
-           {//循环判断给定控件集中的全部控件
-               if (con.Name.Equals(cName))
-               {//判断控件名是否为给定控件名相同名
-                   control = con;//将控件赋值
-                   break;
-               }
-               if(con.Controls.Count > 0){ getControlByName(con.Controls, cName); }
-           }
-           return control;
-       }
-       /// <summary>
-       /// 获取指定控件集中获得焦点的控件
-       /// </summary>
-       /// <param name="tab">指定的控件集</param>
-       /// <param name="type">指定的类型</param>
-       /// <returns>获得的控件，如果没获得，则返回null</returns>
-       public static Control getFocueControlByType(Control.ControlCollection cAll) {
-           Control control = null;
-           foreach (Control con in cAll)
-           {
-               // 循环判断给定控件集中的全部控件
-               if (con.Focused) {
-                   // 将控件赋值
-                   control = con;
-                   break;
-               }
-               if (con.Controls.Count > 0) { getFocueControlByType(con.Controls); }
-           }
-           return control;
-       }
-       /// <summary>
-       /// 获取指定控件集中的指定类型的获得焦点的控件
-       /// </summary>
-       /// <param name="tab">指定的控件集</param>
-       /// <param name="type">指定的类型</param>
-       /// <returns>获得的控件，如果没获得，则返回null</returns>
-       public static Control getFocueControlByType(Control.ControlCollection cAll, Type type) {
-           Control control = null;
-           foreach (Control con in cAll)
-           {//循环判断给定控件集中的全部控件
-               if (con.GetType().Equals(type))
-               {//判断控件类型是否为给定控件类型
-                   if (con.Focused)
-                   {
-                       control = con;//将控件赋值
-                       break;
-                   }
-               }
-               if (con.Controls.Count > 0) { getFocueControlByType(con.Controls, type); }
-           }
-           return control;
-       }
-       /// <summary>
-       /// 获取指定控件集中的指定类型的所有控件
-       /// </summary>
-       /// <param name="tab">指定的控件集</param>
-       /// <param name="type">指定的类型</param>
-       /// <returns>获得的控件列表，如果没获得，则返回空列表</returns>
-       public static List<T> getAllControlByType<T>(List<T> tArr,Control.ControlCollection cAll)where T:Control{
-           // 循环判断给定控件集的全部控件
-           foreach (Control con in cAll)
-           {
-               // 获取类型相同的控件
-               if (con.GetType().Equals(typeof(T)))
-               {//判断控件类型是否为给定控件类型
-                   tArr.Add((T)con);
-               }
-               if(con.Controls.Count > 0) {
-                    getAllControlByType(tArr,con.Controls);
-               } 
-           }
-           return tArr;
-       }
+            Color colorLeft, Color colorTop, Color colorRight, Color colorBottom) {
+
+            ControlPaint.DrawBorder(gra, rec,
+            colorLeft, leftW, borderS, //左边
+            colorTop, topW, borderS, //上边
+            colorRight, rightW, borderS, //右边
+            colorBottom, bottomW, borderS);//底边
+        }
+        /// <summary>
+        /// 以固定颜色重写控件不同宽度的相同样式的边框
+        /// </summary>
+        /// <param name="gra">要画图的矩形区域</param>
+        /// <param name="rec">表示矩形的位置和大小</param>
+        /// <param name="borderS">边框样式</param>
+        /// <param name="leftW">左边框宽度</param>
+        /// <param name="topW">上边框宽度</param>
+        /// <param name="rightW">右边框宽度</param>
+        /// <param name="bottomW">下边框宽度</param>
+        /// <param name="color">边框颜色</param>
+        public static void setCOntrolBorderStyle(Graphics gra,
+            Rectangle rec, ButtonBorderStyle borderS,
+            int leftW, int topW, int rightW, int bottomW,
+            Color color) {
+
+            ControlPaint.DrawBorder(gra, rec,
+            color, leftW, borderS, //左边
+            color, topW, borderS, //上边
+            color, rightW, borderS, //右边
+            color, bottomW, borderS);//底边
+        }
+        /// <summary>
+        /// 以不同颜色重写控件相同同宽度的相同样式的边框
+        /// </summary>
+        /// <param name="gra">要画图的矩形区域</param>
+        /// <param name="rec">表示矩形的位置和大小</param>
+        /// <param name="borderS">边框样式</param>
+        /// <param name="borderW">边框宽度</param>
+        /// <param name="colorLeft">左边框颜色</param>
+        /// <param name="colorTop">上边框颜色</param>
+        /// <param name="colorRight">右边框颜色</param>
+        /// <param name="colorBottom">下边框颜色</param>
+        public static void setCOntrolBorderStyle(Graphics gra,
+            Rectangle rec, ButtonBorderStyle borderS,
+            int borderW,
+            Color colorLeft, Color colorTop, Color colorRight, Color colorBottom) 
+            {
+            ControlPaint.DrawBorder(gra, rec,
+            colorLeft, borderW, borderS, //左边
+            colorTop, borderW, borderS, //上边
+            colorRight, borderW, borderS, //右边
+            colorBottom, borderW, borderS);//底边
+        }
+        /// <summary>
+        /// 以相同同颜色重写控件相同宽度的相同样式的边框
+        /// </summary>
+        /// <param name="gra">要画图的矩形区域</param>
+        /// <param name="rec">表示矩形的位置和大小</param>
+        /// <param name="borderS">边框样式</param>
+        /// <param name="borderW">边框宽度</param>
+        /// <param name="color">边框颜色</param>
+        public static void setCOntrolBorderStyle(Graphics gra,
+            Rectangle rec, ButtonBorderStyle borderS,
+            int borderW,
+            Color color)
+        {
+            ControlPaint.DrawBorder(gra, rec,
+            color, borderW, borderS, //左边
+            color, borderW, borderS, //上边
+            color, borderW, borderS, //右边
+            color, borderW, borderS);//底边
+        }
+        /// <summary>
+        /// 获取指定控件集中的指定姓名的控件
+        /// </summary>
+        /// <param name="tab">指定的控件集</param>
+        /// <param name="cName">指定的控件姓名</param>
+        /// <returns>获得的控件，如果没获得，则返回null</returns>
+        public static Control getControlByName(Control.ControlCollection cAll, string cName)
+        {
+            Control control = null;
+            // 循环判断给定控件集中的全部控件
+            foreach (Control con in cAll) {
+                // 判断控件名是否为给定控件名相同名
+                if(con.Name.Equals(cName)) {
+                    // 将控件赋值
+                    control = con;
+                    break;
+                }
+                if(con.Controls.Count > 0){ 
+                    getControlByName(con.Controls, cName);
+                }
+            }
+            return control;
+        }
+
+        /// <summary>
+        /// 绑定父控件中的
+        /// </summary>
+        /// <param name="cAll"></param>
+        /// <param name="name"></param>
+        /// <param name="eventArgs"></param>
+        public static void bindChildControlMouseEvent(System.Collections.ICollection cAll, string name, MouseEventArgs eventArgs) { 
+            //cAll.GetEnumerator().n
+            //foreach (Collection con in cAll) { 
+                
+            //}
+        }
+        /// <summary>
+        /// 获取指定控件集中获得焦点的控件
+        /// </summary>
+        /// <param name="tab">指定的控件集</param>
+        /// <param name="type">指定的类型</param>
+        /// <returns>获得的控件，如果没获得，则返回null</returns>
+        public static Control getFocueControlByType(Control.ControlCollection cAll) {
+            Control control = null;
+            foreach (Control con in cAll) {
+                // 循环判断给定控件集中的全部控件
+                if(con.Focused) {
+                    // 将控件赋值
+                    control = con;
+                    break;
+                }
+                if (con.Controls.Count > 0) { getFocueControlByType(con.Controls); }
+            }
+            return control;
+        }
+        /// <summary>
+        /// 获取指定控件集中的指定类型的获得焦点的控件
+        /// </summary>
+        /// <param name="tab">指定的控件集</param>
+        /// <param name="type">指定的类型</param>
+        /// <returns>获得的控件，如果没获得，则返回null</returns>
+        public static Control getFocueControlByType<T>(Control.ControlCollection cAll)where T:Control {
+            List<T> conLise = null;
+            Control retCon = null;
+            getAllControlByType<T>(ref conLise, cAll);
+            if(conLise != null && conLise.Count > 0) {
+                foreach (T con in conLise) {
+                    if (con != null && con is T && con.Focused) { 
+                        retCon = con;
+                    }
+                }
+            }
+            return retCon;
+        }
+        /// <summary>
+        /// 获取指定控件集中的指定类型的所有控件
+        /// </summary>
+        /// <param name="tab">指定的控件集</param>
+        /// <param name="type">指定的类型</param>
+        /// <returns>获得的控件列表，如果没获得，则返回空列表</returns>
+        public static void getAllControlByType<T>(ref List<T> conList, Control.ControlCollection cAll) where T:Control{
+            if(conList == null) conList = new List<T>();
+            // 循环判断给定控件集的全部控件
+            foreach (Control con in cAll) {
+                // 判断控件类型是否为给定控件类型
+                if (con != null && con is T) {
+                    conList.Add((T)con);
+                }
+                if(con != null && con.Controls.Count > 0) {
+                    getAllControlByType(ref conList, con.Controls);
+                } 
+            }
+        }
         /// <summary>
         /// 生成历史纪录的Panel
         /// </summary>
@@ -314,7 +324,7 @@ namespace Core.StaticMethod.Method.Utils
             // 设置显示的文本和定位坐标
             tip.Show(tipVal, con, x, y, time);
             // 重绘
-            tip.OwnerDraw = true;
+            tip.OwnerDraw = false;
             tip.Draw += (object sender, DrawToolTipEventArgs e) =>{ 
                 ToolTip tempTT = (ToolTip)sender;
                 using (Brush backBrush = new SolidBrush(tempTT.BackColor))
@@ -322,13 +332,12 @@ namespace Core.StaticMethod.Method.Utils
                     e.Graphics.FillRectangle(backBrush, e.Bounds);
                     e.DrawBorder();
                 }
- 
                 using (Brush textBrush = new SolidBrush(tempTT.ForeColor))
                 {
                     StringFormat sf = new StringFormat();
                     sf.Alignment = StringAlignment.Center;
                     sf.LineAlignment = StringAlignment.Center;
-                    //sf.FormatFlags = StringFormatFlags.;
+                    // sf.FormatFlags = StringFormatFlags.;
                     sf.Trimming = StringTrimming.None;
  
                     e.Graphics.DrawString(e.ToolTipText, e.Font, textBrush, e.Bounds, sf);
@@ -514,12 +523,40 @@ namespace Core.StaticMethod.Method.Utils
             }
         }
         /// <summary>
-        /// 清楚控件的重绘刷新
+        /// 清除控件的重绘刷新
         /// </summary>
         /// <param name="con"></param>
         public static void clearRedrawFlashing(Control con) { 
             con.GetType().GetProperty("DoubleBuffered",System.Reflection.BindingFlags.Instance
-               |System.Reflection.BindingFlags.NonPublic).SetValue(con,true, null);
+                       |System.Reflection.BindingFlags.NonPublic).SetValue(con,true, null);
+        }
+        /// <summary>
+        /// 设置容器集中全部的复选框的Check为true 或 false
+        /// </summary>
+        /// <param name="controls">容器集</param>
+        /// <param name="check">true或false</param>
+        public static void setControlsChecked(Control.ControlCollection controls, bool check) {
+            foreach (Control con in controls) {
+                if(con is CheckBox && con.Enabled) { 
+                    ((CheckBox)con).Checked = check;
+                }else if (con.Controls.Count > 0) { 
+                    setControlsChecked(con.Controls, check);
+                }
+            }
+        }
+        /// <summary>
+        /// 返回容器集中全部的复选框的Check
+        /// </summary>
+        /// <param name="controls">容器集</param>
+        public static void getControlsChecked(ref List<bool> checkens, Control.ControlCollection controls) {
+            if(checkens == null) checkens = new List<bool>();
+            foreach (Control con in controls) {
+                if(con is CheckBox && con.Enabled) { 
+                    checkens.Add( ((CheckBox)con).Checked);
+                }else if (con.Controls.Count > 0) { 
+                    getControlsChecked(ref checkens, con.Controls);
+                }
+            }
         }
     }
 }

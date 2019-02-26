@@ -34,7 +34,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         private void ThereofForm_Load(object sender, EventArgs e) {
             // 设置图标
             this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.关于,true);
-            this.Text = "关于 " + DefaultNameCof.PROGRAM_NAME+"";
+            this.Text = "关于 " + EnumUtilsMet.GetDescription(DefaultNameEnum.PROGRAM_NAME)+"";
             setVersion();
 
             // 组装Tab容器
@@ -54,13 +54,13 @@ namespace UI.ComponentLibrary.FormLibrary {
                 + "版本：1.0.2"+Environment.NewLine
                 + "内部修订版本：1.0.0.2"+Environment.NewLine
                 + "此应用是基于C#和.NET Framework 4.0开发，"
-                + "用于解决在工作中遇到的批量的，重复的，繁琐的处理字符串，"+Environment.NewLine
+                + "用于解决程序开发工作中遇到的批量的，重复的字符串生成与处理"+Environment.NewLine
                 + "GitHub地址："+github;
-            this.version.Text = version;
-            this.version.ForeColor = ColorTranslator.FromHtml("#E13D3D");
-            this.label1.Location = new Point(label1.Location.X, this.version.Location.Y + this.version.Height+5);
-            this.tabControl1.Location = new Point(this.tabControl1.Location.X, this.label1.Location.Y+this.label1.Height+ 3);
-            this.tabControl1.Height = this.ClientSize.Height - (this.tabControl1.Location.Y+5);
+            head_textB.Text = version;
+            head_textB.ForeColor = ColorTranslator.FromHtml("#E13D3D");
+            系统信息_lab.Location = new Point(系统信息_lab.Location.X, head_textB.Location.Y + head_textB.Height+5);
+            tabControl1.Location = new Point(tabControl1.Location.X, 系统信息_lab.Location.Y+系统信息_lab.Height+ 3);
+            tabControl1.Height = ClientSize.Height - (tabControl1.Location.Y+5);
         }
 
         /// <summary>
@@ -136,6 +136,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         private string getVariable() {
             StringBuilder strB = new StringBuilder();
+            string retStr = "";
             //环境变量
             // HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment
             IDictionary dicMachine = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Machine);
@@ -156,13 +157,12 @@ namespace UI.ComponentLibrary.FormLibrary {
             strB.Append(string.Format("{0}{1}", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", Environment.NewLine));
             IDictionary dicProcess = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Process);
             strB.Append(string.Format("{0}： {1}", "进程环境变量", Environment.NewLine));
-            foreach (string str in dicProcess.Keys)
-            {
+            foreach (string str in dicProcess.Keys) {
                 string val = dicProcess[str].ToString();
                 strB.Append(string.Format("{0}： {1}{2}", str, val, Environment.NewLine));
             }
-
-            return strB.ToString();
+            retStr = StringUtilsMet.trimEndNewLine(strB.ToString());
+            return retStr;
         }
 
         /// <summary>
@@ -171,18 +171,19 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         private string getSpecialcatalog() {
             StringBuilder strB = new StringBuilder();
+            string retStr = "";
             //特殊目录 
-             string[] names = Enum.GetNames(typeof(Environment.SpecialFolder));
-             foreach (string name in names){
- 
-                 Environment.SpecialFolder sf;
-                 if (Enum.TryParse<Environment.SpecialFolder>(name, out sf))
-                 {
-                     string folder = Environment.GetFolderPath(sf);
-                     strB.Append(string.Format("{0}： {1}{2}", name, folder, Environment.NewLine));
-                 }
-             }
-             return strB.ToString();
+            string[] names = Enum.GetNames(typeof(Environment.SpecialFolder));
+            foreach (string name in names){
+                Environment.SpecialFolder sf;
+                if (Enum.TryParse<Environment.SpecialFolder>(name, out sf))
+                {
+                    string folder = Environment.GetFolderPath(sf);
+                    strB.Append(string.Format("{0}： {1}{2}", name, folder, Environment.NewLine));
+                }
+            }
+            retStr = StringUtilsMet.trimEndNewLine(strB.ToString());
+            return retStr;
         }
         /// <summary>
         /// 判断操作系统版本

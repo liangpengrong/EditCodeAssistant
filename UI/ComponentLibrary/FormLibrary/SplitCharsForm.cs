@@ -12,6 +12,7 @@ using UI.ComponentLibrary.ControlMethod;
 using Core.CacheLibrary.OperateCache.DataViewOperateCache;
 using Core.CacheLibrary.FormCache;
 using Core.DefaultData.DataLibrary;
+using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 
 namespace UI.ComponentLibrary.FormLibrary {
     /// <summary>
@@ -22,7 +23,6 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 存放数据的数据表格
         /// </summary>
         private DataGridView mainDataGridView;
-
         /// <summary>
         /// 要操作的文本框
         /// </summary>
@@ -60,7 +60,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private int[] indexArr = null;
         // 单元格默认宽度
-        private int cellDefWidth = 100;
+        // private int cellDefWidth = 100;
         // 单元格默认高度
         private int cellDefHeight = 25;
         // 列头的默认高度
@@ -71,9 +71,9 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 构造器
         /// </summary>
         /// <param name="textBox"></param>
-        public SplitCharsForm(TextBox textBox) {
+        public SplitCharsForm() {
             // 赋值要操作的文本框
-            this.textBox = textBox;
+            this.textBox = TextBoxCache.UpOperatingTextBox;
             InitializeComponent();
             // 初始化消息提示控件
             initToolTip();
@@ -83,18 +83,20 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 打开单例模式下的分列窗口
         /// </summary>
         /// <param name="t">所需文本框</param>
-        /// <param name="isShow">是否显示窗体</param>
+        /// <param name="isShowTop">是否显示为顶层窗体</param>
         /// <returns></returns>
-        public static SplitCharsForm initSingleSplitCharsForm(TextBox t){
+        public static SplitCharsForm initSingleSplitCharsForm(bool isShowTop){
             SplitCharsForm splitChars = null;
-            Form form = FormCache.getSingletonCache(DefaultNameCof.SPLIT_CHARS_FORM);
-            if(form == null || !(form is SplitCharsForm)) { 
-                splitChars = new SplitCharsForm(t);
-                splitChars.Name = DefaultNameCof.SPLIT_CHARS_FORM;
-                splitChars = FormCache.ininSingletonForm(splitChars, true);
+            Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.SPLIT_CHARS_FORM);
+            if(form == null || form.IsDisposed || !(form is SplitCharsForm)) { 
+                splitChars = new SplitCharsForm();
+                splitChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM);
+                splitChars = FormCacheFactory.ininSingletonForm(splitChars, true);
             } else {
                 splitChars = (SplitCharsForm)form;
+                splitChars.Activate();
             }
+            if(isShowTop) FormCacheFactory.addTopFormCahce(splitChars);
             return splitChars;
         }
         /// <summary>
@@ -395,12 +397,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 初始化数据表格配置
         /// </summary>
         private void initDataViewConf() {
-            DataTableTemplate dataTable = new DataTableTemplate();
-            dataTable.cellDefHeight = cellDefHeight;
-            dataTable.cellDefWidth = cellDefWidth;
-            dataTable.colHeadersHeight = colHeadersHeight;
-            DataGridView dataView = dataTable.数据表格;
-            dataView.Name = DateTime.Now.Ticks.ToString()+"DataGridView";
+            DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(cellDefHeight ,colHeadersHeight, Color.Empty, Color.Empty);
             dataView.Location = new Point(操作区容器.Location.X, 操作区容器.Height + 操作区容器.Location.Y + 7);
             Controls.Add(dataView);
             mainDataGridView = dataView;
@@ -462,7 +459,8 @@ namespace UI.ComponentLibrary.FormLibrary {
                 }
             };
             // 加入到容器中
-            comboBox.Location = new Point(5,18);
+            表格内容_label.Location = new Point(表格内容_label.Location.X, (操作区容器.Height-表格内容_label.Height)/2+4);
+            comboBox.Location = new Point(表格内容_label.Right+5, (操作区容器.Height-comboBox.Height)/2+2);
             操作区容器.Controls.Add(comboBox);
         }
         /// <summary>
@@ -546,6 +544,8 @@ namespace UI.ComponentLibrary.FormLibrary {
         }
         // 分列按钮点击事件
         private void 分列_but_Click(object sender, EventArgs e) {
+            // 赋值要操作的文本框
+            this.textBox = TextBoxCache.UpOperatingTextBox;
             // 清空缓存
             DataViewCache.removeCacheFactory(mainDataGridView.Name);
             // 执行验证
@@ -555,12 +555,6 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 执行分列
             splitMethod();
         }
-        // 窗体关闭事件
-        private void SplitCharsForm_FormClosed(object sender, FormClosedEventArgs e) {
-            // 清除单例工厂中的本窗体
-            // PubCacheArea.FormCache.setSingletonFactory(Name, null);
-        }
-
         private void 关闭_but_Click(object sender, EventArgs e) {
             Close();
         }

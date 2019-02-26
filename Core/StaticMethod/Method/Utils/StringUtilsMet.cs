@@ -9,7 +9,7 @@ namespace Core.StaticMethod.Method.Utils {
     /// <summary>
     /// 字符串操作工具类
     /// </summary>
-    public class StringUtilsMet {
+    public static class StringUtilsMet {
         /// <summary>
         /// 将字符串中的指定字符串替换为某个字符串(是否区分大小写)
         /// </summary>
@@ -269,8 +269,9 @@ namespace Core.StaticMethod.Method.Utils {
         /// 将字符串转化为驼峰形式
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="type">0-大写类型 1-小写类型</param>
         /// <returns></returns>
-        public static string charsToHump(string str) { 
+        public static string charsToHump(string str, int type) { 
             string[] splitArr = new string[]{"_", "|", "\\", "/", ":", ","}; 
             string[] splLine = str.Split(new string[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
             string[] arr = null;
@@ -280,14 +281,19 @@ namespace Core.StaticMethod.Method.Utils {
                 index = 0;
                 arr = ss.Split(splitArr, StringSplitOptions.RemoveEmptyEntries);
                 foreach(string s in arr) { 
-                    if(index > 0 && Char.IsLower(s.ToCharArray()[0])) { 
+                    if(index > 0 && Char.IsLower(s.ToCharArray()[0])) {
                         retStr.Append(s.Substring(0,1).ToUpper() + s.Substring(1,s.Length-1));
                     } else { 
-                        retStr.Append(s);    
+                        string appStr = s;
+                        if (type == 0) {
+                            appStr = s.Length > 0? s.Substring(0,1).ToUpper()+s.Substring(1) : s;
+                        }else if (type == 1) { 
+                            appStr = s.Length > 0? s.Substring(0,1).ToLower()+s.Substring(1) : s;
+                        }
+                        retStr.Append(appStr);
                     }
                     index ++;
                 }
-                retStr.Append(Environment.NewLine);
             }
             return retStr.ToString();;
         }
@@ -352,6 +358,19 @@ namespace Core.StaticMethod.Method.Utils {
                     break;
             }
             return strArr;
+        }
+        /// <summary>
+        /// 去除尾部的换行符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string trimEndNewLine(string str) { 
+            string retStr = "";
+            // 去除最后一个换行符
+            if(str.Length >= Environment.NewLine.Length) { 
+                retStr = str.Substring(0, str.Length - Environment.NewLine.Length);    
+            }
+            return retStr;
         }
     }
 }

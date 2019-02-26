@@ -1,5 +1,6 @@
 ﻿using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind {
         /// 关于状态栏的事件绑定
         /// </summary>
         internal static void setOnStatusBarEventBind(TextBoxEventTypeEnum eventType, TextBox textBox) { 
-            StatusStrip toolStrip = ControlCache.getSingletonCache().ContainsKey(DefaultNameCof.TOOL_START) ?
-            (StatusStrip)ControlCache.getSingletonCache()[DefaultNameCof.TOOL_START]:null;
+            StatusStrip toolStrip = ControlCacheFactory.getSingletonCache().ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) ?
+            (StatusStrip)ControlCacheFactory.getSingletonCache()[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)]:null;
 
             Dictionary<Type, object> data = new Dictionary<Type, object>();
             data.Add(typeof(TextBox), textBox);
@@ -54,6 +55,8 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind {
                     TextStatusBarEventMet.setRowColumn(data);
                     /*============赋值给状态栏选中字符数===================*/
                     TextStatusBarEventMet.setSelectChars(data);
+                    /*============赋值给状态栏只读状态===================*/
+                    TextStatusBarEventMet.refreshTextReadOnly(data);
                 break;
                 case TextBoxEventTypeEnum.键盘按下事件 :
                         /*============赋值给状态栏当前行列数===================*/

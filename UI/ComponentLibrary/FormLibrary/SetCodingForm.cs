@@ -96,12 +96,16 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         private Dictionary<string, int> getEncoder() { 
             Dictionary<string, int> retDic = new Dictionary<string, int>();
-            EncodingInfo[] codings = Encoding.GetEncodings();
-            foreach(EncodingInfo coding in codings) {
-                if( !retDic.ContainsKey(coding.Name.ToUpper())) { 
-                    retDic.Add(coding.Name.ToUpper(), coding.CodePage);
-                }
-            }
+            retDic.Add(Encoding.ASCII.BodyName, Encoding.ASCII.CodePage);
+            retDic.Add(Encoding.BigEndianUnicode.BodyName, Encoding.BigEndianUnicode.CodePage);
+            retDic.Add(Encoding.Default.BodyName, Encoding.Default.CodePage);
+            retDic.Add(Encoding.UTF8.BodyName, Encoding.UTF8.CodePage);
+            //EncodingInfo[] codings = Encoding.GetEncodings();
+            //foreach(EncodingInfo coding in codings) {
+            //    if( !retDic.ContainsKey(coding.Name.ToUpper())) { 
+            //        retDic.Add(coding.Name.ToUpper(), coding.CodePage);
+            //    }
+            //}
             // 升序排序
             retDic = retDic.OrderBy(p=>p.Key).ToDictionary(p => p.Key, o => o.Value);
 

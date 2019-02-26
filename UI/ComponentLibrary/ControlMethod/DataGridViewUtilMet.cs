@@ -23,6 +23,19 @@ namespace UI.ComponentLibrary.ControlMethod {
             return intList.Max()+10;
         }
         /// <summary>
+        /// 设置单元格对应的列的值
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="columnI"></param>
+        /// <param name="val"></param>
+        public static void setDataGridViewColunmVal(DataGridView view, int columnI, object[] vals) { 
+            for(int i=0; i < view.Rows.Count; i++) {
+                if(i <= vals.Length-1) { 
+                    view.Rows[i].Cells[columnI].Value = vals[i];
+                }
+            }
+        }
+        /// <summary>
         /// 单元格选中后改变对应的行标题,列标题颜色
         /// </summary>
         /// <param name="colIndex">选中单元格列索引</param>
@@ -96,23 +109,28 @@ namespace UI.ComponentLibrary.ControlMethod {
         /// <param name="view">单元格</param>
         /// <param name="colInxe">列索引</param>
         /// <param name="rowIndex">行索引</param>
-        /// <param name="isClearSel">是否清楚清楚之前的单元格选中</param>
-        public static void selectAllCellBySingle(DataGridView view, int colInxe, int rowIndex, Boolean isSelet, Boolean isClearSel){
-            // 是否需要清楚之前的选中
-            if(isClearSel) view.ClearSelection();
-            if(colInxe >= 0) {
-                // 全选某列
-                view.Columns[colInxe].HeaderCell.SortGlyphDirection = SortOrder.None;
-                view.Columns[colInxe].Selected = isSelet;
-                foreach(DataGridViewColumn column in view.Columns) { 
-                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+        /// <param name="isSelet">全选或反选</param>
+        /// <param name="isClearSel">是否清除之前的单元格选中</param>
+        public static void selectAllCellBySingle(DataGridView view, int colInxe, int rowIndex, bool isSelet, bool isClearSel){
+            if(view != null) { 
+                // 是否需要清楚之前的选中
+                if(isClearSel) view.ClearSelection();
+                // 是否需要清楚之前的选中
+                if(isClearSel) view.ClearSelection();
+                if(colInxe >= 0) {
+                    // 全选某列
+                    foreach(DataGridViewColumn column in view.Columns) { 
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    }
+                    view.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
+                    view.Columns[colInxe].HeaderCell.SortGlyphDirection = SortOrder.None;
+                    view.Columns[colInxe].Selected = isSelet;
                 }
-                view.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
-            }
-            if(rowIndex >= 0) { 
-                // 全选某行
-                view.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-                view.Rows[rowIndex].Selected = isSelet;
+                if(rowIndex >= 0) { 
+                    // 全选某行
+                    view.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+                    view.Rows[rowIndex].Selected = isSelet;
+                }
             }
         }
         /// <summary>
@@ -132,6 +150,7 @@ namespace UI.ComponentLibrary.ControlMethod {
             DataGridViewSelectedCellCollection selCell =  view.SelectedCells;
             // 选中单元格的行与列索引
             int[][] rowsColns = getSelCellRowsColns(view);
+            if(rowsColns.Length == 0) return;
             int minRow = rowsColns[0].Min();
             int minColn = rowsColns[1].Min();
 
@@ -234,6 +253,64 @@ namespace UI.ComponentLibrary.ControlMethod {
             foreach(DataGridViewCell cell in selCell) { 
                 cell.Value = null;
             } 
+        }
+        /// <summary>
+        /// 将单元格的数据同步到该单元格所属的行或列
+        /// </summary>
+        /// <param name="cells">单元格集合</param>
+        /// <param name="type">0-行 1-列 2全部</param>
+        public static void cellsDataCopyToRowOrCol(DataGridViewCell[] cells, int type){
+            if(cells != null && cells.Length > 0) { 
+                DataGridView dataGrid = cells[0].DataGridView;
+                List<int> columnIndexs = new List<int>();
+                string val = null;
+                object[] vals = null;
+                int count = 0;
+                // 同步行
+                if(type == 2 || type == 0) {
+                    // 遍历选中的单元格
+                    foreach(DataGridViewCell cell in cells) {
+                        val = cell.Value.ToString();
+                        // 该单元格对应行的单元格数
+                        count = cell.OwningRow.Cells.Count;
+                        vals = new object[count];
+                        for(int i=0; i<vals.Length; i++) { 
+                            vals[i] = val;
+                        }
+                        cell.OwningRow.SetValues(vals);
+                    }
+                }
+                // 同步列
+                if(type == 2 || type == 1) {
+                    vals = new object[dataGrid.RowCount];
+                    foreach(DataGridViewCell cell in cells) {
+                        if(!columnIndexs.Contains(cell.ColumnIndex)) { 
+                            val = cell.Value.ToString();
+                            for(int i = 0;i< dataGrid.RowCount;i++) { 
+                                vals[i] = val;
+                            }
+                            // 设置该列的值
+                            setDataGridViewColunmVal(dataGrid,cell.ColumnIndex,vals);
+                            columnIndexs.Add(cell.ColumnIndex);
+                        }
+                    }
+                }
+                
+            }
+            
+        }
+        /// <summary>
+        /// 将选中的单元格的数据同步到该单元格所属的行或列
+        /// </summary>
+        /// <param name="cells">单元格集合</param>
+        /// <param name="type">0-行 1-列 2全部</param>
+        public static void cellsDataCopyToRowOrCol(DataGridView dataGrid, int type){
+            DataGridViewSelectedCellCollection selCells = dataGrid.SelectedCells;
+            // 将选中单元格集合变为数组
+            DataGridViewCell[] cells = new DataGridViewCell[selCells.Count];
+            selCells.CopyTo(cells,0);
+            // 执行同步
+            cellsDataCopyToRowOrCol(cells, type);
         }
         /// <summary>
         /// 获取表格中选定单元格的数据

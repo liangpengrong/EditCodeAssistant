@@ -22,11 +22,13 @@ namespace UI.StatusBarLibrary
         private Font rifMenuFont = new Font("微软雅黑", 9, FontStyle.Regular);
         // 状态栏默认字体
         private Font startsFont = new Font("微软雅黑", 8, FontStyle.Regular);
+        // 状态栏默认背景色
+        private Color startsDefBackColor = ColorTranslator.FromHtml("#007ACC");
         // 状态栏的子项鼠标移入颜色
-        private Color startsItemMouseEnter = ColorTranslator.FromHtml("#91C9F7");
+        private Color startsItemMouseEnter = ColorTranslator.FromHtml("#3395D6");
         // 状态栏
         private StatusStrip statusStrip = new StatusStrip();
-
+         
         private TextStatusBar()
         {
             // 加载状态栏默认配置
@@ -40,14 +42,14 @@ namespace UI.StatusBarLibrary
         /// 加载状态栏默认配置
         /// </summary>
         private void initStatusStripConfig() {
-            statusStrip.Name = DefaultNameCof.TOOL_START;
+            statusStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START);
             statusStrip.AutoSize = false;
+            statusStrip.BackColor = startsDefBackColor;
             statusStrip.Padding = new Padding(3,0,3,0);
             statusStrip.Font = startsFont;
             statusStrip.AutoSize = false;
             statusStrip.Height = 20;
             statusStrip.LayoutStyle = ToolStripLayoutStyle.StackWithOverflow;
-            statusStrip.BackColor = Color.White;
             statusStrip.Dock = DockStyle.Bottom;
             statusStrip.ShowItemToolTips = true;
         }
@@ -75,18 +77,20 @@ namespace UI.StatusBarLibrary
         private ToolStripStatusLabel getDefStatusLabel(StatusStrip strutsBar, string name, string text, object tag) { 
             ToolStripStatusLabel label = new ToolStripStatusLabel();
             label.Margin = new Padding(0,0,0,0);
+            label.BackColor = startsDefBackColor;
             label.Name = name;
             label.Text = text;
             label.Width = 100;
             label.Padding = new Padding(5,0,5,0);
             label.Height = strutsBar.Height;
             label.Font = strutsBar.Font;
+            label.ForeColor = Color.White;
             label.AutoToolTip = true;
             label.Tag = tag;
             label.AutoSize = true;
+            label.AutoToolTip = true;
             label.TextAlign = ContentAlignment.MiddleCenter;
             label.Font = strutsBar.Font;
-            label.BackColor = strutsBar.BackColor;
             label.Visible = true;
             // 启用双击事件
             label.DoubleClickEnabled = true;
@@ -119,7 +123,7 @@ namespace UI.StatusBarLibrary
             listStrAll.Add(new string[] { StrutsStripDataLib.ItemName.行列数, "行：1，列：1", "行：{1},列：{2}" });
             listStrAll.Add(new string[] { StrutsStripDataLib.ItemName.编码, Encoding.UTF8.BodyName.ToUpper(), "字符编码" });
             listStrAll.Add(new string[] { StrutsStripDataLib.ItemName.大小写状态, "小写", "大小写" });
-            listStrAll.Add(new string[] { StrutsStripDataLib.ItemName.只读状态, "否", "只读状态" });
+            listStrAll.Add(new string[] { StrutsStripDataLib.ItemName.只读状态, "只渎：否", "只读" });
             return listStrAll;
         }
         /// <summary>
@@ -137,7 +141,7 @@ namespace UI.StatusBarLibrary
             rigMenu.ShowItemToolTips = true;
             rigMenu.TabStop = true;
             rigMenu.Font = rifMenuFont;
-            rigMenu.Closing += new ToolStripDropDownClosingEventHandler(MenuItemUtilsMet.moveOutClosing);
+            rigMenu.Closing += new ToolStripDropDownClosingEventHandler(ToolStripUtilsMet.moveOutClosing);
             ToolStripItemCollection tempArr = strutsbar.Items;
             foreach(ToolStripItem stripL in tempArr) {
                 item = new ToolStripMenuItem();
@@ -146,7 +150,7 @@ namespace UI.StatusBarLibrary
                 item.BackColor = strutsbar.BackColor;
                 item.Text = stripL.Name;
                 item.CheckOnClick = true;
-                item.ToolTipText = stripL.ToolTipText;
+                item.AutoToolTip = true;
                 item.CheckedChanged += menuItemCheckedChanged;
                 // 将右键菜单对应的状态栏子项Name放入Tag数据中
                 item.Font = rigMenu.Font;
@@ -196,9 +200,9 @@ namespace UI.StatusBarLibrary
         private void toolLabelMouseDown(object sender, MouseEventArgs e)
         {
             ToolStripStatusLabel lable = (ToolStripStatusLabel)sender;
-            List<TextBox> textList = new List<TextBox>();
-            ControlsUtilsMet.getAllControlByType<TextBox>(textList,ControlCache.getSingletonCache(DefaultNameCof.TAB_CONTENT).Controls);
-            TextBox textBox = textList[0];
+            List<Control> textList = new List<Control>();
+            ControlsUtilsMet.getAllControlByType(ref textList,ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT).Controls);
+            TextBox textBox = textList[0] is TextBox? (TextBox)textList[0] : new TextBox();
             //判断当前控件是否有与其关联的句柄并且按下的是左键
             if (this.statusStrip.IsHandleCreated&&e.Button.Equals(MouseButtons.Left)){
                 // 改变背景色
@@ -216,6 +220,7 @@ namespace UI.StatusBarLibrary
             toolBindingDic.Add(StrutsStripDataLib.ItemName.选中字符数, new methodDelegate(TextStatusBarEventMet.openCharsStatistics));
             toolBindingDic.Add(StrutsStripDataLib.ItemName.编码, new methodDelegate(TextStatusBarEventMet.openSetCodingForm));
             toolBindingDic.Add(StrutsStripDataLib.ItemName.大小写状态, new methodDelegate(TextStatusBarEventMet.setCaseMouse));
+            toolBindingDic.Add(StrutsStripDataLib.ItemName.只读状态, new methodDelegate(TextStatusBarEventMet.setTextReadOnly));
             return toolBindingDic;
         }
 
@@ -223,11 +228,18 @@ namespace UI.StatusBarLibrary
         private void toolLabelDoubleClick(object sender, EventArgs e)
         {
             ToolStripLabel label = (ToolStripLabel)sender;
-
-            List<TextBox> textList = new List<TextBox>();
-            ControlsUtilsMet.getAllControlByType<TextBox>(textList,ControlCache.getSingletonCache(DefaultNameCof.TAB_CONTENT).Controls);
-            TextBox textBox = textList[0];
-
+            //获取当前主Tab容器中的文本框
+            TextBox textBox = null;
+            List<Control> controls = new List<Control>();
+            // 获得主tab容器
+            Control tabCon = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            if(tabCon != null && tabCon is TabControl) { 
+                TabControl tab = (TabControl)tabCon;
+                ControlsUtilsMet.getAllControlByType(ref controls, tab.SelectedTab.Controls);
+                if (controls.Count > 0 && controls[0] is TextBox) { 
+                    textBox = (TextBox)controls[0];
+                }
+            }
             Delegate myDelegate = null;
             doubleClickEventBinding().TryGetValue(label.Name, out myDelegate);
             if (myDelegate!=null)
@@ -242,14 +254,14 @@ namespace UI.StatusBarLibrary
         // 状态栏文本改变公用事件
         private void toolLabelTextChanged(object sender, EventArgs e) {
             ToolStripLabel lab = (ToolStripLabel)sender;
-            if(StrutsStripDataLib.ItemName.大小写状态.Equals(lab.Name)) {
-                if("大写".Equals(lab.Text)) {
-                    lab.ForeColor = Color.Red;
-                } else { 
-                    lab.ForeColor = Color.Black;
-                }
+            //if(StrutsStripDataLib.ItemName.大小写状态.Equals(lab.Name)) {
+            //    if("大写".Equals(lab.Text)) {
+            //        lab.ForeColor = Color.Red;
+            //    } else { 
+            //        lab.ForeColor = Color.Black;
+            //    }
             
-            }
+            //}
         }
         // 状态栏鼠标移入公用事件
         private void toolLabelMouseEnter(object sender, EventArgs e) {
@@ -257,8 +269,6 @@ namespace UI.StatusBarLibrary
             // 改变背景色
             if(lab.Enabled) { 
                 lab.BackColor = startsItemMouseEnter;
-            } else { 
-                lab.BackColor = ColorTranslator.FromHtml("#DDDDDD");
             }
         }
         // 状态栏鼠标移出公用事件
@@ -271,10 +281,10 @@ namespace UI.StatusBarLibrary
         /// </summary>
         /// <returns></returns>
         public static StatusStrip getToolStripStatus() { 
-            Control con = ControlCache.getSingletonCache(DefaultNameCof.TOOL_START);
+            Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TOOL_START);
             if(con == null) {
                 TextStatusBar textStatusBar = new TextStatusBar();
-                ControlCache.addSingletonCache(textStatusBar.statusStrip);
+                ControlCacheFactory.addSingletonCache(textStatusBar.statusStrip);
                 return textStatusBar.statusStrip;
             } else { 
                 return (StatusStrip)con;

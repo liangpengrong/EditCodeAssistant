@@ -63,59 +63,9 @@ namespace CharsToolset.Properties {
         /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon 编辑器128x128 {
+        internal static System.Drawing.Icon 编辑器适配 {
             get {
-                object obj = ResourceManager.GetObject("编辑器128x128", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Icon 编辑器16x16 {
-            get {
-                object obj = ResourceManager.GetObject("编辑器16x16", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Icon 编辑器256x256 {
-            get {
-                object obj = ResourceManager.GetObject("编辑器256x256", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Icon 编辑器32x32 {
-            get {
-                object obj = ResourceManager.GetObject("编辑器32x32", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Icon 编辑器512x512 {
-            get {
-                object obj = ResourceManager.GetObject("编辑器512x512", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Icon 编辑器64x64 {
-            get {
-                object obj = ResourceManager.GetObject("编辑器64x64", resourceCulture);
+                object obj = ResourceManager.GetObject("编辑器适配", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

@@ -73,7 +73,7 @@ namespace UI.ComponentLibrary.FormLibrary
             // 判断验证是否通过
             if( 0.Equals(textBox.TextLength)) { 
                 MessageBox.Show("要操作的文本框内容不能为空");
-            } else if( !isCheck){ 
+            } else if(!isCheck){ 
                 MessageBox.Show("验证未通过");
             } else{ 
                 goTextLings = long.Parse(this.行号T.Text);
@@ -119,11 +119,11 @@ namespace UI.ComponentLibrary.FormLibrary
                 }
                 int row = int.Parse(t.Text);
                 if(row <=0 || row > maxTextLings) { 
-                    errorMes(t,"行号必须为大于0小于"+maxTextLings+"的数字");
+                    errorMes(t,"行号必须为大于0小于等于"+maxTextLings+"的数字");
                     return false;
                 }
             } catch{
-                errorMes(t,"行号必须为大于0小于"+maxTextLings+"的数字");
+                errorMes(t,"行号必须为大于0小于等于"+maxTextLings+"的数字");
                 return false;
             }
             

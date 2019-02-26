@@ -199,26 +199,9 @@ namespace Core.StaticMethod.Method.Utils
         public static object textDelBlankLine(TextBox t)
         {
             int index = t.SelectionStart;
-            StringBuilder strB = new StringBuilder();
-            string text = t.Text;
-            if(!t.SelectionLength.Equals(0)) text = t.SelectedText;
-
-            string[] sAll = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            foreach (string s in sAll)
-            {
-                if (!s.Equals(""))
-                {
-                    strB.AppendLine(s);
-                }
-            }
-
-            if (!t.SelectionLength.Equals(0)) {
-                t.Text=strB.ToString().Remove(strB.ToString().Length - System.Environment.NewLine.Length);
-            } else { 
-                t.SelectedText=strB.ToString().Remove(strB.ToString().Length - System.Environment.NewLine.Length);
-            }
-            
-
+            string[] lines = t.Lines;
+            lines = lines.Where(line=> !line.Equals("")).ToArray();
+            t.Text = string.Join(Environment.NewLine, lines);
             t.SelectionStart =  index;
             return null;
         }
@@ -273,53 +256,142 @@ namespace Core.StaticMethod.Method.Utils
         /// 实现文本框根据选择情况转化为大写
         /// </summary>
         /// <param name="t"></param>
+        /// <param name="type">0-全部 1-行首 2-行尾</param>
         /// <returns></returns>
-        public static object textToUpper(TextBox t) 
+        public static void textToUpper(TextBox t, int type) 
         {
             int index = t.SelectionStart;
             int selLen = t.SelectionLength;
-            if (t.SelectionLength.Equals(0)) {
-                t.Text = t.Text.ToUpperInvariant();
-            } else  {
-                t.SelectedText = t.SelectedText.ToUpperInvariant();
+            switch(type){
+            case 0 :
+                if (t.SelectionLength.Equals(0)) {
+                    t.Text = t.Text.ToUpperInvariant();
+                } else  {
+                    t.SelectedText = t.SelectedText.ToUpperInvariant();
+                }
+            break; 
+            case 1 :
+                if (t.TextLength > 0) { 
+                    string[] line = t.Lines;
+                    for (int i=0,len=line.Length; i<len; i++) { 
+                        string str = line[i];
+                        line[i] = str.Length > 0? str.Substring(0,1).ToUpperInvariant()+str.Substring(1) : str;
+                    }
+                    string text = string.Join(Environment.NewLine, line);
+                    t.Text = text;
+                }
+            break;
+            case 2 :
+                if (t.TextLength > 0) {                     
+                    string[] line = t.Lines;
+                    for (int i=0,len=line.Length; i<len; i++) { 
+                        string str = line[i];
+                        line[i] = str.Length > 0? str.Substring(0, str.Length-1) + str.Substring(str.Length - 1, 1).ToUpperInvariant() : str;
+                    }
+                    string text = string.Join(Environment.NewLine, line);
+                    t.Text = text;
+                }
+            break; 
             }
+            
             t.SelectionStart =  index;
             t.SelectionLength = selLen;
-            return null;
         }
+
         /// <summary>
         /// 实现文本框根据选择情况转化为小写
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static object textToLower(TextBox t)
+        public static void textToLower(TextBox t, int type)
         {
             int index = t.SelectionStart;
             int selLen = t.SelectionLength;
-            if(t.SelectionLength.Equals(0)) {
+
+            switch(type){
+            case 0 :
+                if(t.SelectionLength.Equals(0)) {
                 t.Text = t.Text.ToLowerInvariant();
             } else {
                 t.SelectedText = t.SelectedText.ToLowerInvariant();
             }
+            break; 
+            case 1 :
+                if (t.TextLength > 0) { 
+                    string[] line = t.Lines;
+                    for (int i=0,len=line.Length; i<len; i++) { 
+                        string str = line[i];
+                        line[i] = str.Length > 0? str.Substring(0,1).ToLowerInvariant()+str.Substring(1) : str;
+                    }
+                    string text = string.Join(Environment.NewLine, line);
+                    t.Text = text;
+                }
+            break;
+            case 2 :
+                if (t.TextLength > 0) {                     
+                    string[] line = t.Lines;
+                    for (int i=0,len=line.Length; i<len; i++) { 
+                        string str = line[i];
+                        line[i] = str.Length > 0? str.Substring(0, str.Length-1) + str.Substring(str.Length - 1, 1).ToLowerInvariant() : str;
+                    }
+                    string text = string.Join(Environment.NewLine, line);
+                    t.Text = text;
+                }
+            break; 
+            }
+            
             t.SelectionStart =  index;
             t.SelectionLength = selLen;
-            return null;
+        }
+        /// <summary>
+        /// 将文本框的内容按行并按指定范围转为为大写或小写
+        /// </summary>
+        /// <param name="t">文本框</param>
+        /// <param name="start">每行的起始位置</param>
+        /// <param name="end">每行的结束位置</param>
+        /// <param name="type">0-大写 1-小写</param>
+        /// <returns></returns>
+        public static void textLineRangeToCapitalization(TextBox t, int start, int end, int type) { 
+            if (t.TextLength > 0) { 
+                string[] line = t.Lines;
+                for (int i =0,len=line.Length;i<len; i++) { 
+                    string str = line[i];
+                    string ss = str.Substring(start, end - start);
+                    if (str.Length > 0 && start >=0 && start <= str.Length-1 && end >=0 && end <= str.Length-1
+                        && start <= end) {
+                        if (type == 0) { 
+                            ss = ss.ToUpper();
+                        }else if (type == 1) { 
+                            ss = ss.ToLower();
+                        }
+                        line[i] = str.Substring(0, start) + ss + str.Substring(end, (str.Length-1)-end);
+                    }
+                }
+                string text = string.Join(Environment.NewLine, line);
+                text = text.Substring(0, text.Length - Environment.NewLine.Length);
+                t.Text = text;
+            }
         }
         /// <summary>
         /// 将文本框的内容转化为驼峰形式
         /// </summary>
         /// <param name="t">文本框</param>
+        /// <param name="type">0-大写类型 1-小写类型</param>
         /// <returns></returns>
-        public static object textToHump(TextBox t) {
+        public static void textToHump(TextBox t, int type) {
             int start = t.SelectionStart;
             int selLen = t.SelectionLength;
+            int textlen = t.TextLength;
+            string str = "";
             if(t.SelectionLength > 0){
-               t.SelectedText = StringUtilsMet.charsToHump(t.SelectedText);
+                str = StringUtilsMet.charsToHump(t.SelectedText, type);
+                t.SelectedText = str;
+                t.Select(start, str.Length);
             } else { 
-                t.Text = StringUtilsMet.charsToHump(t.Text);
+                str = StringUtilsMet.charsToHump(t.Text, type);;
+                t.Text = str;
+                t.SelectionStart = start;
             }
-            t.Select(start, selLen);
-            return null;
         }
         /// <summary>
         /// 实现文本框插入当前日期

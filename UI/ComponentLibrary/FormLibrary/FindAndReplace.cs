@@ -1,4 +1,6 @@
-﻿using Core.CacheLibrary.FormCache;
+﻿using Core.CacheLibrary.ControlCache;
+using Core.CacheLibrary.FormCache;
+using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using Microsoft.VisualBasic;
@@ -71,35 +73,63 @@ namespace UI.ComponentLibrary.FormLibrary
         /// 初始化
         /// </summary>
         /// <param name="t"></param>
-        public FindAndReplace(TextBox t)
+        public FindAndReplace()
         {
-            // 赋值启动主窗体
-            this.rootDisplayForm = t.FindForm();
-            // 赋值要操作的文本框
-            this.textBox = t;
-            // 赋值要操作的文本框的右键菜单
-            this.textRightMenu = t.ContextMenuStrip;
-            // 赋值要操作的文本
-            text = t.Text;
+            initData();
             InitializeComponent();
         }
         /// <summary>
-        /// 打开查找和替换窗口
+        /// 初始化数据
+        /// </summary>
+        private bool initData() { 
+            Control conTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            List<TextBox> controls = null;
+            TextBox t = null;
+            if (conTab != null && conTab is TabControl) { 
+                ControlsUtilsMet.getAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
+                if (controls.Count > 0 && controls[0] is TextBox) { 
+                    t = controls[0];
+                }
+            }
+            if (t != null && t is TextBox) {
+                if(textBox != null && !t.Name.Equals(textBox.Name)) { 
+                    // 重置搜索
+                    isResetFindMet = true;
+                }
+                // 赋值启动主窗体
+                rootDisplayForm = t.FindForm();
+                // 赋值要操作的文本框
+                textBox = t;
+                // 赋值要操作的文本框的右键菜单
+                textRightMenu = t.ContextMenuStrip;
+                // 赋值要操作的文本
+                text = t.Text;
+                return true;
+            } else { 
+                MessageBox.Show("无法获取文本框");
+                return false;    
+            }
+        }
+        /// <summary>
+        /// 打开单例模式下的查找和替换窗口
         /// <param name="t">所需文本框</param>
-        /// <param name="isShow">是否显示窗体</param>
+        /// <param name="isShowTop">是否显示为顶层窗体</param>
         /// </summary>
         /// <returns></returns>
-        public static FindAndReplace initSingleFindAndReplace(TextBox t){
+        public static FindAndReplace initSingleFindAndReplace(bool isShowTop){
             FindAndReplace findAndReplace = null;
-            Form form = FormCache.getSingletonCache(DefaultNameCof.SPLIT_CHARS_FORM);
-            if(form == null || !(form is FindAndReplace)) { 
-                findAndReplace = new FindAndReplace(t);
-                findAndReplace.Name = DefaultNameCof.FIND_REPLACE_FORM;
+            Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.FIND_REPLACE_FORM);
+            if(form == null || form.IsDisposed || !(form is FindAndReplace)) { 
+                findAndReplace = new FindAndReplace();
+                findAndReplace.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.FIND_REPLACE_FORM);
                 // 将窗体放入单例窗体工厂中
-                findAndReplace = FormCache.ininSingletonForm(findAndReplace, true);
+                findAndReplace = FormCacheFactory.ininSingletonForm(findAndReplace, true);
             } else {
                 findAndReplace = (FindAndReplace) form;
+                findAndReplace.Activate();
             }
+            if(isShowTop) FormCacheFactory.addTopFormCahce(findAndReplace);
+            findAndReplace.MinimumSize = findAndReplace.Size;
             return findAndReplace;
         }
         /// <summary>
@@ -122,7 +152,6 @@ namespace UI.ComponentLibrary.FormLibrary
             FormUtislMet.middleForm(this);
             // 设置当前索引和总共的索引
             setCurrentLab();
-
         }
 
         /// <summary>
@@ -348,7 +377,6 @@ namespace UI.ComponentLibrary.FormLibrary
                         isFindUpEnd = true;
                         return true;
                     }
-                    
                 } else {
                     return false;
                 }    
@@ -449,7 +477,6 @@ namespace UI.ComponentLibrary.FormLibrary
                 text = textBox.Text;
                 // 替换后刷新索引数组
                 repResetFindIndexArr(seletI);
-                Console.WriteLine("===="+findIndex);
             } 
         }
 
@@ -544,7 +571,7 @@ namespace UI.ComponentLibrary.FormLibrary
         private void repMessShow(string text, string findChars, Boolean isCase) { 
             string tempText = text;
             int count =  StringUtilsMet.getIndexOfAllCount(tempText, findChars, isCase);
-            MessageBox.Show("已成功替换 "+count+" 处");
+            //MessageBox.Show("已成功替换 "+count+" 处");
         }
         /// <summary>
         /// 设置当前索引和总共的索引
@@ -563,7 +590,8 @@ namespace UI.ComponentLibrary.FormLibrary
         // 查找按钮的点击事件
         private void 查找B_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(textBox.Name);
+            // 初始化数据
+            if(!initData()) return;
             // 判断当前方式不是查询就重置搜索
             if(isFindOrRep == 2) isResetFindMet = true;
             // 当前为查询方式
@@ -585,12 +613,14 @@ namespace UI.ComponentLibrary.FormLibrary
         // 替换按钮的点击事件
         private void 替换B_Click(object sender, EventArgs e)
         {
+            if(!initData()) return;
             // 执行替换方法
             repClickMet(1);
         }
         // 全部替换按钮的点击事件
         private void 全部替换B_Click(object sender, EventArgs e)
         {
+            if(!initData()) return;
             // 执行替换方法
             repClickMet(2);
         }

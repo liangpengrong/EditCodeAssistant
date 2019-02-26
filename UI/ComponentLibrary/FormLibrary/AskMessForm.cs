@@ -11,8 +11,8 @@ namespace UI.ComponentLibrary.FormLibrary {
     /// <summary>
     /// 消息提示窗体
     /// </summary>
-    public partial class AskMessFrom : Form {
-        public AskMessFrom() {
+    public partial class AskMessForm : Form {
+        public AskMessForm() {
             InitializeComponent();
         }
 

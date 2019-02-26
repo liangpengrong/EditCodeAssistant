@@ -18,11 +18,14 @@ using UI_TopMenuBar;
 using UI.StatusBarLibrary;
 using UI.ComponentLibrary.ControlLibrary;
 using Core.DefaultData.DataLibrary;
+using Core_Config.ConfigData.FormConfig;
 
 namespace CharsToolset
 {
     public partial class RootDisplayForm : Form
     {
+        // 状态栏默认背景色
+        private Color formBackColor = ColorTranslator.FromHtml("#fff");
         public RootDisplayForm()
         {
             InitializeComponent();
@@ -39,23 +42,22 @@ namespace CharsToolset
             // 将窗体加入到单例窗体工厂
             addSingletonAllForm();
             // 将控件组合到一起并添加到窗体中
-            this.ControlCombination();
+            ControlCombination();
             // 调节窗口位置
-            this.Location = FormUtislMet.middleForm(this);
+            Location = FormUtislMet.middleForm(this);
         }
         /// <summary>
         /// 设置窗体的默认启动配置
         /// </summary>
         private void initRootForm()
         {
-            this.Name = MainFormDataLib.ROOT_FORM_NAME;
-            this.Size = new Size(840, 540);
+            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ROOT_FORM_NAME);
+            this.Size = RootFormCongfig.ROOT_SIZE;
             this.BackColor = Color.White;
-            this.Text = MainFormDataLib.ROOT_FORM_TEXT;
+            this.Text = RootFormDataLib.ROOT_FORM_TEXT;
+            this.BackColor = formBackColor;
             // 图标
-            this.Icon = Properties.Resources.编辑器16x16;
-            // 加载调整大小图标
-            // sizeLab = addSize();
+            this.Icon = Properties.Resources.编辑器适配;
         }
         /// <summary>
         /// 将控件组合到一起并添加到窗体中
@@ -87,7 +89,7 @@ namespace CharsToolset
         /// </summary>
         private void addSingletonAllForm() {
             // 本窗体
-            FormCache.addSingletonCache(this);
+            FormCacheFactory.addSingletonCache(this);
         }
         /// <summary>
         /// 初始化主容器
@@ -129,7 +131,7 @@ namespace CharsToolset
             but.MouseClick += (object sender, MouseEventArgs e) =>{ 
                 Panel panel = (Panel)sender;
                 if(MouseButtons.Left.Equals(e.Button)) { 
-                    addPageMethod(panel);
+                    addPageDefMethod(panel);
                 }
             };
             return but;
@@ -154,7 +156,7 @@ namespace CharsToolset
         public static ContextMenuStrip initRightMenu()
         {
             // 实例化右键菜单
-            ContextMenuStrip textContextMenu = TextRightMenu.getTextRightMenu();
+            ContextMenuStrip textContextMenu = TextRightMenu.getSingleTextRightMenu();
             return textContextMenu;
         }
         /// <summary>
@@ -251,62 +253,26 @@ namespace CharsToolset
         /// 添加新标签的方法
         /// </summary>
         /// <param name="addBut"></param>
-        public static void addPageMethod(Control addBut) {
+        public static void addPageDefMethod(Control addBut) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
-            // 获得主Tab容器
-            TabControl mainTab = initMainTab();
-            // 获得Page
-            TabPage tabPage = initMainTabPage();
             // 获得右键菜单
             ContextMenuStrip textRightMenu = initRightMenu();
             // 获得主编辑文本框
             TextBox mainTextBox = initEditorText();
-            tabPage.Controls.Add(mainTextBox);
-            mainTab.TabPages.Add(tabPage);
+            MainTabContent.addControlsToPage(mainTextBox, true, true);
+            mainTextBox.Location = new Point(1,1);
             mainTextBox.ContextMenuStrip = textRightMenu;
-            addBut.BringToFront();
-            mainTab.FindForm().ActiveControl = mainTextBox;
-            mainTab.SelectedTab = tabPage;
-            // 确定按钮的位置
-            MainTabControlUtils.doIsAddPageButLocation(addBut, mainTab);
         }
 
-        /// <summary>
-        /// 要在顶层与非顶层直接切换的窗体
-        /// </summary>
-        /// <returns></returns>
-        private Form[] toTopListAdd()
-        {
-            //定义要判断顶层和非顶层的窗体集合
-            List<Form> fToMostList = new List<Form>();
-            // 判断窗口是否在单例窗口工厂中存在
-            if(FormCache.getSingletonCache().ContainsKey(DefaultNameCof.FIND_REPLACE_FORM)) { 
-                // 查找和替换窗体
-                fToMostList.Add(FormCache.getSingletonCache()[DefaultNameCof.FIND_REPLACE_FORM]);
-            }
-
-            // 判断窗口是否在单例窗口工厂中存在
-            if(FormCache.getSingletonCache().ContainsKey(DefaultNameCof.SPLIT_CHARS_FORM)) { 
-                // 分列窗体
-                fToMostList.Add(FormCache.getSingletonCache()[DefaultNameCof.SPLIT_CHARS_FORM]);
-            }
-
-            // 判断窗口是否在单例窗口工厂中存在
-            if(FormCache.getSingletonCache().ContainsKey(DefaultNameCof.ADD_CHARS_FORM)) { 
-                // 添加字符窗体
-                fToMostList.Add(FormCache.getSingletonCache()[DefaultNameCof.ADD_CHARS_FORM]);
-            }
-            return fToMostList.ToArray();
-        }
         // 窗体得到焦点事件
         private void RootDisplayForm_Activated(object sender, EventArgs e)
         {
-            FormUtislMet.topFormNoFocus(true, toTopListAdd());
+            FormUtislMet.topFormNoFocus(true, FormCacheFactory.getTopFormCahce().Values.ToArray());
         }
         // 窗体失去焦点事件
         private void RootDisplayForm_Deactivate(object sender, EventArgs e)
         {
-            FormUtislMet.topFormNoFocus(false, toTopListAdd());
+            FormUtislMet.topFormNoFocus(false, FormCacheFactory.getTopFormCahce().Values.ToArray());
         }
     }
 }

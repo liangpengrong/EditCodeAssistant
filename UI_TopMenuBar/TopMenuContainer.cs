@@ -16,11 +16,15 @@ using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using UI_TopMenuBar.TopMenuEvent;
 using UI_OptionForm;
 using Core.DefaultData.DataLibrary;
+using UI.TabContentLibrary.MainTabContent;
+using Core_Config.ConfigData.ControlConfig;
 
 namespace UI_TopMenuBar
 {
     public partial class TopMenuContainer : UserControl, MenuItemAopInter
     {
+        // 默认背景色
+        private Color topBarBackColor = ColorTranslator.FromHtml("#fff");
         private TopMenuContainer()
         {
             // 初始化
@@ -39,7 +43,7 @@ namespace UI_TopMenuBar
         {
             foreach(ToolStripMenuItem tool in this.topMenuStrip.Items.OfType<ToolStripMenuItem>())
             {
-                new MenuItemUtilsMet().isDownItemAop(tool,this);
+                ToolStripUtilsMet.isDownItemAop(tool,this);
             }
         }
         /// <summary>
@@ -63,18 +67,23 @@ namespace UI_TopMenuBar
         
         public virtual void allItem(ToolStripMenuItem tool)
         {
+            // 绑定Name
+            tool.Name = getItemNameDic(tool);
+            // 设置背景色
             tool.BackColor = Color.White;
             tool.AutoToolTip = true;
             tool.ToolTipText = tool.Text;
             // tool.Font = topMenuStrip.Font;
             // 绑定Image
             setItemImage(tool);
+            // 判断是否选中
+            doISItemChecked(tool);
         }
         /// <summary>
         /// 初始化顶部菜单配置
         /// </summary>
         private void initTopMenuConfig() {
-            topMenuStrip.Name = DefaultNameCof.TOP_MENU;
+            topMenuStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOP_MENU);
             topMenuStrip.TabStop = false;
             // 设置大小
             topMenuStrip.Size = new Size(this.Size.Width,10);
@@ -83,7 +92,7 @@ namespace UI_TopMenuBar
             // 设置相对距离
             topMenuStrip.Location = new Point(0,0);
             // 设置背景颜色
-            topMenuStrip.BackColor = Color.Red;
+            topMenuStrip.BackColor = topBarBackColor;
             // 字体
             topMenuStrip.Font = new Font("微软雅黑",9,FontStyle.Regular);
             // 绑定重绘函数
@@ -94,45 +103,53 @@ namespace UI_TopMenuBar
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
+        private void MenuItem_Click(object sender, EventArgs e) {
+            try {
                 ToolStripMenuItem tool = (ToolStripMenuItem)sender;
-                //获取当前获得焦点的文本框
-                TextBox t = TextBoxCache.getFocusTextBox()[MainFormDataLib.ROOT_FORM_NAME];
-                foreach (KeyValuePair<string, Delegate> kvp in this.eventBinding())
-                {//遍历对应关系字典
-                    if (kvp.Key.Equals(tool.Name))
-                    {//判断当前点击的选项名是否与关系字典中的选项名对应，对应则执行关系字典中的对应方法
-                        if (this.topMenuStrip.IsHandleCreated)
-                        {//判断当前控件是否有与其关联的句柄
+                //获取当前主Tab容器中的文本框
+                TextBox t = null;
+                List<Control> controls = new List<Control>();
+                // 获得主tab容器
+                Control tabCon = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+                if(tabCon != null && tabCon is TabControl) { 
+                    TabControl tab = (TabControl)tabCon;
+                    ControlsUtilsMet.getAllControlByType(ref controls, tab.SelectedTab.Controls);
+                    if (controls.Count > 0 && controls[0] is TextBox) { 
+                        t = (TextBox)controls[0];
+                    }
+                }
+                // 遍历对应关系字典
+                foreach (KeyValuePair<string, Delegate> kvp in eventBinding()) {
+                    // 判断当前点击的选项名是否与关系字典中的选项名对应，对应则执行关系字典中的对应方法
+                    if (kvp.Key.Equals(tool.Name)) {
+                        // 判断当前控件是否有与其关联的句柄
+                        if (topMenuStrip.IsHandleCreated) {
                             Dictionary<Type, object> data = new Dictionary<Type, object>();
                             data.Add(typeof(TextBox), t);
                             data.Add(typeof(ToolStripMenuItem), tool);
 
-                            this.topMenuStrip.Invoke(kvp.Value, new object[]{data});
+                            topMenuStrip.Invoke(kvp.Value, new object[]{data});
                         }
                     }
                 }
-                //dLLLoad.TextBoxUtilsMet.textFixStartIndex(t, TextBoxDataLibcs.ExpTextLength, TextBoxDataLibcs.ExpStartIndex);//确定文本框光标位置
             }
-            catch (InvalidCastException ie)
-            {//强制类型转化异常
-                MessageBox.Show(ie.ToString());
-            }
-            catch(NullReferenceException ne)
-            {//空指针异常
-                MessageBox.Show(ne.ToString());
+            catch (Exception ee) {
+                MessageBox.Show(ee.ToString());
             }
         }
-
+        // 判断子项是否选中
+        private void doISItemChecked(ToolStripMenuItem tool) {
+            if(自动换行Item.Equals(tool)) { 
+                tool.Checked = MainTextBConfig.AUTO_WORDWRAP;
+            }
+            
+        }
         /// <summary>
         /// 设置菜单项的Image
         /// </summary>
         /// <param name="item"></param>
         private void setItemImage(ToolStripMenuItem item) {
-            System.Drawing.Image image = getItemImageDic(item.Name);
+            Image image = getItemImageDic(item.Name);
             if(image != null) { 
                 item.Image = image;
                 item.ImageScaling = ToolStripItemImageScaling.None;
@@ -143,9 +160,9 @@ namespace UI_TopMenuBar
         /// 菜单项对应Image的字典
         /// </summary>
         /// <returns></returns>
-        private System.Drawing.Image getItemImageDic(string name) { 
+        private Image getItemImageDic(string name) { 
             
-            Dictionary<string, System.Drawing.Image> toolImageDic = new Dictionary<string, System.Drawing.Image>();
+            Dictionary<string, Image> toolImageDic = new Dictionary<string, Image>();
             toolImageDic.Add(this.打开Item.Name, Core.ImageResource.打开);
             toolImageDic.Add(this.保存Item.Name, Core.ImageResource.保存);
             toolImageDic.Add(this.另存为Item.Name, Core.ImageResource.另存为);
@@ -166,15 +183,65 @@ namespace UI_TopMenuBar
             toolImageDic.Add(this.统计字符Item.Name, Core.ImageResource.统计);
 
             toolImageDic.Add(this.分列Item.Name, Core.ImageResource.分列);
+            toolImageDic.Add(this.代码工具Item.Name, Core.ImageResource.代码);
             toolImageDic.Add(this.首选项Item.Name, Core.ImageResource.设置);
 
             toolImageDic.Add(this.字体Item.Name, Core.ImageResource.字体);
             toolImageDic.Add(this.关于Item.Name, Core.ImageResource.关于);
+            
 
             if (toolImageDic.ContainsKey(name)) { 
                 return toolImageDic[name];
             } else { 
                 return null;    
+            }
+        }
+        /// <summary>
+        /// 菜单项对应Name的字典
+        /// </summary>
+        /// <returns></returns>
+        private string getItemNameDic(ToolStripMenuItem item) { 
+            Dictionary<ToolStripMenuItem, string> toolImageDic = new Dictionary<ToolStripMenuItem, string>();
+            toolImageDic.Add(this.文件Item, TopMenuDataLib.ItemDataLib.文件_ITEM);
+            toolImageDic.Add(this.打开Item, TopMenuDataLib.ItemDataLib.打开_ITEM);
+            toolImageDic.Add(this.保存Item, TopMenuDataLib.ItemDataLib.保存_ITEM);
+            toolImageDic.Add(this.另存为Item, TopMenuDataLib.ItemDataLib.另存为_ITEM);
+            toolImageDic.Add(this.用记事本打开Item, TopMenuDataLib.ItemDataLib.用记事本打开_ITEM);
+            toolImageDic.Add(this.退出Item, TopMenuDataLib.ItemDataLib.退出_ITEM);
+            toolImageDic.Add(this.编辑Item, TopMenuDataLib.ItemDataLib.编辑_ITEM);
+            toolImageDic.Add(this.撤销Item, TopMenuDataLib.ItemDataLib.撤销_ITEM);
+            toolImageDic.Add(this.恢复Item, TopMenuDataLib.ItemDataLib.恢复_ITEM);
+            toolImageDic.Add(this.剪切Item, TopMenuDataLib.ItemDataLib.剪切_ITEM);
+            toolImageDic.Add(this.复制Item, TopMenuDataLib.ItemDataLib.复制_ITEM);
+            toolImageDic.Add(this.粘贴Item, TopMenuDataLib.ItemDataLib.粘贴_ITEM);
+            toolImageDic.Add(this.删除Item, TopMenuDataLib.ItemDataLib.删除_ITEM);
+            toolImageDic.Add(this.全选Item, TopMenuDataLib.ItemDataLib.全选_ITEM);
+            toolImageDic.Add(this.查找替换Item, TopMenuDataLib.ItemDataLib.查找替换_ITEM);
+            toolImageDic.Add(this.转到行Item, TopMenuDataLib.ItemDataLib.转到行_ITEM);
+            toolImageDic.Add(this.统计字符Item, TopMenuDataLib.ItemDataLib.统计字符_ITEM);
+            toolImageDic.Add(this.时间日期Item, TopMenuDataLib.ItemDataLib.时间日期_ITEM);
+            toolImageDic.Add(this.工具Item, TopMenuDataLib.ItemDataLib.工具_ITEM);
+            toolImageDic.Add(this.分列Item, TopMenuDataLib.ItemDataLib.分列_ITEM);
+            toolImageDic.Add(this.添加字符Item, TopMenuDataLib.ItemDataLib.添加字符_ITEM);
+            toolImageDic.Add(this.删除字符Item, TopMenuDataLib.ItemDataLib.删除字符_ITEM);
+            toolImageDic.Add(this.代码工具Item, TopMenuDataLib.ItemDataLib.代码工具_ITEM);
+            toolImageDic.Add(this.代码工具_java_Item, TopMenuDataLib.ItemDataLib.代码工具_java_ITEM);
+            toolImageDic.Add(this.代码工具_java_字段转实体类, TopMenuDataLib.ItemDataLib.代码工具_java_字段转实体类_ITEM);
+
+            toolImageDic.Add(this.首选项Item, TopMenuDataLib.ItemDataLib.首选项_ITEM);
+            toolImageDic.Add(this.查看Item, TopMenuDataLib.ItemDataLib.查看_ITEM);
+            toolImageDic.Add(this.自动换行Item, TopMenuDataLib.ItemDataLib.自动换行_ITEM);
+            toolImageDic.Add(this.状态栏Item, TopMenuDataLib.ItemDataLib.状态栏_ITEM);
+            toolImageDic.Add(this.字体Item, TopMenuDataLib.ItemDataLib.字体_ITEM);
+            toolImageDic.Add(this.字体_设置字体Item, TopMenuDataLib.ItemDataLib.字体_设置字体_ITEM);
+            toolImageDic.Add(this.字体_恢复默认Item, TopMenuDataLib.ItemDataLib.字体_恢复默认_ITEM);
+            toolImageDic.Add(this.帮助Item, TopMenuDataLib.ItemDataLib.帮助_ITEM);
+            toolImageDic.Add(this.关于Item, TopMenuDataLib.ItemDataLib.关于_ITEM);
+
+            if (toolImageDic.ContainsKey(item)) { 
+                return toolImageDic[item];
+            } else { 
+                return "";    
             }
         }
         /// <summary>
@@ -194,54 +261,101 @@ namespace UI_TopMenuBar
             toolBindingDic.Add(this.撤销Item.Name, new methodDelegate(TopMenuEventMet.cancelTextBoxCache));
             toolBindingDic.Add(this.恢复Item.Name, new methodDelegate(TopMenuEventMet.restoreTextBoxCache));
 
-
             toolBindingDic.Add(this.全选Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textAllSelect(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textAllSelect(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.剪切Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textSelectCut(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textSelectCut(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.复制Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textCopy(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textCopy(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.粘贴Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textPaste(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textPaste(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.删除Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textSelectDelect(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
+                    && data[typeof(TextBox)] is TextBox) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textSelectDelect(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.查找替换Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                FindAndReplace.initSingleFindAndReplace(t);
+                FindAndReplace.initSingleFindAndReplace(true);
                 return null;}));
             toolBindingDic.Add(this.转到行Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                RowGoToForm.openRowGoToForm(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
+                    && data[typeof(TextBox)] is TextBox) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    RowGoToForm.openRowGoToForm(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.统计字符Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                CharsStatistics.openCharsStatistics(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
+                    && data[typeof(TextBox)] is TextBox) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    CharsStatistics.openCharsStatistics(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
             toolBindingDic.Add(this.时间日期Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.textInsertDate(t);
-                return null;}));
+                if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
+                    && data[typeof(TextBox)] is TextBox) {
+                    TextBox t = (TextBox)data[typeof(TextBox)];
+                    TextBoxUtilsMet.textInsertDate(t);
+                } else { 
+                    MessageBox.Show("无法获取文本框");    
+                }
+                return null;
+            }));
 
             toolBindingDic.Add(this.自动换行Item.Name, new methodDelegate(TopMenuEventMet.isAutoLine));
             toolBindingDic.Add(this.状态栏Item.Name, new methodDelegate(TopMenuEventMet.isStartBarDisplay));
 
             toolBindingDic.Add(this.分列Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                SplitCharsForm.initSingleSplitCharsForm(t);
+                SplitCharsForm.initSingleSplitCharsForm(true);
                 return null;}));
             toolBindingDic.Add(this.添加字符Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                AddCharsForm.initSingleAddCharsForm(t);
+                AddCharsForm.initSingleAddCharsForm(true);
+                return null;}));
+
+            toolBindingDic.Add(this.代码工具_java_字段转实体类.Name, new methodDelegate((Dictionary<Type , object> data) =>{
+                FieldToJavaEntity ff = FieldToJavaEntity.initPrototypeFieldToJavaEntity(true);
+                //ff.FormBorderStyle = FormBorderStyle.None;
+                // MainTabContent.addControlsToPage(ff, true, true);
+                // ff.tab容器.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
                 return null;}));
 
             toolBindingDic.Add(this.首选项Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
@@ -249,12 +363,13 @@ namespace UI_TopMenuBar
                 setUpMain.ShowDialog();
                 return null;}));
 
-            toolBindingDic.Add(this.字体Item.Name, new methodDelegate(TopMenuEventMet.fontDialogMethod));
+            toolBindingDic.Add(字体_设置字体Item.Name, new methodDelegate(TopMenuEventMet.fontDialogMethod));
+            toolBindingDic.Add(字体_恢复默认Item.Name, new methodDelegate(TopMenuEventMet.textBoxFontReset));
             // 实例化关于窗体
             toolBindingDic.Add(this.关于Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                TextBox t = (TextBox)data[typeof(TextBox)];
                 ThereofForm.openThereofForm();
-                return null;}));
+                return null;
+            }));
             return toolBindingDic;
         }
         /// <summary>
@@ -274,10 +389,10 @@ namespace UI_TopMenuBar
         /// </summary>
         /// <returns></returns>
         public static MenuStrip getTopMenuStrip() { 
-            Control con = ControlCache.getSingletonCache(DefaultNameCof.TOP_MENU);
+            Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TOP_MENU);
             if(con == null) {
                 TopMenuContainer topMenuContainer = new TopMenuContainer();
-                ControlCache.addSingletonCache(topMenuContainer.topMenuStrip);
+                ControlCacheFactory.addSingletonCache(topMenuContainer.topMenuStrip);
                 return topMenuContainer.topMenuStrip;
             } else { 
                 return (MenuStrip)con;

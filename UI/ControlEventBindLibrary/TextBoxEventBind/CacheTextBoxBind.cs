@@ -5,6 +5,7 @@ using Ui.ControlEventLibrary.TextBoxEvent;
 using Core.StaticMethod.Method.Utils;
 using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using UI.ComponentLibrary.ControlLibrary.RightMenu;
+using Core.DefaultData.DataLibrary;
 
 namespace UI.ControlEventBindLibrary.TextBoxEventBind
 {
@@ -13,7 +14,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// <summary>
         /// 文本框文本改变事件
         /// </summary>
-        internal void mainTextBoxChanged(object sender, EventArgs e){
+        internal void textBoxChanged(object sender, EventArgs e){
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.内容改变事件, textBox);
         }
@@ -21,49 +22,49 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// <summary>
         /// 文本框鼠标移过事件
         /// </summary>
-        internal void mainTextBoxMouseMove(object sender, MouseEventArgs e){
+        internal void textBoxMouseMove(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.鼠标移过事件, textBox);
         }
         /// <summary>
         /// 文本框的鼠标在组件内并释放鼠标按键事件
         /// </summary>
-        internal void mainTextBoxMouseUp(object sender, MouseEventArgs e){
+        internal void textBoxMouseUp(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox);
         }
         /// <summary>
         /// 文本框的鼠标按下事件
         /// </summary>
-        internal void mainTextBoxMouseDown(object sender, MouseEventArgs e){
+        internal void textBoxMouseDown(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox);
         }
         /// <summary>
         /// 文本框的鼠标移入事件
         /// </summary>
-        internal void mainTextBoxMouseEnter(object sender, EventArgs e) {
+        internal void textBoxMouseEnter(object sender, EventArgs e) {
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.鼠标移入事件, textBox);
         }
         /// <summary>
         /// 文本框启用事件
         /// </summary>
-        internal void mainTextBoxEnter(object sender, EventArgs e){
+        internal void textBoxEnter(object sender, EventArgs e){
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.控件启用事件, textBox);
         }
         /// <summary>
         /// 文本框获得焦点事件
         /// </summary>
-        internal void mainTextBoxGotFocus(object sender, EventArgs e) {
+        internal void textBoxGotFocus(object sender, EventArgs e) {
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.获取焦点事件, textBox);
         }
         /// <summary>
         /// 文本框的键盘按下事件
         /// </summary>
-        internal void mainTextBoxKeyDown(object sender, KeyEventArgs e) {
+        internal void textBoxKeyDown(object sender, KeyEventArgs e) {
             TextBox textBox = (TextBox) sender;
             setEventBindMethod(TextBoxEventTypeEnum.键盘按下事件, textBox);
             /*============绑定文本框按键按下事件执行方法===================*/
@@ -73,7 +74,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// <summary>
         /// 文本框的键盘松开事件
         /// </summary>
-        internal void mainTextBoxKeyUp(object sender, KeyEventArgs e) {
+        internal void textBoxKeyUp(object sender, KeyEventArgs e) {
             TextBox textBox = (TextBox)sender;
             setEventBindMethod(TextBoxEventTypeEnum.键盘松开事件, textBox);
             /*============绑定文本框按键松开事件执行方法===================*/
@@ -89,10 +90,18 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
                 if (e.Control && e.KeyCode.Equals(Keys.A)) {
                     TextBoxUtilsMet.textAllSelect(t);
                 }
-                //// 查找和替换
-                //if (e.Control && e.KeyCode.Equals(Keys.F)) {
-                //    InitSingleForm.initFindAndReplace(t, true);
-                //}
+                // 撤销
+                if(e.Control && e.KeyCode.Equals(Keys.Z)) { 
+                    // 将文本框置于撤销状态
+                    TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
+                    TextBoxCache.cancelCache(t);
+                }
+                // 恢复
+                if(e.Control && e.KeyCode.Equals(Keys.Y)) { 
+                    // 将文本框置于恢复状态
+                    TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
+                    TextBoxCache.restoreCache(t);
+                }
             } catch(Exception exc) {
                 Console.WriteLine(exc.StackTrace);
             }
@@ -126,10 +135,6 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
                 case TextBoxEventTypeEnum.鼠标移入事件 :
                     /*============绑定右键菜单===================*/
                     TextRightMenu.bindingTextBox(textBox);
-                break;
-                case TextBoxEventTypeEnum.控件启用事件 :
-                    /*============记录到获取焦点文本框缓存中===================*/
-                    TextBoxCache.saveFocusTextBox(textBox);
                 break;
             }    
         }

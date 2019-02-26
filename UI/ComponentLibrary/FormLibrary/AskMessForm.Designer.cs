@@ -1,5 +1,5 @@
 ﻿namespace UI.ComponentLibrary.FormLibrary {
-    partial class AskMessFrom {
+    partial class AskMessForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>

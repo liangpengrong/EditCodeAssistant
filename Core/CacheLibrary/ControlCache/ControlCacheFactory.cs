@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ namespace Core.CacheLibrary.ControlCache {
     /// <summary>
     /// 控件缓存工厂类
     /// </summary>
-    public class ControlCache {
+    public class ControlCacheFactory {
         /// <summary>
         /// 单例控件缓存
         /// </summary>
@@ -34,12 +36,39 @@ namespace Core.CacheLibrary.ControlCache {
         /// </summary>
         /// <param name="singFormName">控件名</param>
         /// <returns>获取到的控件</returns>
-        public static Control getSingletonCache(string singConName) { 
-            if (singletonCache.ContainsKey(singConName)) { 
-                return singletonCache[singConName];
+        public static Control getSingletonCache(DefaultNameEnum singConName) { 
+            string key = EnumUtilsMet.GetDescription(singConName);
+            if (singletonCache.ContainsKey(key)) { 
+                return singletonCache[key];
             } else { 
                 return null;    
-            }   
+            }
+        }
+        /// <summary>
+        /// 获取指定单例控件中的某种类型的全部子控件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="singConName"></param>
+        /// <returns></returns>
+        public static T[] getSingletonChildCon<T>(DefaultNameEnum singConName) where T:Control{
+            T[] retAll = null;
+            // 全局单例控件工厂
+            if(singletonCache.ContainsKey(EnumUtilsMet.GetDescription(singConName))) { 
+                // 全局单例控件工厂
+                Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
+                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
+                    // 获取指定姓名的控件
+                    Control tabParent = single[EnumUtilsMet.GetDescription(singConName)];
+                    if(tabParent != null) { 
+                        List<T> conList = new List<T>();
+                        ControlsUtilsMet.getAllControlByType(ref conList, tabParent.Controls);
+                        if (conList != null && conList.Count > 0) { 
+                            retAll = conList.ToArray();
+                        }
+                    }
+                }
+            }
+            return retAll;
         }
         /// <summary>
         /// 根据控件名获取单例工厂中的对应控件,无法获取则返回null

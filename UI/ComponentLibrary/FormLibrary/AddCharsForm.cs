@@ -1,4 +1,5 @@
 ﻿using Core.CacheLibrary.FormCache;
+using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using ProgramTextBoxLibrary;
@@ -45,28 +46,28 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 匹配末尾
         private bool isMatchEnd = true;
 
-        public AddCharsForm(TextBox textBox) {
+        public AddCharsForm() {
             InitializeComponent();
-            this.textBox = textBox;
             initResultTextBox();
-            // if(textBox != null) 普通_textbox.Font = textBox.Font;
         }
         /// <summary>
         /// 打开添加字符窗口
         /// </summary>
         /// <param name="t">所需文本框</param>
-        /// <param name="isShow">是否显示窗体</param>
+        /// <param name="isShowTop">是否显示为顶层窗体</param>
         /// <returns></returns>
-        public static AddCharsForm initSingleAddCharsForm(TextBox t) {
+        public static AddCharsForm initSingleAddCharsForm(bool isShowTop) {
             AddCharsForm addChars = null;
-            Form form = FormCache.getSingletonCache(DefaultNameCof.ADD_CHARS_FORM);
-            if(form == null || !(form is SplitCharsForm)) { 
-                addChars = new AddCharsForm(t);
-                addChars.Name = DefaultNameCof.SPLIT_CHARS_FORM;
-                addChars = FormCache.ininSingletonForm(addChars, true);
+            Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.ADD_CHARS_FORM);
+            if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
+                addChars = new AddCharsForm();
+                addChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);
+                addChars = FormCacheFactory.ininSingletonForm(addChars, true);
             } else {
                 addChars = (AddCharsForm)form;
+                addChars.Activate();
             }
+            if(isShowTop) FormCacheFactory.addTopFormCahce(addChars);
             return addChars;
         }
         /// <summary>
@@ -92,7 +93,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 resultTextBox = CacheTextBoxTemplate.getCacheTextBox(); 
                 resultTextBox.Location = new Point(1, 普通_操作容器.Location.Y + 普通_操作容器.Height);
                 resultTextBox.Size = new Size(parent.ClientSize.Width-2, (parent.Height-普通_操作容器.Height));
-                resultTextBox.ReadOnly = false;
+                resultTextBox.ReadOnly = true;
                 parent.Controls.Add(resultTextBox);
                 resultTextBox.BringToFront();
             }
@@ -120,8 +121,21 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 去除最后一个换行符
             textVal = textVal.Substring(0, textVal.Length - Environment.NewLine.Length);
             // 判断是否不匹配末尾
-            if (!isMatchEnd) { 
-                textVal = textVal.Substring(0, textVal.Length - end_text.Length);
+            if (!isMatchEnd) {
+                int noneLength = 0;
+                // 匹配空行
+                if (isMatchBlack) {
+                    noneLength = 0;
+                } else {
+                    for (int i = strArr.Length; i>0; i--) {
+                        if (strArr[i-1].Length == 0) {
+                            noneLength = noneLength + Environment.NewLine.Length;
+                        } else { 
+                            break;    
+                        }   
+                    }
+                }
+                textVal = textVal.Substring(0, textVal.Length - (end_text.Length+noneLength));
             }
             int start = resultTextBox.SelectionStart;
             resultTextBox.Text = textVal;
@@ -143,6 +157,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 普通模式下的数据初始化
         /// </summary>
         private void ordinaryInitData() {
+            textBox = TextBoxCache.UpOperatingTextBox;
             head_text = 普通_行首text.Text;
             end_text = 普通_行尾text.Text;
             if(textBox != null) {
