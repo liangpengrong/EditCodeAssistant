@@ -131,7 +131,7 @@ namespace CharsToolset
             but.MouseClick += (object sender, MouseEventArgs e) =>{ 
                 Panel panel = (Panel)sender;
                 if(MouseButtons.Left.Equals(e.Button)) { 
-                    addPageDefMethod(panel);
+                    addMainTextToPage(null, initEditorText());
                 }
             };
             return but;
@@ -199,12 +199,7 @@ namespace CharsToolset
             textBox.TabIndex = 4;
             strtusBar.TabIndex = 5;
             /*==============将文本框添加到标签中======================*/
-            page.Controls.Add(textBox);
-            textBox.Size = page.ClientSize;
-            textBox.Location = new Point(1,1);
-            // 绑定文本框右键菜单
-            textBox.ContextMenuStrip = textStrip;
-
+            addMainTextToPage(page, textBox);
             /*==============将标签加入Tab容器中======================*/
             tab.TabPages.Add(page);
             page.Size = tab.ClientSize;
@@ -216,8 +211,8 @@ namespace CharsToolset
             container.BottomToolStripPanelVisible = false;
 
             container.ContentPanel.Controls.Add(tab);
-            tab.Location = new Point(0, 0);
-            tab.Size = new Size(container.ContentPanel.ClientSize.Width, 
+            tab.Location = new Point(-2, 0);
+            tab.Size = new Size(container.ContentPanel.ClientSize.Width+5, 
                 container.ContentPanel.ClientSize.Height - tab.Location.Y - container.BottomToolStripPanel.Height);
             /*==============将添加标签按钮加入到主容器======================*/
             container.ContentPanel.Controls.Add(addpageBut);
@@ -250,18 +245,21 @@ namespace CharsToolset
             form.ActiveControl = textBox;
         }
         /// <summary>
-        /// 添加新标签的方法
+        /// 添加文本框到标签页的方法
         /// </summary>
-        /// <param name="addBut"></param>
-        public static void addPageDefMethod(Control addBut) {
+        public static void addMainTextToPage(TabPage page, TextBox t) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             // 获得右键菜单
             ContextMenuStrip textRightMenu = initRightMenu();
-            // 获得主编辑文本框
-            TextBox mainTextBox = initEditorText();
-            MainTabContent.addControlsToPage(mainTextBox, true, true);
-            mainTextBox.Location = new Point(1,1);
-            mainTextBox.ContextMenuStrip = textRightMenu;
+            // 判断要添加的标签是否为null，为null则新建一个标签并添加
+            if (page == null) { 
+                MainTabContent.addControlsToPage(t, true, true);
+            } else { 
+                page.Controls.Add(t);
+                t.Size = new Size(page.ClientSize.Width - t.Location.X, page.ClientSize.Height - t.Location.Y);
+            }
+            t.Location = new Point(0, 2);
+            t.ContextMenuStrip = textRightMenu;
         }
 
         // 窗体得到焦点事件

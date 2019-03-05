@@ -20,7 +20,8 @@ namespace UI.TabContentLibrary.MainTabContent {
                 int itemCount = tab.TabCount;
                 int rightMargin = 20;
                 Size itemSize = Size.Empty;
-                if(itemW * itemCount + rightMargin < tab.Width) { 
+                int tabWidth = tab.Width-15;
+                if(itemW * itemCount + rightMargin < tabWidth) { 
                     itemSize = new Size(itemW, tab.ItemSize.Height);
                     if(itemSize != Size.Empty && (!itemSize.Width.Equals(tab.ItemSize.Width) 
                         || !itemSize.Height.Equals(tab.ItemSize.Height))) { 
@@ -29,7 +30,7 @@ namespace UI.TabContentLibrary.MainTabContent {
                     }
                     
                 } else { 
-                    int itemWW = ((tab.Width-rightMargin) / itemCount);
+                    int itemWW = ((tabWidth-rightMargin) / itemCount);
                     itemSize = new Size(itemWW, tab.ItemSize.Height);
                     if(itemSize != Size.Empty && (!itemSize.Width.Equals(tab.ItemSize.Width) 
                         || !itemSize.Height.Equals(tab.ItemSize.Height))) { 
@@ -46,15 +47,16 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// 确定添加按钮的位置
         /// </summary>
         public static void doIsAddPageButLocation(Control addCon, TabControl tab) {
-            if(addCon != null && tab != null) { 
-                int itemW = tab.GetTabRect(tab.SelectedIndex).Width;
+            if(addCon != null && tab != null && tab.TabCount > 0) { 
+                // 标签的宽
+                int itemW = tab.GetTabRect(0).Width;
                 int itemCount = tab.TabCount;
-                int y = tab.Location.Y + (tab.ItemSize.Height+3 - addCon.ClientSize.Height)/2;
-                int x = itemCount*itemW+8;
+                int y = tab.Location.Y + tab.ItemSize.Height - addCon.ClientSize.Height-2;
+                int x = itemCount*itemW+6;
                 if(x+addCon.Width+itemCount < tab.Width) { 
                     addCon.Location = new Point(x, y);
                 } else { 
-                    addCon.Location = new Point(tab.Width-addCon.Width-2, y);
+                    addCon.Location = new Point(tab.Width-addCon.Width-8, y);
                 }
             }
         }
@@ -90,17 +92,11 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// </summary>
         /// <param name="tabPage"></param>
         public static void deleteTabPage(TabControl tab,TabPage tabPage) {
-            if(tabPage != null && tabPage.Parent != null 
-                && typeof(TabControl).Equals(tabPage.Parent.GetType())) { 
-                TabControl tabControl = (TabControl)tabPage.Parent;
-                if(tabControl.TabCount >1) { 
+            if(tabPage != null && tab != null) { 
+                if(tab.TabCount >1) { 
                     int selIndex = tab.SelectedIndex;
-                    int delIndex = getTabIndex(tabControl, tabPage);
-                    tabControl.Controls.Remove(tabPage);
-                    // 确定移除标签后的要显示的标签
-                    if(selIndex != -1 && selIndex.Equals(delIndex)) { 
-                        isdelPageSelMode(tabControl, delIndex);
-                    }
+                    int delIndex = getTabIndex(tab, tabPage);
+                    tab.TabPages.Remove(tabPage);
                     // 移除page标签所带有的删除按钮
                     Dictionary<string,object> tag = ControlsUtilsMet.getControlTagToDic(tabPage);
                     if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
@@ -141,7 +137,7 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// </summary>
         /// <param name="tab">Tab容器</param>
         /// <param name="delPageIndex">要删除的标签索引</param>
-        private static void isdelPageSelMode(TabControl tab, int delPageIndex) { 
+        public static void isdelPageSelMode(TabControl tab, int delPageIndex) { 
             int type = MainTabControlConfig.DEL_PAGE_SELECT_MODE;
             switch (type) { 
             // 向左

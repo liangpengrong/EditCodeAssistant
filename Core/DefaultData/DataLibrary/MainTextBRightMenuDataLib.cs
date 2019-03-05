@@ -39,8 +39,8 @@ namespace Core.DefaultData.DataLibrary {
             public const string 小写形式_自定义_ITEM_NAME = "小写形式_自定义_Item";
 
             public const string 驼峰形式_ITEM_NAME = "驼峰形式Item";
-            public const string 驼峰形式_首字母大写_ITEM_NAME = "驼峰形式_首字母大写_Item";
-            public const string 驼峰形式_首字母小写_ITEM_NAME = "驼峰形式_首字母小写_Item";
+            public const string 驼峰形式_大驼峰_ITEM_NAME = "驼峰形式_大驼峰_Item";
+            public const string 驼峰形式_小驼峰_ITEM_NAME = "驼峰形式_小驼峰_Item";
 
             public const string 清空文本框_ITEM_NAME = "清空文本框Item";
         }

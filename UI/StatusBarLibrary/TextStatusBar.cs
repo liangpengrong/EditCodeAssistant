@@ -45,7 +45,7 @@ namespace UI.StatusBarLibrary
             statusStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START);
             statusStrip.AutoSize = false;
             statusStrip.BackColor = startsDefBackColor;
-            statusStrip.Padding = new Padding(3,0,3,0);
+            statusStrip.Padding = new Padding(0,0,0,0);
             statusStrip.Font = startsFont;
             statusStrip.AutoSize = false;
             statusStrip.Height = 20;
@@ -181,7 +181,7 @@ namespace UI.StatusBarLibrary
         public static void paintStrutsBarFrame(object sender, PaintEventArgs e)
         {
             StatusStrip toolStrip = (StatusStrip)sender;
-            ControlsUtilsMet.setCOntrolBorderStyle(e.Graphics, toolStrip.ClientRectangle
+            ControlsUtilsMet.setControlBorderStyle(e.Graphics, toolStrip.ClientRectangle
                 , ButtonBorderStyle.Solid
                 , 0, 1, 0, 0
                 , Color.FromArgb(160, 160, 160));

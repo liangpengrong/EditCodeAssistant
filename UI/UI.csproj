@@ -91,11 +91,17 @@
     <Compile Include="ComponentLibrary\ControlLibrary\ExportComBox.Designer.cs">
       <DependentUpon>ExportComBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RedrawTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\PromptMessage.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\PromptMessage.Designer.cs">
       <DependentUpon>PromptMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RedrawTextBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\DataGridViewRightMenu.cs">
       <SubType>Component</SubType>

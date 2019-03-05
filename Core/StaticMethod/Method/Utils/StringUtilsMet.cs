@@ -272,30 +272,57 @@ namespace Core.StaticMethod.Method.Utils {
         /// <param name="type">0-大写类型 1-小写类型</param>
         /// <returns></returns>
         public static string charsToHump(string str, int type) { 
-            string[] splitArr = new string[]{"_", "|", "\\", "/", ":", ","}; 
-            string[] splLine = str.Split(new string[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-            string[] arr = null;
-            int index;
-            StringBuilder retStr = new StringBuilder();
-            foreach(string ss in splLine) { 
-                index = 0;
-                arr = ss.Split(splitArr, StringSplitOptions.RemoveEmptyEntries);
-                foreach(string s in arr) { 
-                    if(index > 0 && Char.IsLower(s.ToCharArray()[0])) {
-                        retStr.Append(s.Substring(0,1).ToUpper() + s.Substring(1,s.Length-1));
-                    } else { 
-                        string appStr = s;
-                        if (type == 0) {
-                            appStr = s.Length > 0? s.Substring(0,1).ToUpper()+s.Substring(1) : s;
-                        }else if (type == 1) { 
-                            appStr = s.Length > 0? s.Substring(0,1).ToLower()+s.Substring(1) : s;
+            char[] splitArr = new char[]{'_', '|', '\\', '/', ':', ','};
+            // 先按换行符分割
+            string[] splLine = str.Split(new string[]{Environment.NewLine}, StringSplitOptions.None);
+            // 存放每行中要变为大写的索引
+            int[][] upperIndex = new int[splLine.Length][];
+            char[] linestrArr = str.ToCharArray();
+            // 判断要转化为大写的索引
+            for(int i=0; i<splLine.Length;i++) { 
+                linestrArr = splLine[i].ToCharArray();
+                if(linestrArr != null && linestrArr.Length >= 3) { 
+                    List<int> tempLineIndexs = new List<int>();
+                    for(int j=2; j<linestrArr.Length; j++) {
+                        // 判断前一个字符是否为小写并且当前字符为大写或者前一个字符存在于splitArr中
+                        if(Char.IsUpper(linestrArr[j]) && Char.IsLower(linestrArr[j-1])
+                            || splitArr.Contains(linestrArr[j-1])) { 
+                            tempLineIndexs.Add(j);
                         }
-                        retStr.Append(appStr);
                     }
-                    index ++;
-                }
+                    upperIndex[i] = tempLineIndexs.ToArray();
+                }  
             }
-            return retStr.ToString();;
+            
+            StringBuilder retStr = new StringBuilder();
+            // 遍历行
+            for (int i=0; i<splLine.Length; i++) { 
+                // 每行的小写形式
+                string s = splLine[i].ToLower();
+                if(s.Length > 0) { 
+                    // 每行要转化为大写的索引
+                    int[] indexs = upperIndex[i];
+                    if (type == 0) {
+                        s = s.Substring(0,1).ToUpper() + s.Substring(1,s.Length-1);
+                    }else if (type == 1) { 
+                        s = s.Substring(0,1).ToLower() + s.Substring(1,s.Length-1);
+                    }
+                    // 将该转化为大写形式的地方转化为大写形式
+                    char[] linechar = s.ToCharArray();
+                    foreach(int lineIndex in indexs) { 
+                        linechar[lineIndex] = Char.ToUpperInvariant(linechar[lineIndex]);
+                    }
+                    s = new string(linechar);
+                    // 替换掉要替换的字符
+                    foreach (char split in splitArr) { 
+                        s = s.Replace(split.ToString(), "");
+                    }
+                }
+                retStr.Append(s);
+                // 最后一行不添加换行符
+                if(i < splLine.Length-1) retStr.AppendLine();
+            }
+            return retStr.ToString();
         }
         /// <summary>
         /// 去除字符串数组中的每个元素中的指定匹配项
@@ -371,6 +398,17 @@ namespace Core.StaticMethod.Method.Utils {
                 retStr = str.Substring(0, str.Length - Environment.NewLine.Length);    
             }
             return retStr;
+        }
+        /// <summary>
+        /// 获取字符串包含的中文个数
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static int getChineseLength(string str) { 
+            if(str == null) return 0;
+            int retInt = 0;
+            retInt = str.Length - Regex.Replace(str, @"[\u4e00-\u9fa5]","").Length;
+            return retInt;
         }
     }
 }

@@ -313,7 +313,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 操作区容器重绘事件
         private void 普通_操作容器_Paint(object sender, PaintEventArgs e) {
             Panel panel = (Panel)sender;
-            ControlsUtilsMet.setCOntrolBorderStyle(e.Graphics, panel.ClientRectangle
+            ControlsUtilsMet.setControlBorderStyle(e.Graphics, panel.ClientRectangle
                 ,ButtonBorderStyle.Solid
                 ,0,0,0,1
                 , ColorTranslator.FromHtml("#D9D9D9"));

@@ -42,9 +42,9 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
                 if (t != null) {
                     全选Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
                     剪切Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
-                    复制Item.Enabled = !0.Equals(t.TextLength);
+                    复制Item.Enabled = !0.Equals(t.TextLength) && !0.Equals(t.SelectionLength);
                     粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length) && !t.ReadOnly;
-                    删除Item.Enabled = !t.SelectionLength.Equals(0) && !t.ReadOnly;
+                    删除Item.Enabled = !0.Equals(t.SelectionLength) && !t.ReadOnly;
                     去除Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
                     转化为Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
                     清空文本框Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
@@ -224,8 +224,8 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolBindingDic.Add(this.小写形式_行尾_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_行尾_ItemMethod));
             toolBindingDic.Add(this.小写形式_自定义_Item.Name, new methodDelegate(TextRightMenuMet.小写形式_自定义_ItemMethod));
 
-            toolBindingDic.Add(this.驼峰形式_大写_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_大写_ItemMethod));
-            toolBindingDic.Add(this.驼峰形式_小写_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_小写_ItemMethod));
+            toolBindingDic.Add(this.驼峰形式_大驼峰_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_大驼峰_ItemMethod));
+            toolBindingDic.Add(this.驼峰形式_小驼峰_Item.Name, new methodDelegate(TextRightMenuMet.驼峰形式_小驼峰_ItemMethod));
             return toolBindingDic;
 
 
@@ -288,8 +288,8 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolImageDic.Add(this.小写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_自定义_ITEM_NAME);
 
             toolImageDic.Add(this.驼峰形式Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_ITEM_NAME);
-            toolImageDic.Add(this.驼峰形式_大写_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_首字母大写_ITEM_NAME);
-            toolImageDic.Add(this.驼峰形式_小写_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_首字母小写_ITEM_NAME);
+            toolImageDic.Add(this.驼峰形式_大驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_大驼峰_ITEM_NAME);
+            toolImageDic.Add(this.驼峰形式_小驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_小驼峰_ITEM_NAME);
 
             if (toolImageDic.ContainsKey(item)) { 
                 return toolImageDic[item];

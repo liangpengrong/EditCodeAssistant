@@ -51,7 +51,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="rightW">右边框宽度</param>
         /// <param name="bottomW">下边框宽度</param>
         /// <param name="color">边框颜色</param>
-        public static void setCOntrolBorderStyle(Graphics gra,
+        public static void setControlBorderStyle(Graphics gra,
             Rectangle rec, ButtonBorderStyle borderS,
             int leftW, int topW, int rightW, int bottomW,
             Color color) {
@@ -73,7 +73,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="colorTop">上边框颜色</param>
         /// <param name="colorRight">右边框颜色</param>
         /// <param name="colorBottom">下边框颜色</param>
-        public static void setCOntrolBorderStyle(Graphics gra,
+        public static void setControlBorderStyle(Graphics gra,
             Rectangle rec, ButtonBorderStyle borderS,
             int borderW,
             Color colorLeft, Color colorTop, Color colorRight, Color colorBottom) 
@@ -92,7 +92,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="borderS">边框样式</param>
         /// <param name="borderW">边框宽度</param>
         /// <param name="color">边框颜色</param>
-        public static void setCOntrolBorderStyle(Graphics gra,
+        public static void setControlBorderStyle(Graphics gra,
             Rectangle rec, ButtonBorderStyle borderS,
             int borderW,
             Color color)
@@ -505,7 +505,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="headT">对话框标题</param>
         /// <param name="okDeleg">点击确定按钮执行的委托</param>
         /// <param name="cenDeleg">点击取消按钮执行的委托</param>
-        public static void showAskMessBox(string text, string headT, Action okDeleg, Action cenDeleg) {
+        public static DialogResult showAskMessBox(string text, string headT, Action okDeleg, Action cenDeleg) {
             // 弹出对话框
             DialogResult dr = MessageBox.Show(text, headT, MessageBoxButtons.OK | MessageBoxButtons.OKCancel
                 ,MessageBoxIcon.Exclamation);
@@ -521,6 +521,7 @@ namespace Core.StaticMethod.Method.Utils
                     cenDeleg.Invoke();
                 }
             }
+            return dr;
         }
         /// <summary>
         /// 清除控件的重绘刷新

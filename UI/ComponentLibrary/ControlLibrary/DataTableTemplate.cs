@@ -89,6 +89,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             数据表格.AllowUserToAddRows = false;
             数据表格.ShowCellToolTips = true;
 
+            数据表格.ScrollBars = ScrollBars.Both;
             数据表格.RowTemplate.Height = cellHeight;
             数据表格.AllowUserToAddRows = false;
             数据表格.AllowUserToDeleteRows = false;

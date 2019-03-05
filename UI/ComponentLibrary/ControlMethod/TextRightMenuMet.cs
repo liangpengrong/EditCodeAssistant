@@ -129,13 +129,13 @@ namespace UI.ComponentLibrary.ControlMethod {
             return null;
         }
 
-        public static object 驼峰形式_大写_ItemMethod(Dictionary<Type , object> data) { 
+        public static object 驼峰形式_大驼峰_ItemMethod(Dictionary<Type , object> data) { 
             // 获取文本框
             TextBox t = (TextBox)data[typeof(TextBox)];
             TextBoxUtilsMet.textToHump(t, 0);
             return null;
         }
-        public static object 驼峰形式_小写_ItemMethod(Dictionary<Type , object> data) { 
+        public static object 驼峰形式_小驼峰_ItemMethod(Dictionary<Type , object> data) { 
             // 获取文本框
             TextBox t = (TextBox)data[typeof(TextBox)];
             TextBoxUtilsMet.textToHump(t, 1);

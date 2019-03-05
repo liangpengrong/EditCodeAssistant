@@ -17,12 +17,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
         public static Panel initMainAddPageButton() { 
             Panel but = new Panel();
             // 初始背景色
-            Color backColor = Color.White;
+            Color backColor = Color.Red;
             but.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_PAGE_BUTTON);
             but.TabStop = false;
-            but.Size = new Size(14,14);
+            but.Size = new Size(16,16);
             but.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-            // but.BackColor = ColorTranslator.FromHtml("#D9D9D9");
+            // but.BackColor = backColor;
             but.Paint += (object sender, PaintEventArgs e) =>{ 
                 Panel panel = (Panel)sender;
                 // 边距
@@ -37,6 +37,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 int y1 = (panel.ClientSize.Height-height)/2+(height/2);
                 // 第二条线的x坐标
                 int x2 = (panel.ClientSize.Width-height)/2+(height/2);
+                e.Graphics.DrawRectangle(new Pen(Color.White), e.ClipRectangle);
                 // 绘制中间的线
                 e.Graphics.DrawLine(pen, margin, y1, margin+width, y1);
                 e.Graphics.DrawLine(pen, x2, margin, x2, margin+width);

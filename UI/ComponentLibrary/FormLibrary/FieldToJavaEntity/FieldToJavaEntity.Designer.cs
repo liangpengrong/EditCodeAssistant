@@ -25,6 +25,8 @@
         private void InitializeComponent() {
             this.tab容器 = new System.Windows.Forms.TabControl();
             this.输入_page = new System.Windows.Forms.TabPage();
+            this.输入_包名_textB = new System.Windows.Forms.TextBox();
+            this.包名_lab = new System.Windows.Forms.Label();
             this.输入_类名_textB = new System.Windows.Forms.TextBox();
             this.类名_lab = new System.Windows.Forms.Label();
             this.输入_生成到_lab = new System.Windows.Forms.Label();
@@ -51,8 +53,6 @@
             this.get_set规则_check = new System.Windows.Forms.CheckBox();
             this.生成构造函数_check = new System.Windows.Forms.CheckBox();
             this.全选反选_check = new System.Windows.Forms.CheckBox();
-            this.输入_包名_textB = new System.Windows.Forms.TextBox();
-            this.包名_lab = new System.Windows.Forms.Label();
             this.tab容器.SuspendLayout();
             this.输入_page.SuspendLayout();
             this.选项区容器.SuspendLayout();
@@ -96,6 +96,25 @@
             this.输入_page.Text = "手动输入";
             this.输入_page.ToolTipText = "通过输入字段生成实体类";
             this.输入_page.UseVisualStyleBackColor = true;
+            // 
+            // 输入_包名_textB
+            // 
+            this.输入_包名_textB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.输入_包名_textB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.输入_包名_textB.Location = new System.Drawing.Point(226, 8);
+            this.输入_包名_textB.Name = "输入_包名_textB";
+            this.输入_包名_textB.Size = new System.Drawing.Size(116, 23);
+            this.输入_包名_textB.TabIndex = 4;
+            this.输入_包名_textB.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            // 
+            // 包名_lab
+            // 
+            this.包名_lab.AutoSize = true;
+            this.包名_lab.Location = new System.Drawing.Point(181, 14);
+            this.包名_lab.Name = "包名_lab";
+            this.包名_lab.Size = new System.Drawing.Size(41, 12);
+            this.包名_lab.TabIndex = 5;
+            this.包名_lab.Text = "包名：";
             // 
             // 输入_类名_textB
             // 
@@ -197,8 +216,6 @@
             // 生成序列化_check
             // 
             this.生成序列化_check.AutoSize = true;
-            this.生成序列化_check.Checked = true;
-            this.生成序列化_check.CheckState = System.Windows.Forms.CheckState.Checked;
             this.生成序列化_check.Location = new System.Drawing.Point(9, 365);
             this.生成序列化_check.Name = "生成序列化_check";
             this.生成序列化_check.Size = new System.Drawing.Size(84, 16);
@@ -448,25 +465,6 @@
             this.全选反选_check.UseVisualStyleBackColor = false;
             this.全选反选_check.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             this.全选反选_check.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CheckBox_MouseDown);
-            // 
-            // 输入_包名_textB
-            // 
-            this.输入_包名_textB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.输入_包名_textB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.输入_包名_textB.Location = new System.Drawing.Point(226, 8);
-            this.输入_包名_textB.Name = "输入_包名_textB";
-            this.输入_包名_textB.Size = new System.Drawing.Size(116, 23);
-            this.输入_包名_textB.TabIndex = 4;
-            this.输入_包名_textB.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
-            // 
-            // 包名_lab
-            // 
-            this.包名_lab.AutoSize = true;
-            this.包名_lab.Location = new System.Drawing.Point(181, 14);
-            this.包名_lab.Name = "包名_lab";
-            this.包名_lab.Size = new System.Drawing.Size(41, 12);
-            this.包名_lab.TabIndex = 5;
-            this.包名_lab.Text = "包名：";
             // 
             // FieldToJavaEntity
             // 

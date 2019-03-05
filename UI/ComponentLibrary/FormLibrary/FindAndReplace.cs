@@ -176,8 +176,7 @@ namespace UI.ComponentLibrary.FormLibrary
             }
         }
 
-        private void 查找内容T_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void 查找内容T_KeyDown(object sender, KeyEventArgs e){
             TextBox t = (TextBox)sender;
             if(e.Control && e.KeyCode.Equals(Keys.A)) {
                 t.SelectAll();
@@ -187,8 +186,7 @@ namespace UI.ComponentLibrary.FormLibrary
             }
         }
 
-        private void 替换内容T_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void 替换内容T_KeyDown(object sender, KeyEventArgs e){
             TextBox t = (TextBox)sender;
             if (e.Control && e.KeyCode.Equals(Keys.A))
             {

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using UI.ComponentLibrary.ControlLibrary;
 using UI.ControlEventBindLibrary.TextBoxEventBind;
 
 namespace ProgramTextBoxLibrary
@@ -27,7 +28,7 @@ namespace ProgramTextBoxLibrary
         private static TextBox initEditorText()
         {
             // 获取主编辑文本框
-            TextBox textB = new TextBox();
+            RedrawTextBox textB = new RedrawTextBox();
             // 文本框默认事件绑定
             textDefaultEventBinding(textB);
             // 文本框的默认配置
@@ -61,7 +62,7 @@ namespace ProgramTextBoxLibrary
         /// <summary>
         /// 文本框的默认配置，用来设置主要文本框的启动状态
         /// </summary>
-        private static void textDefaultConfig(TextBox textB) {
+        private static void textDefaultConfig(RedrawTextBox textB) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             // 文本框姓名
             textB.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF) + timeStr;
@@ -78,6 +79,7 @@ namespace ProgramTextBoxLibrary
             textB.Size = new Size(289, 254);
             textB.TabIndex = 0;
             textB.WordWrap = MainTextBConfig.AUTO_WORDWRAP;
+            textB.TextPadding = new Padding(3,3,4,4);
             // 将文件默认编码写入到文本框tag数据中
             TextBoxUtilsMet.textAddTag(textB, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, TextBoxDataLibcs.TEXTBOX_ECODING_DEF);
             // 设置文本框四周锚定

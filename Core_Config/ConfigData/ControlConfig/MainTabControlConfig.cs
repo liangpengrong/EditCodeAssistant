@@ -17,7 +17,7 @@ namespace Core_Config.ConfigData.ControlConfig {
         /// <summary>
         /// 是否显示删除按钮
         /// </summary>
-        public static bool IS_SHOW_DEL_BUTTON = true;
+        public static bool IS_SHOW_DEL_BUTTON = false;
         /// <summary>
         /// 删除是否询问
         /// </summary>

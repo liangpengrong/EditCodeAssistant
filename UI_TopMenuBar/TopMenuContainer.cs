@@ -379,7 +379,7 @@ namespace UI_TopMenuBar
         private static void paintMenuFrame(object sender, PaintEventArgs e)
         {
             MenuStrip menu = (MenuStrip)sender;
-            ControlsUtilsMet.setCOntrolBorderStyle(e.Graphics, menu.ClientRectangle
+            ControlsUtilsMet.setControlBorderStyle(e.Graphics, menu.ClientRectangle
                 ,ButtonBorderStyle.Solid
                 ,0,0,0,0
                 , Color.FromArgb(160, 160, 160));

@@ -42,10 +42,18 @@
             this.不区分大小写_chk = new System.Windows.Forms.CheckBox();
             this.操作区容器 = new System.Windows.Forms.GroupBox();
             this.表格内容_label = new System.Windows.Forms.Label();
+            this.数据表格容器 = new System.Windows.Forms.Panel();
+            this.状态栏 = new System.Windows.Forms.StatusStrip();
+            this.行数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.列数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.选中行数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.选中列数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.选中单元格数_StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.分列设置容器.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.选项区容器.SuspendLayout();
             this.操作区容器.SuspendLayout();
+            this.状态栏.SuspendLayout();
             this.SuspendLayout();
             // 
             // 分列设置容器
@@ -188,8 +196,6 @@
             // 
             // 保留空列_chk
             // 
-            this.保留空列_chk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.保留空列_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.保留空列_chk.Location = new System.Drawing.Point(8, 16);
             this.保留空列_chk.Name = "保留空列_chk";
@@ -208,7 +214,7 @@
             this.分列_but.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(83)))), ((int)(((byte)(44)))));
             this.分列_but.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.分列_but.ForeColor = System.Drawing.Color.White;
-            this.分列_but.Location = new System.Drawing.Point(442, 16);
+            this.分列_but.Location = new System.Drawing.Point(454, 16);
             this.分列_but.Name = "分列_but";
             this.分列_but.Size = new System.Drawing.Size(70, 25);
             this.分列_but.TabIndex = 8;
@@ -218,8 +224,6 @@
             // 
             // 选项区容器
             // 
-            this.选项区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.选项区容器.Controls.Add(this.不包含制表符_chk);
             this.选项区容器.Controls.Add(this.不区分大小写_chk);
             this.选项区容器.Controls.Add(this.保留空列_chk);
@@ -232,8 +236,6 @@
             // 
             // 不包含制表符_chk
             // 
-            this.不包含制表符_chk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.不包含制表符_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.不包含制表符_chk.Location = new System.Drawing.Point(8, 72);
             this.不包含制表符_chk.Name = "不包含制表符_chk";
@@ -245,8 +247,6 @@
             // 
             // 不区分大小写_chk
             // 
-            this.不区分大小写_chk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.不区分大小写_chk.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.不区分大小写_chk.Location = new System.Drawing.Point(8, 43);
             this.不区分大小写_chk.Name = "不区分大小写_chk";
@@ -264,7 +264,7 @@
             this.操作区容器.Controls.Add(this.分列_but);
             this.操作区容器.Location = new System.Drawing.Point(164, 4);
             this.操作区容器.Name = "操作区容器";
-            this.操作区容器.Size = new System.Drawing.Size(522, 50);
+            this.操作区容器.Size = new System.Drawing.Size(534, 50);
             this.操作区容器.TabIndex = 14;
             this.操作区容器.TabStop = false;
             this.操作区容器.Text = "操作区";
@@ -278,11 +278,69 @@
             this.表格内容_label.TabIndex = 9;
             this.表格内容_label.Text = "表格内容：";
             // 
+            // 数据表格容器
+            // 
+            this.数据表格容器.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.数据表格容器.Location = new System.Drawing.Point(164, 60);
+            this.数据表格容器.Name = "数据表格容器";
+            this.数据表格容器.Size = new System.Drawing.Size(534, 344);
+            this.数据表格容器.TabIndex = 15;
+            // 
+            // 状态栏
+            // 
+            this.状态栏.AutoSize = false;
+            this.状态栏.Font = new System.Drawing.Font("Microsoft YaHei Mono", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.状态栏.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.行数_StatusLabel,
+            this.列数_StatusLabel,
+            this.选中行数_StatusLabel,
+            this.选中列数_StatusLabel,
+            this.选中单元格数_StripStatusLabel});
+            this.状态栏.Location = new System.Drawing.Point(0, 409);
+            this.状态栏.Name = "状态栏";
+            this.状态栏.Size = new System.Drawing.Size(707, 22);
+            this.状态栏.TabIndex = 16;
+            this.状态栏.Text = "statusStrip1";
+            // 
+            // 行数_StatusLabel
+            // 
+            this.行数_StatusLabel.Name = "行数_StatusLabel";
+            this.行数_StatusLabel.Size = new System.Drawing.Size(63, 17);
+            this.行数_StatusLabel.Text = "总行数：0";
+            // 
+            // 列数_StatusLabel
+            // 
+            this.列数_StatusLabel.Name = "列数_StatusLabel";
+            this.列数_StatusLabel.Size = new System.Drawing.Size(63, 17);
+            this.列数_StatusLabel.Text = "总列数：0";
+            // 
+            // 选中行数_StatusLabel
+            // 
+            this.选中行数_StatusLabel.Name = "选中行数_StatusLabel";
+            this.选中行数_StatusLabel.Size = new System.Drawing.Size(75, 17);
+            this.选中行数_StatusLabel.Text = "选中行数：0";
+            // 
+            // 选中列数_StatusLabel
+            // 
+            this.选中列数_StatusLabel.Name = "选中列数_StatusLabel";
+            this.选中列数_StatusLabel.Size = new System.Drawing.Size(75, 17);
+            this.选中列数_StatusLabel.Text = "选中行数：0";
+            // 
+            // 选中单元格数_StripStatusLabel
+            // 
+            this.选中单元格数_StripStatusLabel.Name = "选中单元格数_StripStatusLabel";
+            this.选中单元格数_StripStatusLabel.Size = new System.Drawing.Size(99, 17);
+            this.选中单元格数_StripStatusLabel.Text = "选中单元格数：0";
+            // 
             // SplitCharsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(695, 407);
+            this.ClientSize = new System.Drawing.Size(707, 431);
+            this.Controls.Add(this.状态栏);
+            this.Controls.Add(this.数据表格容器);
             this.Controls.Add(this.操作区容器);
             this.Controls.Add(this.选项区容器);
             this.Controls.Add(this.分列设置容器);
@@ -300,6 +358,8 @@
             this.选项区容器.ResumeLayout(false);
             this.操作区容器.ResumeLayout(false);
             this.操作区容器.PerformLayout();
+            this.状态栏.ResumeLayout(false);
+            this.状态栏.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -325,5 +385,12 @@
         private System.Windows.Forms.CheckBox 不包含制表符_chk;
         private System.Windows.Forms.TextBox 字符_textB;
         private System.Windows.Forms.Label 表格内容_label;
+        private System.Windows.Forms.Panel 数据表格容器;
+        private System.Windows.Forms.StatusStrip 状态栏;
+        private System.Windows.Forms.ToolStripStatusLabel 行数_StatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel 列数_StatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel 选中行数_StatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel 选中列数_StatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel 选中单元格数_StripStatusLabel;
     }
 }

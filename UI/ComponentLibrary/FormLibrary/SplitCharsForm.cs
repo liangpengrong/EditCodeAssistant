@@ -167,9 +167,13 @@ namespace UI.ComponentLibrary.FormLibrary {
                 } 
                 dt.Rows.Add(dr);
             }
-            mainDataGridView.DataSource = dt;
-            // 确定窗体的大小
-            defineFormSize(rowColuArr);
+            if (dt.Columns.Count <= 65535) { 
+                mainDataGridView.DataSource = dt;
+                // 确定窗体的大小
+               //  defineFormSize(rowColuArr);
+            } else { 
+                MessageBox.Show("列超出了最大值");    
+            }
         }
         
         /// <summary>
@@ -398,11 +402,36 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void initDataViewConf() {
             DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(cellDefHeight ,colHeadersHeight, Color.Empty, Color.Empty);
-            dataView.Location = new Point(操作区容器.Location.X, 操作区容器.Height + 操作区容器.Location.Y + 7);
-            Controls.Add(dataView);
+            dataView.Location = new Point(0,0);
+            dataView.BringToFront();
+            dataView.Size = 数据表格容器.ClientSize;
+            dataView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            数据表格容器.Controls.Add(dataView);
             mainDataGridView = dataView;
+            mainDataGridView.MouseMove += (object sender, MouseEventArgs e) =>{
+                SetStatusBarLableVal();
+            };
+            mainDataGridView.RowsAdded += (object sender, DataGridViewRowsAddedEventArgs e) => {
+                SetStatusBarLableVal();
+            };
+            mainDataGridView.ColumnAdded += (object sender, DataGridViewColumnEventArgs e) => {
+                SetStatusBarLableVal();
+            };
         }
 
+        // 设置状态栏的lable数据
+        private void SetStatusBarLableVal() {
+            if(mainDataGridView != null) { 
+                行数_StatusLabel.Text = "总行数：" + mainDataGridView.RowCount;
+                列数_StatusLabel.Text = "总列数：" + mainDataGridView.ColumnCount;
+                Console.WriteLine(mainDataGridView.SelectedRows.Count);
+                选中行数_StatusLabel.Text = "选中行数：" + mainDataGridView.SelectedRows.Count;
+                选中列数_StatusLabel.Text = "选中列数：" + mainDataGridView.SelectedColumns.Count;
+                选中单元格数_StripStatusLabel.Text = "选中单元格数：" + mainDataGridView.SelectedCells.Count;
+            }
+
+        }
         /// <summary>
         /// 设置字符文本框中特定字符的背景色
         /// </summary>

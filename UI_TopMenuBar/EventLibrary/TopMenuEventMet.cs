@@ -109,26 +109,35 @@ namespace UI_TopMenuBar.TopMenuEvent
             if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
                 // 获取文本框
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                // 获取文本框的Tag数据
+                Dictionary<string,object> textDic = TextBoxUtilsMet.getDicTextTag(t);
                 // 定义初始化的路径
                 object path = null;
-                TextBoxUtilsMet.getDicTextTag(t).TryGetValue(TextBoxTagKey.SAVE_FILE_PATH, out path);//赋值路径
-                if (path!=null&&FileUtilsMet.isFileUrl(path.ToString()))//判断路径是否存在
-                {
-                    if (path.ToString().Split('.')[path.ToString().Split('.').Length - 1].ToLower().Equals("txt"))
-                    {//判断文件后缀名是否为txt格式
-                        if (MessageBox.Show(
-                             "该文件为本地文件,确定要保存并覆盖吗？"
-                             + System.Environment.NewLine
-                             + "文件路径为：" + path
-                            , "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                        {
-                            FileUtilsMet.FileWrite.writeFile(t.Tag.ToString()//调用方法写入文件内容
-                                , t.Text//获取选中标签中的主文本框的值
-                                , Encoding.Default);
-                        }
-                    } else {
-                        MessageBox.Show("只保存TXT格式的文件");
+                // 赋值路径
+                if(textDic.ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) { 
+                    textDic.TryGetValue(TextBoxTagKey.SAVE_FILE_PATH, out path);
+                } else { path = "";}
+                // 赋值编码
+                Encoding encoding = Encoding.Default;
+                if(textDic.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING)) {
+                    object ee = null;
+                    textDic.TryGetValue(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, out ee);
+                    if(ee != null && ee is Encoding) encoding = (Encoding)ee;
+                } else { path = "";}
+                // 判断路径是否存在
+                if (path!=null&&FileUtilsMet.isFileUrl(path.ToString())) {
+                    //if (path.ToString().Split('.')[path.ToString().Split('.').Length - 1].ToLower().Equals("txt"))
+                    //{//判断文件后缀名是否为txt格式
+                    if (MessageBox.Show(
+                            "确定要保存并覆盖吗？" + System.Environment.NewLine + "文件路径为：" + path
+                        , "保存提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        // 调用方法写入文件内容
+                        FileUtilsMet.FileWrite.writeFile(path.ToString(), t.Text , encoding);
                     }
+                    //} else {
+                    //    MessageBox.Show("只保存TXT格式的文件");
+                    //}
                 }
                 else{
                     saveFileMethod(data);

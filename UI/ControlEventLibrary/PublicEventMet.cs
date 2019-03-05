@@ -20,7 +20,6 @@ namespace Ui.ControlEventLibrary {
         /// <returns>返回该对话框</returns>
         public static object openFileMethod(TextBox t)
         {
-            Encoding encoding = Encoding.Default;
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.CheckFileExists = true;
             openFile.DefaultExt = "txt";
@@ -28,15 +27,13 @@ namespace Ui.ControlEventLibrary {
             openFile.DereferenceLinks = true;
             openFile.Multiselect = true;
             openFile.RestoreDirectory = false;
-            if (openFile.ShowDialog() == DialogResult.OK)
-            {//判断是否点击确定
+            // 判断是否点击确定
+            if (openFile.ShowDialog() == DialogResult.OK) {
+                string path = openFile.FileName;
                 // 判断编码
-                //string[] pathArr = FileUtilsMet.getPathArr(openFile.FileName);
-                //if(!"txt".Equals(pathArr[2].ToLower())) { 
-                //    encoding = FileUtilsMet.isFileEncoding(openFile.FileName);
-                //}
+                Encoding encoding = FileUtilsMet.GetType(path);
                 // 将文件内容赋值到文本框中
-                t.Text = FileUtilsMet.FileRead.read(openFile.FileName, encoding);
+                t.Text = FileUtilsMet.FileRead.read(path, encoding);
                 t.SelectionStart = t.TextLength;
 
                 // 将文件路径写入到文本框tag数据中
@@ -44,7 +41,7 @@ namespace Ui.ControlEventLibrary {
                 // 将文件编码写入到文本框tag数据中
                 TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
                 // 监听文件变化并弹窗提醒
-                PublicEventMet.monitorFileShowMess(openFile.FileName, t);
+                monitorFileShowMess(openFile.FileName, t);
                 t.Focus();
             }
             return openFile;
@@ -55,17 +52,18 @@ namespace Ui.ControlEventLibrary {
         /// </summary>
         /// <param name="t">要保存内容的文本框</param>
         /// <returns></returns>
-        public static object saveFileMethod(TextBox t)
-        {
+        public static object saveFileMethod(TextBox t) {
             SaveFileDialog newSaveFile = new SaveFileDialog();
             newSaveFile.RestoreDirectory = false;
             newSaveFile.ValidateNames = true;
             newSaveFile.DefaultExt = "txt";
             newSaveFile.Filter = "文本文档(*.txt)|*.txt|所有文件(*.*)|*.*";
+            string path = newSaveFile.FileName.ToString();
+            Encoding encoding = FileUtilsMet.GetType(path);
             //判断是否点击确定
             if (newSaveFile.ShowDialog() == DialogResult.OK) {
                 // 调用方法写入文件内容
-                FileUtilsMet.FileWrite.writeFile(newSaveFile.FileName.ToString(), t.Text, Encoding.Default);
+                FileUtilsMet.FileWrite.writeFile(path, t.Text, encoding);
                 // 将保存路径加入到文本框的Tag属性
                 TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName.ToString());
                 // 监听文件变化并弹窗提醒
@@ -117,7 +115,7 @@ namespace Ui.ControlEventLibrary {
                 string[] pathArr = FileUtilsMet.getPathArr(filepath);
                 Encoding encoding = Encoding.Default;
                 if(!"txt".Equals(pathArr[2].ToLower())) {
-                    encoding = FileUtilsMet.isFileEncoding(filepath);
+                    encoding = FileUtilsMet.GetType(filepath);
                 }
                 // 判断文本框的Tag中是否纯在一个监听,存在就销毁他
                 if(TextBoxUtilsMet.getDicTextTag(t).ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR)){
@@ -142,7 +140,6 @@ namespace Ui.ControlEventLibrary {
                                 WinApiUtilsMet.flashWindesTime(f.Handle, 400, 3, true);
                             }));
                         }
-                        
                         // 弹出对话框
                         ControlsUtilsMet.showAskMessBox("文件内容已经更改,是否要重新加载文件", "提示"
                         ,delegate{

@@ -17,6 +17,7 @@ namespace Core.StaticMethod.Method.Redraw {
             RectangleF rectF = e.Graphics.ClipBounds;
             e.Graphics.FillRectangle(b, rectF);
             base.OnRenderToolStripBackground(e);
+            b.Dispose();
         }
         // 边框
         protected override void OnRenderToolStripBorder (ToolStripRenderEventArgs e) { 
@@ -39,6 +40,7 @@ namespace Core.StaticMethod.Method.Redraw {
             float y = rectF.Y + 2;
             e.Graphics.DrawLine(pen ,rectF.X + 25 ,y , rectF.Right, y);
             base.OnRenderSeparator(e);
+            pen.Dispose();
         }
         // 菜单项
         protected override void OnRenderMenuItemBackground (ToolStripItemRenderEventArgs e) {
@@ -88,6 +90,7 @@ namespace Core.StaticMethod.Method.Redraw {
             }
             e.Graphics.FillRectangle(bru, rec);
             base.OnRenderItemCheck(e);
+            bru.Dispose();
         }
         // 文本
         protected override void OnRenderItemText (ToolStripItemTextRenderEventArgs e) {
@@ -100,6 +103,7 @@ namespace Core.StaticMethod.Method.Redraw {
             Brush b = new SolidBrush(ColorTranslator.FromHtml("#F2F2F2"));
             e.Graphics.FillRectangle(b,e.AffectedBounds);
             base.OnRenderToolStripBackground(e);
+            b.Dispose();
         }
     }
 }

@@ -51,7 +51,8 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 生成ToString方法
         private bool isToString = true;
         // 是否序列化
-        private bool isSerialization = true;
+        private bool isSerialization = false;
+
         private string columnNameStr = "字段名称";
         private string columnTypeStr = "字段类型";
         private string columnAnnotateStr = "字段注释";
@@ -478,7 +479,15 @@ namespace UI.ComponentLibrary.FormLibrary {
                     setName = "set"+StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 0);
                     type = dbTypeToJava.ContainsKey(getNameTypeComment(dic)[1])? dbTypeToJava[getNameTypeComment(dic)[1]] : "";
                     comment = getNameTypeComment(dic)[2];
-                    interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+"new "+type+"(this."+name+"));");
+                    if (type.IndexOf("List") >= 0) { 
+                        string setStr = "new Array"+type+"("+name+")";
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+setStr+");");
+                    }else if (type.IndexOf("Map") >= 0) {
+                        string setStr = "new Hash"+type+"("+name+")";
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+setStr+");");
+                    } else { 
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+"new "+type+"(this."+name+"));");
+                    }
                 }
                 // 组装最后的字符串
                 builder.AppendLine(TAB_STR + "/** 自动生成的深克隆方法，将对象中的每项进行深克隆 */");

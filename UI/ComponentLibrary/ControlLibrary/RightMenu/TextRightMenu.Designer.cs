@@ -42,20 +42,20 @@
             this.制表符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.转化为Item = new System.Windows.Forms.ToolStripMenuItem();
             this.大写形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.清空文本框Item = new System.Windows.Forms.ToolStripMenuItem();
             this.大写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.大写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.大写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.大写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.小写形式Item = new System.Windows.Forms.ToolStripMenuItem();
             this.小写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.小写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.小写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.小写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式_大写_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式_小写_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.驼峰形式Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.驼峰形式_大驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.驼峰形式_小驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.清空文本框Item = new System.Windows.Forms.ToolStripMenuItem();
             this.rightMenuStrip.SuspendLayout();
             // 
             // rightMenuStrip
@@ -204,37 +204,6 @@
             this.大写形式Item.Size = new System.Drawing.Size(124, 22);
             this.大写形式Item.Text = "大写形式";
             // 
-            // 小写形式Item
-            // 
-            this.小写形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.小写形式_全部_Item,
-            this.小写形式_行首_Item,
-            this.小写形式_行尾_Item,
-            this.小写形式_自定义_Item});
-            this.小写形式Item.Name = "小写形式Item";
-            this.小写形式Item.Size = new System.Drawing.Size(124, 22);
-            this.小写形式Item.Text = "小写形式";
-            // 
-            // 驼峰形式Item
-            // 
-            this.驼峰形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.驼峰形式_大写_Item,
-            this.驼峰形式_小写_Item});
-            this.驼峰形式Item.Name = "驼峰形式Item";
-            this.驼峰形式Item.Size = new System.Drawing.Size(124, 22);
-            this.驼峰形式Item.Text = "驼峰形式";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(138, 6);
-            // 
-            // 清空文本框Item
-            // 
-            this.清空文本框Item.Name = "清空文本框Item";
-            this.清空文本框Item.Size = new System.Drawing.Size(136, 22);
-            this.清空文本框Item.Text = "清空文本框";
-            // 
             // 大写形式_全部_Item
             // 
             this.大写形式_全部_Item.Name = "大写形式_全部_Item";
@@ -258,6 +227,17 @@
             this.大写形式_自定义_Item.Name = "大写形式_自定义_Item";
             this.大写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
             this.大写形式_自定义_Item.Text = "自定义..";
+            // 
+            // 小写形式Item
+            // 
+            this.小写形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.小写形式_全部_Item,
+            this.小写形式_行首_Item,
+            this.小写形式_行尾_Item,
+            this.小写形式_自定义_Item});
+            this.小写形式Item.Name = "小写形式Item";
+            this.小写形式Item.Size = new System.Drawing.Size(124, 22);
+            this.小写形式Item.Text = "小写形式";
             // 
             // 小写形式_全部_Item
             // 
@@ -283,17 +263,37 @@
             this.小写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
             this.小写形式_自定义_Item.Text = "自定义..";
             // 
-            // 驼峰形式_大写_Item
+            // 驼峰形式Item
             // 
-            this.驼峰形式_大写_Item.Name = "驼峰形式_大写_Item";
-            this.驼峰形式_大写_Item.Size = new System.Drawing.Size(136, 22);
-            this.驼峰形式_大写_Item.Text = "首字母大写";
+            this.驼峰形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.驼峰形式_大驼峰_Item,
+            this.驼峰形式_小驼峰_Item});
+            this.驼峰形式Item.Name = "驼峰形式Item";
+            this.驼峰形式Item.Size = new System.Drawing.Size(124, 22);
+            this.驼峰形式Item.Text = "驼峰形式";
             // 
-            // 驼峰形式_小写_Item
+            // 驼峰形式_大驼峰_Item
             // 
-            this.驼峰形式_小写_Item.Name = "驼峰形式_小写_Item";
-            this.驼峰形式_小写_Item.Size = new System.Drawing.Size(136, 22);
-            this.驼峰形式_小写_Item.Text = "首字母小写";
+            this.驼峰形式_大驼峰_Item.Name = "驼峰形式_大驼峰_Item";
+            this.驼峰形式_大驼峰_Item.Size = new System.Drawing.Size(112, 22);
+            this.驼峰形式_大驼峰_Item.Text = "大驼峰";
+            // 
+            // 驼峰形式_小驼峰_Item
+            // 
+            this.驼峰形式_小驼峰_Item.Name = "驼峰形式_小驼峰_Item";
+            this.驼峰形式_小驼峰_Item.Size = new System.Drawing.Size(112, 22);
+            this.驼峰形式_小驼峰_Item.Text = "小驼峰";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(138, 6);
+            // 
+            // 清空文本框Item
+            // 
+            this.清空文本框Item.Name = "清空文本框Item";
+            this.清空文本框Item.Size = new System.Drawing.Size(136, 22);
+            this.清空文本框Item.Text = "清空文本框";
             this.rightMenuStrip.ResumeLayout(false);
 
         }
@@ -329,7 +329,7 @@
         private System.Windows.Forms.ToolStripMenuItem 小写形式_行首_Item;
         private System.Windows.Forms.ToolStripMenuItem 小写形式_行尾_Item;
         private System.Windows.Forms.ToolStripMenuItem 小写形式_自定义_Item;
-        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_大写_Item;
-        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_小写_Item;
+        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_大驼峰_Item;
+        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_小驼峰_Item;
     }
 }
