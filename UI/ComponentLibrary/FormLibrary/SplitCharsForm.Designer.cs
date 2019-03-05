@@ -306,26 +306,30 @@
             // 
             // 行数_StatusLabel
             // 
+            this.行数_StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.行数_StatusLabel.Name = "行数_StatusLabel";
-            this.行数_StatusLabel.Size = new System.Drawing.Size(63, 17);
+            this.行数_StatusLabel.Size = new System.Drawing.Size(67, 17);
             this.行数_StatusLabel.Text = "总行数：0";
             // 
             // 列数_StatusLabel
             // 
+            this.列数_StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.列数_StatusLabel.Name = "列数_StatusLabel";
-            this.列数_StatusLabel.Size = new System.Drawing.Size(63, 17);
+            this.列数_StatusLabel.Size = new System.Drawing.Size(67, 17);
             this.列数_StatusLabel.Text = "总列数：0";
             // 
             // 选中行数_StatusLabel
             // 
+            this.选中行数_StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.选中行数_StatusLabel.Name = "选中行数_StatusLabel";
-            this.选中行数_StatusLabel.Size = new System.Drawing.Size(75, 17);
+            this.选中行数_StatusLabel.Size = new System.Drawing.Size(79, 17);
             this.选中行数_StatusLabel.Text = "选中行数：0";
             // 
             // 选中列数_StatusLabel
             // 
+            this.选中列数_StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.选中列数_StatusLabel.Name = "选中列数_StatusLabel";
-            this.选中列数_StatusLabel.Size = new System.Drawing.Size(75, 17);
+            this.选中列数_StatusLabel.Size = new System.Drawing.Size(79, 17);
             this.选中列数_StatusLabel.Text = "选中行数：0";
             // 
             // 选中单元格数_StripStatusLabel

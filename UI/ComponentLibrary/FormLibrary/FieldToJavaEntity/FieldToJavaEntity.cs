@@ -88,6 +88,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 窗体加载事件
         private void FieldToJavaEntity_Load(object sender, EventArgs e) {
             this.ShowIcon = false;
+            this.StartPosition = FormStartPosition.CenterParent;
             // 加载数据表格配置
             initInputDataViewConf();
             // 数据表格生成数据
@@ -97,6 +98,8 @@ namespace UI.ComponentLibrary.FormLibrary {
             initToolTip();
             // 调节窗口位置
             Location = FormUtislMet.middleForm(this);
+            // 判断全选复选框
+            isSelectAllChecked();
         }
         /// <summary>
         /// 初始化手动输入的数据表格配置

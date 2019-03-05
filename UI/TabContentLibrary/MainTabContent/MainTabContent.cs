@@ -29,7 +29,7 @@ namespace UI.TabContentLibrary.MainTabContent {
                 // Name
                 tab.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT);
                 // 字体
-                tab.Font = new Font("Microsoft YaHei Mono", 9, FontStyle.Regular, GraphicsUnit.Pixel);
+                tab.Font = new Font("Microsoft YaHei Mono", 10, FontStyle.Regular);
                 // 标签大小
                 tab.ItemSize = new Size(TabControlDataLib.DEF_ITEM_WIDTH, TabControlDataLib.DEF_ITEM_HEIGHT);
                 // 显示关闭按钮

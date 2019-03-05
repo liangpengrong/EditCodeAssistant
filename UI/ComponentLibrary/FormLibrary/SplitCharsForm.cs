@@ -425,7 +425,6 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(mainDataGridView != null) { 
                 行数_StatusLabel.Text = "总行数：" + mainDataGridView.RowCount;
                 列数_StatusLabel.Text = "总列数：" + mainDataGridView.ColumnCount;
-                Console.WriteLine(mainDataGridView.SelectedRows.Count);
                 选中行数_StatusLabel.Text = "选中行数：" + mainDataGridView.SelectedRows.Count;
                 选中列数_StatusLabel.Text = "选中列数：" + mainDataGridView.SelectedColumns.Count;
                 选中单元格数_StripStatusLabel.Text = "选中单元格数：" + mainDataGridView.SelectedCells.Count;

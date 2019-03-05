@@ -141,39 +141,16 @@ namespace UI.ComponentLibrary.FormLibrary
         {
             // 设置图标
             this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.查找替换,true);
-
+            this.StartPosition = FormStartPosition.CenterParent;
             if(textBox.SelectionLength == 0) { 
                 this.当前文档R.Checked = true;
             } else { 
                 this.选定内容R.Checked = true;
             }
-            // 调节窗体的位置
-            // middleForm();
-            FormUtislMet.middleForm(this);
+            // 调节窗口位置
+            Location = FormUtislMet.middleForm(this);
             // 设置当前索引和总共的索引
             setCurrentLab();
-        }
-
-        /// <summary>
-        /// 调节窗体的位置
-        /// </summary>
-        private void middleForm() { 
-            // 根据父窗体居中
-            this.Location = FormUtislMet.middleForm(this,rootDisplayForm);
-            // 获取当前屏幕分辨率
-            int[] wh = MessyUtilsMet.getResolvingpower();
-            
-            int w = rootDisplayForm.Location.X+rootDisplayForm.Width;
-            if(w + this.Width <= wh[0]) {
-                // 设置相对于启动窗体贴右
-                this.Location = new Point(w, this.Location.Y);
-                return;
-            }
-            if(this.Width <= rootDisplayForm.Location.X) { 
-                w = rootDisplayForm.Location.X - this.Width;
-                this.Location = new Point(w, this.Location.Y);
-                return;
-            }
         }
 
         private void 查找内容T_KeyDown(object sender, KeyEventArgs e){

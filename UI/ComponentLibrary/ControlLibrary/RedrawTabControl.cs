@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -85,6 +86,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
         protected override void OnPaint(PaintEventArgs e) {
             TabControl tabc_draw = this;
             Graphics g = e.Graphics;
+            //设置高质量,低速度呈现平滑程度   
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            
             // 重绘选项卡
             for (int i = 0; i < tabc_draw.TabCount; i++) {
                 // 当前处理标签
@@ -120,7 +124,16 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 当前鼠标下的标签索引
             mousePageIndex = getMouseLocPage(this, e.Location);
             // 判断当前鼠标下的删除标签按钮样式
-            // PageDrawDeleteBut(this.CreateGraphics(),this, getMouseDelPageIndex());
+            if (IsShowDelPageBut) { 
+                int delIndex = getMouseDelPageIndex();
+                if(delIndex >= 0) { 
+                    PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
+                } else { 
+                    delIndex = getMouseLocPage(this, e.Location);
+                    if(delIndex >= 0) PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
+                }
+            }
+            
             base.OnMouseMove(e);
         }
         protected override void OnMouseEnter(EventArgs e) {
@@ -147,13 +160,14 @@ namespace UI.ComponentLibrary.ControlLibrary {
         }
         // 判断是否要关闭标签
         private void doIsDelPage(MouseButtons mouse) { 
-            int delIndex = getMouseDelPageIndex();
             if (mouse.Equals(MouseButtons.Left)) {
+                int delIndex = getMouseDelPageIndex();
                 // 点击关闭按钮时移除标签
                 if(IsShowDelPageBut && delIndex >= 0) { 
                     if(isDelPageAskMethod()) MainTabControlUtils.deleteTabPage(this, this.TabPages[delIndex]);
                 }
             }else if (mouse.Equals(MouseButtons.Middle)) { // 按下鼠标滚轮 
+                int delIndex = getMouseLocPage(this, mousePagePoint);
                 if(IsClickMiddleDelPage && delIndex >= 0) { 
                     if(isDelPageAskMethod()) MainTabControlUtils.deleteTabPage(this, this.TabPages[delIndex]);
                 } 
@@ -323,7 +337,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             int y1 = (backrect.Bottom-height)/2+4;
             Color lineColor = Color.Empty;
             if(getMouseDelPageIndex() == index) { // 判断要绘制的关闭按钮是否位于鼠标下
-                lineColor = ColorTranslator.FromHtml("#FFF");
+                lineColor = ColorTranslator.FromHtml("#DF585D");
             } else { 
                 lineColor = ColorTranslator.FromHtml("#FFF");
             }
@@ -349,10 +363,10 @@ namespace UI.ComponentLibrary.ControlLibrary {
             _StringFlags.FormatFlags = StringFormatFlags.NoWrap;
             _StringFlags.Trimming = StringTrimming.EllipsisCharacter;
             
+
             backrectStr.Height = backrectStr.Height;
             backrectStr.Width = backrectStr.Width - (delPageButSize.Width+5);
             backrectStr.X = backrectStr.X + 0;
-            
             if (StringUtilsMet.getChineseLength(text) > 0) {// 包含中文
                 _StringFlags.LineAlignment = StringAlignment.Far;
                 backrectStr.Y = backrectStr.Y + 0;
@@ -361,6 +375,14 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 backrectStr.Y = backrectStr.Y + 3;
             }
             g.DrawString(text, font, fontbrush, backrectStr, new StringFormat(_StringFlags));
+            //char[] chars = text.ToCharArray();
+            //for(int i=0; i< chars.Length; i++) { 
+            //    Console.WriteLine(i);
+            //    char c = chars[i];
+            //    backrectStr.X = backrectStr.X +(4*i)+ i;
+            //    g.DrawString(c.ToString(), font, fontbrush, backrectStr, new StringFormat(_StringFlags));
+            //}
+            
         }
         /// <summary>
         /// 获取当前鼠标位置下的标签索引
