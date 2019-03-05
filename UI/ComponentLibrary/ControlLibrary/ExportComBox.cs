@@ -26,7 +26,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <summary>
         /// 导出到文本框Name
         /// </summary>
-        public const string EXPORT_TEXT_NAME = "导出到文本框";
+        public const string EXPORT_TEXT_NAME = "导出到选定文本框";
         /// <summary>
         /// 导出到记事本Name
         /// </summary>
@@ -85,7 +85,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 row[EXPORT_NOTEBOOK_NAME] = val;
                 table.Rows.Add(row);
             }
-            export_combox.Width = 110;
+            export_combox.Width = 130;
             export_combox.Height = 30;
             export_combox.Font = new Font("微软雅黑", 9, FontStyle.Regular);
             export_combox.ItemHeight = 25;

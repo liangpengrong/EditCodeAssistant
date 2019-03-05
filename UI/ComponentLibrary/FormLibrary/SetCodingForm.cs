@@ -28,7 +28,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         private void SetCodingForm_Load(object sender, EventArgs e) {
             // 将文本框的编码赋值到label中
             textCodinCopyLab();
-            setCodingSet(getEncoder());
+            setCodingSet();
         }
         /// <summary>
         /// 打开设置文本框编码窗口
@@ -59,57 +59,20 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <summary>
         /// 设置下拉列表框的值
         /// </summary>
-        private void setCodingSet(Dictionary<string, int> items) {
-            int selIndex = 0;
-            DataTable table = new DataTable();
-            DataColumn column;
-            DataRow row;
-            column = new DataColumn("Name");
-            table.Columns.Add(column);
-            column = new DataColumn("Value");
-            table.Columns.Add(column);
-            // 设置数据源
-            foreach(KeyValuePair<string, int> kvp in items) { 
-                string key = kvp.Key.ToUpper();
-                int val = kvp.Value;
-                if(textCoding != null && val.Equals(textCoding.CodePage)) {
-                    selIndex = table.Rows.Count;
-                }
-                row = table.NewRow();
-                row["Name"] = key;
-                row["Value"] = val;
-                table.Rows.Add(row);
+        private void setCodingSet() {
+            Dictionary<int, string> encDic = FileUtilsMet.GetFileEncodingInfo();
+            Dictionary<object, string> encDic2 = new Dictionary<object, string>();
+            // 将int转为object
+            foreach(KeyValuePair<int,string> kvp in encDic) { 
+                encDic2.Add(kvp.Key, kvp.Value);
             }
-            
-            // 绑定数据源
-            this.coding_set.DisplayMember = "Name";
-            this.coding_set.ValueMember = "Value";
-            this.coding_set.DataSource = table;
-            this.coding_set.SelectedIndex = selIndex;
+            // 设置下拉列表框的值
+            ControlsUtilsMet.SetComboBoxItems(coding_set, encDic2);
+            // 选定与文本框编写相同的项
+            coding_set.SelectedValue = textCoding.CodePage;
             // 设置自动匹配
             this.coding_set.AutoCompleteMode = AutoCompleteMode.Suggest;
             this.coding_set.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        /// <summary>
-        /// 获取下拉框要显示的编码
-        /// </summary>
-        /// <returns></returns>
-        private Dictionary<string, int> getEncoder() { 
-            Dictionary<string, int> retDic = new Dictionary<string, int>();
-            retDic.Add(Encoding.ASCII.BodyName, Encoding.ASCII.CodePage);
-            retDic.Add(Encoding.BigEndianUnicode.BodyName, Encoding.BigEndianUnicode.CodePage);
-            retDic.Add(Encoding.Default.BodyName, Encoding.Default.CodePage);
-            retDic.Add(Encoding.UTF8.BodyName, Encoding.UTF8.CodePage);
-            //EncodingInfo[] codings = Encoding.GetEncodings();
-            //foreach(EncodingInfo coding in codings) {
-            //    if( !retDic.ContainsKey(coding.Name.ToUpper())) { 
-            //        retDic.Add(coding.Name.ToUpper(), coding.CodePage);
-            //    }
-            //}
-            // 升序排序
-            retDic = retDic.OrderBy(p=>p.Key).ToDictionary(p => p.Key, o => o.Value);
-
-            return retDic;
         }
         /// <summary>
         /// 将文本框编码设置为指定编码格式

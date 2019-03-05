@@ -54,18 +54,26 @@ namespace Ui.ControlEventLibrary {
         /// <returns></returns>
         public static object saveFileMethod(TextBox t) {
             SaveFileDialog newSaveFile = new SaveFileDialog();
+            Dictionary<string,object> textTag = TextBoxUtilsMet.getDicTextTag(t);
             newSaveFile.RestoreDirectory = false;
             newSaveFile.ValidateNames = true;
             newSaveFile.DefaultExt = "txt";
+            if(t != null && t.Parent != null) { 
+                newSaveFile.FileName = t.Parent.Text;
+            }
             newSaveFile.Filter = "文本文档(*.txt)|*.txt|所有文件(*.*)|*.*";
-            string path = newSaveFile.FileName.ToString();
-            Encoding encoding = FileUtilsMet.GetType(path);
+            // 获取文本框保存的Ecoding
+            Encoding encoding = Encoding.Default;
+            if (textTag.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING) && textTag[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING] is Encoding) { 
+                encoding = (Encoding)textTag[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
+            }
             //判断是否点击确定
             if (newSaveFile.ShowDialog() == DialogResult.OK) {
+                string path = newSaveFile.FileName;
                 // 调用方法写入文件内容
                 FileUtilsMet.FileWrite.writeFile(path, t.Text, encoding);
                 // 将保存路径加入到文本框的Tag属性
-                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName.ToString());
+                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName);
                 // 监听文件变化并弹窗提醒
                 monitorFileShowMess(newSaveFile.FileName, t);
             }

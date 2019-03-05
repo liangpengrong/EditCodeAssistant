@@ -166,7 +166,6 @@ namespace Core.StaticMethod.Method.Utils
         
         
         }
-
         /// <summary>
         /// 用记事本打开文本
         /// </summary>
@@ -187,7 +186,7 @@ namespace Core.StaticMethod.Method.Utils
         /// </summary>
         /// <param name="path">指定的文件路径</param>
         /// <returns></returns>
-        public static Boolean isFileUrl(string path)
+        public static bool isFileUrl(string path)
         {
             return File.Exists(@path);
         }
@@ -230,13 +229,31 @@ namespace Core.StaticMethod.Method.Utils
         /// </summary> 
         /// <param name=“FILE_NAME“>文件路径</param> 
         /// <returns>文件的编码类型</returns> 
-        public static System.Text.Encoding GetType(string FILE_NAME) { 
-            FileStream fs = new FileStream(FILE_NAME, FileMode.Open, FileAccess.Read); 
-            Encoding r = GetType(fs); 
-            fs.Close(); 
-            return r; 
+        public static System.Text.Encoding GetType(string FILE_NAME) {
+            Encoding encoding = Encoding.Default;
+            if (File.Exists(FILE_NAME)) { 
+                FileStream fs = new FileStream(FILE_NAME, FileMode.Open, FileAccess.Read); 
+                encoding = GetType(fs); 
+                fs.Close(); 
+            }
+            return encoding; 
         } 
-
+        /// <summary>
+        /// 获取文件的全部编码 key为编码代表的code value为name
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<int, string> GetFileEncodingInfo() { 
+            Dictionary<int, string> retDic = new Dictionary<int, string>();
+            EncodingInfo[] codings = Encoding.GetEncodings();
+            foreach (EncodingInfo coding in codings) {
+                if (!retDic.ContainsKey(coding.CodePage)) {
+                    retDic.Add(coding.CodePage, coding.Name.ToUpper());
+                }
+            }
+            // 升序排序
+            retDic = retDic.OrderBy(p=>p.Value).ToDictionary(p => p.Key, o => o.Value);
+            return retDic;
+        }
         /// <summary> 
         /// 通过给定的文件流，判断文件的编码类型 
         /// </summary> 

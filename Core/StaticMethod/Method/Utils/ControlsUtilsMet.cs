@@ -559,5 +559,35 @@ namespace Core.StaticMethod.Method.Utils
                 }
             }
         }
+        /// <summary>
+        /// 设置下拉列表框的值
+        /// </summary>
+        /// <param name="combo">下拉列表</param>
+        /// <param name="items">key实际的值 val为要显示的值</param>
+        public static void SetComboBoxItems(ComboBox combo, Dictionary<object, string> items) {
+            int selIndex = 0;
+            DataTable table = new DataTable();
+            DataColumn column;
+            DataRow row;
+            column = new DataColumn("Name");
+            table.Columns.Add(column);
+            column = new DataColumn("Value");
+            table.Columns.Add(column);
+            // 设置数据源
+            foreach(KeyValuePair<object, string> kvp in items) { 
+                object key = kvp.Key;
+                string val = kvp.Value;
+                row = table.NewRow();
+                row["Name"] = key;
+                row["Value"] = val;
+                table.Rows.Add(row);
+            }
+            
+            // 绑定数据源
+            combo.DisplayMember = "Value";
+            combo.ValueMember = "Name";
+            combo.DataSource = table;
+            combo.SelectedIndex = selIndex;
+        }
     }
 }

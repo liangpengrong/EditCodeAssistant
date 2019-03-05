@@ -53,6 +53,8 @@
             this.get_set规则_check = new System.Windows.Forms.CheckBox();
             this.生成构造函数_check = new System.Windows.Forms.CheckBox();
             this.全选反选_check = new System.Windows.Forms.CheckBox();
+            this.输入_编码_lab = new System.Windows.Forms.Label();
+            this.输入_编码_comB = new System.Windows.Forms.ComboBox();
             this.tab容器.SuspendLayout();
             this.输入_page.SuspendLayout();
             this.选项区容器.SuspendLayout();
@@ -74,7 +76,7 @@
             this.tab容器.Margin = new System.Windows.Forms.Padding(0);
             this.tab容器.Name = "tab容器";
             this.tab容器.SelectedIndex = 0;
-            this.tab容器.Size = new System.Drawing.Size(650, 447);
+            this.tab容器.Size = new System.Drawing.Size(743, 447);
             this.tab容器.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tab容器.TabIndex = 10000;
             this.tab容器.TabStop = false;
@@ -82,6 +84,8 @@
             // 
             // 输入_page
             // 
+            this.输入_page.Controls.Add(this.输入_编码_lab);
+            this.输入_page.Controls.Add(this.输入_编码_comB);
             this.输入_page.Controls.Add(this.输入_包名_textB);
             this.输入_page.Controls.Add(this.包名_lab);
             this.输入_page.Controls.Add(this.输入_类名_textB);
@@ -91,7 +95,7 @@
             this.输入_page.Location = new System.Drawing.Point(4, 26);
             this.输入_page.Margin = new System.Windows.Forms.Padding(0);
             this.输入_page.Name = "输入_page";
-            this.输入_page.Size = new System.Drawing.Size(642, 417);
+            this.输入_page.Size = new System.Drawing.Size(735, 417);
             this.输入_page.TabIndex = 0;
             this.输入_page.Text = "手动输入";
             this.输入_page.ToolTipText = "通过输入字段生成实体类";
@@ -140,7 +144,7 @@
             this.输入_生成到_lab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.输入_生成到_lab.AutoSize = true;
             this.输入_生成到_lab.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.输入_生成到_lab.Location = new System.Drawing.Point(453, 10);
+            this.输入_生成到_lab.Location = new System.Drawing.Point(546, 10);
             this.输入_生成到_lab.Name = "输入_生成到_lab";
             this.输入_生成到_lab.Size = new System.Drawing.Size(56, 17);
             this.输入_生成到_lab.TabIndex = 2;
@@ -156,9 +160,10 @@
             this.输入_生成到_comB.IntegralHeight = false;
             this.输入_生成到_comB.ItemHeight = 20;
             this.输入_生成到_comB.Items.AddRange(new object[] {
-            "源文本框",
+            "选定文本框",
+            "JAVA文件",
             "记事本"});
-            this.输入_生成到_comB.Location = new System.Drawing.Point(512, 6);
+            this.输入_生成到_comB.Location = new System.Drawing.Point(605, 6);
             this.输入_生成到_comB.Name = "输入_生成到_comB";
             this.输入_生成到_comB.Size = new System.Drawing.Size(121, 28);
             this.输入_生成到_comB.TabIndex = 1;
@@ -466,11 +471,36 @@
             this.全选反选_check.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             this.全选反选_check.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CheckBox_MouseDown);
             // 
+            // 输入_编码_lab
+            // 
+            this.输入_编码_lab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.输入_编码_lab.AutoSize = true;
+            this.输入_编码_lab.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.输入_编码_lab.Location = new System.Drawing.Point(368, 11);
+            this.输入_编码_lab.Name = "输入_编码_lab";
+            this.输入_编码_lab.Size = new System.Drawing.Size(44, 17);
+            this.输入_编码_lab.TabIndex = 7;
+            this.输入_编码_lab.Text = "编码：";
+            // 
+            // 输入_编码_comB
+            // 
+            this.输入_编码_comB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.输入_编码_comB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.输入_编码_comB.FormattingEnabled = true;
+            this.输入_编码_comB.IntegralHeight = false;
+            this.输入_编码_comB.ItemHeight = 17;
+            this.输入_编码_comB.Location = new System.Drawing.Point(414, 7);
+            this.输入_编码_comB.Name = "输入_编码_comB";
+            this.输入_编码_comB.Size = new System.Drawing.Size(121, 25);
+            this.输入_编码_comB.TabIndex = 6;
+            this.输入_编码_comB.TabStop = false;
+            this.输入_编码_comB.SelectedIndexChanged += new System.EventHandler(this.输入_编码_comB_SelectedIndexChanged);
+            // 
             // FieldToJavaEntity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 460);
+            this.ClientSize = new System.Drawing.Size(920, 460);
             this.Controls.Add(this.tab容器);
             this.Controls.Add(this.选项区容器);
             this.DoubleBuffered = true;
@@ -525,5 +555,7 @@
         private System.Windows.Forms.CheckBox 全选反选_check;
         private System.Windows.Forms.TextBox 输入_包名_textB;
         private System.Windows.Forms.Label 包名_lab;
+        private System.Windows.Forms.Label 输入_编码_lab;
+        private System.Windows.Forms.ComboBox 输入_编码_comB;
     }
 }

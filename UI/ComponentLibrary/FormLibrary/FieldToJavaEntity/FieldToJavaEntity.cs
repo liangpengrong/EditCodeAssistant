@@ -52,7 +52,8 @@ namespace UI.ComponentLibrary.FormLibrary {
         private bool isToString = true;
         // 是否序列化
         private bool isSerialization = false;
-
+        // 默认文本编码
+        private Encoding encoding = Encoding.UTF8;
         private string columnNameStr = "字段名称";
         private string columnTypeStr = "字段类型";
         private string columnAnnotateStr = "字段注释";
@@ -100,6 +101,8 @@ namespace UI.ComponentLibrary.FormLibrary {
             Location = FormUtislMet.middleForm(this);
             // 判断全选复选框
             isSelectAllChecked();
+            // 设置编码下拉框
+            SetEcodingVal();
         }
         /// <summary>
         /// 初始化手动输入的数据表格配置
@@ -781,19 +784,61 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(输入_生成到_comB.Equals(comB) && comB.Focused) {
 
                 List<Dictionary<string, string>> dataDic = dateTabelStrToList(inputDataGridView);
+                // 获取最终内容
                 string str = beGetSetTotalMethod(dataDic);
-                if ("源文本框".Equals(comB.SelectedItem)) { 
+                if ("选定文本框".Equals(comB.SelectedItem)) { 
                     TextBox t = TextBoxCache.UpOperatingTextBox;
                     if (t != null) { 
-                        if(str != null && str.Length > 0) t.Text = str;
+                        if(str != null && str.Length > 0){ 
+                            t.Text = str;
+                            // 将文件编码写入到文本框tag数据中
+                            TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
+                            t.Focus();
+                        } 
                     } else { 
                         MessageBox.Show("获取的源文本框为NULL");    
                     }
-                }else if ("记事本".Equals(comB.SelectedItem) && comB.Focused){ 
+                }else if("JAVA文件".Equals(comB.SelectedItem) && comB.Focused){ 
+                    SaveJavaFile(str);
+                } else if ("记事本".Equals(comB.SelectedItem) && comB.Focused){ 
                     if(str != null && str.Length > 0) FileUtilsMet.turnOnNotepad(str);
                 }
             }
             
+        }
+        /// <summary>
+        /// 设置编码下拉列表框的值
+        /// </summary>
+        private void SetEcodingVal() {
+            Dictionary<int, string> encDic = FileUtilsMet.GetFileEncodingInfo();
+            Dictionary<object, string> encDic2 = new Dictionary<object, string>();
+            // 将int转为object
+            foreach(KeyValuePair<int,string> kvp in encDic) { 
+                encDic2.Add(kvp.Key, kvp.Value);
+            }
+            // 设置下拉列表框的值
+            ControlsUtilsMet.SetComboBoxItems(输入_编码_comB, encDic2);
+            // 选定与文本框编写相同的项
+            输入_编码_comB.SelectedValue = Encoding.UTF8.CodePage;
+            // 设置自动匹配
+            输入_编码_comB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            输入_编码_comB.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
+
+        // 保存为JAVA文件
+        private void SaveJavaFile(string str) { 
+            SaveFileDialog newSaveFile = new SaveFileDialog();
+            newSaveFile.RestoreDirectory = false;
+            newSaveFile.ValidateNames = true;
+            newSaveFile.DefaultExt = "txt";
+            newSaveFile.FileName = classNameStr+".java";
+            newSaveFile.Filter = "java文档(*.java)|*.java|所有文件(*.*)|*.*";
+            //判断是否点击确定
+            if (newSaveFile.ShowDialog() == DialogResult.OK) {
+                string path = newSaveFile.FileName;
+                // 调用方法写入文件内容
+                FileUtilsMet.FileWrite.writeFile(path, str, encoding);
+            }    
         }
         // 文本框文本改变事件
         private void TextBox_TextChanged(object sender, EventArgs e) {
@@ -802,6 +847,20 @@ namespace UI.ComponentLibrary.FormLibrary {
                 classNameStr = t.Text;
             }else if(t.Equals(输入_包名_textB)) { 
                 packageNameStr = t.Text;
+            }
+        }
+        // 编码选项改变事件
+        private void 输入_编码_comB_SelectedIndexChanged(object sender, EventArgs e) {
+            ComboBox combo = (ComboBox)sender;
+            object obj = combo.SelectedValue;
+            // 获取选定的编码
+            if (obj != null) {
+                try { 
+                    int code = int.Parse(obj.ToString());
+                    encoding = Encoding.GetEncoding(code);
+                } catch (Exception ee) { 
+                    MessageBox.Show("无法将选中内容转化为编码");
+                }   
             }
         }
     }
