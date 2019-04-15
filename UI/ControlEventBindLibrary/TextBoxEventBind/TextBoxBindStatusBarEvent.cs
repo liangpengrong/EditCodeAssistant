@@ -45,8 +45,6 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind {
                     TextStatusBarEventMet.setSelectChars(data);
                 break;
                 case TextBoxEventTypeEnum.获取焦点事件 :
-                    /*============将文本框中的文件路径放到父容器的Text中===================*/
-                    MainTextBoxEventMet.setParentTextByFileName(data);
                     /*============设置文本框中的编码到状态栏中===================*/
                     MainTextBoxEventMet.setToolSatrtEcoding(data);
                     /*============赋值给状态栏总行数与字符数===================*/
@@ -59,7 +57,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind {
                     TextStatusBarEventMet.refreshTextReadOnly(data);
                 break;
                 case TextBoxEventTypeEnum.键盘按下事件 :
-                        /*============赋值给状态栏当前行列数===================*/
+                    /*============赋值给状态栏当前行列数===================*/
                     TextStatusBarEventMet.setRowColumn(data);
                 break;
                 case TextBoxEventTypeEnum.键盘松开事件 : 

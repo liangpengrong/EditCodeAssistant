@@ -1,10 +1,15 @@
-﻿using Core.StaticMethod.Method.Utils;
+﻿using Core.CacheLibrary.ControlCache;
+using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using UI.ComponentLibrary.ControlLibrary;
+using UI.TabContentLibrary.MainTabContent;
+
 namespace UI.ComponentLibrary.ControlMethod {
     public static class DataGridViewUtilMet {
         /// <summary>
@@ -150,9 +155,9 @@ namespace UI.ComponentLibrary.ControlMethod {
             DataGridViewSelectedCellCollection selCell =  view.SelectedCells;
             // 选中单元格的行与列索引
             int[][] rowsColns = getSelCellRowsColns(view);
-            if(rowsColns.Length == 0) return;
-            int minRow = rowsColns[0].Min();
-            int minColn = rowsColns[1].Min();
+            if(rowsColns.Length == 0 || selCell.Count == 0) return;
+            int minRow = rowsColns[0].Min<int>();
+            int minColn = rowsColns[1].Min<int>();
 
             // 判断剪贴板内容不为空并且选中单元格不为0
             if(text != null && text.Length > 0 && selCell.Count > 0) {
@@ -336,19 +341,28 @@ namespace UI.ComponentLibrary.ControlMethod {
             return tableText;
         }
         /// <summary>
-        /// 导出表格数据到文本框
+        /// 导出表格数据到新标签
         /// </summary>
         /// <param name="view">表格</param>
-        /// <param name="t">文本框</param>
         /// <param name="excNoHaveTabs">不包含tab符号</param>
-        public static void exportText(DataGridView view, TextBox t, bool excNoHaveTabs) { 
+        public static void exportNewPage(DataGridView view, bool excNoHaveTabs) {
+            // 将表格内容转化为字符串
             string s = getDatatabelSelText(view, false);
-            if(t != null) { 
-                // 不包含制表符
-                if(excNoHaveTabs) {s = s.Replace("\t", "");}
-                t.Text = s;
-                t.SelectionStart = s.Length;
-            }
+            // 判断是否包含制表符
+            if(excNoHaveTabs) {s = s.Replace("\t", "");}
+            MainTabContent.exportNewPage(s);
+        }
+        /// <summary>
+        /// 导出表格数据到当前标签
+        /// </summary>
+        /// <param name="view">表格</param>
+        /// <param name="excNoHaveTabs">不包含tab符号</param>
+        public static void exportThisPage(DataGridView view, bool excNoHaveTabs) {
+            // 将表格内容转化为字符串
+            string s = getDatatabelSelText(view, false);
+            // 判断是否包含制表符
+            if(excNoHaveTabs) {s = s.Replace("\t", "");}
+            ControlsUtilsMet.exportThisPage(s);
         }
         /// <summary>
         /// 导出表格数据到记事本

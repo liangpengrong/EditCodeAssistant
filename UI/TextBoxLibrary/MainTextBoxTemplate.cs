@@ -58,6 +58,9 @@ namespace ProgramTextBoxLibrary
             textB.Enter += fromDelegate.textBoxEnter;
             // 绑定控件获得焦点事件
             textB.GotFocus += fromDelegate.textBoxGotFocus;
+            // 文本框接收拖放事件
+            textB.DragDrop += fromDelegate.textBoxDragDrop;
+
         }
         /// <summary>
         /// 文本框的默认配置，用来设置主要文本框的启动状态

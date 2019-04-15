@@ -1,4 +1,5 @@
-﻿using Core.DefaultData.DataLibrary;
+﻿using Core.CacheLibrary.ControlCache;
+using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using Core_Config.ConfigData.ControlConfig;
 using System;
@@ -6,87 +7,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Windows.Forms;
+using UI.ComponentLibrary.ControlLibrary.RightMenu;
 
 namespace UI.TabContentLibrary.MainTabContent {
     public static class MainTabControlUtils {
-        /// <summary>
-        /// 确定添加标签后标签显示的模式
-        /// </summary>
-        /// <param name="tab"></param>
-        public static void doIsAddPageSizeMode(TabControl tab) {
-            if(tab.TabCount > 0 && tab.SelectedIndex > 0) { 
-                int itemW = TabControlDataLib.DEF_ITEM_WIDTH;
-                int itemCount = tab.TabCount;
-                int rightMargin = 20;
-                Size itemSize = Size.Empty;
-                int tabWidth = tab.Width-15;
-                if(itemW * itemCount + rightMargin < tabWidth) { 
-                    itemSize = new Size(itemW, tab.ItemSize.Height);
-                    if(itemSize != Size.Empty && (!itemSize.Width.Equals(tab.ItemSize.Width) 
-                        || !itemSize.Height.Equals(tab.ItemSize.Height))) { 
-                        tab.ItemSize = itemSize;
-                        tab.SizeMode = TabSizeMode.Fixed;
-                    }
-                    
-                } else { 
-                    int itemWW = ((tabWidth-rightMargin) / itemCount);
-                    itemSize = new Size(itemWW, tab.ItemSize.Height);
-                    if(itemSize != Size.Empty && (!itemSize.Width.Equals(tab.ItemSize.Width) 
-                        || !itemSize.Height.Equals(tab.ItemSize.Height))) { 
-                        tab.ItemSize = itemSize;
-                        tab.SizeMode = TabSizeMode.Fixed;
-                    }
-                }
-                // 确定每个标签的删除按钮的位置
-                doIsDelPageButLocation(tab);
-            }
-            
-        }
-        /// <summary>
-        /// 确定添加按钮的位置
-        /// </summary>
-        public static void doIsAddPageButLocation(Control addCon, TabControl tab) {
-            if(addCon != null && tab != null && tab.TabCount > 0) { 
-                // 标签的宽
-                int itemW = tab.GetTabRect(0).Width;
-                int itemCount = tab.TabCount;
-                int y = tab.Location.Y + tab.ItemSize.Height - addCon.ClientSize.Height-2;
-                int x = itemCount*itemW+6;
-                if(x+addCon.Width+itemCount < tab.Width) { 
-                    addCon.Location = new Point(x, y);
-                } else { 
-                    addCon.Location = new Point(tab.Width-addCon.Width-8, y);
-                }
-            }
-        }
-        /// <summary>
-        /// 确定删除标签按钮的位置
-        /// </summary>
-        /// <param name="tab"></param>
-        public static void doIsDelPageButLocation(TabControl tab) {
-            int itemW = -1;
-            int itemH = -1;
-            int x = -1;
-            int y = -1;
-            for(int i=0,len=tab.TabCount; i<len;i++) {
-                TabPage page = tab.TabPages[i];
-                Dictionary<string,object> tag = ControlsUtilsMet.getControlTagToDic(page);
-                if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)) && tab.TabCount > 0) { 
-                    Control con = (Control) tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
-                    // 确定关闭按钮的位置
-                    itemW = tab.GetTabRect(i).Width;
-                    itemH = tab.GetTabRect(i).Height;
-                    if(con.Width + 10 > itemW || tab.TabCount == 1) { 
-                        con.Visible = false;
-                    }
-                    x = tab.GetTabRect(i).X+itemW-con.Width-4;
-                    y = tab.Location.Y + (itemH-con.Height)/2+con.Height/2;
-                    con.Location = new Point(x,y);
-                    con.BringToFront();
-                }
-            }
-        }
+        
         /// <summary>
         /// 移除TabPage
         /// </summary>
@@ -260,6 +187,35 @@ namespace UI.TabContentLibrary.MainTabContent {
                     if(del != null) del.Visible = false;
                 }
             }
+        }
+        /// <summary>
+        /// 添加文本框到标签页的方法
+        /// </summary>
+        public static void addMainTextToPage(TabPage page, TextBox t) {
+            string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
+            // 获得右键菜单
+            ContextMenuStrip textRightMenu = TextRightMenu.getSingleTextRightMenu();
+            // 判断要添加的标签是否为null，为null则新建一个标签并添加
+            if (page == null) { 
+                MainTabContent.addControlsToPage(t, true, true);
+            } else { 
+                page.Controls.Add(t);
+                t.Size = new Size(page.ClientSize.Width - t.Location.X, page.ClientSize.Height - t.Location.Y);
+            }
+            t.Location = new Point(0, 2);
+            t.ContextMenuStrip = textRightMenu;
+            ControlsUtilsMet.timersMet(200, (object sender, ElapsedEventArgs e)=>{
+                if(t != null) {
+                    if(t.InvokeRequired) { 
+                        t.Invoke(new EventHandler(delegate {
+                            if(t.FindForm() !=  null) { 
+                                t.FindForm().ActiveControl = t;
+                                ((System.Timers.Timer)sender).Dispose();
+                            }
+                        }));
+                    }
+                } 
+            });
         }
     }
 }

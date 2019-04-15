@@ -13,9 +13,12 @@ using System.Text;
 using System.Windows.Forms;
 using UI.ComponentLibrary.ControlLibrary;
 using UI.ComponentLibrary.ControlMethod;
+using UI.TabContentLibrary.MainTabContent;
 
 namespace UI.ComponentLibrary.FormLibrary {
-    public partial class FieldToJavaEntity : Form {
+    public partial class CreadJavaEntity : Form {
+        // 输出类型下拉框
+        private ComboBox outputComBox = null;
         // 换行符
         private static string LINE = Environment.NewLine;
         // 一个Tab字符
@@ -23,7 +26,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 最终要根据此数组生成get/set 0位-字段类型 1位-字段名称 2位-注释
         private List<string[]> dataStrs = new List<string[]>();
         // 属于手动输入的数据表格
-        private DataGridView inputDataGridView = null;
+        private DataGridView inputDGV = null;
         // 类命
         private string classNameStr = "";
         // 包名
@@ -38,26 +41,26 @@ namespace UI.ComponentLibrary.FormLibrary {
         private bool isFieldComment = true;
         // 生成get/set注释
         private bool isGetSetComment = true;
-        /// <summary>
-        /// 生成构造器注释
-        /// </summary>
+        // 生成构造器注释
         private bool isConstrComment = true;
         // get/set生成类型 0-全部生成 1-只生成get 2-只生成set
         private int getAndSetType = 0;
         // get/set生成类型 0-get/set对中 1-先get后set 2-先set后get
         private int getAndSetRule = 0;
         // 生成深拷贝方法
-        private bool isDeepClone = true;
+        private bool isDeepClone = false;
         // 生成ToString方法
         private bool isToString = true;
         // 是否序列化
         private bool isSerialization = false;
+        // 类型匹配规则 0-匹配数据库 1-匹配java对象封装类
+        private int TypeRule = 0;
         // 默认文本编码
         private Encoding encoding = Encoding.UTF8;
         private string columnNameStr = "字段名称";
         private string columnTypeStr = "字段类型";
         private string columnAnnotateStr = "字段注释";
-        private FieldToJavaEntity() {
+        private CreadJavaEntity() {
             InitializeComponent();
         }
         // 验证参数
@@ -76,8 +79,8 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         /// <param name="isShowTop"></param>
         /// <returns></returns>
-        public static FieldToJavaEntity initPrototypeFieldToJavaEntity(bool isShowTop) { 
-            FieldToJavaEntity fieldToJavaEntity = new FieldToJavaEntity();
+        public static CreadJavaEntity initPrototypeForm(bool isShowTop) { 
+            CreadJavaEntity fieldToJavaEntity = new CreadJavaEntity();
             fieldToJavaEntity.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.FIELD_TO_JAVA_ENTITY)+DateTime.Now.Ticks.ToString();
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCahce(fieldToJavaEntity);
@@ -87,14 +90,16 @@ namespace UI.ComponentLibrary.FormLibrary {
             return fieldToJavaEntity;
         }
         // 窗体加载事件
-        private void FieldToJavaEntity_Load(object sender, EventArgs e) {
+        private void CreadJavaEntity_Load(object sender, EventArgs e) {
             this.ShowIcon = false;
             this.StartPosition = FormStartPosition.CenterParent;
             // 加载数据表格配置
             initInputDataViewConf();
             // 数据表格生成数据
-            initDataViewStr(inputDataGridView);
-            输入_生成到_comB.SelectedIndex = 0;
+            initDataViewStr(inputDGV);
+            // 设置输出类型下拉框
+            setOutputComBox();
+            输入_类型规则_comB.SelectedIndex = 0;
             // 生成消息提示
             initToolTip();
             // 调节窗口位置
@@ -104,23 +109,32 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 设置编码下拉框
             SetEcodingVal();
         }
+        // 设置输出类型下拉框
+        private void setOutputComBox() { 
+            // 实例化导出下拉框
+            outputComBox = new ExportComBox(new ExportComBoxValEnum[]{ExportComBoxValEnum.EXPORT_EXCEL_VAL });
+            // 绑定点击事件
+            outputComBox.SelectedIndexChanged += new EventHandler(ComboBox_SelectedIndexChanged);
+            // 加入到容器中
+            outputComBox.Location = new Point(输入_生成到_lab.Right+5
+                , 输入_生成到_lab.Location.Y - 4);
+            输入_生成到_lab.Parent.Controls.Add(outputComBox);
+            outputComBox.BringToFront();
+        }
         /// <summary>
         /// 初始化手动输入的数据表格配置
         /// </summary>
         private void initInputDataViewConf() {
-            DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(27, 30, Color.Empty, Color.Empty);
-            dataView.Location = new Point(1, 输入_生成到_comB.Bottom + 输入_生成到_comB.Location.Y);
-            inputDataGridView = dataView;
-            输入_page.Controls.Add(inputDataGridView);
-            inputDataGridView.BringToFront();
-            inputDataGridView.Width = 输入_page.ClientSize.Width - 4;
-            inputDataGridView.Height = 输入_page.ClientSize.Height - (inputDataGridView.Location.Y+1);
-            inputDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            inputDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // inputDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedHeaders;
-            inputDataGridView.AllowUserToResizeColumns = false;
-            // inputDataGridView.AllowUserToResizeRows = false;
-            inputDataGridView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(27, 25, Color.Empty, Color.Empty);
+            dataView.Location = new Point(操作区_容器.Location.X, 操作区_容器.Bottom + 5);
+            inputDGV = dataView;
+            this.Controls.Add(inputDGV);
+            inputDGV.BringToFront();
+            inputDGV.Width = 操作区_容器.ClientSize.Width;
+            inputDGV.Height = 选项区容器.ClientSize.Height - (inputDGV.Location.Y-选项区容器.Location.X);
+            inputDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            inputDGV.AllowUserToResizeColumns = false;
+            inputDGV.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
         }
 
         /// <summary>
@@ -175,8 +189,11 @@ namespace UI.ComponentLibrary.FormLibrary {
             view.DataSource = dt;
             // 行标题宽度
             view.RowHeadersWidth = 60;
+            for(int i = 0; i < view.Columns.Count; i++) { 
+                view.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
             // 生成行标题
-            for (int i = 0; i < inputDataGridView.RowCount; i++) {
+            for (int i = 0; i < inputDGV.RowCount; i++) {
                 view.Rows[i].HeaderCell.Value = (i+1).ToString();
             }  
         }
@@ -287,15 +304,14 @@ namespace UI.ComponentLibrary.FormLibrary {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0) {
-                Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
                 string modifier = TAB_STR+"private";
                 string type = "";
                 string name = "";
                 string comment = "";
                 foreach (Dictionary<string, string> dic in dataDic) {
-                    name = StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 1);
-                    if(dbTypeToJava.ContainsKey(dic[columnTypeStr])) type = dbTypeToJava[getNameTypeComment(dic)[1]];
-                    comment = getNameTypeComment(dic)[2];
+                    name = getRealName(dic, 0);
+                    type = getRealType(dic);
+                    comment = getRealComment(dic);
                     // 是否生成字段注释
                     if (isFieldComment && 生成字段注释_check.Enabled) { 
                         builder.AppendLine(TAB_STR+"/** "+ comment +" */");
@@ -313,7 +329,6 @@ namespace UI.ComponentLibrary.FormLibrary {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0 && 生成get_set_check.Enabled) { 
-                Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
                 string type = "";
                 string name = "";
                 string comment = "";
@@ -321,19 +336,19 @@ namespace UI.ComponentLibrary.FormLibrary {
                 List<string> setL = new List<string>();
 
                 foreach (Dictionary<string, string> dic in dataDic) {
-                    name = getNameTypeComment(dic)[0];
-                    type = getNameTypeComment(dic)[1];
-                    comment = getNameTypeComment(dic)[2];
+                    name = getRealName(dic, 0);
+                    type = getRealType(dic);
+                    comment = getRealComment(dic);
                     // 判断是否生成get set
                     if (isGetAndSet && 生成get_set_check.Enabled) {
                         string getStr = "";
                         string setStr = "";
                         if (getAndSetType== 0 || getAndSetType == 1) { 
-                            getStr = beOneGetMethod(name, type, comment);
+                            getStr = beOneGetMethod(dic);
                             getL.Add(getStr);
                         }
                         if (getAndSetType== 0 || getAndSetType == 2) { 
-                            setStr = beOneSetMethod(name, type, comment);
+                            setStr = beOneSetMethod(dic);
                             setL.Add(setStr);
                         }  
                     }
@@ -375,37 +390,36 @@ namespace UI.ComponentLibrary.FormLibrary {
             return retStr;
         }
         // 生成一个get方法
-        private string beOneGetMethod(string name, string dbtype, string zs) {
+        private string beOneGetMethod(Dictionary<string, string> dic) {
             StringBuilder builder = new StringBuilder();
-            Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
-            string type = dbTypeToJava.ContainsKey(dbtype)? dbTypeToJava[dbtype] : "";
-            string getname = StringUtilsMet.charsToHump(name, 0);
-            string getname2 = StringUtilsMet.charsToHump(name, 1);
-            string prefix = "get";
+            string type = getRealType(dic);
+            string fieldName = getRealName(dic, 0);
+            string getName = getRealName(dic, 1);
+            string comment = getRealComment(dic);
             // 判断生成注释
             if (isGetAndSet && isGetSetComment && 生成get_set_check.Enabled && 生成get_set注释_check.Enabled) {
-                builder.AppendLine(TAB_STR+"/** "+ zs +" */");
+                builder.AppendLine(TAB_STR+"/** "+ comment +" */");
             }
             // 根据类型判断前缀
-            if ("boolean".Equals(type)) prefix = "is";
-            builder.AppendLine(TAB_STR+"public "+ type +" "+prefix+ getname+"() {");
-            builder.AppendLine(TAB_STR+TAB_STR+"return this."+ getname2+";");
+            if ("boolean".Equals(type)) getName = "is"+getName.Substring(3, getName.Length-3);
+            builder.AppendLine(TAB_STR+"public "+ type +" "+getName+"() {");
+            builder.AppendLine(TAB_STR+TAB_STR+"return this."+ fieldName +";");
             builder.Append(TAB_STR+"}");
             return builder.ToString();
         }
         // 生成一个set方法
-        private string beOneSetMethod(string name, string dbtype, string zs) {
+        private string beOneSetMethod(Dictionary<string, string> dic) {
             StringBuilder builder = new StringBuilder();
-            Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
-            string type = dbTypeToJava.ContainsKey(dbtype)? dbTypeToJava[dbtype] : "";
-            string setname = StringUtilsMet.charsToHump(name, 0);
-            string setname2 = StringUtilsMet.charsToHump(name, 1);
+            string type = getRealType(dic);
+            string fieldName = getRealName(dic, 0);
+            string setName = getRealName(dic, 2);
+            string comment = getRealComment(dic);
             // 判断生成注释
             if (isGetAndSet && isGetSetComment && 生成get_set_check.Enabled && 生成get_set注释_check.Enabled) {
-                builder.AppendLine(TAB_STR+"/** "+ zs +" */");
+                builder.AppendLine(TAB_STR+"/** "+ comment +" */");
             }
-            builder.AppendLine(TAB_STR+"public void set"+ setname+"("+type+" "+setname2+") {");
-            builder.AppendLine(TAB_STR+TAB_STR+"this."+ setname2 + " = " + setname2+";");
+            builder.AppendLine(TAB_STR+"public void "+setName +"("+type+" "+fieldName+") {");
+            builder.AppendLine(TAB_STR+TAB_STR+"this."+ fieldName + " = " + fieldName+";");
             builder.Append(TAB_STR+"}");
             return builder.ToString();
         }
@@ -414,22 +428,20 @@ namespace UI.ComponentLibrary.FormLibrary {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0 && 生成构造函数_check.Enabled) {
-                Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
                 int index = 0;
                 string type = "";
                 string name = "";
                 string comment = "";
                 // 方法注释字符串
-                StringBuilder commentVarBui = new StringBuilder(TAB_STR+"/**"
-                    +LINE+TAB_STR+"* 自动生成的有参构造器，用来在实例化对象时赋值属性"+LINE);
+                StringBuilder commentVarBui = new StringBuilder(TAB_STR+"/**"+LINE);
                 // 方法参数字符串
                 StringBuilder methodVarBui = new StringBuilder();
                 // 内部参数
                 StringBuilder interiorVarBui = new StringBuilder(TAB_STR+TAB_STR+"super();"+LINE);
                 foreach (Dictionary<string, string> dic in dataDic) { 
-                    name = StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 1);
-                    type = dbTypeToJava.ContainsKey(getNameTypeComment(dic)[1])? dbTypeToJava[getNameTypeComment(dic)[1]] : "";
-                    comment = getNameTypeComment(dic)[2];
+                    type = getRealType(dic);
+                    name = getRealName(dic, 0);
+                    comment = getRealComment(dic);
                     // 判断生成注释
                     if(isConstructor && isConstrComment && 构造器生成注释_check.Enabled) { 
                         commentVarBui.AppendLine(TAB_STR+"* @param "+name +" - "+comment);
@@ -456,8 +468,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 string interiorVar = StringUtilsMet.trimEndNewLine(interiorVarBui.ToString());
                 // 组装最后的字符串
                 // 生成无参构造器
-                builder.AppendLine(TAB_STR+"/** 无参构造器 */");
-                builder.AppendLine(TAB_STR+"public "+classNameStr+"() {}");
+                builder.AppendLine(TAB_STR+"public "+classNameStr+"() {super();}");
                 builder.AppendLine(commentVar);
                 builder.Append(TAB_STR+"public "+classNameStr+" (");
                 builder.AppendLine(methodVar + ") {");
@@ -472,7 +483,6 @@ namespace UI.ComponentLibrary.FormLibrary {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0 && isDeepClone && 生成深拷贝方法_check.Enabled) { 
-                Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
                 string type = "";
                 string name = "";
                 string setName = "";
@@ -481,23 +491,26 @@ namespace UI.ComponentLibrary.FormLibrary {
                 // 内部参数
                 StringBuilder interiorVarBui = new StringBuilder(classNameStr+" "+claName+"= new "+classNameStr+"();"+LINE);
                 foreach (Dictionary<string, string> dic in dataDic) { 
-                    name = StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 1);
-                    setName = "set"+StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 0);
-                    type = dbTypeToJava.ContainsKey(getNameTypeComment(dic)[1])? dbTypeToJava[getNameTypeComment(dic)[1]] : "";
-                    comment = getNameTypeComment(dic)[2];
-                    if (type.IndexOf("List") >= 0) { 
-                        string setStr = "new Array"+type+"("+name+")";
-                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+setStr+");");
+                    setName = getRealName(dic, 2);
+                    name = getRealName(dic, 0);
+                    type = getRealType(dic);
+                    comment = getRealComment(dic);
+                    if (type.IndexOf("BigDecimal") >= 0) { 
+                        string setStr = "this."+name+" != null? new "+type+"(this."+name+".toString()) : null";
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+setStr+");");
+                    }else if (type.IndexOf("List") >= 0) { 
+                        string setStr = "this."+name+" != null? new Array"+type+"("+name+")  : null";
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+setStr+");");
                     }else if (type.IndexOf("Map") >= 0) {
-                        string setStr = "new Hash"+type+"("+name+")";
-                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+setStr+");");
+                        string setStr = "this."+name+" != null? new Hash"+type+"("+name+")  : null";
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+setStr+");");
                     } else { 
-                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+"new "+type+"(this."+name+"));");
+                        interiorVarBui.AppendLine(TAB_STR+TAB_STR+claName+"."+setName+"("+"this."+name+" != null? new "+type+"(this."+name+") : null);");
                     }
                 }
                 // 组装最后的字符串
-                builder.AppendLine(TAB_STR + "/** 自动生成的深克隆方法，将对象中的每项进行深克隆 */");
-                builder.AppendLine(TAB_STR+"public "+classNameStr+" DeepCloning() {");
+                builder.AppendLine(TAB_STR + "/** 自动生成的深克隆方法，将对象中的每项属性进行深克隆 */");
+                builder.AppendLine(TAB_STR+"public "+classNameStr+" deepCloning() {");
                 // 去除最后一个换行符
                 string interiorVar = StringUtilsMet.trimEndNewLine(interiorVarBui.ToString());
                 builder.AppendLine(TAB_STR+TAB_STR+interiorVar);
@@ -512,8 +525,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0 && isToString && 生成ToString_check.Enabled) { 
-                Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
-                int index = 0;
+                int index = -1;
                 string type = "";
                 string name = "";
                 string comment = "";
@@ -521,25 +533,25 @@ namespace UI.ComponentLibrary.FormLibrary {
                 StringBuilder interiorVarBui = new StringBuilder(TAB_STR+TAB_STR+"return \""+classNameStr+"：[");
                 foreach (Dictionary<string, string> dic in dataDic) { 
                     index++;
-                    name = StringUtilsMet.charsToHump(getNameTypeComment(dic)[0], 1);
-                    type = dbTypeToJava.ContainsKey(getNameTypeComment(dic)[1])? dbTypeToJava[getNameTypeComment(dic)[1]] : "";
-                    comment = getNameTypeComment(dic)[2];
-                    if (index <= 4) { 
-                        interiorVarBui.Append(name+"=\" + "+name+" + \", ");
-                    } else { 
-                        if(interiorVarBui.Length >= 6){ 
-                            interiorVarBui.Remove(interiorVarBui.ToString().Length-6, 6);
-                        } 
-                        interiorVarBui.Append(LINE+TAB_STR+TAB_STR+TAB_STR+TAB_STR+" + \""+name+"=\" + "+name+" + \", ");
-                        index = 0;
+                    name = getRealName(dic, 0);
+                    type = getRealType(dic);
+                    comment = getRealComment(dic);
+                    // 当一行字段为4个时换行显示
+                    if (index >0 && index % 4 == 0) { 
+                        // 加换行
+                        interiorVarBui.Append(LINE);
+                        // 加缩进
+                        interiorVarBui.Append(TAB_STR+TAB_STR+TAB_STR);
                     }
+                    if(index == 0) {
+                        interiorVarBui.Append(name+"=\" +"+name);
+                    } else { 
+                        interiorVarBui.Append("+ \", "+name+"=\" +"+name);
+                    }   
                 }
-                builder.AppendLine(TAB_STR + "/** 重写后的toString方法 */");
                 builder.AppendLine(TAB_STR + "@Override");
                 builder.AppendLine(TAB_STR + "public String toString() {");
-                string interiorVar = interiorVarBui.ToString();
-                if (interiorVar.Length >= 2) interiorVar = interiorVar.Substring(0, interiorVar.Length-2)+"]\"";
-                builder.AppendLine(interiorVar+";");
+                builder.AppendLine(interiorVarBui.Append("+\"]\";").ToString());
                 builder.AppendLine(TAB_STR + "}");
             }
             retStr = builder.ToString();
@@ -567,7 +579,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             }
         }
         /// <summary>
-        /// 将数据表格的内容转化为要生成get set方法所需的List<string[]>
+        /// 将数据表格的内容转化为要生成get set方法所需的List<Dictionary<string, string>>
         /// </summary>
         /// <param name="dataGrid"></param>
         /// <returns></returns>
@@ -581,10 +593,12 @@ namespace UI.ComponentLibrary.FormLibrary {
                 retList = new List<Dictionary<string, string>>();
                 foreach (DataGridViewRow forRow in rc) {
                     rowDic = new Dictionary<string, string>();
+                    // 取每行的单元格对应的数据
                     for (int i=0; i < forRow.Cells.Count; i++) {
                         DataGridViewCell cell = forRow.Cells[i];
-                        string val = cell != null && cell.Value != null? cell.Value.ToString() : "";
+                        // 取该行该列的列头值为key
                         string key = i<= cc.Count? cc[i].HeaderCell.Value.ToString() : DateTime.Now.Ticks.ToString();
+                        string val = cell != null && cell.Value != null? cell.Value.ToString() : "";
                         rowDic.Add(key, val);
                     }
                     // 取行不全为空的
@@ -595,20 +609,68 @@ namespace UI.ComponentLibrary.FormLibrary {
             }
             return retList;
         }
-        // 获取实际要用到的字段名 字段类型 字段注释 
-        private string[] getNameTypeComment(Dictionary<string, string> dic) { 
-            string[] strArr = new string[] {"","","" };
-            Dictionary<string, string> dbTypeToJava = getDbTypeToJavaType();
-            if (dic.ContainsKey(columnNameStr)) { 
-                strArr[0] = dic[columnNameStr];
+        /// <summary>
+        /// 获取真实的name值
+        /// </summary>
+        /// <param name="name">原始的name</param>
+        /// <param name="type">0-字段 1-get方法 2-set方法 3-大驼峰 4-小驼峰</param>
+        /// <returns></returns>
+        private string getRealName(string name, int type) {
+            string str = name;
+            switch(type) { 
+            case 0:
+                str = StringUtilsMet.charsToHump(name, 1);
+                break;
+            case 1:
+                str = "get"+StringUtilsMet.charsToHump(name, 0);
+                break;
+            case 2:
+                str = "set"+StringUtilsMet.charsToHump(name, 0);
+                break;
+            case 3:
+                str = StringUtilsMet.charsToHump(name, 0);
+                break;
+            case 4:
+                str = StringUtilsMet.charsToHump(name, 1);
+                break;
             }
-            if(dic.ContainsKey(columnTypeStr)) { 
-                strArr[1] = dic[columnTypeStr];
+            return str;
+        }
+        private string getRealName(Dictionary<string, string> dic, int type) { 
+            return getRealName(dic.ContainsKey(columnNameStr)? dic[columnNameStr] : "", type);
+        }
+        /// <summary>
+        /// 获取真实的typr值
+        /// </summary>
+        /// <param name="type">原始的type</param>
+        /// <returns></returns>
+        private string getRealType(string type) {
+            string str = type;
+            Dictionary<string, string> dbTypeToJava = null;
+            if (TypeRule == 0) { 
+                dbTypeToJava = getDbTypeToJavaType();// 匹配数据库
+            }else if (TypeRule == 1) { 
+                dbTypeToJava = getTypeToJavaType();// 匹配JAVA
+            } else { 
+                dbTypeToJava = new Dictionary<string, string>();
             }
-            if (dic.ContainsKey(columnAnnotateStr)) { 
-                strArr[2] = dic[columnAnnotateStr];
-            }
-            return strArr;
+            str = dbTypeToJava.ContainsKey(type)? dbTypeToJava[type] : type;
+            return str;
+        }
+        private string getRealType(Dictionary<string, string> dic) { 
+            return getRealType(dic.ContainsKey(columnTypeStr)? dic[columnTypeStr] : "");
+        }
+        /// <summary>
+        /// 获取真实的Comment值
+        /// </summary>
+        /// <param name="type">原始的Comment</param>
+        /// <returns></returns>
+        private string getRealComment(string comment) {
+            string str = comment;
+            return str;
+        }
+        private string getRealComment(Dictionary<string, string> dic) { 
+            return getRealComment(dic.ContainsKey(columnAnnotateStr)? dic[columnAnnotateStr] : "");
         }
         // key为数据库类型 value为对于JAVA类型
         private static Dictionary<string, string> getDbTypeToJavaType() { 
@@ -635,22 +697,37 @@ namespace UI.ComponentLibrary.FormLibrary {
             dic.Add("TIMESTAMP","java.sql.Timestamp");
             return dic;
         }
+        // key为数据库类型 value为对于JAVA类型
+        private static Dictionary<string, string> getTypeToJavaType() { 
+            Dictionary<string, string> dic = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            dic.Add("String","String");
+            dic.Add("int","Integer");
+            dic.Add("boolean","Boolean");
+            dic.Add("long","Long");
+            dic.Add("float","Float");
+            dic.Add("double","Double");
+            dic.Add("Object","Object");
+            dic.Add("char","Character");
+            dic.Add("BigDecimal","java.math.BigDecimal");
+            dic.Add("DATE","java.sql.Date");
+            dic.Add("TIME","java.sql.Time");
+            dic.Add("TIMESTAMP","java.sql.Timestamp");
+            dic.Add("Type","java.lang.reflect.Type");
+            return dic;
+        }
         // 选项卡选择事件
         private void tab容器_Selecting(object sender, TabControlCancelEventArgs e) {
             TabControl tabControl = (TabControl)sender;
-            if(e.TabPageIndex == 0 && inputDataGridView == null) { 
+            if(e.TabPageIndex == 0 && inputDGV == null) { 
                 // 加载数据表格配置
                 initInputDataViewConf();
                 // 数据表格生成数据
-                initDataViewStr(inputDataGridView);
+                initDataViewStr(inputDGV);
             }
         }
         // 下拉框鼠标移入事件
         private void ComboBox_MouseEnter(object sender, EventArgs e) {
             ComboBox combo = (ComboBox)sender;
-            //if(combo.Equals(输入_生成到_comB)) { 
-            //    combo.DroppedDown = true;
-            //}
         }
         // 复选框鼠标点击事件事件
         private void CheckBox_MouseDown(object sender, MouseEventArgs e) {
@@ -781,30 +858,33 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 下拉框选择子项事件
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ComboBox comB = (ComboBox)sender;
-            if(输入_生成到_comB.Equals(comB) && comB.Focused) {
-
-                List<Dictionary<string, string>> dataDic = dateTabelStrToList(inputDataGridView);
+            if(outputComBox != null && outputComBox.Equals(comB) && comB.Focused) {
+                List<Dictionary<string, string>> dataDic = dateTabelStrToList(inputDGV);
                 // 获取最终内容
                 string str = beGetSetTotalMethod(dataDic);
-                if ("选定文本框".Equals(comB.SelectedItem)) { 
-                    TextBox t = TextBoxCache.UpOperatingTextBox;
-                    if (t != null) { 
-                        if(str != null && str.Length > 0){ 
-                            t.Text = str;
-                            // 将文件编码写入到文本框tag数据中
-                            TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
-                            t.Focus();
-                        } 
-                    } else { 
-                        MessageBox.Show("获取的源文本框为NULL");    
-                    }
-                }else if("JAVA文件".Equals(comB.SelectedItem) && comB.Focused){ 
-                    SaveJavaFile(str);
-                } else if ("记事本".Equals(comB.SelectedItem) && comB.Focused){ 
-                    if(str != null && str.Length > 0) FileUtilsMet.turnOnNotepad(str);
+                ExportComBoxValEnum val = ExportComBox.stringToEnum(comB.SelectedValue.ToString());
+                switch(val) {
+                    case ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL: // 新标签
+                        if(str.Length > 0) MainTabContent.exportNewPage(str);
+                    break;
+                    case ExportComBoxValEnum.EXPORT_THIS_PAGE_VAL: // 当前标签
+                        if(str.Length > 0) ControlsUtilsMet.exportThisPage(str);
+                    break;
+                    case ExportComBoxValEnum.EXPORT_JAVA_VAL: // java文件
+                        if(str.Length > 0) FileUtilsMet.saveJavaFile(str, classNameStr, encoding);
+                    break;
+                    case ExportComBoxValEnum.EXPORT_NOTEBOOK_VAL: // 记事本
+                        if(str.Length > 0) FileUtilsMet.turnOnNotepad(str);
+                    break;
                 }
             }
-            
+            if(输入_类型规则_comB.Equals(comB) && comB.Focused) {
+                if ("数据库".Equals(comB.SelectedItem)) { 
+                    TypeRule = 0;
+                }else if("JAVA对象".Equals(comB.SelectedItem) && comB.Focused){ 
+                    TypeRule = 1;
+                }
+            }
         }
         /// <summary>
         /// 设置编码下拉列表框的值
@@ -825,21 +905,6 @@ namespace UI.ComponentLibrary.FormLibrary {
             输入_编码_comB.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
-        // 保存为JAVA文件
-        private void SaveJavaFile(string str) { 
-            SaveFileDialog newSaveFile = new SaveFileDialog();
-            newSaveFile.RestoreDirectory = false;
-            newSaveFile.ValidateNames = true;
-            newSaveFile.DefaultExt = "txt";
-            newSaveFile.FileName = classNameStr+".java";
-            newSaveFile.Filter = "java文档(*.java)|*.java|所有文件(*.*)|*.*";
-            //判断是否点击确定
-            if (newSaveFile.ShowDialog() == DialogResult.OK) {
-                string path = newSaveFile.FileName;
-                // 调用方法写入文件内容
-                FileUtilsMet.FileWrite.writeFile(path, str, encoding);
-            }    
-        }
         // 文本框文本改变事件
         private void TextBox_TextChanged(object sender, EventArgs e) {
             TextBox t = (TextBox)sender;
@@ -859,7 +924,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                     int code = int.Parse(obj.ToString());
                     encoding = Encoding.GetEncoding(code);
                 } catch (Exception ee) { 
-                    MessageBox.Show("无法将选中内容转化为编码");
+                    MessageBox.Show("无法将选中内容转化为编码"+ee);
                 }   
             }
         }

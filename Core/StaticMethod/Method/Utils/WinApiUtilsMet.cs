@@ -150,6 +150,32 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool FlashWindow(IntPtr handle, bool invert);
+
+        /// <summary>
+        /// 该函数将指定的消息发送到一个或多个窗口。此函数为指定的窗口调用窗口程序，直到窗口程序处理完消息再返回。而和函数PostMessage不同，PostMessage是将一个消息寄送到一个线程的消息队列后就立即返回。
+        /// </summary>
+        /// <param name="hWnd">指定要接收消息的窗口的句柄。如果此参数为HWND_BROADCAST，则消息将被发送到系统中所有顶层窗口，包括无效或不可见的非自身拥有的窗口、被覆盖的窗口和弹出式窗口，但消息不被发送到子窗口</param>
+        /// <param name="Msg">指定被发送的消息</param>
+        /// <param name="wParam">指定附加的消息特定信息</param>
+        /// <param name="lParam">指定附加的消息特定信息</param>
+        /// <returns></returns>
+        [DllImport("user32.dll ", EntryPoint = "SendMessage")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 模拟鼠标动作
+        /// </summary>
+        [DllImport("user32.dll")]
+        public static extern void mouse_event(int flags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        /// <summary>
+        /// 该函数把光标移到屏幕的指定位置。如果新位置不在由 ClipCursor函数设置的屏幕矩形区域之内，则系统自动调整坐标，使得光标在矩形之内。
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", EntryPoint = "SetCursorPos")]  
+        public static extern int SetCursorPos(int x, int y);  
         /// <summary>
         /// 闪烁指定窗体
         /// </summary>

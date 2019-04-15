@@ -30,21 +30,28 @@ namespace UI.ComponentLibrary.ControlLibrary {
              true);                                         // 设置以上值为 true  
             UpdateStyles(); 
         }
-
-        protected override void OnResize(EventArgs e)
-        {
+        // 调整大小事件
+        protected override void OnResize(EventArgs e) {
+            SetTextDispLayout();
             base.OnResize(e);
-            SetTextDispLayout();
         }
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
+        protected override void OnGotFocus(EventArgs e) {
             SetTextDispLayout();
+            base.OnGotFocus(e);
         }
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
+        protected override void OnSizeChanged(EventArgs e) {
             SetTextDispLayout();
+            base.OnSizeChanged(e);
+        }
+        protected override void OnDragEnter(DragEventArgs drgevent) {
+            if (this.AllowDrop == true) { 
+                if (drgevent.Data.GetDataPresent(DataFormats.FileDrop)){
+                    drgevent.Effect = DragDropEffects.All;
+                } else {
+                    drgevent.Effect = DragDropEffects.None;
+                }
+            }
+            base.OnDragEnter(drgevent);
         }
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
         private static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, string lParam);

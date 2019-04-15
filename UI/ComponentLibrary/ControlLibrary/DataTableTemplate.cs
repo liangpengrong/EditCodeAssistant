@@ -113,6 +113,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             数据表格.RowsDefaultCellStyle.SelectionForeColor = Color.White;
             // 默认选中单元格的列标题背景色
             数据表格.ColumnHeadersDefaultCellStyle.SelectionBackColor = selCellHeadBack != Color.Empty ? selCellHeadBack : this.selDefCellHeadBack;
+            数据表格.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             // 默认选中单元格的列标题前景色
             数据表格.ColumnHeadersDefaultCellStyle.SelectionForeColor = selCellHeadFontC != Color.Empty ? selCellHeadFontC : this.selDefCellHeadFontC;
             // 默认选中单元格的行标题背景色

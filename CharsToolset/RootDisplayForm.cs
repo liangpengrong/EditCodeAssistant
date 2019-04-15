@@ -19,16 +19,23 @@ using UI.StatusBarLibrary;
 using UI.ComponentLibrary.ControlLibrary;
 using Core.DefaultData.DataLibrary;
 using Core_Config.ConfigData.FormConfig;
+using Ui.ControlEventLibrary;
 
 namespace CharsToolset
 {
     public partial class RootDisplayForm : Form
     {
+        private string[] loadPath = null;
         // 状态栏默认背景色
         private Color formBackColor = ColorTranslator.FromHtml("#fff");
         public RootDisplayForm()
         {
             InitializeComponent();
+        }
+        public RootDisplayForm(string[] loadPath)
+        {
+            InitializeComponent();
+            this.loadPath = loadPath;
         }
         /// <summary>
         /// 窗体的启动函数
@@ -42,7 +49,9 @@ namespace CharsToolset
             // 将窗体加入到单例窗体工厂
             addSingletonAllForm();
             // 将控件组合到一起并添加到窗体中
-            ControlCombination();
+            controlCombination();
+            // 打开拖入的文件到新标签中
+            loadOpenFile();
             // 调节窗口位置
             Location = FormUtislMet.middleForm(this);
         }
@@ -55,6 +64,7 @@ namespace CharsToolset
             this.Size = RootFormCongfig.ROOT_SIZE;
             this.BackColor = Color.White;
             this.Text = RootFormDataLib.ROOT_FORM_TEXT;
+            this.IsMdiContainer = true;
             this.BackColor = formBackColor;
             // 图标
             this.Icon = Properties.Resources.编辑器适配;
@@ -62,12 +72,9 @@ namespace CharsToolset
         /// <summary>
         /// 将控件组合到一起并添加到窗体中
         /// </summary>
-        private void ControlCombination()
-        {
+        private void controlCombination() {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             /*---------------------控件实例-------------------------*/
-            // 获得添加标签按钮
-            Panel addPageBut = initAddPageButton();
             // 获得顶部菜单
             MenuStrip topMenu = initTopMenuStrip();
             // 获得主容器
@@ -82,7 +89,15 @@ namespace CharsToolset
             ContextMenuStrip textRightMenu = initRightMenu();
             // 获得主编辑文本框
             TextBox mainTextBox = initEditorText();
-            initFormLayout(this, topMenu, strutsBar, stripContainer, mainTab, tabPage, addPageBut, mainTextBox, textRightMenu);
+            initFormLayout(this, topMenu, strutsBar, stripContainer, mainTab, tabPage, mainTextBox, textRightMenu);
+        }
+        // 窗口加载时判断是否有拖动到上面的文件
+        private void loadOpenFile() {
+          if(loadPath != null && loadPath.Length>0) {
+              foreach (string p in loadPath) {// 遍历路径
+                 FileUtilsMet.setTextBoxValByPath(MainTabContent.getNewPageTextBox(), p, Encoding.UTF8);
+              }
+          }
         }
         /// <summary>
         /// 将窗体添加到单例窗体工厂中
@@ -116,25 +131,10 @@ namespace CharsToolset
         /// <param name="c">传入的确定大小用的控件</param>
         /// <param name="pageText">标签上显示的文本</param>
         /// <returns></returns>
-        public static TabPage initMainTabPage()
-        {
+        public static TabPage initMainTabPage() {
             // 实例化一个Page
             TabPage page = MainTabContent.initMainTabPage();
             return page;
-        }
-        /// <summary>
-        /// 初始化单例模式下的添加标签按钮
-        /// </summary>
-        /// <returns></returns>
-        public static Panel initAddPageButton() { 
-            Panel but = AddPageButton.initSingleMainAddPageButton();
-            but.MouseClick += (object sender, MouseEventArgs e) =>{ 
-                Panel panel = (Panel)sender;
-                if(MouseButtons.Left.Equals(e.Button)) { 
-                    addMainTextToPage(null, initEditorText());
-                }
-            };
-            return but;
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace CharsToolset
         /// <param name="text">文本框</param>
         /// <param name="textStrip">文本框的右键菜单</param>
         public static void initFormLayout(Form form, MenuStrip topMenu, StatusStrip strtusBar, ToolStripContainer container,
-            TabControl tab, TabPage page,Control addpageBut, TextBox textBox, ContextMenuStrip textStrip) {
+            TabControl tab, TabPage page, TextBox textBox, ContextMenuStrip textStrip) {
             /*==============设置控件的tab顺序======================*/
             textBox.TabIndex = 0;
             topMenu.TabIndex = 1;
@@ -198,11 +198,6 @@ namespace CharsToolset
             tab.TabIndex = 3;
             textBox.TabIndex = 4;
             strtusBar.TabIndex = 5;
-            /*==============将文本框添加到标签中======================*/
-            addMainTextToPage(page, textBox);
-            /*==============将标签加入Tab容器中======================*/
-            tab.TabPages.Add(page);
-            page.Size = tab.ClientSize;
 
             /*==============将Tab容器加入到主容器======================*/
             container.LeftToolStripPanelVisible = false;
@@ -214,9 +209,6 @@ namespace CharsToolset
             tab.Location = new Point(-2, 0);
             tab.Size = new Size(container.ContentPanel.ClientSize.Width+5, 
                 container.ContentPanel.ClientSize.Height - tab.Location.Y - container.BottomToolStripPanel.Height);
-            /*==============将添加标签按钮加入到主容器======================*/
-            container.ContentPanel.Controls.Add(addpageBut);
-            addpageBut.BringToFront();
 
             /*==============将顶部加入到窗体======================*/
             form.Controls.Add(topMenu);
@@ -239,37 +231,14 @@ namespace CharsToolset
             bbb.Size = new Size(1,1);
             bbb.SendToBack();
             form.Controls.Add(bbb);
-            // 确定添加按钮的位置
-            MainTabControlUtils.doIsAddPageButLocation(addpageBut, tab);
-            // 使文本框获取焦点
-            form.ActiveControl = textBox;
-        }
-        /// <summary>
-        /// 添加文本框到标签页的方法
-        /// </summary>
-        public static void addMainTextToPage(TabPage page, TextBox t) {
-            string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
-            // 获得右键菜单
-            ContextMenuStrip textRightMenu = initRightMenu();
-            // 判断要添加的标签是否为null，为null则新建一个标签并添加
-            if (page == null) { 
-                MainTabContent.addControlsToPage(t, true, true);
-            } else { 
-                page.Controls.Add(t);
-                t.Size = new Size(page.ClientSize.Width - t.Location.X, page.ClientSize.Height - t.Location.Y);
-            }
-            t.Location = new Point(0, 2);
-            t.ContextMenuStrip = textRightMenu;
         }
 
         // 窗体得到焦点事件
-        private void RootDisplayForm_Activated(object sender, EventArgs e)
-        {
+        private void RootDisplayForm_Activated(object sender, EventArgs e) {
             FormUtislMet.topFormNoFocus(true, FormCacheFactory.getTopFormCahce().Values.ToArray());
         }
         // 窗体失去焦点事件
-        private void RootDisplayForm_Deactivate(object sender, EventArgs e)
-        {
+        private void RootDisplayForm_Deactivate(object sender, EventArgs e) {
             FormUtislMet.topFormNoFocus(false, FormCacheFactory.getTopFormCahce().Values.ToArray());
         }
     }

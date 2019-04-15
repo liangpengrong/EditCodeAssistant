@@ -82,7 +82,7 @@ namespace Core.StaticMethod.Method.Utils
                         WinApiUtilsMet.setFormTopNoFocus(true, form);
                     } else {
                         // 判断当前前台窗口是否为要设置的窗口
-                        if( !WinApiUtilsMet.GetForegroundWindow().Equals(form.Handle)) {
+                        if(form.TopLevel && !WinApiUtilsMet.GetForegroundWindow().Equals(form.Handle)) {
                             // 将窗口设置为非顶层
                             WinApiUtilsMet.setFormTopNoFocus(false, form);
                         }

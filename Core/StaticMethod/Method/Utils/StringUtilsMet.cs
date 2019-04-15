@@ -274,7 +274,7 @@ namespace Core.StaticMethod.Method.Utils {
         public static string charsToHump(string str, int type) { 
             char[] splitArr = new char[]{'_', '|', '\\', '/', ':', ','};
             // 先按换行符分割
-            string[] splLine = str.Split(new string[]{Environment.NewLine}, StringSplitOptions.None);
+            string[] splLine = str.Replace(" ", "").Split(new string[]{Environment.NewLine}, StringSplitOptions.None);
             // 存放每行中要变为大写的索引
             int[][] upperIndex = new int[splLine.Length][];
             char[] linestrArr = str.ToCharArray();
@@ -308,11 +308,14 @@ namespace Core.StaticMethod.Method.Utils {
                         s = s.Substring(0,1).ToLower() + s.Substring(1,s.Length-1);
                     }
                     // 将该转化为大写形式的地方转化为大写形式
-                    char[] linechar = s.ToCharArray();
-                    foreach(int lineIndex in indexs) { 
-                        linechar[lineIndex] = Char.ToUpperInvariant(linechar[lineIndex]);
+                    if (indexs != null && indexs.Length > 0) {
+                        char[] linechar = s.ToCharArray();
+                        foreach(int lineIndex in indexs) { 
+                            linechar[lineIndex] = Char.ToUpperInvariant(linechar[lineIndex]);
+                        }
+                        s = new string(linechar);
                     }
-                    s = new string(linechar);
+
                     // 替换掉要替换的字符
                     foreach (char split in splitArr) { 
                         s = s.Replace(split.ToString(), "");

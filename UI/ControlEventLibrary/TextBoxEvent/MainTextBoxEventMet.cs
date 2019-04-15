@@ -74,7 +74,7 @@ namespace Ui.ControlEventLibrary.TextBoxEvent {
                         page.ResetText();
                         
                         // 设置标签文本
-                        page.Text = pathArr[1]+"."+pathArr[2];
+                        page.Text = pathArr[1];
                         // 设置提示文本
                         page.ToolTipText = filepath;
                     }
@@ -108,6 +108,18 @@ namespace Ui.ControlEventLibrary.TextBoxEvent {
                     labEcoding.Text = ecoding.BodyName.ToUpper();
                 }
             });
+            return null;
+        }
+        /// <summary>
+        /// 将拖放的文件内容置入文本框并改变其父容器的命名
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static object dragSetTextBoxText(Dictionary<Type, object> data) { 
+            // 获取文本框
+            TextBox t = (TextBox)data[typeof(TextBox)];
+
+
             return null;
         }
     }

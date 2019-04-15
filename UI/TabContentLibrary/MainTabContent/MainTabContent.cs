@@ -2,11 +2,13 @@
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using Core_Config.ConfigData.ControlConfig;
+using ProgramTextBoxLibrary;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Windows.Forms;
 using UI.ComponentLibrary;
 using UI.ComponentLibrary.ControlLibrary;
@@ -40,6 +42,14 @@ namespace UI.TabContentLibrary.MainTabContent {
                 tab.IsDelPageAsk =  MainTabControlConfig.IS_DEL_ASK;
                 tab.Padding = new Point(0,0);
                 tab.Margin = new Padding(0,0,0,0);
+                // 显示添加按钮
+                tab.showAddPageButtton(true, true, delegate(){
+                    TabPage page = initMainTabPage();
+                    MainTabControlUtils.addMainTextToPage(page
+                        , MainTextBoxTemplate.getMainTextBox());
+                    tab.TabPages.Add(page);
+                    tab.SelectedTab = page;
+                });
                 // 设置不被焦点选中
                 tab.TabStop = false;
                 //设置主Tab容器的四周锚定
@@ -52,31 +62,6 @@ namespace UI.TabContentLibrary.MainTabContent {
                 tab.ShowToolTips = true;
                 // Tab容器宽
                 tab.Size = new Size(0,0);
-                // 添加控件事件
-                tab.ControlAdded += (object sender, ControlEventArgs e) =>{ 
-                    // 确定显示模式
-                    MainTabControlUtils.doIsAddPageSizeMode(tab);
-                };
-                // 移除控件事件
-                tab.ControlRemoved += (object sender, ControlEventArgs e) =>{
-                    if(e.Control is TabPage) { 
-                        TabPage ppp = (TabPage)e.Control;
-                        // 确定显示模式
-                        MainTabControlUtils.doIsAddPageSizeMode(tab);
-                        // 确定添加按钮的位置
-                        MainTabControlUtils.doIsAddPageButLocation(ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON) ,tab);
-                    }
-                };
-                // 调整大小事件
-                tab.Resize += (object sender, EventArgs e) =>{
-                    ControlsUtilsMet.asynchronousMet(tab, 100, delegate{ 
-                        // 确定显示模式
-                        MainTabControlUtils.doIsAddPageSizeMode(tab);
-                        // 确定添加按钮的位置
-                        MainTabControlUtils.doIsAddPageButLocation(ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON) ,tab);
-                    });
-                    
-                };
                 // 加入到缓存中
                 ControlCacheFactory.addSingletonCache(tab);
             } else { 
@@ -90,8 +75,7 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// <param name="c">传入的确定大小用的控件</param>
         /// <param name="pageText">标签上显示的文本</param>
         /// <returns></returns>
-        public static TabPage initMainTabPage()
-        {
+        public static TabPage initMainTabPage() {
             // 实例化一个Page
             TabPage page = new TabPage();
             int index = 1;
@@ -104,7 +88,7 @@ namespace UI.TabContentLibrary.MainTabContent {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             page.BackColor = Color.White;
             page.Name = TabControlDataLib.PAGE_NAME_DEF + timeStr;
-            page.Text = TabControlDataLib.PAGE_TEXT+"_"+index;
+            page.Text = TabControlDataLib.PAGE_TEXT;
             page.UseVisualStyleBackColor = true;
             page.Padding = new Padding(0,0,0,0);
             page.Margin = new Padding(0,0,0,0);
@@ -114,80 +98,25 @@ namespace UI.TabContentLibrary.MainTabContent {
             // 进入控件事件
             page.Enter += (object sender, EventArgs e) =>{ 
                 TabPage pp = (TabPage)sender;
-                Control con = null;
-                con = page.Controls[page.Controls.Count-1];
-                pp.FindForm().ActiveControl = con;
+                ControlsUtilsMet.timersMet(200, (object sender1, ElapsedEventArgs e1)=>{
+                    Form f = pp.FindForm();
+                    if(f != null) { 
+                        if(f.InvokeRequired) { 
+                            f.Invoke(new EventHandler(delegate {
+                                if(pp.Controls.Count > 0) { 
+                                    Control con = pp.Controls[pp.Controls.Count-1];
+                                    f.ActiveControl = con;
+                                    ((System.Timers.Timer)sender1).Dispose();
+                                }
+                            }));
+                        }
+                        }
+                    
+                });
             };
             return page;
         }
-         /// <summary>
-        /// 添加关闭按钮
-        /// </summary>
-        /// <param name="tab"></param>
-        public static void addDelPageBut(TabControl tab) { 
-            string tagKey = EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY);
-            Panel del = null;
-            foreach(TabPage page in tab.TabPages) {
-                int selIndex = tab.TabCount-1;
-                int itemW = tab.GetTabRect(selIndex).Width;
-                int itemH = tab.GetTabRect(selIndex).Height;
-                // 获取page页保存的tag数据
-                Dictionary<string, object> tag = ControlsUtilsMet.getControlTagToDic(page);
-                // 判断tag中是否存在删除按钮
-                if(page.Tag != null && tag != null && tag.ContainsKey(tagKey) && tag[tagKey] != null) {
-                    del = (Panel)tag[tagKey];
-                    // 判断删除按钮是否不存在其父窗体
-                    if(tab.Parent != null && !tab.Parent.Controls.Contains(del)) { 
-                        tab.Parent.Controls.Add(del);
-                        del.BringToFront();
-                    }
-                } else {
-                    // 创建一个新的删除按钮
-                    del = getDelPageBut();
-                    // 确定关闭按钮的位置
-                    int x = tab.GetTabRect(selIndex).X+itemW-del.Width-4;
-                    int y = tab.Location.Y + (itemH-del.Height)/2+del.Height/2;
-                    del.Location = new Point(x,y);
-                    ControlsUtilsMet.setControlTag(page, tagKey, del);
-                    if(tab.Parent != null){ 
-                        tab.Parent.Controls.Add(del);
-                        del.BringToFront();
-                    }
-                    // 按钮的点击关闭标签事件
-                    del.MouseClick += (object sender, MouseEventArgs e) =>{
-                        Panel pp = (Panel)sender;
-                        if(MouseButtons.Left.Equals(e.Button)) {
-                            if(page.Parent != null && tab.TabCount > 1) { 
-                                // 删除是否提示
-                                if (MainTabControlConfig.IS_DEL_ASK) {
-                                    ControlsUtilsMet.showAskMessBox("是否删除该标签", "删除标签", delegate{ 
-                                        TabControl tabControl1 = (TabControl)page.Parent;
-                                        // 删除标签
-                                        MainTabControlUtils.deleteTabPage(page);
-                                        // 确定删除标签按钮的位置
-                                        MainTabControlUtils.doIsDelPageButLocation(tabControl1);
-                                    }, null);
-                                } else {
-                                    TabControl tabControl1 = (TabControl)page.Parent;
-                                    // 删除标签
-                                    MainTabControlUtils.deleteTabPage(page);
-                                    // 确定删除标签按钮的位置
-                                    MainTabControlUtils.doIsDelPageButLocation(tabControl1);
-                                }
-                            }
-                        }
-                    
-                    };
-                }
-                // 当按钮超出标签的宽度或当前只有一个标签时隐藏删除按钮否则显示按钮
-                if(del.Width+10 > itemW || tab.TabCount == 1) { 
-                    del.Visible = false;
-                } else { 
-                    del.Visible = true;
-                }
-                del.BackColor = page.BackColor;
-            }
-        }
+
         /// <summary>
         /// 将控件数组添加到Tab容器中
         /// </summary>
@@ -207,10 +136,6 @@ namespace UI.TabContentLibrary.MainTabContent {
             if(isSynSize) con.Size = new Size(tabPage.ClientSize.Width - con.Location.X, tabPage.ClientSize.Height - con.Location.Y);
             // 设置文本框四周锚定
             if(isAnchor) con.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            Control addBut = ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON);
-            // 确定按钮的位置
-            MainTabControlUtils.doIsAddPageButLocation(addBut, mainTab);
-            addBut.BringToFront();
         }
         /// <summary>
         /// 将窗体数组添加到Tab容器中
@@ -223,70 +148,62 @@ namespace UI.TabContentLibrary.MainTabContent {
             TabControl mainTab = initMainTab();
             // 获得Page
             TabPage tabPage = initMainTabPage();
+            mainTab.TabPages.Add(tabPage);
+            Size minSize = form.MinimumSize;
+            // 判断是否设置了最小大小
+            if(tabPage.FindForm().Size.Width < minSize.Width) { 
+                tabPage.FindForm().Width = minSize.Width;
+            }
+            if(tabPage.FindForm().Size.Height < minSize.Height) { 
+                tabPage.FindForm().Height = minSize.Height;
+            }
+            tabPage.Text = form.Text;
+            tabPage.ToolTipText = form.Text;
+            // 设置窗体属性
+            form.Location = new Point(0, 2);
+            if(isSynSize) form.ClientSize = new Size(tabPage.Size.Width, tabPage.Size.Height-2);
+            if(isAnchor) form.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.AutoScaleMode = AutoScaleMode.None;
             form.TopLevel = false;
             form.Parent = tabPage;
-            mainTab.TabPages.Add(tabPage);
-            if(isSynSize) form.Size = new Size(tabPage.ClientSize.Width, tabPage.ClientSize.Height);
-            if(isAnchor) form.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
             mainTab.FindForm().ActiveControl = form;
             mainTab.SelectedTab = tabPage;
-                
-            Control addBut = ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON);
-            // 确定按钮的位置
-            MainTabControlUtils.doIsAddPageButLocation(addBut, mainTab);
-            addBut.BringToFront();
+            
+            form.BringToFront();
         }
         /// <summary>
-        /// 获取关闭按钮
+        /// 获取新标签的文本框
         /// </summary>
-        /// <returns></returns>
-        private static Panel getDelPageBut() { 
-            Panel panel = new Panel();
-            panel.Size = new Size(9,9);
-            panel.TabStop = false;
-            panel.TabIndex = int.MaxValue;
-            panel.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DEL_PAGE_BUTTON)+DateTime.Now.ToUniversalTime().Ticks;
-            // 鼠标是否移入
-            bool mouseMove = false;
-            // 消除控件重绘闪烁
-            ControlsUtilsMet.clearRedrawFlashing(panel);
-            panel.Paint += (object sender, PaintEventArgs e) =>{ 
-                Panel ppp = (Panel)sender;
-                Graphics g = e.Graphics;
-                Color lineColor = ColorTranslator.FromHtml("#fff");
-                // 线得高
-                int height = 2;
-                // 线的宽
-                int width = (int) Math.Sqrt((panel.Height*panel.Height)*(panel.Width*panel.Width));
-                // 鼠标移入移出
-                if(mouseMove) {
-                    lineColor = ColorTranslator.FromHtml("#DD5252");
-
-                } else {
-                    lineColor = ColorTranslator.FromHtml("#fff");
-                }
-                // 中间加号颜色
-                Pen pen = new Pen(lineColor, height);
-                // 重绘背景
-                // 绘制第一条线
-                g.DrawLine(pen, 0, 0, panel.Width-height, panel.Height-height);
-                // 绘制第二条线
-                g.DrawLine(pen, panel.Width-height, 0, 0, panel.Height-height);
-            };
-            // 鼠标移入事件
-            panel.MouseEnter += (object sender, EventArgs e) =>{
-                Panel ppp = (Panel)sender;
-                mouseMove = true;
-                ppp.Invalidate();
-                
-            };
-            // 鼠标移出事件
-            panel.MouseLeave += (object sender, EventArgs e) =>{ 
-                Panel ppp = (Panel)sender;
-                mouseMove = false;
-                ppp.Invalidate();
-            };
-            return panel;
+        public static TextBox getNewPageTextBox() { 
+            Control con = null;
+            con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            if(con is RedrawTabControl) { 
+                RedrawTabControl redrawTab = (RedrawTabControl)con;
+                redrawTab.addPageInvoke();
+                // 获取标签容器中当前标签的文本框
+                con = ControlsUtilsMet.getControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+            }
+            // 转化为文本框
+            TextBox textBox = con != null && con is TextBox?(TextBox)con : null;
+            return textBox;
+        }
+        /// <summary>
+        /// 导出数据到新标签
+        /// </summary>
+        public static void exportNewPage(string s) { 
+            // 获取当前程序的标签容器
+            Control con = null;
+            con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            if(con is RedrawTabControl) { 
+                RedrawTabControl redrawTab = (RedrawTabControl)con;
+                redrawTab.addPageInvoke();
+                // 获取标签容器中当前标签的文本框
+                con = ControlsUtilsMet.getControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+            }
+            // 转化为文本框
+            TextBox textBox = con != null && con is TextBox?(TextBox)con : null;
+            ControlsUtilsMet.exportTextBox(textBox, s);
         }
     }
 }

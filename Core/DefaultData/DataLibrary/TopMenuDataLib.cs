@@ -45,7 +45,7 @@ namespace Core.DefaultData.DataLibrary {
             public const string 关于_ITEM = "关于Item";
             public const string 代码工具_ITEM = "代码工具Item";
             public const string 代码工具_java_ITEM = "代码工具_java_Item";
-            public const string 代码工具_java_字段转实体类_ITEM = "代码工具_java_字段转实体类_Item";
+            public const string 代码工具_java_生成JAVA实体类_ITEM = "代码工具_java_生成JAVA实体类_Item";
         }
     }
 }

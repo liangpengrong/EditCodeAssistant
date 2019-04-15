@@ -40,18 +40,18 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             TextBox t = menuSourceTextBox;
             try {
                 if (t != null) {
-                    全选Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
-                    剪切Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    bool readOnly = t.ReadOnly && t.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0;
+                    全选Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
+                    剪切Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
                     复制Item.Enabled = !0.Equals(t.TextLength) && !0.Equals(t.SelectionLength);
-                    粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length) && !t.ReadOnly;
-                    删除Item.Enabled = !0.Equals(t.SelectionLength) && !t.ReadOnly;
-                    去除Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
-                    转化为Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
-                    清空文本框Item.Enabled = !0.Equals(t.TextLength) && !t.ReadOnly;
+                    粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length) && !readOnly;
+                    删除Item.Enabled = !0.Equals(t.SelectionLength) && !readOnly;
+                    去除Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
+                    转化为Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
+                    清空文本框Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
                 } else { 
                     // 文本框NUll时禁用右键菜单
                     rightMenuStrip.Enabled = !(t == null);
-                    // MessageBox.Show("右键菜单绑定的文本框为null");
                 }
             } catch(Exception ie){
                 MessageBox.Show(ie.ToString());

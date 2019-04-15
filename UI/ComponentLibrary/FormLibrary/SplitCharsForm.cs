@@ -13,6 +13,7 @@ using Core.CacheLibrary.OperateCache.DataViewOperateCache;
 using Core.CacheLibrary.FormCache;
 using Core.DefaultData.DataLibrary;
 using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
+using Core.CacheLibrary.ControlCache;
 
 namespace UI.ComponentLibrary.FormLibrary {
     /// <summary>
@@ -85,7 +86,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <param name="t">所需文本框</param>
         /// <param name="isShowTop">是否显示为顶层窗体</param>
         /// <returns></returns>
-        public static SplitCharsForm initSingleSplitCharsForm(bool isShowTop){
+        public static SplitCharsForm initSingleForm(bool isShowTop){
             SplitCharsForm splitChars = null;
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.SPLIT_CHARS_FORM);
             if(form == null || form.IsDisposed || !(form is SplitCharsForm)) { 
@@ -97,6 +98,20 @@ namespace UI.ComponentLibrary.FormLibrary {
                 splitChars.Activate();
             }
             if(isShowTop) FormCacheFactory.addTopFormCahce(splitChars);
+            return splitChars;
+        }
+        /// <summary>
+        /// 打开多例模式下的窗口
+        /// </summary>
+        /// <param name="t">所需文本框</param>
+        /// <param name="isShowTop">是否显示为顶层窗体</param>
+        /// <returns></returns>
+        public static SplitCharsForm initPrototypeForm(bool isShowTop){
+            SplitCharsForm splitChars = new SplitCharsForm();
+            splitChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM);
+            splitChars = FormCacheFactory.ininSingletonForm(splitChars, true);
+            if(isShowTop) FormCacheFactory.addTopFormCahce(splitChars);
+            splitChars.Activate();
             return splitChars;
         }
         /// <summary>
@@ -194,7 +209,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 验证方法
         /// </summary>
         /// <returns></returns>
-        private Boolean isCheck() {
+        private bool isCheck() {
             // 验证文本框
             if(textBox == null) { 
                 MessageBox.Show("无法获取文本框");
@@ -468,28 +483,32 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void setExportCombox() {
             // 实例化导出下拉框
-            ExportComBox exportComBox = new ExportComBox();
-            ComboBox comboBox = exportComBox.export_combox;
+            ComboBox comboBox = new ExportComBox(new ExportComBoxValEnum[]{ExportComBoxValEnum.EXPORT_JAVA_VAL });
             // 绑定点击事件
             comboBox.SelectedIndexChanged += (object sender, EventArgs e) =>{
                 ComboBox box = (ComboBox)sender;
-                int val = int.Parse(box.SelectedValue.ToString());
+                ExportComBoxValEnum val = ExportComBox.stringToEnum(box.SelectedValue.ToString());
                 switch(val) {
-                    case 0:
-                        DataGridViewUtilMet.exportText(mainDataGridView, textBox, excNoHaveTabs);
-                        break;
-                    case 1:
+                    case ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL:
+                        DataGridViewUtilMet.exportNewPage(mainDataGridView, excNoHaveTabs);
+                    break;
+                    case ExportComBoxValEnum.EXPORT_THIS_PAGE_VAL:
+                        DataGridViewUtilMet.exportThisPage(mainDataGridView, excNoHaveTabs);
+                    break;
+                    case ExportComBoxValEnum.EXPORT_NOTEBOOK_VAL:
                         DataGridViewUtilMet.exportNotepad(mainDataGridView, excNoHaveTabs);
-                        break;
-                    case 2:
-                        DataGridViewUtilMet.exportExcel(mainDataGridView, excNoHaveTabs);
-                        break;
+                    break;
+                    case ExportComBoxValEnum.EXPORT_EXCEL_VAL:
+                        MessageBox.Show("该功能尚未完成");
+                        // DataGridViewUtilMet.exportExcel(mainDataGridView, excNoHaveTabs);
+                    break;
                 }
             };
             // 加入到容器中
             表格内容_label.Location = new Point(表格内容_label.Location.X, (操作区容器.Height-表格内容_label.Height)/2+4);
             comboBox.Location = new Point(表格内容_label.Right+5, (操作区容器.Height-comboBox.Height)/2+2);
             操作区容器.Controls.Add(comboBox);
+            comboBox.BringToFront();
         }
         /// <summary>
         /// 获取表格中选定单元格的数据

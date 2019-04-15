@@ -25,9 +25,9 @@ namespace Core.StaticMethod.Method.Utils {
             return description;
         }
         [AttributeUsage(AttributeTargets.Field,AllowMultiple = false)]  
-        internal sealed class EnumDescriptionAttribute : Attribute {
-            internal string Description { get; }
-            internal EnumDescriptionAttribute(string description)  
+        public sealed class EnumDescriptionAttribute : Attribute {
+            public string Description { get; }
+            public EnumDescriptionAttribute(string description)  
                 : base()  
             {  
                 Description = description;  

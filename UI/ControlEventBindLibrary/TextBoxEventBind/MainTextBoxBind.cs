@@ -7,6 +7,8 @@ using Core.CacheLibrary.ControlCache;
 using Core.StaticMethod.Method.Utils;
 using UI.ComponentLibrary.ControlLibrary.RightMenu;
 using Core.DefaultData.DataLibrary;
+using Ui.ControlEventLibrary;
+using System.Text;
 
 namespace UI.ControlEventBindLibrary.TextBoxEventBind
 {
@@ -17,7 +19,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// </summary>
         internal void textBoxChanged(object sender, EventArgs e){
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.内容改变事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.内容改变事件, textBox, null);
         }
 
         /// <summary>
@@ -25,49 +27,57 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// </summary>
         internal void textBoxMouseMove(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.鼠标移过事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.鼠标移过事件, textBox, null);
         }
         /// <summary>
         /// 文本框的鼠标在组件内并释放鼠标按键事件
         /// </summary>
         internal void textBoxMouseUp(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox, null);
         }
         /// <summary>
         /// 文本框的鼠标按下事件
         /// </summary>
         internal void textBoxMouseDown(object sender, MouseEventArgs e){
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.鼠标按下事件, textBox, null);
         }
         /// <summary>
         /// 文本框的鼠标移入事件
         /// </summary>
         internal void textBoxMouseEnter(object sender, EventArgs e) {
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.鼠标移入事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.鼠标移入事件, textBox, null);
         }
         /// <summary>
         /// 文本框启用事件
         /// </summary>
         internal void textBoxEnter(object sender, EventArgs e){
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.控件启用事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.控件启用事件, textBox, null);
         }
         /// <summary>
         /// 文本框获得焦点事件
         /// </summary>
         internal void textBoxGotFocus(object sender, EventArgs e) {
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.获取焦点事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.获取焦点事件, textBox, null);
+        }
+        // 文本框拖放完成事件
+        internal void textBoxDragDrop(object sender, DragEventArgs e) { 
+            TextBox textBox = (TextBox)sender;
+            // 获取拖放文件的文件名
+            Array arrFile = (Array)e.Data.GetData(DataFormats.FileDrop);
+            string path = arrFile != null && arrFile.Length > 0? arrFile.GetValue(0).ToString() : null;
+            setEventBindMethod(TextBoxEventTypeEnum.文件拖放完成事件, textBox, path);
         }
         /// <summary>
         /// 文本框的键盘按下事件
         /// </summary>
         internal void textBoxKeyDown(object sender, KeyEventArgs e) {
             TextBox textBox = (TextBox) sender;
-            setEventBindMethod(TextBoxEventTypeEnum.键盘按下事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.键盘按下事件, textBox, null);
             /*============绑定文本框按键按下事件执行方法===================*/
             textBoxkeyDownBinding(e, textBox);
             
@@ -77,7 +87,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// </summary>
         internal void textBoxKeyUp(object sender, KeyEventArgs e) {
             TextBox textBox = (TextBox)sender;
-            setEventBindMethod(TextBoxEventTypeEnum.键盘松开事件, textBox);
+            setEventBindMethod(TextBoxEventTypeEnum.键盘松开事件, textBox, null);
             /*============绑定文本框按键松开事件执行方法===================*/
             textBoxkeyUpBinding(e, textBox);
             
@@ -89,6 +99,7 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
             try {
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 data.Add(typeof(TextBox), t);
+                if(t.ReadOnly) MessageBox.Show("文本框为只读的");
                 // 全选
                 if(e.Control && e.KeyCode.Equals(Keys.A)) {
                     TextBoxUtilsMet.textAllSelect(t);
@@ -108,7 +119,6 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
             }
             
         }
-
         /// <summary>
         /// 文本框松开事件绑定
         /// </summary>
@@ -123,13 +133,13 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
         /// <summary>
         /// 文本框事件类型对应的执行方法
         /// </summary>
-        private void setEventBindMethod(TextBoxEventTypeEnum eventType, TextBox textBox) { 
+        private void setEventBindMethod(TextBoxEventTypeEnum eventType, TextBox textBox, object data) { 
             StatusStrip toolStrip = ControlCacheFactory.getSingletonCache().ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) ?
             (StatusStrip)ControlCacheFactory.getSingletonCache()[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)]:null;
 
-            Dictionary<Type, object> data = new Dictionary<Type, object>();
-            data.Add(typeof(TextBox), textBox);
-            data.Add(typeof(StatusStrip), toolStrip);
+            Dictionary<Type, object> dataDic = new Dictionary<Type, object>();
+            dataDic.Add(typeof(TextBox), textBox);
+            dataDic.Add(typeof(StatusStrip), toolStrip);
             // 状态栏事件
             TextBoxBindStatusBarEvent.setOnStatusBarEventBind(eventType, textBox);
             // 菜单项事件
@@ -137,15 +147,21 @@ namespace UI.ControlEventBindLibrary.TextBoxEventBind
             switch(eventType) { 
                 case TextBoxEventTypeEnum.内容改变事件 : 
                     /*============将文本数据放入缓冲区===================*/
-                    MainTextBoxEventMet.setTextBoxCache(data);
+                    MainTextBoxEventMet.setTextBoxCache(dataDic);
                 break;
                 case TextBoxEventTypeEnum.鼠标移入事件 :
                     /*============绑定右键菜单===================*/
                     TextRightMenu.bindingTextBox(textBox);
                 break;
                 case TextBoxEventTypeEnum.获取焦点事件 :
+                    /*============将文本框中的文件路径放到父容器的Text中===================*/
+                    MainTextBoxEventMet.setParentTextByFileName(dataDic);
                     /*============赋值到即将要操作的文本框===================*/
                     TextBoxCache.UpOperatingTextBox = textBox;
+                break;
+                case TextBoxEventTypeEnum.文件拖放完成事件 :
+                    /*============将文件放入到文本框中并改变其父容器的命名===================*/
+                    FileUtilsMet.setTextBoxValByPath(textBox, data != null? data.ToString() : null, Encoding.UTF8);
                 break;
             }
                 

@@ -23,22 +23,9 @@
         /// 使用代码编辑器修改此方法的内容。
         /// </summary>
         private void InitializeComponent() {
-            this.export_combox = new System.Windows.Forms.ComboBox();
-            // 
-            // export_combox
-            // 
-            this.export_combox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.export_combox.FormattingEnabled = true;
-            this.export_combox.ItemHeight = 12;
-            this.export_combox.Location = new System.Drawing.Point(7, 20);
-            this.export_combox.Name = "export_combox";
-            this.export_combox.Size = new System.Drawing.Size(121, 20);
-            this.export_combox.TabIndex = 9;
 
         }
 
         #endregion
-
-        public System.Windows.Forms.ComboBox export_combox;
     }
 }

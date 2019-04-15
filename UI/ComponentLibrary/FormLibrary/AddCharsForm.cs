@@ -1,4 +1,5 @@
-﻿using Core.CacheLibrary.FormCache;
+﻿using Core.CacheLibrary.ControlCache;
+using Core.CacheLibrary.FormCache;
 using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Windows.Forms;
 using UI.ComponentLibrary.ControlLibrary;
 using UI.ComponentLibrary.ControlLibrary.RightMenu;
+using UI.TabContentLibrary.MainTabContent;
 
 namespace UI.ComponentLibrary.FormLibrary {
     /// <summary>
@@ -21,9 +23,6 @@ namespace UI.ComponentLibrary.FormLibrary {
     public partial class AddCharsForm : Form {
         // 显示结果的文本框
         private TextBox resultTextBox;
-        
-        // 要操作的文本框
-        private TextBox textBox;
         
         // 要操作的字符串
         private string text_val = "";
@@ -56,7 +55,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <param name="t">所需文本框</param>
         /// <param name="isShowTop">是否显示为顶层窗体</param>
         /// <returns></returns>
-        public static AddCharsForm initSingleAddCharsForm(bool isShowTop) {
+        public static AddCharsForm initSingleForm(bool isShowTop) {
             AddCharsForm addChars = null;
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.ADD_CHARS_FORM);
             if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
@@ -71,18 +70,18 @@ namespace UI.ComponentLibrary.FormLibrary {
             return addChars;
         }
         /// <summary>
-        /// 验证
+        /// 打开添加字符窗口
         /// </summary>
-        private bool isCheck() {
-            if(textBox == null) { 
-                MessageBox.Show("源文本框不能为null");
-                return false;
-            }
-            //if(textBox.TextLength == 0) { 
-            //    MessageBox.Show("源文本框文本不能为空");
-            //    return false;
-            //}
-            return true;
+        /// <param name="t">所需文本框</param>
+        /// <param name="isShowTop">是否显示为顶层窗体</param>
+        /// <returns></returns>
+        public static AddCharsForm initPrototypeForm(bool isShowTop) {
+            AddCharsForm addChars = new AddCharsForm();
+            addChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);
+            addChars = FormCacheFactory.ininSingletonForm(addChars, true);
+            if(isShowTop) FormCacheFactory.addTopFormCahce(addChars);
+            addChars.Activate();
+            return addChars;
         }
         /// <summary>
         /// 初始化结果文本框
@@ -93,7 +92,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 resultTextBox = CacheTextBoxTemplate.getCacheTextBox(); 
                 resultTextBox.Location = new Point(1, 普通_操作容器.Location.Y + 普通_操作容器.Height);
                 resultTextBox.Size = new Size(parent.ClientSize.Width-2, (parent.Height-普通_操作容器.Height));
-                resultTextBox.ReadOnly = true;
+                resultTextBox.ReadOnly = false;
                 parent.Controls.Add(resultTextBox);
                 resultTextBox.BringToFront();
             }
@@ -102,8 +101,6 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 添加字符的执行方法
         /// </summary>
         private void ordinaryAddChars() {
-            // 验证
-            if(!isCheck()) return;
             // 按照换行符分割
             string[] strArr = StringUtilsMet.splitStrToArr(text_val
                 ,new string[]{ Environment.NewLine}, true, false);
@@ -146,29 +143,45 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 添加字符的总执行方法
         /// </summary>
         private void addCharsMet() {
+            // 获取当前标签的文本框
+            TextBox textBox = ControlsUtilsMet.getSelectPageTextBox();
+            textBox = textBox != null? textBox : new TextBox();
             // 普通模式
             if(0.Equals(type)) {
+                text_val = textBox.SelectionLength > 0?textBox.SelectedText : textBox.Text;
+                // 添加字符
                 ordinaryAddChars();
                 // 将首尾字符添加到历史纪录中
                 addTextHistory();
             }
         }
         /// <summary>
-        /// 普通模式下的数据初始化
+        /// 导出数据到新标签
         /// </summary>
-        private void ordinaryInitData() {
-            textBox = TextBoxCache.UpOperatingTextBox;
-            head_text = 普通_行首text.Text;
-            end_text = 普通_行尾text.Text;
-            if(textBox != null) {
-                if(textBox.SelectionLength == 0) { 
-                    text_val = textBox.Text;
-                } else { 
-                    text_val = textBox.SelectedText;    
-                }
-            } 
+        public void exportNewPage() { 
+            string s = resultTextBox.SelectionLength == 0? resultTextBox.Text : resultTextBox.SelectedText;
+            MainTabContent.exportNewPage(s);
         }
-
+        /// <summary>
+        /// 导出数据到当前标签
+        /// </summary>
+        public void exportThisPage() {
+            string s = resultTextBox.SelectionLength == 0? resultTextBox.Text : resultTextBox.SelectedText;
+            ControlsUtilsMet.exportThisPage(s);
+        }
+        /// <summary>
+        /// 导出数据到记事本
+        /// </summary>
+        /// <param name="view">表格</param>
+        /// <param name="excNoHaveTabs">不包含tab符号</param>
+        public void exportNotepad() {
+            if(resultTextBox.SelectionLength > 0) { 
+                FileUtilsMet.turnOnNotepad(resultTextBox.SelectedText);
+            } else { 
+                FileUtilsMet.turnOnNotepad(resultTextBox.Text);
+            }
+            
+        }
         /// <summary>
         /// 初始化消息提示
         /// </summary>
@@ -183,19 +196,22 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void initExportCombox() {
             // 实例化导出下拉框
-            ExportComBox exportComBox = new ExportComBox(new int[]{ExportComBox.EXPORT_EXCEL_VAL});
-            ComboBox comboBox = exportComBox.export_combox;
+            ComboBox comboBox = new ExportComBox(new ExportComBoxValEnum[]{ExportComBoxValEnum.EXPORT_EXCEL_VAL
+                ,ExportComBoxValEnum.EXPORT_JAVA_VAL});;
             // 绑定点击事件
             comboBox.SelectedIndexChanged += (object sender, EventArgs e) =>{
                 ComboBox box = (ComboBox)sender;
-                int val = int.Parse(box.SelectedValue.ToString());
+                ExportComBoxValEnum val = ExportComBox.stringToEnum(box.SelectedValue.ToString());
                 switch(val) {
-                    case ExportComBox.EXPORT_TEXT_VAL:
-                        exportText();
-                        break;
-                    case ExportComBox.EXPORT_NOTEBOOK_VAL:
+                    case ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL: // 导出到新标签
+                        exportNewPage();
+                    break;
+                    case ExportComBoxValEnum.EXPORT_THIS_PAGE_VAL: // 导出到当前标签
+                        exportThisPage();
+                    break;
+                    case ExportComBoxValEnum.EXPORT_NOTEBOOK_VAL: // 导出到记事本
                         exportNotepad();
-                        break;
+                    break;
                 }
             };
             // 加入到容器中
@@ -203,38 +219,6 @@ namespace UI.ComponentLibrary.FormLibrary {
                 , 普通_确定添加but.Location.Y - 1);
             comboBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             普通_操作容器.Controls.Add(comboBox);
-        }
-        /// <summary>
-        /// 导出数据到文本框
-        /// </summary>
-        /// <param name="view">表格</param>
-        /// <param name="t">文本框</param>
-        /// <param name="excNoHaveTabs">不包含tab符号</param>
-        public void exportText() {
-            if(textBox != null) {
-                int start = textBox.SelectionStart;
-                string s = resultTextBox.SelectionLength == 0? resultTextBox.Text : resultTextBox.SelectedText;
-                if(textBox.SelectionLength == 0) { 
-                    textBox.Text = s;
-                } else { 
-                    textBox.SelectedText = s;
-                }
-                textBox.SelectionStart = start;
-                textBox.SelectionLength = s.Length;
-            }
-        }
-        /// <summary>
-        /// 导出数据到记事本
-        /// </summary>
-        /// <param name="view">表格</param>
-        /// <param name="excNoHaveTabs">不包含tab符号</param>
-        public void exportNotepad() {
-            if(resultTextBox.SelectionLength > 0) { 
-                FileUtilsMet.turnOnNotepad(resultTextBox.SelectedText);
-            } else { 
-                FileUtilsMet.turnOnNotepad(resultTextBox.Text);
-            }
-            
         }
         /// <summary>
         /// 将文本内容追加到历史纪录中
@@ -336,13 +320,11 @@ namespace UI.ComponentLibrary.FormLibrary {
         }
         // 确定按钮的点击事件
         private void 普通_确定添加but_Click(object sender, EventArgs e) {
-            // 初始化数据
-            ordinaryInitData();
             // 执行添加方法
             addCharsMet();
         }
         // 文本框键盘按下事件
-        private void textbox_KeyDown(object sender, KeyEventArgs e) {
+        private void Textbox_KeyDown(object sender, KeyEventArgs e) {
             TextBox t = (TextBox)sender;
             // 全选
             if(e.Control && Keys.A.Equals(e.KeyCode)) { 
@@ -370,10 +352,19 @@ namespace UI.ComponentLibrary.FormLibrary {
             textHistoryRecord(but.Name);
         }
         // 文本框鼠标移入事件
-        private void 普通_textbox_MouseEnter(object sender, EventArgs e) {
+        private void Textbox_MouseEnter(object sender, EventArgs e) {
             TextBox textBox = (TextBox)sender;
             // 绑定右键菜单
             TextRightMenu.bindingTextBox(textBox);
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e) {
+            TextBox textBox = (TextBox)sender;
+            if(普通_行首text.Equals(textBox)) { 
+                head_text = textBox.Text;
+            }else if (普通_行尾text.Equals(textBox)) { 
+                end_text = textBox.Text;
+            }
         }
     }
 }

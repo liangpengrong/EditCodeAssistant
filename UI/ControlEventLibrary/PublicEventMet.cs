@@ -7,19 +7,20 @@ using System.Windows.Forms;
 using System.Threading;
 using Core.StaticMethod.Method.Utils;
 using Core.DefaultData.DataLibrary;
+using UI.TabContentLibrary.MainTabContent;
 
 namespace Ui.ControlEventLibrary {
-   /// <summary>
-   /// 公共的事件绑定方法
-   /// </summary>
-   public class PublicEventMet {
+    /// <summary>
+    /// 公共的事件绑定方法
+    /// </summary>
+    public class PublicEventMet {
         private PublicEventMet() { }
         /// <summary>
         /// 实例化文本选择对话框
         /// </summary>
-        /// <returns>返回该对话框</returns>
-        public static object openFileMethod(TextBox t)
-        {
+        /// <param name="t">为null则打开一个新标签</param>
+        /// <returns>该对话框</returns>
+        public static object openFileMethod(TextBox t) {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.CheckFileExists = true;
             openFile.DefaultExt = "txt";
@@ -32,17 +33,8 @@ namespace Ui.ControlEventLibrary {
                 string path = openFile.FileName;
                 // 判断编码
                 Encoding encoding = FileUtilsMet.GetType(path);
-                // 将文件内容赋值到文本框中
-                t.Text = FileUtilsMet.FileRead.read(path, encoding);
-                t.SelectionStart = t.TextLength;
-
-                // 将文件路径写入到文本框tag数据中
-                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.SAVE_FILE_PATH, openFile.FileName);
-                // 将文件编码写入到文本框tag数据中
-                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
-                // 监听文件变化并弹窗提醒
-                monitorFileShowMess(openFile.FileName, t);
-                t.Focus();
+                TextBox tempTextB = t != null? t : MainTabContent.getNewPageTextBox();
+                FileUtilsMet.setTextBoxValByPath(tempTextB, path, encoding);
             }
             return openFile;
         }
@@ -74,8 +66,9 @@ namespace Ui.ControlEventLibrary {
                 FileUtilsMet.FileWrite.writeFile(path, t.Text, encoding);
                 // 将保存路径加入到文本框的Tag属性
                 TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName);
-                // 监听文件变化并弹窗提醒
-                monitorFileShowMess(newSaveFile.FileName, t);
+                // 监听文件变化并弹窗提醒 传入的文本框为null则开启一个新标签
+                TextBox tempTextB = t != null? t : MainTabContent.getNewPageTextBox();
+                FileUtilsMet.setTextBoxValByPath(tempTextB, path, encoding);
             }
             return newSaveFile;
         }
@@ -108,77 +101,5 @@ namespace Ui.ControlEventLibrary {
             }
             return retDic;    
         }
-        /// <summary>
-        /// 监听文件变化并弹出提示框提示重新加载或另存为
-        /// </summary>
-        /// <param name="filepath"></param>
-        /// <param name="t"></param>
-        public static void monitorFileShowMess(string filepath, TextBox t) {
-            Dictionary<Type, object> data = new Dictionary<Type, object>();
-            data.Add(typeof(TextBox), t);
-
-            // 监听文件变化
-            try { 
-                FileSystemWatcher wat = null;
-                string[] pathArr = FileUtilsMet.getPathArr(filepath);
-                Encoding encoding = Encoding.Default;
-                if(!"txt".Equals(pathArr[2].ToLower())) {
-                    encoding = FileUtilsMet.GetType(filepath);
-                }
-                // 判断文本框的Tag中是否纯在一个监听,存在就销毁他
-                if(TextBoxUtilsMet.getDicTextTag(t).ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR)){
-                    Object obj = TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
-                    if(obj.GetType().Equals(typeof(FileSystemWatcher))) { 
-                        wat =(FileSystemWatcher) TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
-                        wat.EnableRaisingEvents = false;
-                        wat.Dispose();
-                    }
-                }
-                
-                // 获取一个新的文件监听
-                wat = FileUtilsMet.fileMonitor(pathArr[0], pathArr[1]+"."+pathArr[2],
-                    NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.Size
-                    ,null,null
-                    ,delegate(object sender, FileSystemEventArgs e){
-                        FileSystemWatcher watcher = (FileSystemWatcher)sender;
-                        // 闪烁窗体
-                        Form f = t.FindForm();
-                        if(f.InvokeRequired) { 
-                            f.Invoke(new EventHandler(delegate{ 
-                                WinApiUtilsMet.flashWindesTime(f.Handle, 400, 3, true);
-                            }));
-                        }
-                        // 弹出对话框
-                        ControlsUtilsMet.showAskMessBox("文件内容已经更改,是否要重新加载文件", "提示"
-                        ,delegate{
-                            if (t.InvokeRequired) {
-                                t.Invoke(new EventHandler(delegate {
-                                    // 获取内容
-                                    string text = FileUtilsMet.FileRead.read(filepath, encoding);
-                                    t.Text = text;
-                                }));
-                            }    
-                        },null);
-                        watcher.EnableRaisingEvents = false;
-                    }
-                    , delegate{ 
-                        // 弹出对话框
-                        ControlsUtilsMet.showAskMessBox("文件在磁盘上已经被删除或重命名, 是否立刻另存为", "提示"
-                        ,delegate{
-                            if (t.InvokeRequired) {
-                                t.Invoke(new EventHandler(delegate {
-                                    // 调用另存为方法
-                                    saveFileMethod(t);
-                                }));
-                            }    
-                        },null); 
-
-                });
-                // 加入到文本框的tag数据中
-                TextBoxUtilsMet.textAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR, wat);
-            } catch {
-                MessageBox.Show("监听文件状态时发生异常");
-            }
-        }
-   }
+    }
 }

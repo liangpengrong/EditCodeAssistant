@@ -57,7 +57,7 @@ namespace ProgramTextBoxLibrary {
         private static void textDefaultConfig(TextBox textB) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             // 文本框姓名
-            textB.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF) + timeStr;
+            textB.Name = timeStr;
             textB.TabStop = true;
             textB.AllowDrop = true;
             textB.BorderStyle = BorderStyle.None;

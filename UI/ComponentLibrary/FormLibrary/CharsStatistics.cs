@@ -142,7 +142,7 @@ namespace UI.ComponentLibrary.FormLibrary
             foreach(KeyValuePair<string,string> kvp in dic){
                 string name = kvp.Key;
                 string textVal = kvp.Value;
-                Control con = ControlsUtilsMet.getControlByName(统计信息G.Controls, name);
+                Control con = ControlsUtilsMet.getControlByName(统计信息G.Controls, name, false);
                 con.Text = textVal;
             }
         }

@@ -25,8 +25,8 @@
         private void InitializeComponent() {
             this.选项区容器 = new System.Windows.Forms.GroupBox();
             this.文本框自动换行_chk = new System.Windows.Forms.CheckBox();
-            this.不匹配空行_chk = new System.Windows.Forms.CheckBox();
             this.不匹配末尾_chk = new System.Windows.Forms.CheckBox();
+            this.不匹配空行_chk = new System.Windows.Forms.CheckBox();
             this.tab容器 = new System.Windows.Forms.TabControl();
             this.普通_page = new System.Windows.Forms.TabPage();
             this.普通_操作容器 = new System.Windows.Forms.Panel();
@@ -49,12 +49,13 @@
             this.选项区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.选项区容器.Controls.Add(this.文本框自动换行_chk);
-            this.选项区容器.Controls.Add(this.不匹配空行_chk);
             this.选项区容器.Controls.Add(this.不匹配末尾_chk);
+            this.选项区容器.Controls.Add(this.不匹配空行_chk);
             this.选项区容器.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.选项区容器.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.选项区容器.Location = new System.Drawing.Point(2, 6);
             this.选项区容器.Name = "选项区容器";
-            this.选项区容器.Size = new System.Drawing.Size(120, 430);
+            this.选项区容器.Size = new System.Drawing.Size(150, 430);
             this.选项区容器.TabIndex = 9999;
             this.选项区容器.TabStop = false;
             this.选项区容器.Text = "选项区";
@@ -64,36 +65,36 @@
             this.文本框自动换行_chk.AutoSize = true;
             this.文本框自动换行_chk.Location = new System.Drawing.Point(10, 91);
             this.文本框自动换行_chk.Name = "文本框自动换行_chk";
-            this.文本框自动换行_chk.Size = new System.Drawing.Size(108, 16);
+            this.文本框自动换行_chk.Size = new System.Drawing.Size(111, 21);
             this.文本框自动换行_chk.TabIndex = 7;
             this.文本框自动换行_chk.TabStop = false;
             this.文本框自动换行_chk.Text = "文本框自动换行";
             this.文本框自动换行_chk.UseVisualStyleBackColor = true;
             this.文本框自动换行_chk.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
-            // 不匹配空行_chk
-            // 
-            this.不匹配空行_chk.AutoSize = true;
-            this.不匹配空行_chk.Location = new System.Drawing.Point(11, 28);
-            this.不匹配空行_chk.Name = "不匹配空行_chk";
-            this.不匹配空行_chk.Size = new System.Drawing.Size(84, 16);
-            this.不匹配空行_chk.TabIndex = 5;
-            this.不匹配空行_chk.TabStop = false;
-            this.不匹配空行_chk.Text = "不匹配空行";
-            this.不匹配空行_chk.UseVisualStyleBackColor = true;
-            this.不匹配空行_chk.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
             // 不匹配末尾_chk
             // 
             this.不匹配末尾_chk.AutoSize = true;
             this.不匹配末尾_chk.Location = new System.Drawing.Point(11, 60);
             this.不匹配末尾_chk.Name = "不匹配末尾_chk";
-            this.不匹配末尾_chk.Size = new System.Drawing.Size(84, 16);
+            this.不匹配末尾_chk.Size = new System.Drawing.Size(87, 21);
             this.不匹配末尾_chk.TabIndex = 6;
             this.不匹配末尾_chk.TabStop = false;
             this.不匹配末尾_chk.Text = "不匹配末尾";
             this.不匹配末尾_chk.UseVisualStyleBackColor = true;
             this.不匹配末尾_chk.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // 不匹配空行_chk
+            // 
+            this.不匹配空行_chk.AutoSize = true;
+            this.不匹配空行_chk.Location = new System.Drawing.Point(11, 28);
+            this.不匹配空行_chk.Name = "不匹配空行_chk";
+            this.不匹配空行_chk.Size = new System.Drawing.Size(87, 21);
+            this.不匹配空行_chk.TabIndex = 5;
+            this.不匹配空行_chk.TabStop = false;
+            this.不匹配空行_chk.Text = "不匹配空行";
+            this.不匹配空行_chk.UseVisualStyleBackColor = true;
+            this.不匹配空行_chk.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // tab容器
             // 
@@ -102,13 +103,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tab容器.Controls.Add(this.普通_page);
             this.tab容器.Controls.Add(this.高级_page);
+            this.tab容器.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tab容器.HotTrack = true;
             this.tab容器.ItemSize = new System.Drawing.Size(80, 22);
-            this.tab容器.Location = new System.Drawing.Point(126, 12);
+            this.tab容器.Location = new System.Drawing.Point(160, 12);
             this.tab容器.Margin = new System.Windows.Forms.Padding(0);
             this.tab容器.Name = "tab容器";
             this.tab容器.SelectedIndex = 0;
-            this.tab容器.Size = new System.Drawing.Size(614, 425);
+            this.tab容器.Size = new System.Drawing.Size(642, 425);
             this.tab容器.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab容器.TabIndex = 1111;
             this.tab容器.TabStop = false;
@@ -120,7 +122,7 @@
             this.普通_page.Location = new System.Drawing.Point(4, 26);
             this.普通_page.Margin = new System.Windows.Forms.Padding(0);
             this.普通_page.Name = "普通_page";
-            this.普通_page.Size = new System.Drawing.Size(606, 395);
+            this.普通_page.Size = new System.Drawing.Size(634, 395);
             this.普通_page.TabIndex = 0;
             this.普通_page.Text = "普通";
             this.普通_page.ToolTipText = "普通模式";
@@ -140,31 +142,33 @@
             this.普通_操作容器.Location = new System.Drawing.Point(-4, -3);
             this.普通_操作容器.Margin = new System.Windows.Forms.Padding(0);
             this.普通_操作容器.Name = "普通_操作容器";
-            this.普通_操作容器.Size = new System.Drawing.Size(614, 40);
+            this.普通_操作容器.Size = new System.Drawing.Size(642, 40);
             this.普通_操作容器.TabIndex = 5;
             this.普通_操作容器.Paint += new System.Windows.Forms.PaintEventHandler(this.普通_操作容器_Paint);
             // 
             // 普通_行尾text
             // 
             this.普通_行尾text.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.普通_行尾text.Location = new System.Drawing.Point(221, 10);
+            this.普通_行尾text.Location = new System.Drawing.Point(235, 10);
             this.普通_行尾text.Multiline = true;
             this.普通_行尾text.Name = "普通_行尾text";
             this.普通_行尾text.Size = new System.Drawing.Size(99, 23);
             this.普通_行尾text.TabIndex = 5;
             this.普通_行尾text.WordWrap = false;
-            this.普通_行尾text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_KeyDown);
+            this.普通_行尾text.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.普通_行尾text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Textbox_KeyDown);
             // 
             // 普通_行首text
             // 
             this.普通_行首text.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.普通_行首text.Location = new System.Drawing.Point(52, 10);
+            this.普通_行首text.Location = new System.Drawing.Point(60, 10);
             this.普通_行首text.Multiline = true;
             this.普通_行首text.Name = "普通_行首text";
             this.普通_行首text.Size = new System.Drawing.Size(99, 23);
             this.普通_行首text.TabIndex = 2;
             this.普通_行首text.WordWrap = false;
-            this.普通_行首text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_KeyDown);
+            this.普通_行首text.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.普通_行首text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Textbox_KeyDown);
             // 
             // 普通_行尾历史but
             // 
@@ -175,7 +179,7 @@
             this.普通_行尾历史but.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.普通_行尾历史but.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.普通_行尾历史but.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.普通_行尾历史but.Location = new System.Drawing.Point(319, 10);
+            this.普通_行尾历史but.Location = new System.Drawing.Point(333, 10);
             this.普通_行尾历史but.Name = "普通_行尾历史but";
             this.普通_行尾历史but.Size = new System.Drawing.Size(23, 23);
             this.普通_行尾历史but.TabIndex = 12;
@@ -193,7 +197,7 @@
             this.普通_行首历史but.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.普通_行首历史but.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.普通_行首历史but.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.普通_行首历史but.Location = new System.Drawing.Point(150, 10);
+            this.普通_行首历史but.Location = new System.Drawing.Point(158, 10);
             this.普通_行首历史but.Name = "普通_行首历史but";
             this.普通_行首历史but.Size = new System.Drawing.Size(23, 23);
             this.普通_行首历史but.TabIndex = 11;
@@ -205,24 +209,24 @@
             // 普通_行尾lab
             // 
             this.普通_行尾lab.AutoSize = true;
-            this.普通_行尾lab.Location = new System.Drawing.Point(182, 17);
+            this.普通_行尾lab.Location = new System.Drawing.Point(188, 13);
             this.普通_行尾lab.Name = "普通_行尾lab";
-            this.普通_行尾lab.Size = new System.Drawing.Size(41, 12);
+            this.普通_行尾lab.Size = new System.Drawing.Size(44, 17);
             this.普通_行尾lab.TabIndex = 6;
             this.普通_行尾lab.Text = "行尾：";
             // 
             // 普通_行首lab
             // 
             this.普通_行首lab.AutoSize = true;
-            this.普通_行首lab.Location = new System.Drawing.Point(13, 17);
+            this.普通_行首lab.Location = new System.Drawing.Point(13, 13);
             this.普通_行首lab.Name = "普通_行首lab";
-            this.普通_行首lab.Size = new System.Drawing.Size(41, 12);
+            this.普通_行首lab.Size = new System.Drawing.Size(44, 17);
             this.普通_行首lab.TabIndex = 4;
             this.普通_行首lab.Text = "行首：";
             // 
             // 普通_确定添加but
             // 
-            this.普通_确定添加but.Location = new System.Drawing.Point(357, 10);
+            this.普通_确定添加but.Location = new System.Drawing.Point(372, 10);
             this.普通_确定添加but.Name = "普通_确定添加but";
             this.普通_确定添加but.Size = new System.Drawing.Size(75, 23);
             this.普通_确定添加but.TabIndex = 3;
@@ -235,7 +239,7 @@
             this.高级_page.Location = new System.Drawing.Point(4, 26);
             this.高级_page.Name = "高级_page";
             this.高级_page.Padding = new System.Windows.Forms.Padding(3);
-            this.高级_page.Size = new System.Drawing.Size(606, 395);
+            this.高级_page.Size = new System.Drawing.Size(572, 395);
             this.高级_page.TabIndex = 1;
             this.高级_page.Text = "高级";
             this.高级_page.UseVisualStyleBackColor = true;
@@ -244,7 +248,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 439);
+            this.ClientSize = new System.Drawing.Size(805, 439);
             this.Controls.Add(this.tab容器);
             this.Controls.Add(this.选项区容器);
             this.DoubleBuffered = true;

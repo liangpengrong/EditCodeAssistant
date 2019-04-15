@@ -108,14 +108,22 @@ namespace UI_TopMenuBar
                 ToolStripMenuItem tool = (ToolStripMenuItem)sender;
                 //获取当前主Tab容器中的文本框
                 TextBox t = null;
-                List<Control> controls = new List<Control>();
+                Control control = null;
                 // 获得主tab容器
                 Control tabCon = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
                 if(tabCon != null && tabCon is TabControl) { 
                     TabControl tab = (TabControl)tabCon;
-                    ControlsUtilsMet.getAllControlByType(ref controls, tab.SelectedTab.Controls);
-                    if (controls.Count > 0 && controls[0] is TextBox) { 
-                        t = (TextBox)controls[0];
+                    if (t == null) { 
+                        control = ControlsUtilsMet.getControlByName(tab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+                        if (control != null && control is TextBox) { 
+                            t = (TextBox)control;
+                        } 
+                    } 
+                    if(t == null) { 
+                        control = ControlsUtilsMet.getFocueControlByType(tab.SelectedTab.Controls);
+                        if (control != null && control is TextBox) { 
+                            t = (TextBox)control;
+                        }
                     }
                 }
                 // 遍历对应关系字典
@@ -226,7 +234,7 @@ namespace UI_TopMenuBar
             toolImageDic.Add(this.删除字符Item, TopMenuDataLib.ItemDataLib.删除字符_ITEM);
             toolImageDic.Add(this.代码工具Item, TopMenuDataLib.ItemDataLib.代码工具_ITEM);
             toolImageDic.Add(this.代码工具_java_Item, TopMenuDataLib.ItemDataLib.代码工具_java_ITEM);
-            toolImageDic.Add(this.代码工具_java_字段转实体类, TopMenuDataLib.ItemDataLib.代码工具_java_字段转实体类_ITEM);
+            toolImageDic.Add(this.代码工具_java_生成JAVA实体类, TopMenuDataLib.ItemDataLib.代码工具_java_生成JAVA实体类_ITEM);
 
             toolImageDic.Add(this.首选项Item, TopMenuDataLib.ItemDataLib.首选项_ITEM);
             toolImageDic.Add(this.查看Item, TopMenuDataLib.ItemDataLib.查看_ITEM);
@@ -345,17 +353,21 @@ namespace UI_TopMenuBar
             toolBindingDic.Add(this.状态栏Item.Name, new methodDelegate(TopMenuEventMet.isStartBarDisplay));
 
             toolBindingDic.Add(this.分列Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                SplitCharsForm.initSingleSplitCharsForm(true);
+                SplitCharsForm ff = SplitCharsForm.initSingleForm(true);
+                ff.Show();
+                //SplitCharsForm ff = SplitCharsForm.initPrototypeForm(false);
+                //MainTabContent.addControlsToPage(ff, true, true);
                 return null;}));
             toolBindingDic.Add(this.添加字符Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                AddCharsForm.initSingleAddCharsForm(true);
+                AddCharsForm ff = AddCharsForm.initSingleForm(true);
+                ff.Show();
+                //AddCharsForm ff = AddCharsForm.initPrototypeForm(false);
+                //MainTabContent.addControlsToPage(ff, true, true);
                 return null;}));
 
-            toolBindingDic.Add(this.代码工具_java_字段转实体类.Name, new methodDelegate((Dictionary<Type , object> data) =>{
-                FieldToJavaEntity ff = FieldToJavaEntity.initPrototypeFieldToJavaEntity(true);
-                //ff.FormBorderStyle = FormBorderStyle.None;
-                // MainTabContent.addControlsToPage(ff, true, true);
-                // ff.tab容器.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+            toolBindingDic.Add(this.代码工具_java_生成JAVA实体类.Name, new methodDelegate((Dictionary<Type , object> data) =>{
+                CreadJavaEntity ff = CreadJavaEntity.initPrototypeForm(false);
+                MainTabContent.addControlsToPage(ff, true, true);
                 return null;}));
 
             toolBindingDic.Add(this.首选项Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{

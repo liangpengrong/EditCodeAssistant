@@ -20,6 +20,6 @@ namespace Core.DefaultData.DataLibrary {
         /// <summary>
         /// 标签的文本内容
         /// </summary>
-        public const string PAGE_TEXT = "new";
+        public const string PAGE_TEXT = "新建标签";
     }
 }

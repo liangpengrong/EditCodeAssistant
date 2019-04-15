@@ -12,6 +12,7 @@ using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
 using Core_Config.ConfigData.ControlConfig;
 using System.Drawing;
+using UI.TabContentLibrary.MainTabContent;
 
 namespace UI_TopMenuBar.TopMenuEvent
 {
@@ -33,12 +34,10 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// 实例化文本选择对话框
         /// </summary>
         /// <returns>返回该对话框</returns>
-        public static object openFileMethod(Dictionary<Type , object> data)
-        {
+        public static object openFileMethod(Dictionary<Type , object> data) {
             if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
-                // 获取文本框
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                PublicEventMet.openFileMethod(t);
+                // 获取新的文本框
+                PublicEventMet.openFileMethod(null);
             } else { 
                 MessageBox.Show("无法获取文本框");    
             }

@@ -14,6 +14,8 @@ namespace Ui.ControlEventLibrary.TextBoxEvent {
         键盘按下事件 = 6,
         键盘松开事件 = 7,
         控件启用事件 = 8,
-        鼠标移入事件 = 9
+        鼠标移入事件 = 9,
+        文件拖放完成事件 = 10
+        
     }
 }

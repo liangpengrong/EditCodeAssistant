@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Timers;
 using System.Data;
+using Core.CacheLibrary.ControlCache;
+using Core.DefaultData.DataLibrary;
 
 namespace Core.StaticMethod.Method.Utils
 {
@@ -93,10 +95,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="borderW">边框宽度</param>
         /// <param name="color">边框颜色</param>
         public static void setControlBorderStyle(Graphics gra,
-            Rectangle rec, ButtonBorderStyle borderS,
-            int borderW,
-            Color color)
-        {
+            Rectangle rec, ButtonBorderStyle borderS, int borderW, Color color) {
             ControlPaint.DrawBorder(gra, rec,
             color, borderW, borderS, //左边
             color, borderW, borderS, //上边
@@ -108,36 +107,22 @@ namespace Core.StaticMethod.Method.Utils
         /// </summary>
         /// <param name="tab">指定的控件集</param>
         /// <param name="cName">指定的控件姓名</param>
+        /// <param name="fuzzy">是否模糊匹配</param>
         /// <returns>获得的控件，如果没获得，则返回null</returns>
-        public static Control getControlByName(Control.ControlCollection cAll, string cName)
-        {
+        public static Control getControlByName(Control.ControlCollection cAll, string cName, bool fuzzy) {
             Control control = null;
             // 循环判断给定控件集中的全部控件
-            foreach (Control con in cAll) {
+            for (int i=0; i<cAll.Count; i++) {
+                control = cAll[i];
                 // 判断控件名是否为给定控件名相同名
-                if(con.Name.Equals(cName)) {
-                    // 将控件赋值
-                    control = con;
+                if((!fuzzy && control.Name.Equals(cName)) || (fuzzy && control.Name.IndexOf(cName) >= 0)) {
                     break;
                 }
-                if(con.Controls.Count > 0){ 
-                    getControlByName(con.Controls, cName);
+                if(control.Controls.Count > 0){ 
+                    getControlByName(control.Controls, cName, fuzzy);
                 }
             }
             return control;
-        }
-
-        /// <summary>
-        /// 绑定父控件中的
-        /// </summary>
-        /// <param name="cAll"></param>
-        /// <param name="name"></param>
-        /// <param name="eventArgs"></param>
-        public static void bindChildControlMouseEvent(System.Collections.ICollection cAll, string name, MouseEventArgs eventArgs) { 
-            //cAll.GetEnumerator().n
-            //foreach (Collection con in cAll) { 
-                
-            //}
         }
         /// <summary>
         /// 获取指定控件集中获得焦点的控件
@@ -147,14 +132,14 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns>获得的控件，如果没获得，则返回null</returns>
         public static Control getFocueControlByType(Control.ControlCollection cAll) {
             Control control = null;
-            foreach (Control con in cAll) {
+            for(int i=0; i<cAll.Count; i++) {
+                control = cAll[i];
                 // 循环判断给定控件集中的全部控件
-                if(con.Focused) {
+                if(control.Focused) {
                     // 将控件赋值
-                    control = con;
                     break;
                 }
-                if (con.Controls.Count > 0) { getFocueControlByType(con.Controls); }
+                if (control.Controls.Count > 0) { getFocueControlByType(control.Controls); }
             }
             return control;
         }
@@ -164,9 +149,9 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="tab">指定的控件集</param>
         /// <param name="type">指定的类型</param>
         /// <returns>获得的控件，如果没获得，则返回null</returns>
-        public static Control getFocueControlByType<T>(Control.ControlCollection cAll)where T:Control {
+        public static T getFocueControlByType<T>(Control.ControlCollection cAll)where T:Control {
             List<T> conLise = null;
-            Control retCon = null;
+            T retCon = null;
             getAllControlByType<T>(ref conLise, cAll);
             if(conLise != null && conLise.Count > 0) {
                 foreach (T con in conLise) {
@@ -386,7 +371,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="e">执行事件</param>
         public static void asynchronousMet(int time , ElapsedEventHandler e) {
             // 延迟1毫秒执行方法
-            System.Timers.Timer timer = new System.Timers.Timer(time);
+            System.Timers.Timer timer = new System.Timers.Timer(time==0? 1:time);
             // 到达时间的时候执行事件；
             timer.Elapsed += e;
             // 设置是执行一次（false）还是一直执行(true)；
@@ -395,6 +380,26 @@ namespace Core.StaticMethod.Method.Utils
             timer.Enabled = true;
             
         }
+        /// <summary>
+        /// 循环调用某个无返回值的方法
+        /// </summary>
+        /// <param name="time">毫秒</param>
+        /// <param name="e">执行事件</param>
+        public static void timersMet(int time, ElapsedEventHandler e) {
+            try { 
+                // 延迟1毫秒执行方法
+                System.Timers.Timer timer = new System.Timers.Timer(time);
+                // 到达时间的时候执行事件；
+                timer.Elapsed += e;
+                // 设置是执行一次（false）还是一直执行(true)；
+                timer.AutoReset = true;
+                // 是否执行System.Timers.Timer.Elapsed事件；
+                timer.Enabled = true;
+            } catch (Exception ex) { 
+                Console.WriteLine(ex);
+            }
+        }
+
         /// <summary>
         /// 设置控件的Tag数据
         /// </summary>
@@ -588,6 +593,46 @@ namespace Core.StaticMethod.Method.Utils
             combo.ValueMember = "Name";
             combo.DataSource = table;
             combo.SelectedIndex = selIndex;
+        }
+        /// <summary>
+        /// 获取当前标签的文本框
+        /// </summary>
+        /// <returns></returns>
+        public static TextBox getSelectPageTextBox() { 
+            Control con = null;
+            con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            if(con is TabControl) { 
+                TabControl redrawTab = (TabControl)con;
+                // 获取标签容器中当前标签的文本框
+                con = ControlsUtilsMet.getControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+            }
+            // 转化为文本框
+            TextBox textBox = con != null && con is TextBox?(TextBox)con : null;
+            return textBox;
+        }
+        /// <summary>
+        /// 导出数据到文本框
+        /// </summary>
+        public static void exportTextBox(TextBox textBox, string s) {
+            if (textBox != null) {
+                int start = textBox.SelectionStart;
+                if(textBox.SelectionLength == 0) { 
+                    textBox.Text = s;
+                } else { 
+                    textBox.SelectedText = s;
+                }
+                textBox.SelectionStart = start;
+                textBox.SelectionLength = s.Length;
+            } else { 
+                MessageBox.Show("要导出的容器必须为文本框");
+            }
+        }
+        /// <summary>
+        /// 导出数据到当前标签
+        /// </summary>
+        public static void exportThisPage(string s) {
+            TextBox textBox = getSelectPageTextBox();
+            exportTextBox(textBox, s);
         }
     }
 }

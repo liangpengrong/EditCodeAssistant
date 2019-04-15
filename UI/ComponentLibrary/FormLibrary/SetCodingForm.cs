@@ -85,7 +85,15 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 文本框的Tag数据
             Dictionary<string, object> tag = TextBoxUtilsMet.getDicTextTag(textBox);
             // 获取选中的项的编码页码
-            int codingInt = int.Parse(((DataRowView)this.coding_set.SelectedItem).Row.ItemArray[1].ToString());
+            int codingInt = Encoding.UTF8.CodePage;
+            if(coding_set.SelectedValue != null) {
+                try {
+                    codingInt = int.Parse(coding_set.SelectedValue.ToString());
+                } catch (Exception ee) { 
+                    MessageBox.Show("选中内容无法转化为编码，将使用默认编码"+ee);
+                }
+            }
+
             // 获取选择项的编码
             Encoding coding = Encoding.GetEncoding(codingInt);
 
