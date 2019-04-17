@@ -128,7 +128,7 @@
     <None Include="Resources\打开.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\分列.png" />
+    <None Include="Resources\分割_old.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\复制.png" />
@@ -183,6 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\代码.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分割.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\字符串.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

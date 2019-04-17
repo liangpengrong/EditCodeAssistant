@@ -435,11 +435,11 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         public static Dictionary<string, object> getDicTextTag(TextBox t)
         {
-            Dictionary<string, object> tagD=new Dictionary<string,object>();
+            Dictionary<string, object> tagD = new Dictionary<string,object>();
             try {
-                tagD = (Dictionary<string, object>)t.Tag;
+                tagD = t.Tag != null? (Dictionary<string, object>)t.Tag : tagD;
             } catch (Exception e){
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(e.StackTrace);
             }
             return tagD;
         }

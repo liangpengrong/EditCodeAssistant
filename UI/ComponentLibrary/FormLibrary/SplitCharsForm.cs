@@ -20,10 +20,8 @@ namespace UI.ComponentLibrary.FormLibrary {
     /// 分列窗体
     /// </summary>
     public partial class SplitCharsForm : Form {
-        /// <summary>
-        /// 存放数据的数据表格
-        /// </summary>
-        private DataGridView mainDataGridView;
+
+        private RedrawDataTable redrawDataTable;
         /// <summary>
         /// 要操作的文本框
         /// </summary>
@@ -43,15 +41,15 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <summary>
         /// 保留空列
         /// </summary>
-        private Boolean isNone = false;
+        private bool isNone = false;
         /// <summary>
         /// 是否区分大小写
         /// </summary>
-        private Boolean isSensitive = true;
+        private bool isSensitive = true;
         /// <summary>
         /// 导出时不包含制表符
         /// </summary>
-        private Boolean excNoHaveTabs = false;
+        private bool excNoHaveTabs = false;
         /// <summary>
         /// 分隔符的集合
         /// </summary>
@@ -74,7 +72,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <param name="textBox"></param>
         public SplitCharsForm() {
             // 赋值要操作的文本框
-            this.textBox = TextBoxCache.UpOperatingTextBox;
+            this.textBox = ControlsUtilsMet.getSelectPageTextBox();
             InitializeComponent();
             // 初始化消息提示控件
             initToolTip();
@@ -163,8 +161,8 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(rowColuArr == null || 0.Equals(rowColuArr.Length)) return;
             // 要绑定的数据源
             DataTable dt = new DataTable();
-            mainDataGridView.SelectAll();
-            mainDataGridView.ClearSelection();
+            redrawDataTable.SelectAll();
+            redrawDataTable.ClearSelection();
             DataRow dr = null;
             // 获取列最大的值
             int maxColu = rowColuArr.Max(x=>x.Length);
@@ -183,7 +181,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 dt.Rows.Add(dr);
             }
             if (dt.Columns.Count <= 65535) { 
-                mainDataGridView.DataSource = dt;
+                redrawDataTable.DataSource = dt;
                 // 确定窗体的大小
                //  defineFormSize(rowColuArr);
             } else { 
@@ -200,7 +198,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             List<int> intList = new List<int>();
             foreach(string[] strArr1 in rowColuArr) {
                 foreach(string str1 in strArr1) { 
-                   intList.Add( (int)CreateGraphics().MeasureString(str1 , mainDataGridView.Font).Width);
+                   intList.Add( (int)CreateGraphics().MeasureString(str1 , redrawDataTable.Font).Width);
                 }
             }
             return intList.Max()+10;
@@ -216,13 +214,14 @@ namespace UI.ComponentLibrary.FormLibrary {
                 return false;
             }
             if(0.Equals(textBox.TextLength)) { 
-                MessageBox.Show("文本框不能为空");
+                MessageBox.Show("源数据不能为空");
                 return false;
             }
-            if(1.Equals(isCharsOrCharIndex)) { 
+            if(1.Equals(isCharsOrCharIndex)) {
+                
                 // 验证字符输入框
                 if(0.Equals(字符_textB.TextLength) && !制表符_chk.Checked && !分号_chk.Checked
-                    && !冒号_chk.Checked && !空格_chk.Checked) { 
+                    && !冒号_chk.Checked && !空格_chk.Checked && !逗号_chk.Checked && !点_chk.Checked) { 
                     MessageBox.Show("字符文本框不能为空");
                     return false;
                 }
@@ -243,11 +242,11 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         /// <param name="rowColuArr">生成表格说使用的数据</param>
         private void defineFormSize(string[][] rowColuArr){
-            int cellWidth = mainDataGridView.Rows[0].Cells[0].Size.Width;
+            int cellWidth = redrawDataTable.Rows[0].Cells[0].Size.Width;
             // 数据表格在窗体中所占的宽
-            int dataViewW = mainDataGridView.Location.X + mainDataGridView.RowHeadersWidth + (cellWidth * rowColuArr.Max(x=>x.Length));
+            int dataViewW = redrawDataTable.Location.X + redrawDataTable.RowHeadersWidth + (cellWidth * rowColuArr.Max(x=>x.Length));
             // 数据表格在窗体中所占的高
-            int dataViewH = mainDataGridView.Location.Y + colHeadersHeight + (cellDefHeight * rowColuArr.Length);
+            int dataViewH = redrawDataTable.Location.Y + colHeadersHeight + (cellDefHeight * rowColuArr.Length);
             // 判断工作区的宽
             if(dataViewW > 1000) { 
                 Width = MessyUtilsMet.getResolvingpower()[0] - 100;
@@ -300,6 +299,8 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(分号_chk.Checked) separatorList.Add(";");
             if(冒号_chk.Checked) separatorList.Add(":");
             if(空格_chk.Checked) separatorList.Add(" ");
+            if(逗号_chk.Checked) separatorList.Add(",");
+            if(点_chk.Checked) separatorList.Add(".");
             // 判断其他文本框
             string splitChars = 字符_textB.Text;
             if(splitChars.IndexOf("\\,") >= 0) separatorList.Add(",");
@@ -404,7 +405,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(1.Equals(isCharsOrCharIndex)) { 
                 rowColArr = charsSplitMethod();
             }
-            // 判断是否为字符分列方式
+            // 判断是否为字符索引分列方式
             if(2.Equals(isCharsOrCharIndex)) { 
                 rowColArr = charsIndexSplitMethod();
             }
@@ -416,33 +417,32 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 初始化数据表格配置
         /// </summary>
         private void initDataViewConf() {
-            DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(cellDefHeight ,colHeadersHeight, Color.Empty, Color.Empty);
-            dataView.Location = new Point(0,0);
-            dataView.BringToFront();
-            dataView.Size = 数据表格容器.ClientSize;
-            dataView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-            数据表格容器.Controls.Add(dataView);
-            mainDataGridView = dataView;
-            mainDataGridView.MouseMove += (object sender, MouseEventArgs e) =>{
-                SetStatusBarLableVal();
+            RedrawDataTable dataView = new RedrawDataTable();
+            dataView.CellDefaultHeight = cellDefHeight;
+            dataView.ColumnHeadDefaultHeight = colHeadersHeight;
+            dataView.Location = new Point(操作区容器.Location.X, 操作区容器.Bottom+5);
+            dataView.Size = new Size(操作区容器.Width, 选项区容器.Bottom-dataView.Location.Y);
+            dataView.MouseMove += (object sender, MouseEventArgs e) =>{
+                SetStatusBarLableVal((DataGridView)sender);
             };
-            mainDataGridView.RowsAdded += (object sender, DataGridViewRowsAddedEventArgs e) => {
-                SetStatusBarLableVal();
+            dataView.RowsAdded += (object sender, DataGridViewRowsAddedEventArgs e) => {
+                SetStatusBarLableVal((DataGridView)sender);
             };
-            mainDataGridView.ColumnAdded += (object sender, DataGridViewColumnEventArgs e) => {
-                SetStatusBarLableVal();
+            dataView.ColumnAdded += (object sender, DataGridViewColumnEventArgs e) => {
+                SetStatusBarLableVal((DataGridView)sender);
             };
-        }
+            redrawDataTable = dataView;
+            this.Controls.Add(redrawDataTable);
 
+        }
         // 设置状态栏的lable数据
-        private void SetStatusBarLableVal() {
-            if(mainDataGridView != null) { 
-                行数_StatusLabel.Text = "总行数：" + mainDataGridView.RowCount;
-                列数_StatusLabel.Text = "总列数：" + mainDataGridView.ColumnCount;
-                选中行数_StatusLabel.Text = "选中行数：" + mainDataGridView.SelectedRows.Count;
-                选中列数_StatusLabel.Text = "选中列数：" + mainDataGridView.SelectedColumns.Count;
-                选中单元格数_StripStatusLabel.Text = "选中单元格数：" + mainDataGridView.SelectedCells.Count;
+        private void SetStatusBarLableVal(DataGridView dataGrid) {
+            if(dataGrid != null) { 
+                行数_StatusLabel.Text = "总行数：" + dataGrid.RowCount;
+                列数_StatusLabel.Text = "总列数：" + dataGrid.ColumnCount;
+                选中行数_StatusLabel.Text = "选中行数：" + dataGrid.SelectedRows.Count;
+                选中列数_StatusLabel.Text = "选中列数：" + dataGrid.SelectedColumns.Count;
+                选中单元格数_StripStatusLabel.Text = "选中单元格数：" + dataGrid.SelectedCells.Count;
             }
 
         }
@@ -490,13 +490,13 @@ namespace UI.ComponentLibrary.FormLibrary {
                 ExportComBoxValEnum val = ExportComBox.stringToEnum(box.SelectedValue.ToString());
                 switch(val) {
                     case ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL:
-                        DataGridViewUtilMet.exportNewPage(mainDataGridView, excNoHaveTabs);
+                        DataGridViewUtilMet.exportNewPage(redrawDataTable, excNoHaveTabs);
                     break;
                     case ExportComBoxValEnum.EXPORT_THIS_PAGE_VAL:
-                        DataGridViewUtilMet.exportThisPage(mainDataGridView, excNoHaveTabs);
+                        DataGridViewUtilMet.exportThisPage(redrawDataTable, excNoHaveTabs);
                     break;
                     case ExportComBoxValEnum.EXPORT_NOTEBOOK_VAL:
-                        DataGridViewUtilMet.exportNotepad(mainDataGridView, excNoHaveTabs);
+                        DataGridViewUtilMet.exportNotepad(redrawDataTable, excNoHaveTabs);
                     break;
                     case ExportComBoxValEnum.EXPORT_EXCEL_VAL:
                         MessageBox.Show("该功能尚未完成");
@@ -518,12 +518,12 @@ namespace UI.ComponentLibrary.FormLibrary {
         private string getDatatabelSelText(bool isSelectAll) { 
             string tableText = "";
             // 选定的单元格集合
-            DataGridViewSelectedCellCollection selCell = mainDataGridView.SelectedCells;
-            if(isSelectAll) mainDataGridView.SelectAll();
-            tableText = mainDataGridView.GetClipboardContent().GetText();
+            DataGridViewSelectedCellCollection selCell = redrawDataTable.SelectedCells;
+            if(isSelectAll) redrawDataTable.SelectAll();
+            tableText = redrawDataTable.GetClipboardContent().GetText();
             // 还原
             if(isSelectAll) { 
-                mainDataGridView.ClearSelection();
+                redrawDataTable.ClearSelection();
                 foreach(DataGridViewCell cell in selCell) { 
                     cell.Selected = true;
                 }
@@ -533,8 +533,8 @@ namespace UI.ComponentLibrary.FormLibrary {
 
         // 窗体加载事件
         private void SplitOrAddChars_Load(object sender, EventArgs e) {
-            // 设置图标
-            Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.分列,true);
+            // 读取窗体的默认配置
+            formDefConfig();
             // 加载数据表格配置
             initDataViewConf();
             // 判断要操作的字符串
@@ -543,11 +543,17 @@ namespace UI.ComponentLibrary.FormLibrary {
             readTextSetDataView(initRowColuArr(text));
             // 设置导出按钮
             setExportCombox();
-            // 调节窗口位置
-            // middleForm();
-            Location = FormUtislMet.middleForm(this);
         }
-
+        /// <summary>
+        /// 窗体默认配置
+        /// </summary>
+        private void formDefConfig() { 
+            // 设置图标
+            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.分割,true);
+            this.AutoScaleMode = AutoScaleMode.None;
+            // 调节窗口位置
+            this.Location = FormUtislMet.middleForm(this);
+        }
         // 单选按钮选项改变事件
         private void Radio_CheckedChanged(object sender, EventArgs e) {
             RadioButton radBut = (RadioButton)sender;
@@ -560,6 +566,8 @@ namespace UI.ComponentLibrary.FormLibrary {
                 分号_chk.Enabled = !radBut.Checked;
                 冒号_chk.Enabled = !radBut.Checked;
                 空格_chk.Enabled = !radBut.Checked;
+                逗号_chk.Enabled = !radBut.Checked;
+                点_chk.Enabled = !radBut.Checked;
                 字符_textB.Enabled = !radBut.Checked;
                 不区分大小写_chk.Enabled = !radBut.Checked;
                 字符个数_textB.Enabled = radBut.Checked;
@@ -592,11 +600,11 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 分列按钮点击事件
         private void 分列_but_Click(object sender, EventArgs e) {
             // 赋值要操作的文本框
-            this.textBox = TextBoxCache.UpOperatingTextBox;
+            textBox = ControlsUtilsMet.getSelectPageTextBox();
             // 清空缓存
-            DataViewCache.removeCacheFactory(mainDataGridView.Name);
+            DataViewCache.removeCacheFactory(redrawDataTable.Name);
             // 执行验证
-            if( !isCheck()) return;
+            if(!isCheck()) return;
             // 判断要操作的字符串
             isOperatingText();
             // 执行分列

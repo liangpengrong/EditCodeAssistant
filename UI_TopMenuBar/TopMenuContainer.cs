@@ -141,8 +141,8 @@ namespace UI_TopMenuBar
                     }
                 }
             }
-            catch (Exception ee) {
-                MessageBox.Show(ee.ToString());
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
             }
         }
         // 判断子项是否选中
@@ -190,7 +190,7 @@ namespace UI_TopMenuBar
             toolImageDic.Add(this.转到行Item.Name, Core.ImageResource.转到行);
             toolImageDic.Add(this.统计字符Item.Name, Core.ImageResource.统计);
 
-            toolImageDic.Add(this.分列Item.Name, Core.ImageResource.分列);
+            toolImageDic.Add(this.字符串工具Item.Name, Core.ImageResource.字符串);
             toolImageDic.Add(this.代码工具Item.Name, Core.ImageResource.代码);
             toolImageDic.Add(this.首选项Item.Name, Core.ImageResource.设置);
 
@@ -229,9 +229,9 @@ namespace UI_TopMenuBar
             toolImageDic.Add(this.统计字符Item, TopMenuDataLib.ItemDataLib.统计字符_ITEM);
             toolImageDic.Add(this.时间日期Item, TopMenuDataLib.ItemDataLib.时间日期_ITEM);
             toolImageDic.Add(this.工具Item, TopMenuDataLib.ItemDataLib.工具_ITEM);
-            toolImageDic.Add(this.分列Item, TopMenuDataLib.ItemDataLib.分列_ITEM);
-            toolImageDic.Add(this.添加字符Item, TopMenuDataLib.ItemDataLib.添加字符_ITEM);
-            toolImageDic.Add(this.删除字符Item, TopMenuDataLib.ItemDataLib.删除字符_ITEM);
+            toolImageDic.Add(this.字符串工具_分割字符_Item, TopMenuDataLib.ItemDataLib.字符串工具_分割字符_ITEM);
+            toolImageDic.Add(this.字符串工具_添加字符_Item, TopMenuDataLib.ItemDataLib.字符串工具_添加字符_ITEM);
+            toolImageDic.Add(this.字符串工具_删除字符_Item, TopMenuDataLib.ItemDataLib.字符串工具_删除字符_ITEM);
             toolImageDic.Add(this.代码工具Item, TopMenuDataLib.ItemDataLib.代码工具_ITEM);
             toolImageDic.Add(this.代码工具_java_Item, TopMenuDataLib.ItemDataLib.代码工具_java_ITEM);
             toolImageDic.Add(this.代码工具_java_生成JAVA实体类, TopMenuDataLib.ItemDataLib.代码工具_java_生成JAVA实体类_ITEM);
@@ -352,13 +352,13 @@ namespace UI_TopMenuBar
             toolBindingDic.Add(this.自动换行Item.Name, new methodDelegate(TopMenuEventMet.isAutoLine));
             toolBindingDic.Add(this.状态栏Item.Name, new methodDelegate(TopMenuEventMet.isStartBarDisplay));
 
-            toolBindingDic.Add(this.分列Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
+            toolBindingDic.Add(this.字符串工具_分割字符_Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 SplitCharsForm ff = SplitCharsForm.initSingleForm(true);
                 ff.Show();
                 //SplitCharsForm ff = SplitCharsForm.initPrototypeForm(false);
                 //MainTabContent.addControlsToPage(ff, true, true);
                 return null;}));
-            toolBindingDic.Add(this.添加字符Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
+            toolBindingDic.Add(this.字符串工具_添加字符_Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 AddCharsForm ff = AddCharsForm.initSingleForm(true);
                 ff.Show();
                 //AddCharsForm ff = AddCharsForm.initPrototypeForm(false);

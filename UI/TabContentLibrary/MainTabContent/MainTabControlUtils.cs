@@ -189,21 +189,61 @@ namespace UI.TabContentLibrary.MainTabContent {
             }
         }
         /// <summary>
+        /// 将标签转化为窗体
+        /// </summary>
+        /// <param name="tab">标签容器</param>
+        /// <param name="index">索引</param>
+        /// <param name="isRestore">关闭窗体是否还原标签</param>
+        public static void pageToForm(TabControl tab, int index, bool isRestore) { 
+            if(tab == null) return;
+            TabPage page = tab.TabPages[index];
+            Dictionary<string, object> tagDuc = new Dictionary<string, object>();
+            Control[] conArr = new Control[page.Controls.Count];
+            Form form = new Form();
+            form.Show();
+            form.Name = DateTime.Now.Ticks.ToString()+"_Form";
+            form.Size = page.Size;
+            form.Icon = tab.FindForm().Icon;
+            form.Location = tab.FindForm().Location;
+            form.Text = tab.FindForm().Text+"_"+page.Text;
+            tagDuc.Add("page", page);
+            tagDuc.Add("index", index);
+            form.Tag = tagDuc;
+            // 窗口关闭后还原到tab容器中
+            if(isRestore) { 
+                form.FormClosing += (object sender, FormClosingEventArgs e)=>{
+                    object objTag = form.Tag;
+                    if(objTag != null && objTag is Dictionary<string, object>) { 
+                        Dictionary<string, object> dic = (Dictionary<string, object>)objTag;
+                        TabPage pp = (TabPage)dic["page"];
+                        int i = (int)dic["index"];
+                        form.Controls.CopyTo(conArr, 0);
+                        pp.Controls.AddRange(conArr);
+                        tab.TabPages.Insert(i, pp);
+                    }
+                };
+            }
+            page.Controls.CopyTo(conArr, 0);
+            form.Controls.AddRange(conArr);
+            tab.TabPages.Remove(page);
+            form.Activate();
+        }
+
+        /// <summary>
         /// 添加文本框到标签页的方法
         /// </summary>
         public static void addMainTextToPage(TabPage page, TextBox t) {
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
-            // 获得右键菜单
-            ContextMenuStrip textRightMenu = TextRightMenu.getSingleTextRightMenu();
             // 判断要添加的标签是否为null，为null则新建一个标签并添加
+            // t.Location = new Point(0, 2);
+            t.Size = new Size(page.ClientSize.Width - t.Location.X 
+                , page.ClientSize.Height - t.Location.Y);
             if (page == null) { 
                 MainTabContent.addControlsToPage(t, true, true);
             } else { 
                 page.Controls.Add(t);
-                t.Size = new Size(page.ClientSize.Width - t.Location.X, page.ClientSize.Height - t.Location.Y);
+                t.BringToFront();
             }
-            t.Location = new Point(0, 2);
-            t.ContextMenuStrip = textRightMenu;
             ControlsUtilsMet.timersMet(200, (object sender, ElapsedEventArgs e)=>{
                 if(t != null) {
                     if(t.InvokeRequired) { 

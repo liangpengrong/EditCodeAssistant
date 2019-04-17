@@ -339,19 +339,6 @@ namespace Core.StaticMethod.Method.Utils
             return tip;
         }
         /// <summary>
-        /// 异步并延迟执行基于某个窗体的无返回值的方法
-        /// </summary>
-        /// <param name="con">指定控件</param>
-        /// <param name="time">毫秒</param>
-        /// <param name="e">执行事件</param>
-        public static void asynchronousMet(Form form, int time , EventHandler e) {
-            asynchronousMet(time, new ElapsedEventHandler(delegate{
-                if(form.InvokeRequired) { 
-                    form.Invoke(e);
-                }
-            }));
-        }
-        /// <summary>
         /// 异步并延迟执行基于某个控件的无返回值的方法
         /// </summary>
         /// <param name="con">指定控件</param>

@@ -51,9 +51,6 @@
             this.统计字符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.时间日期Item = new System.Windows.Forms.ToolStripMenuItem();
             this.工具Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.分列Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.添加字符Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.删除字符Item = new System.Windows.Forms.ToolStripMenuItem();
             this.代码工具Item = new System.Windows.Forms.ToolStripMenuItem();
             this.代码工具_java_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.代码工具_java_生成JAVA实体类 = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +63,10 @@
             this.字体_恢复默认Item = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助Item = new System.Windows.Forms.ToolStripMenuItem();
             this.关于Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字符串工具Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字符串工具_分割字符_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字符串工具_添加字符_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.字符串工具_删除字符_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -248,32 +249,12 @@
             // 工具Item
             // 
             this.工具Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.分列Item,
-            this.添加字符Item,
-            this.删除字符Item,
+            this.字符串工具Item,
             this.代码工具Item,
             this.首选项Item});
             this.工具Item.Name = "工具Item";
             this.工具Item.Size = new System.Drawing.Size(44, 21);
             this.工具Item.Text = "工具";
-            // 
-            // 分列Item
-            // 
-            this.分列Item.Name = "分列Item";
-            this.分列Item.Size = new System.Drawing.Size(180, 22);
-            this.分列Item.Text = "分列";
-            // 
-            // 添加字符Item
-            // 
-            this.添加字符Item.Name = "添加字符Item";
-            this.添加字符Item.Size = new System.Drawing.Size(180, 22);
-            this.添加字符Item.Text = "添加字符";
-            // 
-            // 删除字符Item
-            // 
-            this.删除字符Item.Name = "删除字符Item";
-            this.删除字符Item.Size = new System.Drawing.Size(180, 22);
-            this.删除字符Item.Text = "删除字符";
             // 
             // 代码工具Item
             // 
@@ -288,13 +269,13 @@
             this.代码工具_java_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.代码工具_java_生成JAVA实体类});
             this.代码工具_java_Item.Name = "代码工具_java_Item";
-            this.代码工具_java_Item.Size = new System.Drawing.Size(180, 22);
+            this.代码工具_java_Item.Size = new System.Drawing.Size(105, 22);
             this.代码工具_java_Item.Text = "JAVA";
             // 
             // 代码工具_java_生成JAVA实体类
             // 
             this.代码工具_java_生成JAVA实体类.Name = "代码工具_java_生成JAVA实体类";
-            this.代码工具_java_生成JAVA实体类.Size = new System.Drawing.Size(180, 22);
+            this.代码工具_java_生成JAVA实体类.Size = new System.Drawing.Size(165, 22);
             this.代码工具_java_生成JAVA实体类.Text = "生成JAVA实体类";
             // 
             // 首选项Item
@@ -366,6 +347,34 @@
             this.关于Item.Size = new System.Drawing.Size(106, 22);
             this.关于Item.Text = "关于..";
             // 
+            // 字符串工具Item
+            // 
+            this.字符串工具Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.字符串工具_分割字符_Item,
+            this.字符串工具_添加字符_Item,
+            this.字符串工具_删除字符_Item});
+            this.字符串工具Item.Name = "字符串工具Item";
+            this.字符串工具Item.Size = new System.Drawing.Size(180, 22);
+            this.字符串工具Item.Text = "字符串工具";
+            // 
+            // 字符串工具_分割字符_Item
+            // 
+            this.字符串工具_分割字符_Item.Name = "字符串工具_分割字符_Item";
+            this.字符串工具_分割字符_Item.Size = new System.Drawing.Size(180, 22);
+            this.字符串工具_分割字符_Item.Text = "分割字符";
+            // 
+            // 字符串工具_添加字符_Item
+            // 
+            this.字符串工具_添加字符_Item.Name = "字符串工具_添加字符_Item";
+            this.字符串工具_添加字符_Item.Size = new System.Drawing.Size(180, 22);
+            this.字符串工具_添加字符_Item.Text = "添加字符";
+            // 
+            // 字符串工具_删除字符_Item
+            // 
+            this.字符串工具_删除字符_Item.Name = "字符串工具_删除字符_Item";
+            this.字符串工具_删除字符_Item.Size = new System.Drawing.Size(180, 22);
+            this.字符串工具_删除字符_Item.Text = "删除字符";
+            // 
             // TopMenuContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -395,7 +404,6 @@
         public System.Windows.Forms.ToolStripMenuItem 帮助Item;
         public System.Windows.Forms.ToolStripMenuItem 关于Item;
         public System.Windows.Forms.MenuStrip topMenuStrip;
-        public System.Windows.Forms.ToolStripMenuItem 分列Item;
         public System.Windows.Forms.ToolStripMenuItem 统计字符Item;
         public System.Windows.Forms.ToolStripMenuItem 查看Item;
         public System.Windows.Forms.ToolStripMenuItem 自动换行Item;
@@ -412,12 +420,14 @@
         public System.Windows.Forms.ToolStripMenuItem 用记事本打开Item;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem 退出Item;
-        private System.Windows.Forms.ToolStripMenuItem 添加字符Item;
-        private System.Windows.Forms.ToolStripMenuItem 删除字符Item;
         private System.Windows.Forms.ToolStripMenuItem 代码工具Item;
         private System.Windows.Forms.ToolStripMenuItem 代码工具_java_Item;
         private System.Windows.Forms.ToolStripMenuItem 代码工具_java_生成JAVA实体类;
         private System.Windows.Forms.ToolStripMenuItem 字体_设置字体Item;
         private System.Windows.Forms.ToolStripMenuItem 字体_恢复默认Item;
+        private System.Windows.Forms.ToolStripMenuItem 字符串工具Item;
+        private System.Windows.Forms.ToolStripMenuItem 字符串工具_分割字符_Item;
+        private System.Windows.Forms.ToolStripMenuItem 字符串工具_添加字符_Item;
+        private System.Windows.Forms.ToolStripMenuItem 字符串工具_删除字符_Item;
     }
 }

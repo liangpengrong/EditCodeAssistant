@@ -9,7 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace UI.ComponentLibrary.ControlLibrary {
-    public class AddPageButton {
+    public class RedrawAddPageBut : Panel{
+        private RedrawAddPageBut() { 
+            initMainAddPageButton();
+        }
         // 鼠标是否进入
         private bool mouse = false;
         // 鼠标进入颜色
@@ -20,16 +23,15 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 初始化添加标签按钮
         /// </summary>
         /// <returns></returns>
-        public Panel initMainAddPageButton() { 
-            Panel but = new Panel();
+        public void initMainAddPageButton() { 
             // 初始背景色
             Color backColor = Color.Red;
-            but.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_PAGE_BUTTON);
-            but.TabStop = false;
-            but.Size = new Size(16,16);
-            but.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_PAGE_BUTTON);
+            this.TabStop = false;
+            this.Size = new Size(16,16);
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Top;
             // but.BackColor = backColor;
-            but.Paint += (object sender, PaintEventArgs e) =>{ 
+            this.Paint += (object sender, PaintEventArgs e) =>{ 
                 Panel panel = (Panel)sender;
                 // 边距
                 int margin = 2;
@@ -54,26 +56,25 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 e.Graphics.DrawLine(pen, x2, margin, x2, margin+width);
                 // 重绘边框
             };
-            but.MouseEnter += (object sender, EventArgs e)=>{
+            this.MouseEnter += (object sender, EventArgs e)=>{
                 mouse = true;
-                but.Refresh();
+                this.Refresh();
             };
-            but.MouseLeave += (object sender, EventArgs e)=>{
+            this.MouseLeave += (object sender, EventArgs e)=>{
                 mouse = false;
-                but.Refresh();
+                this.Refresh();
             };
-            return but;
         }
 
         /// <summary>
         /// 初始化单例模式下的添加标签按钮
         /// </summary>
         /// <returns></returns>
-        public static Panel initSingleMainAddPageButton() { 
+        public static Panel initSingleAddPageButton() { 
             Panel panel = null;
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.ADD_PAGE_BUTTON);
             if(con == null || !(con is Panel)) {
-                panel = new AddPageButton().initMainAddPageButton();
+                panel = new RedrawAddPageBut();
                 ControlCacheFactory.addSingletonCache(panel);
             } else { 
                 panel = (Panel)con;

@@ -8,8 +8,8 @@
     <ProjectGuid>{0CF9D020-AF37-4FA1-924D-4831C128650C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CharsToolset</RootNamespace>
-    <AssemblyName>CharsToolset</AssemblyName>
+    <RootNamespace>EditCodeAssistant</RootNamespace>
+    <AssemblyName>EditCodeAssistant</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -52,7 +52,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>CharsToolset.Program</StartupObject>
+    <StartupObject>EditCodeAssistant.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\编辑器适配.ico</ApplicationIcon>

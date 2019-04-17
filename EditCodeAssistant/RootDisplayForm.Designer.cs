@@ -1,4 +1,4 @@
-﻿namespace CharsToolset
+﻿namespace EditCodeAssistant
 {
     partial class RootDisplayForm
     {

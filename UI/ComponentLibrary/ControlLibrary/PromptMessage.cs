@@ -53,7 +53,6 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 }
             };
             return but;
-            
         }
     }
 }

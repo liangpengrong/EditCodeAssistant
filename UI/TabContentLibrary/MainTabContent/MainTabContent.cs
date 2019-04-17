@@ -2,7 +2,6 @@
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using Core_Config.ConfigData.ControlConfig;
-using ProgramTextBoxLibrary;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,7 +18,7 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// 初始化主Tab容器
         /// </summary>
         /// <returns>该Tab容器</returns>
-        public static TabControl initMainTab() {
+        public static RedrawTabControl initMainTab() {
             // 获取单例模式的主Tab容器
             RedrawTabControl tab = null;
             // 获取主容器
@@ -31,7 +30,7 @@ namespace UI.TabContentLibrary.MainTabContent {
                 // Name
                 tab.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT);
                 // 字体
-                tab.Font = new Font("Microsoft YaHei Mono", 10, FontStyle.Regular);
+                tab.Font = new Font("Microsoft YaHei", 10, FontStyle.Regular);
                 // 标签大小
                 tab.ItemSize = new Size(TabControlDataLib.DEF_ITEM_WIDTH, TabControlDataLib.DEF_ITEM_HEIGHT);
                 // 显示关闭按钮
@@ -40,14 +39,14 @@ namespace UI.TabContentLibrary.MainTabContent {
                 tab.IsClickMiddleDelPage = MainTabControlConfig.IS_CLICK_MIDDLE_DEL_PAGE;
                 // 删除按钮时是否询问
                 tab.IsDelPageAsk =  MainTabControlConfig.IS_DEL_ASK;
-                tab.Padding = new Point(0,0);
+                tab.Padding = new Padding(0,20,0,0);
                 tab.Margin = new Padding(0,0,0,0);
                 // 显示添加按钮
                 tab.showAddPageButtton(true, true, delegate(){
                     TabPage page = initMainTabPage();
-                    MainTabControlUtils.addMainTextToPage(page
-                        , MainTextBoxTemplate.getMainTextBox());
                     tab.TabPages.Add(page);
+                    RedrawTextBox t = new RedrawTextBox();
+                    MainTabControlUtils.addMainTextToPage(page , t);
                     tab.SelectedTab = page;
                 });
                 // 设置不被焦点选中
@@ -75,45 +74,9 @@ namespace UI.TabContentLibrary.MainTabContent {
         /// <param name="c">传入的确定大小用的控件</param>
         /// <param name="pageText">标签上显示的文本</param>
         /// <returns></returns>
-        public static TabPage initMainTabPage() {
+        public static RedrawTabPage initMainTabPage() {
             // 实例化一个Page
-            TabPage page = new TabPage();
-            int index = 1;
-            // 获取主标签容器
-            Control mainTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
-            if(mainTab != null && mainTab is TabControl) { 
-                index = ((TabControl)mainTab).TabCount+1;
-            }
-            // 设置Page的背景颜色为白色
-            string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
-            page.BackColor = Color.White;
-            page.Name = TabControlDataLib.PAGE_NAME_DEF + timeStr;
-            page.Text = TabControlDataLib.PAGE_TEXT;
-            page.UseVisualStyleBackColor = true;
-            page.Padding = new Padding(0,0,0,0);
-            page.Margin = new Padding(0,0,0,0);
-            page.ToolTipText = page.Text;
-            // 设置Page的大小
-            page.Size = new Size(1, 1);
-            // 进入控件事件
-            page.Enter += (object sender, EventArgs e) =>{ 
-                TabPage pp = (TabPage)sender;
-                ControlsUtilsMet.timersMet(200, (object sender1, ElapsedEventArgs e1)=>{
-                    Form f = pp.FindForm();
-                    if(f != null) { 
-                        if(f.InvokeRequired) { 
-                            f.Invoke(new EventHandler(delegate {
-                                if(pp.Controls.Count > 0) { 
-                                    Control con = pp.Controls[pp.Controls.Count-1];
-                                    f.ActiveControl = con;
-                                    ((System.Timers.Timer)sender1).Dispose();
-                                }
-                            }));
-                        }
-                        }
-                    
-                });
-            };
+            RedrawTabPage page = new RedrawTabPage();
             return page;
         }
 
@@ -159,8 +122,7 @@ namespace UI.TabContentLibrary.MainTabContent {
             }
             tabPage.Text = form.Text;
             tabPage.ToolTipText = form.Text;
-            // 设置窗体属性
-            form.Location = new Point(0, 2);
+            
             if(isSynSize) form.ClientSize = new Size(tabPage.Size.Width, tabPage.Size.Height-2);
             if(isAnchor) form.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
             form.FormBorderStyle = FormBorderStyle.None;
@@ -169,8 +131,11 @@ namespace UI.TabContentLibrary.MainTabContent {
             form.Parent = tabPage;
             mainTab.FindForm().ActiveControl = form;
             mainTab.SelectedTab = tabPage;
-            
+
             form.BringToFront();
+            form.Show();
+            // 设置窗体属性
+            form.Location = new Point(0, 2);
         }
         /// <summary>
         /// 获取新标签的文本框

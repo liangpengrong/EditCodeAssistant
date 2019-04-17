@@ -21,8 +21,17 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="lParam">第二个消息参数</param>
         /// <returns></returns>
         [DllImport("User32.DLL")]
-        public static extern int SendMessage(IntPtr hWnd,
-            uint Msg, int wParam, string lParam);
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, string lParam);
+        /// <summary>
+        /// 该函数将指定的消息发送到一个或多个窗口。此函数为指定的窗口调用窗口程序，直到窗口程序处理完消息再返回。而和函数PostMessage不同，PostMessage是将一个消息寄送到一个线程的消息队列后就立即返回。
+        /// </summary>
+        [DllImport("user32.dll ", EntryPoint = "SendMessage")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        /// <summary>
+        /// 向一个指定的窗口句柄的窗口发送消息
+        /// </summary>
+        [DllImport("user32.dll", EntryPoint = "SendMessageA")]
+        public static extern int SendMessage(IntPtr hwnd, uint wMsg, IntPtr wParam, ref Rectangle lParam);
         /// <summary>
         /// 在窗口列表中寻找与指定条件相符的第一个子窗口 。
         /// 该函数获得一个窗口的句柄，该窗口的类名和窗口名与给定的字符串相匹配。这个函数查找子窗口，从排在给定的子窗口后面的下一个子窗口开始。在查找时不区分大小写。
@@ -150,17 +159,6 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool FlashWindow(IntPtr handle, bool invert);
-
-        /// <summary>
-        /// 该函数将指定的消息发送到一个或多个窗口。此函数为指定的窗口调用窗口程序，直到窗口程序处理完消息再返回。而和函数PostMessage不同，PostMessage是将一个消息寄送到一个线程的消息队列后就立即返回。
-        /// </summary>
-        /// <param name="hWnd">指定要接收消息的窗口的句柄。如果此参数为HWND_BROADCAST，则消息将被发送到系统中所有顶层窗口，包括无效或不可见的非自身拥有的窗口、被覆盖的窗口和弹出式窗口，但消息不被发送到子窗口</param>
-        /// <param name="Msg">指定被发送的消息</param>
-        /// <param name="wParam">指定附加的消息特定信息</param>
-        /// <param name="lParam">指定附加的消息特定信息</param>
-        /// <returns></returns>
-        [DllImport("user32.dll ", EntryPoint = "SendMessage")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 模拟鼠标动作

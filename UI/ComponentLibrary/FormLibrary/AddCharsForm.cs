@@ -3,7 +3,6 @@ using Core.CacheLibrary.FormCache;
 using Core.CacheLibrary.OperateCache.TextBoxOperateCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
-using ProgramTextBoxLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +21,7 @@ namespace UI.ComponentLibrary.FormLibrary {
     /// </summary>
     public partial class AddCharsForm : Form {
         // 显示结果的文本框
-        private TextBox resultTextBox;
+        private RedrawTextBox resultTextBox;
         
         // 要操作的字符串
         private string text_val = "";
@@ -89,7 +88,8 @@ namespace UI.ComponentLibrary.FormLibrary {
         private void initResultTextBox() { 
             Control parent = 普通_操作容器.Parent;
             if(parent != null) { 
-                resultTextBox = CacheTextBoxTemplate.getCacheTextBox(); 
+                resultTextBox = new RedrawTextBox();
+                resultTextBox.IsEnabledStatusBar = false;
                 resultTextBox.Location = new Point(1, 普通_操作容器.Location.Y + 普通_操作容器.Height);
                 resultTextBox.Size = new Size(parent.ClientSize.Width-2, (parent.Height-普通_操作容器.Height));
                 resultTextBox.ReadOnly = false;
@@ -287,12 +287,23 @@ namespace UI.ComponentLibrary.FormLibrary {
 
         // 窗体加载事件
         private void AddCharsForm_Load(object sender, EventArgs e) {
+            // 读取窗体默认配置
+            formDefConfig();
             // 初始化消息提示控件
             // initToolTip();
             // 初始化导出按钮
             initExportCombox();
             // 行首文本框获取焦点
             普通_行首text.Focus();
+        }
+        /// <summary>
+        /// 窗体默认配置
+        /// </summary>
+        private void formDefConfig() { 
+            // 设置图标
+            this.AutoScaleMode = AutoScaleMode.None;
+            // 调节窗口位置
+            this.Location = FormUtislMet.middleForm(this);
         }
         // 操作区容器重绘事件
         private void 普通_操作容器_Paint(object sender, PaintEventArgs e) {

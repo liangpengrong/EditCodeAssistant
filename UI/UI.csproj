@@ -72,12 +72,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentLibrary\ControlLibrary\AddPageButton.cs" />
     <Compile Include="ComponentLibrary\ControlLibrary\DataTableTemplate.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\DataTableTemplate.Designer.cs">
       <DependentUpon>DataTableTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RedrawAddPageBut.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\DropdownBut.cs">
       <SubType>Component</SubType>
@@ -91,6 +93,9 @@
     <Compile Include="ComponentLibrary\ControlLibrary\ExportComBox.Designer.cs">
       <DependentUpon>ExportComBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RedrawDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\RedrawTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -99,6 +104,9 @@
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\PromptMessage.Designer.cs">
       <DependentUpon>PromptMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLibrary\ControlLibrary\RedrawTabPage.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentLibrary\ControlLibrary\RedrawTextBox.cs">
       <SubType>Component</SubType>
@@ -171,21 +179,15 @@
     <Compile Include="ComponentLibrary\FormLibrary\ThereofForm.Designer.cs">
       <DependentUpon>ThereofForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\CacheTextBoxBind.cs" />
-    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\MainTextBoxBind.cs" />
-    <Compile Include="ControlEventBindLibrary\TextBoxEventBind\TextBoxBindStatusBarEvent.cs" />
     <Compile Include="ControlEventLibrary\PublicEventMet.cs" />
     <Compile Include="ControlEventLibrary\StatusBarEvent\TextStatusBarEvent\TextStatusBarEventMet.cs" />
     <Compile Include="ControlEventLibrary\TextBoxEvent\MainTextBoxEventMet.cs" />
-    <Compile Include="ControlEventLibrary\TextBoxEvent\TextBoxEventTypeEnum.cs" />
     <Compile Include="ControlRedraw\RightStripRenderer.cs" />
     <Compile Include="ControlRedraw\TopMenuRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusBarLibrary\TextStatusBar.cs" />
     <Compile Include="TabContentLibrary\MainTabContent\MainTabContent.cs" />
     <Compile Include="TabContentLibrary\MainTabContent\MainTabControlUtils.cs" />
-    <Compile Include="TextBoxLibrary\CacheTextBoxTemplate.cs" />
-    <Compile Include="TextBoxLibrary\MainTextBoxTemplate.cs" />
     <Compile Include="ToolStripContainerLibrary\MainToolStripContainer.cs" />
     <EmbeddedResource Include="ComponentLibrary\ControlLibrary\DataTableTemplate.resx">
       <DependentUpon>DataTableTemplate.cs</DependentUpon>
@@ -264,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ComponentLibrary\FormMethod\" />
+    <Folder Include="ControlEventBindLibrary\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\警告.png" />

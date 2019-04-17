@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
 using Core_Config.ConfigData.ControlConfig;
@@ -41,6 +42,33 @@ namespace UI.ControlEventLibrary.StatusBarEvent.TextStatusBarEvent
             } else { 
                 MessageBox.Show("无法获取状态栏");    
             }
+            return null;
+        }
+        /// <summary>
+        /// 设置状态栏的编码
+        /// </summary>
+        /// <param name="data"></param>
+        public static object setToolSatrtEcoding(Dictionary<Type, object> data) {
+            // 获取文本框
+            TextBox t = (TextBox)data[typeof(TextBox)];
+            // 开辟新线程执行方法
+            ControlsUtilsMet.asynchronousMet(t,300, delegate{ 
+                Dictionary<string, object> tag = TextBoxUtilsMet.getDicTextTag(t);
+                Encoding ecoding = TextBoxDataLibcs.TEXTBOX_ECODING_DEF;
+                // 获取文本框中Tag中存的编码
+                if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING)) {
+                    ecoding = (Encoding)TextBoxUtilsMet.getDicTextTag(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
+                }
+                // 全局单例控件工厂
+                Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
+                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START))) { 
+                    // 状态栏
+                    ToolStrip toolStrip = (ToolStrip)single[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)];
+                    // 获取编码Item
+                    ToolStripItem labEcoding = toolStrip.Items[StrutsStripDataLib.ItemName.编码];
+                    labEcoding.Text = ecoding.BodyName.ToUpper();
+                }
+            });
             return null;
         }
         /// <summary>

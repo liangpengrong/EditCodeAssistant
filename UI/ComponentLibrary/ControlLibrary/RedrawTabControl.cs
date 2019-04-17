@@ -16,13 +16,13 @@ using UI.TabContentLibrary.MainTabContent;
 namespace UI.ComponentLibrary.ControlLibrary {
     public class RedrawTabControl : TabControl{
         // 添加标签的按钮
-        public Control AddPageBut { get => AddPageButton.initSingleMainAddPageButton();}
+        public Control AddPageBut { get => RedrawAddPageBut.initSingleAddPageButton();}
         // 添加标签按钮的代理对象
         public delegate void AddPageButInvoker();
         // 添加标签按钮的实际代理对象
         private AddPageButInvoker addPageButInvoker = null;
-        
-
+        // 判断是否已经成功将标签转化为窗体
+        private bool isPageSuccessToForm = false;
         // 删除按钮的大小
         private Size delPageButSize = new Size(8,8);
 
@@ -31,10 +31,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
 
         // 取消标签的选定
         private bool cancelSelectPage = false;
+
+        public new Padding Padding { get; set; } = new Padding(0,0,0,0);
         /// <summary>
         /// 当前鼠标下的索引
         /// </summary>
-        public int MousePage { get; private set; } = 0;
+        public int MousePage { get; private set; } = -1;
         /// <summary>
         /// 当前鼠标下的位置
         /// </summary>
@@ -59,7 +61,10 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 是否显示删除标签提示
         /// </summary>
         public bool IsDelPageAsk { get; set ; } = false;
-
+        /// <summary>
+        /// 标签是否可以转化为独立的窗口
+        /// </summary>
+        public bool IsPageToAbsoluteForm { get; set ; } = true;
 
         public RedrawTabControl() { 
              SetStyle(  
@@ -80,9 +85,6 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 return new Rectangle(rect.Left - 2, rect.Top +0, rect.Width + 2, rect.Height + 1);
             }
         }
-
-        
-
         // 标签背景色
         private Color page_back_color = ColorTranslator.FromHtml("#007ACC");
         // 标签选中背景色
@@ -105,7 +107,6 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Graphics g = e.Graphics;
             //设置高质量,低速度呈现平滑程度   
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-            
             // 重绘选项卡
             for (int i = 0; i < tabc_draw.TabCount; i++) {
                 // 当前处理标签
@@ -117,8 +118,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
                     // 选中样式
                     DrawSelectPage(g, tabc_draw, i);
                 } else {
-                    if (i == MousePage) { 
-                        // 鼠标当前标签样式
+                    if (i == MousePage && MouseButtons.None.Equals(MouseClickButtons)) { 
+                        // 鼠标移入标签样式
                         DrawMouseSelectPage(g, tabc_draw, MousePage);
                     } else { 
                         // 未选中样式
@@ -141,18 +142,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 当前鼠标下的标签索引
             MousePage = getMouseLocPage(this, e.Location);
             // 判断当前鼠标下的删除标签按钮样式
-            if (IsShowDelPageBut) { 
-                int delIndex = getMouseDelPageIndex();
-                if(delIndex >= 0) { 
-                    PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
-                } else { 
-                    delIndex = getMouseLocPage(this, e.Location);
-                    if(delIndex >= 0) PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
-                }
-            }
-            
+            diIsDelPageMouseStyle();
+            // 判断标签是否要转化为独立的窗口
+            // doIsPageToForm();
             base.OnMouseMove(e);
         }
+        
         // 控件启用事件
         protected override void OnMouseEnter(EventArgs e) {
             base.OnMouseEnter(e);
@@ -164,9 +159,14 @@ namespace UI.ComponentLibrary.ControlLibrary {
             MousePagePoint = Point.Empty;
             base.OnMouseLeave(e);
         }
+        // 鼠标按下事件
+        protected override void OnMouseDown(MouseEventArgs e) {
+            isPageSuccessToForm = false;
+            MouseClickButtons = e.Button;
+            base.OnMouseDown(e);
+        }
         // 鼠标点击事件
         protected override void OnMouseClick(MouseEventArgs e) {
-            MouseClickButtons = e.Button;
             // 判断是否显示移除标签对话框
             doIsDelPage(e.Button);
             base.OnMouseClick(e);
@@ -217,6 +217,22 @@ namespace UI.ComponentLibrary.ControlLibrary {
             
             base.OnControlRemoved(e);
         }
+        /// <summary>
+        /// 判断标签是否要转化为独立的窗口
+        /// </summary>
+        private void doIsPageToForm() {
+            // 已设置可以转化为独立的窗口 并且 一直按下了鼠标左键 
+            TabPage selPage = this.SelectedTab;
+            if (IsPageToAbsoluteForm && !isPageSuccessToForm 
+                && MouseButtons.Left.Equals(MouseClickButtons) && selPage != null) {
+                Rectangle rectangle = this.GetTabRect(this.SelectedIndex);
+                int y = MousePagePoint.Y;
+                if (y < -10 || y > rectangle.Height + 10) { 
+                    MainTabControlUtils.pageToForm(this, this.SelectedIndex, true);
+                    isPageSuccessToForm = true;
+                }
+            }
+        }
         // 判断是否要关闭标签
         private void doIsDelPage(MouseButtons mouse) { 
             if (mouse.Equals(MouseButtons.Left)) {
@@ -242,7 +258,20 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }
             return retBool;
         }
-
+        /// <summary>
+        /// 判断当前鼠标下的删除标签按钮样式
+        /// </summary>
+        private void diIsDelPageMouseStyle() { 
+            if (IsShowDelPageBut) { 
+                int delIndex = getMouseDelPageIndex();
+                if(delIndex >= 0) { 
+                    PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
+                } else { 
+                    delIndex = getMouseLocPage(this, MousePagePoint);
+                    if(delIndex >= 0) PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
+                }
+            }
+        }
         // 判断删除标签后的显示模式
         private void delPageIsPageMode(TabPage page) { 
             int selIndex = this.SelectedIndex;
@@ -357,7 +386,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             g.FillRectangle(backbrush, backrect);
             // 不为0 且不为选中标签 且不为当前鼠标下的标签 且不为当前鼠标下的标签的后一个标签
             if(index != tab.SelectedIndex && index != tab.SelectedIndex -1
-                && index != MousePage && index != MousePage-1) { 
+                && ((index != MousePage && index != MousePage-1) || (!MouseButtons.None.Equals(MouseClickButtons))
+                )) { 
                 // 绘制标签边框
                 ControlsUtilsMet.setControlBorderStyle(g, offsetBackrect, ButtonBorderStyle.Solid
                 , 1, 1, 1, 1, page_nosel_color, page_nosel_color, bordercolor, page_nosel_color);
@@ -379,6 +409,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             int y1 = (backrect.Bottom-height)/2+4;
             Color lineColor = Color.Empty;
             if(getMouseDelPageIndex() == index) { // 判断要绘制的关闭按钮是否位于鼠标下
+
                 lineColor = ColorTranslator.FromHtml("#DF585D");
             } else { 
                 lineColor = ColorTranslator.FromHtml("#FFF");
@@ -511,9 +542,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 确定添加按钮的位置
         /// </summary>
         private void doIsAddPageButLocation(Control addCon, TabControl tab) {
-            if(addCon != null && tab != null && tab.TabCount > 0) { 
+            if(addCon != null && tab != null && tab.TabCount >= 0) { 
                 // 标签的宽
-                int itemW = tab.GetTabRect(0).Width;
+                int itemW = tab.TabCount > 0? tab.GetTabRect(0).Width : 0;
                 // 标签个数
                 int itemCount = tab.TabCount;
                 // 按钮的x坐标
@@ -521,7 +552,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 // 按钮的x坐标
                 int x = itemCount*itemW+6;
                 
-                if(x+ itemW+ addCon.Width < tab.Width) { 
+                if(x+ itemW + addCon.Width < tab.Width) { 
                     addCon.Location = new Point(x, y);
                 } else { 
                     addCon.Location = new Point(tab.ClientSize.Width-addCon.Width-10, y);

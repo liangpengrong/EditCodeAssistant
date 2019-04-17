@@ -103,9 +103,19 @@ namespace Core {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static System.Drawing.Bitmap 分列 {
+        public static System.Drawing.Bitmap 分割 {
             get {
-                object obj = ResourceManager.GetObject("分列", resourceCulture);
+                object obj = ResourceManager.GetObject("分割", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 分割_old {
+            get {
+                object obj = ResourceManager.GetObject("分割_old", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +176,16 @@ namespace Core {
         public static System.Drawing.Bitmap 字体 {
             get {
                 object obj = ResourceManager.GetObject("字体", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 字符串 {
+            get {
+                object obj = ResourceManager.GetObject("字符串", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

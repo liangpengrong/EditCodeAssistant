@@ -27,14 +27,14 @@
             this.字符_textB = new System.Windows.Forms.TextBox();
             this.字符个数_textB = new System.Windows.Forms.TextBox();
             this.字符个数_rad = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.整个文本_rad = new System.Windows.Forms.RadioButton();
-            this.单个行_rad = new System.Windows.Forms.RadioButton();
             this.字符_rad = new System.Windows.Forms.RadioButton();
             this.空格_chk = new System.Windows.Forms.CheckBox();
             this.冒号_chk = new System.Windows.Forms.CheckBox();
             this.分号_chk = new System.Windows.Forms.CheckBox();
             this.制表符_chk = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.整个文本_rad = new System.Windows.Forms.RadioButton();
+            this.单个行_rad = new System.Windows.Forms.RadioButton();
             this.保留空列_chk = new System.Windows.Forms.CheckBox();
             this.分列_but = new System.Windows.Forms.Button();
             this.选项区容器 = new System.Windows.Forms.GroupBox();
@@ -42,13 +42,14 @@
             this.不区分大小写_chk = new System.Windows.Forms.CheckBox();
             this.操作区容器 = new System.Windows.Forms.GroupBox();
             this.表格内容_label = new System.Windows.Forms.Label();
-            this.数据表格容器 = new System.Windows.Forms.Panel();
             this.状态栏 = new System.Windows.Forms.StatusStrip();
             this.行数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.列数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.选中行数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.选中列数_StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.选中单元格数_StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.逗号_chk = new System.Windows.Forms.CheckBox();
+            this.点_chk = new System.Windows.Forms.CheckBox();
             this.分列设置容器.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.选项区容器.SuspendLayout();
@@ -58,6 +59,8 @@
             // 
             // 分列设置容器
             // 
+            this.分列设置容器.Controls.Add(this.点_chk);
+            this.分列设置容器.Controls.Add(this.逗号_chk);
             this.分列设置容器.Controls.Add(this.字符_textB);
             this.分列设置容器.Controls.Add(this.字符个数_textB);
             this.分列设置容器.Controls.Add(this.字符个数_rad);
@@ -69,7 +72,7 @@
             this.分列设置容器.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.分列设置容器.Location = new System.Drawing.Point(8, 4);
             this.分列设置容器.Name = "分列设置容器";
-            this.分列设置容器.Size = new System.Drawing.Size(164, 228);
+            this.分列设置容器.Size = new System.Drawing.Size(164, 237);
             this.分列设置容器.TabIndex = 0;
             this.分列设置容器.TabStop = false;
             this.分列设置容器.Text = "分列设置";
@@ -77,7 +80,7 @@
             // 字符_textB
             // 
             this.字符_textB.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.字符_textB.Location = new System.Drawing.Point(8, 104);
+            this.字符_textB.Location = new System.Drawing.Point(10, 117);
             this.字符_textB.MaxLength = 9999999;
             this.字符_textB.Multiline = true;
             this.字符_textB.Name = "字符_textB";
@@ -89,7 +92,7 @@
             // 
             this.字符个数_textB.Enabled = false;
             this.字符个数_textB.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.字符个数_textB.Location = new System.Drawing.Point(7, 195);
+            this.字符个数_textB.Location = new System.Drawing.Point(10, 205);
             this.字符个数_textB.Name = "字符个数_textB";
             this.字符个数_textB.Size = new System.Drawing.Size(135, 26);
             this.字符个数_textB.TabIndex = 8;
@@ -97,7 +100,7 @@
             // 字符个数_rad
             // 
             this.字符个数_rad.AutoSize = true;
-            this.字符个数_rad.Location = new System.Drawing.Point(6, 173);
+            this.字符个数_rad.Location = new System.Drawing.Point(10, 184);
             this.字符个数_rad.Name = "字符个数_rad";
             this.字符个数_rad.Size = new System.Drawing.Size(86, 21);
             this.字符个数_rad.TabIndex = 7;
@@ -106,14 +109,67 @@
             this.字符个数_rad.UseVisualStyleBackColor = true;
             this.字符个数_rad.CheckedChanged += new System.EventHandler(this.Radio_CheckedChanged);
             // 
+            // 字符_rad
+            // 
+            this.字符_rad.AutoSize = true;
+            this.字符_rad.Checked = true;
+            this.字符_rad.Location = new System.Drawing.Point(9, 96);
+            this.字符_rad.Name = "字符_rad";
+            this.字符_rad.Size = new System.Drawing.Size(62, 21);
+            this.字符_rad.TabIndex = 6;
+            this.字符_rad.TabStop = true;
+            this.字符_rad.Text = "字符：";
+            this.字符_rad.UseVisualStyleBackColor = true;
+            this.字符_rad.CheckedChanged += new System.EventHandler(this.Radio_CheckedChanged);
+            // 
+            // 空格_chk
+            // 
+            this.空格_chk.AutoSize = true;
+            this.空格_chk.Location = new System.Drawing.Point(78, 49);
+            this.空格_chk.Name = "空格_chk";
+            this.空格_chk.Size = new System.Drawing.Size(51, 21);
+            this.空格_chk.TabIndex = 3;
+            this.空格_chk.Text = "空格";
+            this.空格_chk.UseVisualStyleBackColor = true;
+            // 
+            // 冒号_chk
+            // 
+            this.冒号_chk.AutoSize = true;
+            this.冒号_chk.Location = new System.Drawing.Point(10, 48);
+            this.冒号_chk.Name = "冒号_chk";
+            this.冒号_chk.Size = new System.Drawing.Size(51, 21);
+            this.冒号_chk.TabIndex = 2;
+            this.冒号_chk.Text = "冒号";
+            this.冒号_chk.UseVisualStyleBackColor = true;
+            // 
+            // 分号_chk
+            // 
+            this.分号_chk.AutoSize = true;
+            this.分号_chk.Location = new System.Drawing.Point(78, 22);
+            this.分号_chk.Name = "分号_chk";
+            this.分号_chk.Size = new System.Drawing.Size(51, 21);
+            this.分号_chk.TabIndex = 1;
+            this.分号_chk.Text = "分号";
+            this.分号_chk.UseVisualStyleBackColor = true;
+            // 
+            // 制表符_chk
+            // 
+            this.制表符_chk.AutoSize = true;
+            this.制表符_chk.Location = new System.Drawing.Point(10, 22);
+            this.制表符_chk.Name = "制表符_chk";
+            this.制表符_chk.Size = new System.Drawing.Size(63, 21);
+            this.制表符_chk.TabIndex = 0;
+            this.制表符_chk.Text = "制表符";
+            this.制表符_chk.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.整个文本_rad);
             this.groupBox1.Controls.Add(this.单个行_rad);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(8, 238);
+            this.groupBox1.Location = new System.Drawing.Point(8, 247);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(164, 58);
+            this.groupBox1.Size = new System.Drawing.Size(164, 50);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "分列格式";
@@ -142,59 +198,6 @@
             this.单个行_rad.Text = "单个行";
             this.单个行_rad.UseVisualStyleBackColor = true;
             this.单个行_rad.CheckedChanged += new System.EventHandler(this.Radio_CheckedChanged);
-            // 
-            // 字符_rad
-            // 
-            this.字符_rad.AutoSize = true;
-            this.字符_rad.Checked = true;
-            this.字符_rad.Location = new System.Drawing.Point(7, 82);
-            this.字符_rad.Name = "字符_rad";
-            this.字符_rad.Size = new System.Drawing.Size(62, 21);
-            this.字符_rad.TabIndex = 6;
-            this.字符_rad.TabStop = true;
-            this.字符_rad.Text = "字符：";
-            this.字符_rad.UseVisualStyleBackColor = true;
-            this.字符_rad.CheckedChanged += new System.EventHandler(this.Radio_CheckedChanged);
-            // 
-            // 空格_chk
-            // 
-            this.空格_chk.AutoSize = true;
-            this.空格_chk.Location = new System.Drawing.Point(79, 54);
-            this.空格_chk.Name = "空格_chk";
-            this.空格_chk.Size = new System.Drawing.Size(51, 21);
-            this.空格_chk.TabIndex = 3;
-            this.空格_chk.Text = "空格";
-            this.空格_chk.UseVisualStyleBackColor = true;
-            // 
-            // 冒号_chk
-            // 
-            this.冒号_chk.AutoSize = true;
-            this.冒号_chk.Location = new System.Drawing.Point(7, 54);
-            this.冒号_chk.Name = "冒号_chk";
-            this.冒号_chk.Size = new System.Drawing.Size(51, 21);
-            this.冒号_chk.TabIndex = 2;
-            this.冒号_chk.Text = "冒号";
-            this.冒号_chk.UseVisualStyleBackColor = true;
-            // 
-            // 分号_chk
-            // 
-            this.分号_chk.AutoSize = true;
-            this.分号_chk.Location = new System.Drawing.Point(79, 18);
-            this.分号_chk.Name = "分号_chk";
-            this.分号_chk.Size = new System.Drawing.Size(51, 21);
-            this.分号_chk.TabIndex = 1;
-            this.分号_chk.Text = "分号";
-            this.分号_chk.UseVisualStyleBackColor = true;
-            // 
-            // 制表符_chk
-            // 
-            this.制表符_chk.AutoSize = true;
-            this.制表符_chk.Location = new System.Drawing.Point(7, 20);
-            this.制表符_chk.Name = "制表符_chk";
-            this.制表符_chk.Size = new System.Drawing.Size(63, 21);
-            this.制表符_chk.TabIndex = 0;
-            this.制表符_chk.Text = "制表符";
-            this.制表符_chk.UseVisualStyleBackColor = true;
             // 
             // 保留空列_chk
             // 
@@ -226,6 +229,8 @@
             // 
             // 选项区容器
             // 
+            this.选项区容器.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.选项区容器.Controls.Add(this.不包含制表符_chk);
             this.选项区容器.Controls.Add(this.不区分大小写_chk);
             this.选项区容器.Controls.Add(this.保留空列_chk);
@@ -283,17 +288,6 @@
             this.表格内容_label.TabIndex = 9;
             this.表格内容_label.Text = "表格内容：";
             // 
-            // 数据表格容器
-            // 
-            this.数据表格容器.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.数据表格容器.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.数据表格容器.Location = new System.Drawing.Point(178, 60);
-            this.数据表格容器.Name = "数据表格容器";
-            this.数据表格容器.Size = new System.Drawing.Size(520, 344);
-            this.数据表格容器.TabIndex = 15;
-            // 
             // 状态栏
             // 
             this.状态栏.AutoSize = false;
@@ -344,6 +338,26 @@
             this.选中单元格数_StripStatusLabel.Size = new System.Drawing.Size(99, 17);
             this.选中单元格数_StripStatusLabel.Text = "选中单元格数：0";
             // 
+            // 逗号_chk
+            // 
+            this.逗号_chk.AutoSize = true;
+            this.逗号_chk.Location = new System.Drawing.Point(78, 76);
+            this.逗号_chk.Name = "逗号_chk";
+            this.逗号_chk.Size = new System.Drawing.Size(51, 21);
+            this.逗号_chk.TabIndex = 16;
+            this.逗号_chk.Text = "逗号";
+            this.逗号_chk.UseVisualStyleBackColor = true;
+            // 
+            // 点_chk
+            // 
+            this.点_chk.AutoSize = true;
+            this.点_chk.Location = new System.Drawing.Point(10, 75);
+            this.点_chk.Name = "点_chk";
+            this.点_chk.Size = new System.Drawing.Size(39, 21);
+            this.点_chk.TabIndex = 17;
+            this.点_chk.Text = "点";
+            this.点_chk.UseVisualStyleBackColor = true;
+            // 
             // SplitCharsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -351,7 +365,6 @@
             this.ClientSize = new System.Drawing.Size(707, 431);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.状态栏);
-            this.Controls.Add(this.数据表格容器);
             this.Controls.Add(this.操作区容器);
             this.Controls.Add(this.选项区容器);
             this.Controls.Add(this.分列设置容器);
@@ -360,7 +373,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "分列字符";
+            this.Text = "分割字符";
             this.Load += new System.EventHandler(this.SplitOrAddChars_Load);
             this.分列设置容器.ResumeLayout(false);
             this.分列设置容器.PerformLayout();
@@ -396,12 +409,13 @@
         private System.Windows.Forms.CheckBox 不包含制表符_chk;
         private System.Windows.Forms.TextBox 字符_textB;
         private System.Windows.Forms.Label 表格内容_label;
-        private System.Windows.Forms.Panel 数据表格容器;
         private System.Windows.Forms.StatusStrip 状态栏;
         private System.Windows.Forms.ToolStripStatusLabel 行数_StatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel 列数_StatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel 选中行数_StatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel 选中列数_StatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel 选中单元格数_StripStatusLabel;
+        private System.Windows.Forms.CheckBox 逗号_chk;
+        private System.Windows.Forms.CheckBox 点_chk;
     }
 }

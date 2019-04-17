@@ -86,28 +86,35 @@ namespace UI.ComponentLibrary.FormLibrary {
             if(isShowTop) FormCacheFactory.addTopFormCahce(fieldToJavaEntity);
             // 加入到多例工厂
             FormCacheFactory.addPrototypeCache(DefaultNameEnum.FIELD_TO_JAVA_ENTITY, fieldToJavaEntity);
-            fieldToJavaEntity.Show();
+            //fieldToJavaEntity.Show();
             return fieldToJavaEntity;
         }
         // 窗体加载事件
         private void CreadJavaEntity_Load(object sender, EventArgs e) {
-            this.ShowIcon = false;
-            this.StartPosition = FormStartPosition.CenterParent;
+            // 加载窗体默认配置
+            initFormDefConfig();
             // 加载数据表格配置
             initInputDataViewConf();
             // 数据表格生成数据
             initDataViewStr(inputDGV);
             // 设置输出类型下拉框
             setOutputComBox();
-            输入_类型规则_comB.SelectedIndex = 0;
             // 生成消息提示
             initToolTip();
-            // 调节窗口位置
-            Location = FormUtislMet.middleForm(this);
             // 判断全选复选框
             isSelectAllChecked();
             // 设置编码下拉框
             SetEcodingVal();
+
+            this.输入_类型规则_comB.SelectedIndex = 0;
+        }
+        // 窗口的默认配置
+        private void initFormDefConfig() { 
+            this.ShowIcon = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.AutoScaleMode = AutoScaleMode.None;
+            // 调节窗口位置
+            this.Location = FormUtislMet.middleForm(this);
         }
         // 设置输出类型下拉框
         private void setOutputComBox() { 
@@ -125,16 +132,25 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 初始化手动输入的数据表格配置
         /// </summary>
         private void initInputDataViewConf() {
-            DataGridView dataView = DataTableTemplate.GetDataGridViewTempl(27, 25, Color.Empty, Color.Empty);
+            RedrawDataTable dataView = new RedrawDataTable();
+            
+            dataView.ColumnSortMode = false;
+            dataView.IsShowLineNumber = true;
+            dataView.CellDefaultHeight = 24;
+            dataView.ColumnHeadDefaultHeight = 24;
             dataView.Location = new Point(操作区_容器.Location.X, 操作区_容器.Bottom + 5);
+            dataView.AllowUserToAddRows = true;
+            dataView.AllowUserToResizeRows = false;
+            dataView.AllowUserToResizeColumns = false;
+            dataView.BringToFront();
+            dataView.Width = 操作区_容器.ClientSize.Width;
+            dataView.Height = 选项区容器.ClientSize.Height - (dataView.Location.Y-选项区容器.Location.X);
+            dataView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            dataView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
             inputDGV = dataView;
             this.Controls.Add(inputDGV);
-            inputDGV.BringToFront();
-            inputDGV.Width = 操作区_容器.ClientSize.Width;
-            inputDGV.Height = 选项区容器.ClientSize.Height - (inputDGV.Location.Y-选项区容器.Location.X);
-            inputDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            inputDGV.AllowUserToResizeColumns = false;
-            inputDGV.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
         }
 
         /// <summary>
@@ -187,15 +203,6 @@ namespace UI.ComponentLibrary.FormLibrary {
                 dt.Rows.Add(dr);
             }
             view.DataSource = dt;
-            // 行标题宽度
-            view.RowHeadersWidth = 60;
-            for(int i = 0; i < view.Columns.Count; i++) { 
-                view.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-            // 生成行标题
-            for (int i = 0; i < inputDGV.RowCount; i++) {
-                view.Rows[i].HeaderCell.Value = (i+1).ToString();
-            }  
         }
         /// <summary>
         /// 生成最后结果的方法

@@ -120,10 +120,10 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="代码" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAAB5SURBVChTlZFRCsAgDEO9wsbYDiUKfnj/o3RraESlcywQ
-        sK8JdCyIyC+7cOVBKaWjlCKPMes7xrhhmNWFh4JadwDUHFar7D2Waq07oQXmQivhvJzzRWBLhClj3J+A
-        3v0UuWUa/PxoZeSQDl2JDHfrTOb+nJVd+G4JN8rd630kjXVpAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAHlJREFUKFOVkVEKwCAMQ73CxtgOJQp+eP+jdGtoRKVzLBCwrwl0LIjIL7tw5UEp
+        paOUIo8x6zvGuGGY1YWHglp3ANQcVqvsPZZqrTuhBeZCK+G8nPNFYEuEKWPcn4De/RS5ZRr8/Ghl5JAO
+        XYkMd+tM5v6clV34bgk3yt3rfSSNdWkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="保存" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -149,7 +149,11 @@
         MPYQAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="分列" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="分割" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\分割.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="分割_old" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         EwAACxMBAJqcGAAAAFpJREFUKFOVTUEOwDAI8on+/zMsmmKo6VZ3oFIENAC/kI+7Ywjr5q2ArbLPDwVy
@@ -206,6 +210,9 @@
         Ih5DgYge5bSR5gPdTDAuDD6Qa+8Jt2IC8r7AzK6w9lJKqZJzbgKy9Z2gRxBt/JMibp2wyrCcI+EFt/pG
         8B/jslAAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="字符串" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\字符串.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="打开" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

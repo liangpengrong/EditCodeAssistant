@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharsToolset", "CharsToolset\CharsToolset.csproj", "{0CF9D020-AF37-4FA1-924D-4831C128650C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{0BBB23B0-D8C4-4735-9FB2-48AD897A364A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{C7550D1C-E3F1-4BBD-8281-AB122822486C}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_OptionForm", "UI_OptionForm\UI_OptionForm.csproj", "{6A6FE15A-6249-4156-94CA-2D2B372AC0A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core_Config", "Core_Config\Core_Config.csproj", "{F957C230-0F57-4CB4-9884-17D3D29C8746}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditCodeAssistant", "EditCodeAssistant\EditCodeAssistant.csproj", "{0CF9D020-AF37-4FA1-924D-4831C128650C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,18 +25,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|x86.ActiveCfg = Debug|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|x86.Build.0 = Debug|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Mixed Platforms.Build.0 = Release|x86
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|x86.ActiveCfg = Release|Any CPU
-		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|x86.Build.0 = Release|Any CPU
 		{0BBB23B0-D8C4-4735-9FB2-48AD897A364A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BBB23B0-D8C4-4735-9FB2-48AD897A364A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BBB23B0-D8C4-4735-9FB2-48AD897A364A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -97,6 +85,18 @@ Global
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|x86.ActiveCfg = Release|Any CPU
 		{F957C230-0F57-4CB4-9884-17D3D29C8746}.Release|x86.Build.0 = Release|Any CPU
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|x86.ActiveCfg = Debug|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Debug|x86.Build.0 = Debug|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|x86.ActiveCfg = Release|x86
+		{0CF9D020-AF37-4FA1-924D-4831C128650C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

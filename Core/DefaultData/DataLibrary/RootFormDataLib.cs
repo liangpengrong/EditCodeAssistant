@@ -9,7 +9,7 @@ namespace Core.DefaultData.DataLibrary {
         /// <summary>
         /// 启动程序默认的Text
         /// </summary>
-        public const string ROOT_FORM_TEXT = "CharsToolset";
+        public const string ROOT_FORM_TEXT = "代码助手小工具——用于提高程序开发效率";
         /// <summary>
         /// 启动程序默认的Text
         /// </summary>
