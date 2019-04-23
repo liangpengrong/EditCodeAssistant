@@ -426,6 +426,13 @@ namespace UI.ComponentLibrary.FormLibrary {
             dataView.Location = new Point(操作区容器.Location.X, 操作区容器.Bottom+5);
             dataView.Size = new Size(操作区容器.Width, 选项区容器.Bottom-dataView.Location.Y);
             redrawDataTable = dataView;
+            // 记录到状态栏中
+            Control c = UIComponentFactory.getSingleControl(DefaultNameEnum.TOOL_START);
+            if(c != null && c is RedrawStatusBar) { 
+                RedrawStatusBar bar = (RedrawStatusBar)c;
+                bar.SetSourceControl(dataView);
+            }
+            // 加入到容器中
             this.Controls.Add(redrawDataTable);
 
         }

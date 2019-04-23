@@ -173,6 +173,12 @@ namespace UI.ComponentLibrary.FormLibrary {
             dataView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
             inputDGV = dataView;
+            // 记录到状态栏中
+            Control c = UIComponentFactory.getSingleControl(DefaultNameEnum.TOOL_START);
+            if(c != null && c is RedrawStatusBar) { 
+                RedrawStatusBar bar = (RedrawStatusBar)c;
+                bar.SetSourceControl(dataView);
+            }
             this.Controls.Add(dataView);
         }
 

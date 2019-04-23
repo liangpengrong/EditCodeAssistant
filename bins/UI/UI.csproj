@@ -152,10 +152,10 @@
     <Compile Include="ComponentLibrary\FormLibrary\CharsStatistics.Designer.cs">
       <DependentUpon>CharsStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentLibrary\FormLibrary\FieldToJavaEntity\CreadJavaEntity.cs">
+    <Compile Include="ComponentLibrary\FormLibrary\CreadJavaEntity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComponentLibrary\FormLibrary\FieldToJavaEntity\CreadJavaEntity.Designer.cs">
+    <Compile Include="ComponentLibrary\FormLibrary\CreadJavaEntity.Designer.cs">
       <DependentUpon>CreadJavaEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentLibrary\FormLibrary\FindAndReplace.cs">
@@ -214,7 +214,7 @@
     <EmbeddedResource Include="ComponentLibrary\FormLibrary\CharsStatistics.resx">
       <DependentUpon>CharsStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentLibrary\FormLibrary\FieldToJavaEntity\CreadJavaEntity.resx">
+    <EmbeddedResource Include="ComponentLibrary\FormLibrary\CreadJavaEntity.resx">
       <DependentUpon>CreadJavaEntity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentLibrary\FormLibrary\FindAndReplace.resx">
