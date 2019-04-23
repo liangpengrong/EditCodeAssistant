@@ -1,4 +1,5 @@
 ﻿using Core.CacheLibrary.FormCache;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,6 +18,10 @@ namespace EditCodeAssistant
 
         static void Main(string[] args)
         {
+            if (!isSetupNetFramework()) {
+                MessageBox.Show("当前系统未检测到.Net Framework库，请安装大于或等于v4.0版本的.Net Framework库"); 
+                return; 
+            }
             mainStartClass(args);
         }
         // 程序的主启动方法
@@ -90,6 +95,21 @@ namespace EditCodeAssistant
             internal static System.Threading.Mutex _mutex;
             [DllImport("User32.dll", CharSet = CharSet.Unicode, EntryPoint = "FlashWindow")]
             internal static extern void FlashWindow(IntPtr hwnd, bool bInvert);
+        }
+
+        // 判断是否安装了.net环境
+        private static bool isSetupNetFramework() { 
+　　         RegistryKey key = Registry.LocalMachine;
+　　         string[] subkeyNames = key.OpenSubKey("").OpenSubKey("SOFTWARE\\Microsoft\\.NETFramework\\policy").GetSubKeyNames();
+　　         //在这里我是判断test表项是否存在
+　　         foreach (string keyName in subkeyNames) {
+　　　　          if (keyName.IndexOf("v4") >= 0) {
+　　　　　　          key.Close();
+　　　　　　          return true;
+　　　　          }
+　　         }
+　　         key.Close();
+　　         return false;
         }
     }
 }

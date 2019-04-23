@@ -43,6 +43,8 @@
             this.Activated += new System.EventHandler(this.RootDisplayForm_Activated);
             this.Deactivate += new System.EventHandler(this.RootDisplayForm_Deactivate);
             this.Load += new System.EventHandler(this.RootDisplayForm_Load);
+            this.VisibleChanged += new System.EventHandler(this.RootDisplayForm_VisibleChanged);
+            this.Resize += new System.EventHandler(this.RootDisplayForm_Resize);
             this.ResumeLayout(false);
 
         }

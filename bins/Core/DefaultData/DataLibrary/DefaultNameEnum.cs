@@ -1,0 +1,115 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using static Core.StaticMethod.Method.Utils.EnumUtilsMet;
+
+namespace Core.DefaultData.DataLibrary {
+    /// <summary>
+    /// 默认姓名配置枚举类
+    /// </summary>
+    public enum DefaultNameEnum{
+        /// <summary>
+        /// 程序本身命名
+        /// </summary>
+        [EnumDescription("EditCodeAssistant")] PROGRAM_NAME,
+        /// <summary>
+        /// 启动窗体的默认命名
+        /// </summary>
+        [EnumDescription("RootDisplayForm")] ROOT_FORM_NAME,
+        /// <summary>
+        /// 查找和替换窗口的默认命名
+        /// </summary>
+        [EnumDescription("FindAndReplace")] FIND_REPLACE_FORM,
+        /// <summary>
+        /// 转到行窗口的默认命名
+        /// </summary>
+        [EnumDescription("RowGoToForm")] ROW_GOTO_FORM,
+        /// <summary>
+        /// 设置编码窗口的默认命名
+        /// </summary>
+        [EnumDescription("SetCodingForm")] SET_CODING_FORM,
+        /// <summary>
+        /// 消息提示窗口的默认命名
+        /// </summary>
+        [EnumDescription("AskMessForm")] ASK_MESS_FORM,
+        /// <summary>
+        /// 提出统计窗口的默认命名
+        /// </summary>
+        [EnumDescription("CharsStatistics")] CHARS_STATISTICS,
+        /// <summary>
+        /// 分割字符串窗口的默认命名
+        /// </summary>
+        [EnumDescription("SplitCharsForm")] SPLIT_CHARS_FORM,
+        /// <summary>
+        /// 添加字符窗体的默认密码
+        /// </summary>
+        [EnumDescription("AddCharsForm")] ADD_CHARS_FORM,
+        /// <summary>
+        /// 生成JAVA实体类窗体的默认命名
+        /// </summary>
+        [EnumDescription("CreadJavaEntity")] CREAD_JAVA_ENTITY,
+        /// <summary>
+        /// 关于窗体的默认命名
+        /// </summary>
+        [EnumDescription("ThereofForm")] THEREOF_FORM,
+        /// <summary>
+        /// 默认文本框右键菜单命名
+        /// </summary>
+        [EnumDescription("textRightMenu")] TEXT_RIGHT_MENU,
+        /// <summary>
+        /// tag中的删除按钮的key
+        /// </summary>
+        [EnumDescription("delbut")] DEF_BUTTON_TAG_KEY,
+        /// <summary>
+        /// 程序主容器命名
+        /// </summary>
+        [EnumDescription("mainContainer")] MAIN_CONTAINER,
+        /// <summary>
+        /// 状态栏默认命名
+        /// </summary>
+        [EnumDescription("statusStrip")] TOOL_START,
+        /// <summary>
+        /// 顶部菜单默认命名
+        /// </summary>
+        [EnumDescription("topMenuStrip")] TOP_MENU,
+        /// <summary>
+        /// 文本框的默认命名
+        /// </summary>
+        [EnumDescription("mainTextBox")] TEXTBOX_NAME_DEF,
+        /// <summary>
+        /// 标签容器的默认命名
+        /// </summary>
+        [EnumDescription("mainTabControl")] TAB_CONTENT,
+        /// <summary>
+        /// 标签容器中的标签页的默认命名
+        /// </summary>
+        [EnumDescription("pageNameDefault")] TAB_PAGE_NAME,
+        /// <summary>
+        /// 调整大小角标的默认命名
+        /// </summary>
+        [EnumDescription("sizeSubscript")] SIZE_SUBSCRIPT,
+        /// <summary>
+        /// 表格右键菜单的默认命名
+        /// </summary>
+        [EnumDescription("dataViewRightMenu")] DATA_VIEW_RIGHT_MENU,
+        /// <summary>
+        /// 添加标签按钮的默认命名
+        /// </summary>
+        [EnumDescription("mainAddPageButton")] ADD_PAGE_BUTTON,
+        /// <summary>
+        /// 重绘表格的默认命名
+        /// </summary>
+        [EnumDescription("DataGridViewRedraw")] DATA_GRID_VIEW_REDRAW,
+        /// <summary>
+        /// 删除标签按钮的默认命名
+        /// </summary>
+        [EnumDescription("delPageButton")] DEL_PAGE_BUTTON,
+        /// <summary>
+        /// 消息提示按钮的默认命名
+        /// </summary>
+        [EnumDescription("PromptMessage")] PROMPT_MESSAGE,
+        
+    }
+}

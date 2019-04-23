@@ -1,38 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using Core.StaticMethod.Method.Utils;
 using Core.CacheLibrary.FormCache;
-using UI.ToolStripContainerLibrary;
-using UI.TabContentLibrary.MainTabContent;
-using UI.ComponentLibrary;
-using UI.ComponentLibrary.ControlLibrary.RightMenu;
-using UI_TopMenuBar;
-using UI.StatusBarLibrary;
-using UI.ComponentLibrary.ControlLibrary;
 using Core.DefaultData.DataLibrary;
 using Core_Config.ConfigData.FormConfig;
-using Ui.ControlEventLibrary;
+using UI.ComponentLibrary.MethodLibrary.Util;
+using UI;
+using UI_TopMenuBar;
 
-namespace EditCodeAssistant
-{
-    public partial class RootDisplayForm : Form
-    {
+namespace EditCodeAssistant {
+    public partial class RootDisplayForm : Form {
         private string[] loadPath = null;
         // 状态栏默认背景色
         private Color formBackColor = ColorTranslator.FromHtml("#fff");
-        public RootDisplayForm()
-        {
+        public RootDisplayForm() {
             InitializeComponent();
         }
-        public RootDisplayForm(string[] loadPath)
-        {
+        public RootDisplayForm(string[] loadPath) {
             InitializeComponent();
             this.loadPath = loadPath;
         }
@@ -52,7 +39,7 @@ namespace EditCodeAssistant
             // 打开拖入的文件到新标签中
             loadOpenFile();
             // 调节窗口位置
-            Location = FormUtislMet.middleForm(this);
+            Location = FormUtislMet.MiddleForm(this);
         }
         /// <summary>
         /// 设置窗体的默认启动配置
@@ -79,7 +66,7 @@ namespace EditCodeAssistant
             // 获得主容器
             ToolStripContainer stripContainer = initMainContainer();
             // 获得文本框状态栏
-            StatusStrip strutsBar = initTextStrtusBar();
+            StatusStrip strutsBar = initMainStrtusBar();
             // 获得主Tab容器
             TabControl mainTab = initMainTab();
             initFormLayout(this, topMenu, strutsBar, stripContainer, mainTab);
@@ -88,7 +75,7 @@ namespace EditCodeAssistant
         private void loadOpenFile() {
           if(loadPath != null && loadPath.Length>0) {
               foreach (string p in loadPath) {// 遍历路径
-                 FileUtilsMet.setTextBoxValByPath(MainTabContent.getNewPageTextBox(), p, Encoding.UTF8);
+                 FileUtilsMet.SetTextBoxValByPath(MainTabControlUtils.GetNewPageTextBox(), p, Encoding.UTF8);
               }
           }
         }
@@ -103,17 +90,21 @@ namespace EditCodeAssistant
         /// 初始化主容器
         /// </summary>
         /// <returns></returns>
-        public static ToolStripContainer initMainContainer() { 
-            ToolStripContainer toolStripContainer = MainToolStripContainer.initToolStripContainer();
-            return toolStripContainer;
+        private ToolStripContainer initMainContainer() { 
+            Control ccc = UIComponentFactory.getSingleControl(DefaultNameEnum.MAIN_CONTAINER, true);
+            ToolStripContainer container = null;
+            if(ccc != null && ccc is ToolStripContainer) container = (ToolStripContainer)ccc;
+            return container;
         }
         /// <summary>
         /// 初始化主Tab容器
         /// </summary>
         /// <returns>该Tab容器</returns>
-        public static TabControl initMainTab() {
+        private TabControl initMainTab() {
             // 获取主Tab容器
-            TabControl tab = MainTabContent.initMainTab();
+            TabControl tab = null;
+            Control ccc = UIComponentFactory.getSingleControl(DefaultNameEnum.TAB_CONTENT, true);
+            if(ccc != null && ccc is TabControl) tab = (TabControl)ccc;
             return tab;
         }
 
@@ -121,18 +112,31 @@ namespace EditCodeAssistant
         /// 实例化顶部菜单
         /// </summary>
         /// <returns>返回该顶部菜单</returns>
-        public static MenuStrip initTopMenuStrip() {
+        private MenuStrip initTopMenuStrip() {
             MenuStrip topMenu = TopMenuContainer.getTopMenuStrip();
             return topMenu;
         }
         /// <summary>
-        /// 实例化文本框状态栏
+        /// 实例化状态栏
         /// </summary>
         /// <returns></returns>
-        public static StatusStrip initTextStrtusBar() {
-            // 获取文本框状态栏
-            StatusStrip strtusBar = TextStatusBar.getToolStripStatus();
-            return strtusBar;
+        private StatusStrip initMainStrtusBar() {
+            Control ccc = UIComponentFactory.getSingleControl(DefaultNameEnum.TOOL_START, true);
+            StatusStrip statusStrip = null;
+            if(ccc != null && ccc is StatusStrip) statusStrip = (StatusStrip)ccc;
+            return statusStrip;
+        }
+        // 根据窗体是否为最小化判断窗体的显示隐藏
+        private void doIsTopFormVisible(){
+            Form[] topFormArr = FormCacheFactory.getTopFormCache().Values.ToArray();
+            for(int i=0; i<topFormArr.Length; i++) { 
+                Form f = topFormArr[i];
+                if(this.WindowState.Equals(FormWindowState.Minimized)) { 
+                    f.Visible = false;
+                } else { 
+                    f.Visible = true;
+                }
+            }
         }
         /// <summary>
         /// 初始化窗体的布局
@@ -145,7 +149,7 @@ namespace EditCodeAssistant
         /// <param name="page">page页</param>
         /// <param name="text">文本框</param>
         /// <param name="textStrip">文本框的右键菜单</param>
-        public static void initFormLayout(Form form, MenuStrip topMenu, StatusStrip strtusBar, ToolStripContainer container,
+        private void initFormLayout(Form form, MenuStrip topMenu, StatusStrip strtusBar, ToolStripContainer container,
             TabControl tab) {
             /*==============设置控件的tab顺序======================*/
             topMenu.TabIndex = 1;
@@ -181,11 +185,19 @@ namespace EditCodeAssistant
 
         // 窗体得到焦点事件
         private void RootDisplayForm_Activated(object sender, EventArgs e) {
-            FormUtislMet.topFormNoFocus(true, FormCacheFactory.getTopFormCahce().Values.ToArray());
+            FormUtislMet.TopFormNoFocus(true, FormCacheFactory.getTopFormCache().Values.ToArray());
         }
         // 窗体失去焦点事件
         private void RootDisplayForm_Deactivate(object sender, EventArgs e) {
-            FormUtislMet.topFormNoFocus(false, FormCacheFactory.getTopFormCahce().Values.ToArray());
+            FormUtislMet.TopFormNoFocus(false, FormCacheFactory.getTopFormCache().Values.ToArray());
+        }
+
+        private void RootDisplayForm_VisibleChanged(object sender, EventArgs e) {
+            
+        }
+        // 窗体大小调整事件
+        private void RootDisplayForm_Resize(object sender, EventArgs e) {
+            doIsTopFormVisible();
         }
     }
 }
