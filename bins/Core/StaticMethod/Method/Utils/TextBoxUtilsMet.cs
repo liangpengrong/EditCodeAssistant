@@ -509,6 +509,33 @@ namespace Core.StaticMethod.Method.Utils
             rowColum[1] = col;
             return rowColum;
         }
-
+        /// <summary>
+        /// 判断当前鼠标位置是否处于文本框中某行的末尾
+        /// </summary>
+        /// <param name="t">文本框</param>
+        /// <param name="p">鼠标位置</param>
+        /// <returns></returns>
+        public static bool IsPointLineEnd(TextBox t, Point p) { 
+            var charIndex = t.GetCharIndexFromPosition(p);
+            var charPosition = t.GetPositionFromCharIndex(charIndex);
+            if (p.X > charPosition.X && charIndex == t.TextLength-1) charIndex++;
+            return IsPointLineEnd(t, charIndex);
+        }
+        /// <summary>
+        /// 判断当前索引位置是否处于文本框中某行的末尾
+        /// </summary>
+        /// <param name="t">文本框</param>
+        /// <param name="index">索引</param>
+        /// <returns></returns>
+        public static bool IsPointLineEnd(TextBox t, int index) { 
+            bool retBool = false;
+            var charIndex = index;
+            if(t.TextLength.Equals(charIndex) 
+                || (charIndex+Environment.NewLine.Length<= t.TextLength
+                && t.Text.Substring(charIndex,Environment.NewLine.Length).Equals(Environment.NewLine))) { 
+                retBool = true;
+            }
+            return retBool;
+        }
     }
 }

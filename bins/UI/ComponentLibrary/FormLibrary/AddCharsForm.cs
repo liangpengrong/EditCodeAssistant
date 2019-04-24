@@ -107,19 +107,20 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 按照换行符分割
             string[] strArr = StringUtilsMet.SplitStrToArray(text_val
                 ,new string[]{ Environment.NewLine}, true, false);
-            StringBuilder stringBuilder = new StringBuilder();
-            // 遍历数组并添加字符
-            foreach(string s in strArr) {
-                // 判断是否匹配空行
-                if(isMatchBlack || (!isMatchBlack && s.Length > 0)) {
-                    stringBuilder.Append(head_text + s + end_text).AppendLine();
-                } else { 
-                    stringBuilder.AppendLine();
-                }
-            }
-            string textVal = stringBuilder.ToString();
-            // 去除最后一个换行符
-            textVal = textVal.Substring(0, textVal.Length - Environment.NewLine.Length);
+            //StringBuilder stringBuilder = new StringBuilder();
+            //// 遍历数组并添加字符
+            //foreach(string s in strArr) {
+            //    // 判断是否匹配空行
+            //    if(isMatchBlack || (!isMatchBlack && s.Length > 0)) {
+            //        stringBuilder.Append(head_text + s + end_text).AppendLine();
+            //    } else { 
+            //        stringBuilder.AppendLine();
+            //    }
+            //}
+            //string textVal = stringBuilder.ToString();
+            //// 去除最后一个换行符
+            //textVal = textVal.Substring(0, textVal.Length - Environment.NewLine.Length);
+            string textVal = StringUtilsMet.InsertLineFirstAndLast(text_val, head_text, end_text, isMatchBlack);
             // 判断是否不匹配末尾
             if (!isMatchEnd) {
                 int noneLength = 0;

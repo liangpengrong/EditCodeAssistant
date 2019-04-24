@@ -135,6 +135,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             } else if (con is DataGridView) { 
                 hideName.Clear();
                 hideName.Add(StrutsStripDataLib.ItemName.编码);
+                //hideName.Add(StrutsStripDataLib.ItemName.大小写状态);
+                //hideName.Add(StrutsStripDataLib.ItemName.只读状态);
             }
             ToolStripStatusLabel[] tools = Items.OfType<ToolStripStatusLabel>().ToArray();
             // 隐藏右键菜单元素 和状态栏元素

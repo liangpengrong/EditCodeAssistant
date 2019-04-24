@@ -156,22 +156,27 @@
     <ProjectReference Include="..\bins\Core\Core.csproj">
       <Project>{8a11c6e8-725f-489c-a530-ebfec6ab2b44}</Project>
       <Name>Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\bins\Core_Config\Core_Config.csproj">
       <Project>{e32ce552-669a-496f-8578-8dedcc226dc1}</Project>
       <Name>Core_Config</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\bins\UI\UI.csproj">
       <Project>{c7550d1c-e3f1-4bbd-8281-ab122822486c}</Project>
       <Name>UI</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\bins\UI_OptionForm\UI_OptionForm.csproj">
       <Project>{df9d676d-2d52-4754-9be8-9cd9dcb6f3a8}</Project>
       <Name>UI_OptionForm</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\bins\UI_TopMenuBar\UI_TopMenuBar.csproj">
       <Project>{0ca67886-a0e5-42d9-954e-d3660782888d}</Project>
       <Name>UI_TopMenuBar</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

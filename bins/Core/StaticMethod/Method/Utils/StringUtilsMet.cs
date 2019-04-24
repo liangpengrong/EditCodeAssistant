@@ -11,7 +11,7 @@ namespace Core.StaticMethod.Method.Utils {
     /// </summary>
     public static class StringUtilsMet {
         /// <summary>
-        /// 将字符串中的指定字符串替换为某个字符串(是否区分大小写)
+        /// 将字符串中的指定字符串替换为某个字符串
         /// </summary>
         /// <param name="text">字符串</param>
         /// <param name="findS">被替换的字符串</param>
@@ -19,11 +19,36 @@ namespace Core.StaticMethod.Method.Utils {
         /// <param name="sensitive">是否匹配大小写</param>
         /// <returns></returns>
         public static string ReplaceCaseText(string text, string findS, string repS ,bool sensitive) {
+            return ReplaceCaseText(text, findS,repS,-1,sensitive);
+        }
+        /// <summary>
+        /// 将字符串中的指定字符串替换为某个字符串
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="findS">被替换的字符串</param>
+        /// <param name="repS">要替换的字符串</param>
+        /// <param name="repCount">要替换的次数</param>
+        /// <param name="sensitive">是否匹配大小写</param>
+        /// <returns></returns>
+        public static string ReplaceCaseText(string text, string findS, string repS ,int repCount, bool sensitive) {
+            return ReplaceCaseText(text, findS,repS,1,repCount,sensitive);
+        }
+        /// <summary>
+        /// 将字符串中的指定字符串替换为某个字符串
+        /// </summary>
+        /// <param name="text">字符串</param>
+        /// <param name="findS">被替换的字符串</param>
+        /// <param name="repS">要替换的字符串</param>
+        /// <param name="repIndex">要替换的起始位置</param>
+        /// <param name="repCount">要替换的次数</param>
+        /// <param name="sensitive">是否匹配大小写</param>
+        /// <returns></returns>
+        public static string ReplaceCaseText(string text, string findS, string repS , int repIndex, int repCount, bool sensitive) {
             string retS = text;
             if(sensitive) {
-                retS = Strings.Replace(text, findS, repS, 1, -1, CompareMethod.Binary);
+                retS = Strings.Replace(text, findS, repS, repIndex, repCount, CompareMethod.Binary);
             } else { 
-                retS = Strings.Replace(text, findS, repS, 1, -1, CompareMethod.Text);
+                retS = Strings.Replace(text, findS, repS, repIndex, repCount, CompareMethod.Text);
             }
             return retS;
         }
@@ -327,38 +352,47 @@ namespace Core.StaticMethod.Method.Utils {
             }
             return retStr.ToString();
         }
+        public static string[] CharsTrim(string[] strArr, string find, int type) { 
+            return CharsTrim(strArr, find, -1, type);
+        }
         /// <summary>
-        /// 去除字符串数组中的每个元素中的指定匹配项
+        /// 去除字符串数组中每个元素的指定项
         /// </summary>
         /// <param name="strArr">源字符串数组</param>
-        /// <param name="trim">要去除的匹配</param>
+        /// <param name="find">要去除的匹配</param>
+        /// <param name="repCount">匹配的次数 -1为无限匹配</param>
         /// <param name="type">去除类型(0全部 1行首 2行尾)</param>
         /// <returns></returns>
-        public static string[] CharsTrim(string[] strArr, string trim, int type) {
+        public static string[] CharsTrim(string[] strArr, string find, int repCount, int type) {
             int index = -1,starts = -1;
             switch (type) { 
                 case 0:
                     for(int i = 0,len = strArr.Length; i< len; i++) { 
-                        strArr[i] = ReplaceCaseText(strArr[i], trim, "", true);
+                        // 循环去除数组元素的所有匹配项
+                        strArr[i] = ReplaceCaseText(strArr[i], find, "", repCount, true);
                     }
                     break;
                 case 1:
                     for(int i = 0,len = strArr.Length; i< len; i++) {
+                        // 获取数组元素
                         string s = strArr[i];
-                        int[] indexs = GetCharsIndexOf(s, trim, true);
+                        // 获取在单个元素中的全部匹配的索引
+                        int[] indexs = GetCharsIndexOf(s, find, true);
                         for(int j = 0,len2=indexs.Length;j<len2;j++) {
                             if(j>0){
-                                if(indexs[j-1]+trim.Length == indexs[j]){ 
+                                if(indexs[j-1]+find.Length == indexs[j]){ // 判断索引是否时连续的 连续就说明还处于行首
                                     index = indexs[j];
-                                } else { 
-                                  break;    
-                                }
+                                } else {break;}
                             } else { 
                                 index = indexs[j];
                             }
+                            // 判断匹配的次数是否相同
+                            if(repCount != -1 && j+1 == repCount) break;
                         }
+                        // 取得匹配项对应的行首索引
                         if(index > -1) {
-                            starts = index+trim.Length;
+                            starts = index+find.Length;
+                            // 截取行首到字符串结尾
                             strArr[i] = s.Substring(starts, s.Length-starts);
                         }
                     }
@@ -366,19 +400,17 @@ namespace Core.StaticMethod.Method.Utils {
                 case 2:
                     for(int i = 0,len = strArr.Length; i< len; i++) {
                         string s = strArr[i];
-                        int[] indexs = GetCharsIndexOf(s, trim, true);
-                        // 反转数组
-                        Array.Reverse(indexs);
-                        for(int j = 0,len2=indexs.Length;j<len2;j++) {
+                        int[] indexs = GetCharsIndexOf(s, find, true);
+                        for(int j = indexs.Length-1,len2=0;j>len2;j--) {
                             if(j>0){
-                                if(indexs[j-1]-trim.Length == indexs[j]){ 
+                                if(indexs[j-1]+find.Length == indexs[j]){ 
                                     index = indexs[j];
-                                } else { 
-                                  break;    
-                                }
+                                } else {break;}
                             } else { 
                                 index = indexs[j];
                             }
+                            // 判断匹配的次数是否相同
+                            if(repCount != -1 && indexs.Length-j == repCount) break;
                         }
                         if(index > -1) {
                             starts = index;
@@ -388,6 +420,18 @@ namespace Core.StaticMethod.Method.Utils {
                     break;
             }
             return strArr;
+        }
+        /// <summary>
+        /// 去除字符串中每行的的指定匹配项
+        /// </summary>
+        /// <param name="str">父字符串</param>
+        /// <param name="find">要去除的匹配</param>
+        /// <param name="repCount">匹配的次数</param>
+        /// <param name="type">去除类型(0全部 1行首 2行尾)</param>
+        /// <returns></returns>
+        public static string CharTrimByLine(string str, string find, int repCount, int type) { 
+            string[] arr = CharsTrim(SplitStrToArray(str, new string[]{Environment.NewLine},true,false), find, repCount, type);
+            return string.Join(Environment.NewLine, arr);
         }
         /// <summary>
         /// 去除尾部的换行符
@@ -412,6 +456,33 @@ namespace Core.StaticMethod.Method.Utils {
             int retInt = 0;
             retInt = str.Length - Regex.Replace(str, @"[\u4e00-\u9fa5]","").Length;
             return retInt;
+        }
+        /// <summary>
+        /// 将字符串插入到父字符串的行尾
+        /// </summary>
+        /// <param name="str">父字符串</param>
+        /// <param name="first">行首字符</param>
+        /// <param name="last">行尾字符</param>
+        /// <param name="isMatchBlack">是否匹配空行</param>
+        /// <returns></returns>
+        public static string InsertLineFirstAndLast(string str, string first, string last, bool isMatchBlack) {
+            // 按照换行符分割
+            string[] strArr = SplitStrToArray(str
+                ,new string[]{ Environment.NewLine}, true, false);
+            StringBuilder stringBuilder = new StringBuilder();
+            // 遍历数组并添加字符
+            foreach(string s in strArr) {
+                // 判断是否匹配空行
+                if(isMatchBlack || (!isMatchBlack && s.Length > 0)) {
+                    stringBuilder.Append(first + s + last).AppendLine();
+                } else { 
+                    stringBuilder.AppendLine();
+                }
+            }
+            string textVal = stringBuilder.ToString();
+            // 去除最后一个换行符
+            textVal = textVal.Substring(0, textVal.Length - Environment.NewLine.Length);
+            return textVal;
         }
     }
 }
