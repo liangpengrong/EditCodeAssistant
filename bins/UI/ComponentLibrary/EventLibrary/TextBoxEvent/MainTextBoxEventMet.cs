@@ -34,7 +34,7 @@ namespace Ui.ComponentLibrary.EventLibrary.TextBoxEvent {
             // 非只读才能撤销
             if (!t.ReadOnly) { 
                 // 将文本框置于撤销状态
-                TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
                 TextBoxCache.cancelCache(t);
             }
             
@@ -49,7 +49,7 @@ namespace Ui.ComponentLibrary.EventLibrary.TextBoxEvent {
             // 非只读才能撤销
             if (!t.ReadOnly) { 
                 // 将文本框置于恢复状态
-                TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
                 TextBoxCache.restoreCache(t);
             }
             
@@ -65,12 +65,12 @@ namespace Ui.ComponentLibrary.EventLibrary.TextBoxEvent {
             Control con = t.Parent;
             // 判断父容器是否为TabPage
             if(con.GetType().Equals(typeof(TabPage))) {
-                ControlsUtilsMet.AsynchronousMethod(t, 300, delegate{ 
+                ControlsUtils.AsynchronousMethod(t, 300, delegate{ 
                     // 判断Tag中是否存在保存路径
-                    if(TextBoxUtilsMet.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
-                        string filepath = TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.SAVE_FILE_PATH].ToString();
+                    if(TextBoxUtils.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
+                        string filepath = TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.SAVE_FILE_PATH].ToString();
                         TabPage page = (TabPage)t.Parent;
-                        string[] pathArr = FileUtilsMet.GetPathArr(filepath);
+                        string[] pathArr = FileUtils.GetPathArr(filepath);
                         page.ResetText();
                         
                         // 设置标签文本
@@ -91,18 +91,18 @@ namespace Ui.ComponentLibrary.EventLibrary.TextBoxEvent {
             // 获取文本框
             TextBox t = (TextBox)data[typeof(TextBox)];
             // 开辟新线程执行方法
-            ControlsUtilsMet.AsynchronousMethod(t,300, delegate{ 
-                Dictionary<string, object> tag = TextBoxUtilsMet.GetTextTagToMap(t);
+            ControlsUtils.AsynchronousMethod(t,300, delegate{ 
+                Dictionary<string, object> tag = TextBoxUtils.GetTextTagToMap(t);
                 Encoding ecoding = TextBoxDataLibcs.TEXTBOX_ECODING_DEF;
                 // 获取文本框中Tag中存的编码
                 if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING)) {
-                    ecoding = (Encoding)TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
+                    ecoding = (Encoding)TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
                 }
                 // 全局单例控件工厂
                 Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
-                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START))) { 
+                if(single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TOOL_START))) { 
                     // 状态栏
-                    ToolStrip toolStrip = (ToolStrip)single[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)];
+                    ToolStrip toolStrip = (ToolStrip)single[EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)];
                     // 获取编码Item
                     ToolStripItem labEcoding = toolStrip.Items[StrutsStripDataLib.ItemName.编码];
                     labEcoding.Text = ecoding.BodyName.ToUpper();

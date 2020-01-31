@@ -13,7 +13,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于文件操作的工具类
     /// </summary>
-    public static class FileUtilsMet
+    public static class FileUtils
     {
         private static FileStream fileStream = null;
         private static StreamWriter streamWriter = null;
@@ -174,9 +174,9 @@ namespace Core.StaticMethod.Method.Utils
                 process.Refresh();
             }
             // 得到文本框主窗体中的类名为Edit的窗口句柄
-            IntPtr vHandle = WinApiUtilsMet.FindWindowEx(process.MainWindowHandle, IntPtr.Zero, "Edit", null);
+            IntPtr vHandle = WinApiUtils.FindWindowEx(process.MainWindowHandle, IntPtr.Zero, "Edit", null);
             // 向指定窗口句柄发送设置文本的消息
-            WinApiUtilsMet.SendMessage(vHandle, 0x000C, 0, text);        
+            WinApiUtils.SendMessage(vHandle, 0x000C, 0, text);        
         }
         
         // 保存为JAVA文件
@@ -398,9 +398,9 @@ namespace Core.StaticMethod.Method.Utils
             t.SelectionStart = t.TextLength;
 
             // 将文件路径写入到文本框tag数据中
-            TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.SAVE_FILE_PATH, path);
+            TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.SAVE_FILE_PATH, path);
             // 将文件编码写入到文本框tag数据中
-            TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
+            TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, encoding);
             // 监听文件变化并弹窗提醒
             monitorFileTextShowMess(path, t);
             t.Focus();
@@ -423,10 +423,10 @@ namespace Core.StaticMethod.Method.Utils
                     encoding = GetType(filepath);
                 }
                 // 判断文本框的Tag中是否纯在一个监听,存在就销毁他
-                if(TextBoxUtilsMet.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR)){
-                    object obj = TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
+                if(TextBoxUtils.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR)){
+                    object obj = TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
                     if(obj.GetType().Equals(typeof(FileSystemWatcher))) { 
-                        wat =(FileSystemWatcher) TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
+                        wat =(FileSystemWatcher) TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR];
                         wat.EnableRaisingEvents = false;
                         wat.Dispose();
                     }
@@ -442,11 +442,11 @@ namespace Core.StaticMethod.Method.Utils
                         Form f = t.FindForm();
                         if(f.InvokeRequired) { 
                             f.Invoke(new EventHandler(delegate{ 
-                                WinApiUtilsMet.flashWindesTime(f.Handle, 400, 3, true);
+                                WinApiUtils.flashWindesTime(f.Handle, 400, 3, true);
                             }));
                         }
                         // 弹出对话框
-                        ControlsUtilsMet.ShowAskMessBox("文件内容已经更改,是否要重新加载文件", "提示"
+                        ControlsUtils.ShowAskMessBox("文件内容已经更改,是否要重新加载文件", "提示"
                         ,delegate{
                             if (t.InvokeRequired) {
                                 t.Invoke(new EventHandler(delegate {
@@ -462,7 +462,7 @@ namespace Core.StaticMethod.Method.Utils
                         MessageBox.Show("文件在磁盘上已经被删除或重命名！");
                 });
                 // 加入到文本框的tag数据中
-                TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR, wat);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_TAG_KEY_FILEMONITOR, wat);
             } catch {
                 MessageBox.Show("监听文件状态时发生异常");
             }

@@ -37,14 +37,14 @@ namespace EditCodeAssistant {
             // 打开拖入的文件到新标签中
             loadOpenFile();
             // 调节窗口位置
-            Location = FormUtislMet.MiddleForm(this);
+            Location = FormUtisl.MiddleForm(this);
         }
         /// <summary>
         /// 设置窗体的默认启动配置
         /// </summary>
         private void initRootForm()
         {
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ROOT_FORM_NAME);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.ROOT_FORM_NAME);
             this.Size = RootFormCongfig.ROOT_SIZE;
             this.BackColor = Color.White;
             this.Text = RootFormDataLib.ROOT_FORM_TEXT;
@@ -72,7 +72,7 @@ namespace EditCodeAssistant {
         private void loadOpenFile() {
           if(loadPath != null && loadPath.Length>0) {
               foreach (string p in loadPath) {// 遍历路径
-                 FileUtilsMet.SetTextBoxValByPath(MainTabControlUtils.GetNewPageTextBox(), p, Encoding.UTF8);
+                 FileUtils.SetTextBoxValByPath(MainTabControlUtils.GetNewPageTextBox(), p, Encoding.UTF8);
               }
           }
         }
@@ -184,11 +184,11 @@ namespace EditCodeAssistant {
 
         // 窗体得到焦点事件
         private void RootDisplayForm_Activated(object sender, EventArgs e) {
-            FormUtislMet.TopFormNoFocus(true, FormCacheFactory.getTopFormCache().Values.ToArray());
+            FormUtisl.TopFormNoFocus(true, FormCacheFactory.getTopFormCache().Values.ToArray());
         }
         // 窗体失去焦点事件
         private void RootDisplayForm_Deactivate(object sender, EventArgs e) {
-            FormUtislMet.TopFormNoFocus(false, FormCacheFactory.getTopFormCache().Values.ToArray());
+            FormUtisl.TopFormNoFocus(false, FormCacheFactory.getTopFormCache().Values.ToArray());
         }
 
         private void RootDisplayForm_VisibleChanged(object sender, EventArgs e) {

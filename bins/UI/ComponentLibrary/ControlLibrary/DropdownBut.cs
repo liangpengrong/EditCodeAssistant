@@ -68,7 +68,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
 
             Button but = this.下拉按钮_but;
             Button but2 = this.button1;
-            WinApiUtilsMet.AnimateWindow(but.Handle, 3000, 0x80000);
+            WinApiUtils.AnimateWindow(but.Handle, 3000, 0x80000);
             // 边框颜色
             but.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#ADADAD");
             but.BackColor = ColorTranslator.FromHtml("#E1E1E1");
@@ -79,11 +79,11 @@ namespace UI.ComponentLibrary.ControlLibrary {
         // 下拉按钮的点击事件
         private void but_Click(object sender, EventArgs e) {
             Button but = (Button)sender;
-            int x = ControlsUtilsMet.LocationOnClient(this.下拉按钮_pan).X;
+            int x = ControlsUtils.LocationOnClient(this.下拉按钮_pan).X;
             
             if(this.button1.Name.Equals(but.Name)) {
                 if(historicalPanel == null || historicalPanel.IsDisposed) { 
-                  historicalPanel = ControlsUtilsMet.GetHistoricalPanel(下拉按钮_but
+                  historicalPanel = ControlsUtils.GetHistoricalPanel(下拉按钮_but
                      , 下拉按钮_pan.Parent.FindForm().Controls
                      , false
                      , history

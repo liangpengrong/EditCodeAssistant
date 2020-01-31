@@ -12,7 +12,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于菜单控件的工具类
     /// </summary>
-    public static class ToolStripUtilsMet
+    public static class ToolStripUtils
     {
         /// <summary>
         /// 递归遍历右键菜单选项判断其有无子项,并且实现在有子菜单项，无子菜单，全部菜单下的方法执行
@@ -45,7 +45,7 @@ namespace Core.StaticMethod.Method.Utils
             tool.Closing += new ToolStripDropDownClosingEventHandler((object sender, ToolStripDropDownClosingEventArgs e)=>{ 
                 ToolStripDropDown menu = (ToolStripDropDown)sender;
                 Point mousePoint;//初始化一个接受鼠标位置的Point
-                WinApiUtilsMet.GetCursorPos(out mousePoint);//赋值
+                WinApiUtils.GetCursorPos(out mousePoint);//赋值
                 if (menu.ClientRectangle.Contains(mousePoint.X - menu.Left, mousePoint.Y - menu.Top)){
                     e.Cancel = true;//阻止关闭
                 } else {

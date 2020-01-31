@@ -21,7 +21,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.MAIN_CONTAINER);
             if(con == null) {
                 stripContainer = this;
-                stripContainer.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER);
+                stripContainer.Name = EnumUtils.GetDescription(DefaultNameEnum.MAIN_CONTAINER);
                 stripContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
                 stripContainer.Dock = DockStyle.None;
                 // 设置不被焦点选中
@@ -44,7 +44,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.MAIN_CONTAINER);
             if(con == null || !(con is RedrawMainContainer)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.MAIN_CONTAINER);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawMainContainer)con;
@@ -60,7 +60,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawMainContainer conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.MAIN_CONTAINER)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.MAIN_CONTAINER, conThis);

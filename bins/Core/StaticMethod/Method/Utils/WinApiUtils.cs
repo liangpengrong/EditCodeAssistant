@@ -10,7 +10,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于WindowsAPI的工具类
     /// </summary>
-    public class WinApiUtilsMet
+    public class WinApiUtils
     {
         /// <summary>
         /// 设置滚动条得到最小 最大值
@@ -204,7 +204,14 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="y"></param>
         /// <returns></returns>
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]  
-        public static extern int SetCursorPos(int x, int y);  
+        public static extern int SetCursorPos(int x, int y);
+        /// <summary>
+        /// 该函数将插入标记的位置（按客户区坐标）信息拷贝到指定的Point结构中
+        /// </summary>
+        /// <param name="lpPoint"></param>
+        /// <returns></returns>
+        [DllImport("user32")]
+        public static extern bool GetCaretPos(ref System.Drawing.Point lpPoint);
         /// <summary>
         /// 闪烁指定窗体
         /// </summary>

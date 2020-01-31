@@ -34,7 +34,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.SET_CODING_FORM);
             if(form == null || form.IsDisposed || !(form is SetCodingForm)) { 
                 formThis = this;
-                formThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SET_CODING_FORM);
+                formThis.Name = EnumUtils.GetDescription(DefaultNameEnum.SET_CODING_FORM);
                 // 将窗体放入单例窗体工厂中
                 formThis = FormCacheFactory.ininSingletonForm(formThis, false);
             } else {
@@ -53,7 +53,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             SetCodingForm formThis = this;
-            formThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SET_CODING_FORM)+DateTime.Now.Ticks.ToString();;
+            formThis.Name = EnumUtils.GetDescription(DefaultNameEnum.SET_CODING_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(formThis);
             // 加入到多例工厂
@@ -82,7 +82,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 Control conTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
                 List<TextBox> controls = null;
                 if (conTab != null && conTab is TabControl) { 
-                    ControlsUtilsMet.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
+                    ControlsUtils.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
                     if (controls.Count > 0 && controls[0] is TextBox) { 
                         textBox = controls[0];
                     }
@@ -93,7 +93,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 将文本框的编码赋值到label中
         /// </summary>
         private void textCodinCopyLab() {
-            Dictionary<string, object> textDic = TextBoxUtilsMet.GetTextTagToMap(textBox);
+            Dictionary<string, object> textDic = TextBoxUtils.GetTextTagToMap(textBox);
             if(textDic.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING)){ 
                 Encoding coding = (Encoding)textDic[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
                 textCoding = coding;
@@ -107,14 +107,14 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 设置下拉列表框的值
         /// </summary>
         private void setCodingSet() {
-            Dictionary<int, string> encDic = FileUtilsMet.GetBrieflyFileEncodingInfo();
+            Dictionary<int, string> encDic = FileUtils.GetBrieflyFileEncodingInfo();
             Dictionary<object, string> encDic2 = new Dictionary<object, string>();
             // 将int转为object
             foreach(KeyValuePair<int,string> kvp in encDic) { 
                 encDic2.Add(kvp.Key, kvp.Value);
             }
             // 设置下拉列表框的值
-            ControlsUtilsMet.SetComboBoxItems(coding_set, encDic2);
+            ControlsUtils.SetComboBoxItems(coding_set, encDic2);
             // 选定与文本框编写相同的项
             coding_set.SelectedValue = textCoding.CodePage;
             // 设置自动匹配
@@ -130,7 +130,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             int index = textBox.SelectionStart;
             int selLen = textBox.SelectionLength;
             // 文本框的Tag数据
-            Dictionary<string, object> tag = TextBoxUtilsMet.GetTextTagToMap(textBox);
+            Dictionary<string, object> tag = TextBoxUtils.GetTextTagToMap(textBox);
             // 获取选中的项的编码页码
             int codingInt = Encoding.UTF8.CodePage;
             if(coding_set.SelectedValue != null) {
@@ -147,7 +147,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 获取文本框的文本
             string text = "";
             if(tag.ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
-                text = FileUtilsMet.FileRead.Read(tag[TextBoxTagKey.SAVE_FILE_PATH].ToString(), coding);
+                text = FileUtils.FileRead.Read(tag[TextBoxTagKey.SAVE_FILE_PATH].ToString(), coding);
             } else { 
                 text = textBox.Text;
             }
@@ -160,7 +160,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             textBox.SelectionStart = index;
             textBox.SelectionLength = selLen;
             // 设置保持在Tag数据中的文本框编码
-            TextBoxUtilsMet.TextBoxAddTag(textBox, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, coding);
+            TextBoxUtils.TextBoxAddTag(textBox, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, coding);
         }
         /// <summary>
         /// 验证

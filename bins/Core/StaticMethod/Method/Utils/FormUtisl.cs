@@ -10,7 +10,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于窗体的工具类
     /// </summary>
-    public static class FormUtislMet
+    public static class FormUtisl
     {
         /// <summary>
         /// 退出主程序，结束进程
@@ -56,10 +56,10 @@ namespace Core.StaticMethod.Method.Utils
             if(form == null || form.IsDisposed) return;
             if (form != null) {
                 if (isTop) {
-                    WinApiUtilsMet.setFormTopNoFocus(true, form);
+                    WinApiUtils.setFormTopNoFocus(true, form);
                 } else {
-                    if (!WinApiUtilsMet.GetForegroundWindow().Equals(form.Handle)) {
-                        WinApiUtilsMet.setFormTopNoFocus(false, form);
+                    if (!WinApiUtils.GetForegroundWindow().Equals(form.Handle)) {
+                        WinApiUtils.setFormTopNoFocus(false, form);
                     }
                 }
             }
@@ -79,12 +79,12 @@ namespace Core.StaticMethod.Method.Utils
                     // 判断是否要设置为顶层
                     if(isTop) {
                         // 设为顶层
-                        WinApiUtilsMet.setFormTopNoFocus(true, form);
+                        WinApiUtils.setFormTopNoFocus(true, form);
                     } else {
                         // 判断当前前台窗口是否为要设置的窗口
-                        if(form.TopLevel && !WinApiUtilsMet.GetForegroundWindow().Equals(form.Handle)) {
+                        if(form.TopLevel && !WinApiUtils.GetForegroundWindow().Equals(form.Handle)) {
                             // 将窗口设置为非顶层
-                            WinApiUtilsMet.setFormTopNoFocus(false, form);
+                            WinApiUtils.setFormTopNoFocus(false, form);
                         }
                     }
                 }
@@ -96,7 +96,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="name">窗体标题名</param>
         /// <returns></returns>
         public static IntPtr GetProcessFormByName(string headName) {
-            IntPtr intPtr = WinApiUtilsMet.FindWindow(null, headName);
+            IntPtr intPtr = WinApiUtils.FindWindow(null, headName);
             return intPtr;
         }
 

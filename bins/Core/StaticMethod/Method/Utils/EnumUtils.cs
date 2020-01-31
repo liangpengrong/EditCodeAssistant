@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 namespace Core.StaticMethod.Method.Utils {
-   public static class EnumUtilsMet {
+   public static class EnumUtils {
         /// <summary>
         /// 根据枚举获取对应的valueString值
         /// </summary>

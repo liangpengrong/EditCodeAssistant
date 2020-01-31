@@ -75,7 +75,7 @@ namespace Core.CacheLibrary.FormCache {
                 if(singForm == null) return retBool;
                 string fNamer = singForm.Name;
                 singForm.FormClosed += (object sender, FormClosedEventArgs e)=>{
-                    remSingletonCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name));
+                    remSingletonCache(EnumUtils.GetStrToDefaultName(((Form)sender).Name));
                 };
                 if(singletonCache.ContainsKey(fNamer)) { 
                     singletonCache[fNamer] = singForm;
@@ -96,10 +96,10 @@ namespace Core.CacheLibrary.FormCache {
         public static bool addPrototypeCache(DefaultNameEnum name, Form protForm) {
             bool retBool = false;
             try {
-                string key = EnumUtilsMet.GetDescription(name);
+                string key = EnumUtils.GetDescription(name);
                 if(protForm == null) return retBool;
                 protForm.FormClosed += (object sender, FormClosedEventArgs e)=>{
-                    remPrototypeCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name), (Form)sender);
+                    remPrototypeCache(EnumUtils.GetStrToDefaultName(((Form)sender).Name), (Form)sender);
                 };
                 if(prototypeCache.ContainsKey(key)) { 
                     Form[] formArr = prototypeCache[key];
@@ -123,7 +123,7 @@ namespace Core.CacheLibrary.FormCache {
             if(topform == null) return;
             string fNamer = topform.Name;
             topform.FormClosed += (object sender, FormClosedEventArgs e)=>{
-                remTopFormCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name));
+                remTopFormCache(EnumUtils.GetStrToDefaultName(((Form)sender).Name));
             };
             if(topFormCache.ContainsKey(fNamer)) { 
                 topFormCache[fNamer] = topform;
@@ -137,7 +137,7 @@ namespace Core.CacheLibrary.FormCache {
         /// <param name="name">窗口名</param>
         /// <returns>获取到的窗体</returns>
         public static Form getSingletonCache(DefaultNameEnum name) { 
-            string key = EnumUtilsMet.GetDescription(name);
+            string key = EnumUtils.GetDescription(name);
             if (singletonCache.ContainsKey(key)) { 
                 return singletonCache[key];
             } else { 
@@ -150,7 +150,7 @@ namespace Core.CacheLibrary.FormCache {
         /// <param name="name">窗口名</param>
         /// <returns>获取到的窗体</returns>
         public static Form[] getPrototypeCache(DefaultNameEnum name) { 
-            string key = EnumUtilsMet.GetDescription(name);
+            string key = EnumUtils.GetDescription(name);
             if (prototypeCache.ContainsKey(key)) { 
                 return prototypeCache[key];
             } else { 
@@ -163,7 +163,7 @@ namespace Core.CacheLibrary.FormCache {
         /// <param name="key"></param>
         /// <param name="protForm"></param>
         public static void remPrototypeCache(DefaultNameEnum name, Form protForm) { 
-            string key = EnumUtilsMet.GetDescription(name);
+            string key = EnumUtils.GetDescription(name);
             if(protForm == null) return;
             if(prototypeCache.ContainsKey(key)) { 
                 Form[] formArr = prototypeCache[key];
@@ -178,7 +178,7 @@ namespace Core.CacheLibrary.FormCache {
         /// <param name="key"></param>
         /// <param name="protForm"></param>
         public static void remSingletonCache(DefaultNameEnum name) { 
-            string key = EnumUtilsMet.GetDescription(name);
+            string key = EnumUtils.GetDescription(name);
             if(singletonCache.ContainsKey(key)) {
                 singletonCache.Remove(key);
             }
@@ -189,7 +189,7 @@ namespace Core.CacheLibrary.FormCache {
         /// <param name="key"></param>
         /// <param name="protForm"></param>
         public static void remTopFormCache(DefaultNameEnum name) { 
-            string key = EnumUtilsMet.GetDescription(name);
+            string key = EnumUtils.GetDescription(name);
             if(topFormCache.ContainsKey(key)) { 
                 topFormCache.Remove(key);
             }

@@ -104,16 +104,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="StaticMethod\Inter\MenuItemAopInter.cs" />
-    <Compile Include="StaticMethod\Method\Utils\ApplicationExc.cs" />
-    <Compile Include="StaticMethod\Method\Utils\ControlsUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\EnumUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\FileUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\FormUtislMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\ToolStripUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\MessyUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\StringUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\TextBoxUtilsMet.cs" />
-    <Compile Include="StaticMethod\Method\Utils\WinApiUtilsMet.cs" />
+    <Compile Include="StaticMethod\Method\Utils\ApplicationException.cs" />
+    <Compile Include="StaticMethod\Method\Utils\ControlsUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\EnumUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\FileUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\FormUtisl.cs" />
+    <Compile Include="StaticMethod\Method\Utils\ToolStripUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\MessyUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\StringUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\TextBoxUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\WinApiUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

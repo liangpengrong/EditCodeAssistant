@@ -33,7 +33,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TEXT_RIGHT_MENU);
             if(con == null || !(con is ContextMenuStrip)) {
                 conThis = rightMenuStrip;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (ContextMenuStrip)con;
@@ -48,7 +48,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             ContextMenuStrip conThis = rightMenuStrip;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.TEXT_RIGHT_MENU, conThis);
@@ -68,12 +68,14 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// <summary>
         /// 判断文本框的右键菜单那些需要禁用那些需要启用
         /// </summary>
-        private void isMenuEnabled() {
+        private void doIsMenuEnabled() {
             TextBox t = menuSourceTextBox;
             try {
                 if (t != null) {
-                    bool readOnly = t.ReadOnly && t.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0;
-                    全选Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
+                    bool readOnly = t.ReadOnly && t.Name.IndexOf(EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0;
+                    全选Item.Enabled = !0.Equals(t.TextLength);
+                    选中整行Item.Enabled = !0.Equals(t.TextLength);
+                    智能选择Item.Enabled = !0.Equals(t.TextLength);
                     剪切Item.Enabled = !0.Equals(t.TextLength) && !readOnly;
                     复制Item.Enabled = !0.Equals(t.TextLength) && !0.Equals(t.SelectionLength);
                     粘贴Item.Enabled = !0.Equals(Clipboard.GetText().Length) && !readOnly;
@@ -102,13 +104,13 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
                 menuSourceTextBox = (TextBox)obj;
             }
             // 判断哪些选项需要隐藏
-            isMenuEnabled();
+            doIsMenuEnabled();
         }
         /// <summary>
         /// 右键菜单的默认配置
         /// </summary>
         private void menuDefaultConfig() {
-            rightMenuStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU);
+            rightMenuStrip.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXT_RIGHT_MENU);
             // 使用自定义的样式
             rightMenuStrip.Renderer = new RightStripRenderer();
             // 设置不具有Tab焦点
@@ -124,7 +126,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             rightMenuStrip.BackColor = Color.White;
             // 遍历右键菜单下所有的一级ToolStripMenuItem选项
             foreach (ToolStripMenuItem tool in rightMenuStrip.Items.OfType<ToolStripMenuItem>()) {
-                ToolStripUtilsMet.doIsDownItemAop(tool, this);
+                ToolStripUtils.doIsDownItemAop(tool, this);
             }
             // 调整右键菜单配置
             menuConfig();
@@ -171,21 +173,23 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         /// </summary>
         public void haveDownItem(ToolStripMenuItem tool)
         {
-        
+            // 为所有的子选项的选项绑定总的点击事件
+            tool.Click += new EventHandler(this.MenuItem_Click);
         }
         /// <summary>
         /// 当右键菜单无子项时的执行方法
         /// </summary>
         public void noDownItem(ToolStripMenuItem tool)
         {   
-            // 为所有的子选项的选项绑定总的点击事件
-            tool.Click += new EventHandler(this.MenuItem_Click);
+            
         }
         /// <summary>
         /// 全部右键菜单的执行方法
         /// </summary>
         public void allItem(ToolStripMenuItem tool)
         {
+            // 为所有的子选项的选项绑定总的点击事件
+            tool.Click += new EventHandler(this.MenuItem_Click);
             // 设置背景色
             if (allBackColor == null){
                 tool.BackColor = Color.White;//设置所有的选项背景色为白色
@@ -233,126 +237,159 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         private Dictionary<string, Delegate> eventBinding()
         {
             Dictionary<string, Delegate> toolBindingDic = new Dictionary<string, Delegate>();
+            /**===============委托区域============*/
+            methodDelegate allTextToLower = new methodDelegate((Dictionary<Type , object> data)=>{ 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                TextBoxUtils.TextBoxToLower(t, 0);
+                return null;
+            });
+            methodDelegate allTextToUpper = new methodDelegate((Dictionary<Type , object> data)=>{ 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                TextBoxUtils.TextBoxToUpper(t, 0);
+                return null;
+            });
+            methodDelegate clearAllSpaces = new methodDelegate((Dictionary<Type , object> data)=>{ 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxDeleteSpace(t);
+                return null;
+            });
+            /**===============绑定区域============*/
             toolBindingDic.Add(this.全选Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxAllSelect(t);
+                TextBoxUtils.TextBoxAllSelect(t);
                 return null;
             }));
             toolBindingDic.Add(this.选中整行Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                if (t is RedrawTextBox) {
+                    Point mousrP = ((RedrawTextBox)t).MouseMoveLocation;
+                    t.SelectionStart = t.GetCharIndexFromPosition(new Point(mousrP.X, mousrP.Y-6));
+                }
                 int i = t.GetFirstCharIndexOfCurrentLine();
-                t.Select(i, t.Lines[t.GetLineFromCharIndex(t.SelectionStart)].Length);
+                int len = t.Lines[t.GetLineFromCharIndex(i)].Length;
+                t.Select(i, len);
                 return null;
             }));
             toolBindingDic.Add(this.智能选择Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                if (t is RedrawTextBox) {
+                    Point mousrP = ((RedrawTextBox)t).MouseMoveLocation;
+                    t.SelectionStart = t.GetCharIndexFromPosition(new Point(mousrP.X, mousrP.Y-6));
+                }
                 intelligentSelectText(t);
                 return null;
             }));
             toolBindingDic.Add(this.剪切Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxCuttingText(t);
+                TextBoxUtils.TextBoxCuttingText(t);
                 return null;
             }));
             toolBindingDic.Add(this.复制Item.Name,new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxCopyText(t);
+                TextBoxUtils.TextBoxCopyText(t);
                 return null;
             }));
             toolBindingDic.Add(this.粘贴Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxPasteText(t);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                TextBoxUtils.TextBoxPasteText(t);
                 return null;
             }));
             toolBindingDic.Add(this.删除Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxDeleteText(t);
+                TextBoxUtils.TextBoxDeleteText(t);
                 return null;
             }));
-            toolBindingDic.Add(this.全部空格Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxDeleteSpace(t);
+            toolBindingDic.Add(this.去除_空格_Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
+                clearAllSpaces.Invoke(data);
+                rightMenuStrip.Close();
                 return null;
             }));
-            toolBindingDic.Add(this.行首空格Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.去除_空格_全部空格_Item.Name, clearAllSpaces);
+            toolBindingDic.Add(this.去除_空格_行首空格_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxDelRowFirstSpace(t);
+                TextBoxUtils.TextBoxDelRowFirstSpace(t);
                 return null;
             }));
-            toolBindingDic.Add(this.行尾空格Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.去除_空格_行尾空格_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxDelRowTailSpace(t);
+                TextBoxUtils.TextBoxDelRowTailSpace(t);
                 return null;
             }));
-            toolBindingDic.Add(this.空行Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.去除_空行_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxDelBlankLine(t);
+                TextBoxUtils.TextBoxDelBlankLine(t);
                 return null;
             }));
-            toolBindingDic.Add(this.换行符Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.去除_换行符_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxPlaceNewline(t);
+                TextBoxUtils.TextBoxPlaceNewline(t);
                 return null;
             }));
-            toolBindingDic.Add(this.制表符Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.去除_制表符_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxPlaceTabs(t);
+                TextBoxUtils.TextBoxPlaceTabs(t);
                 return null;
             }));
             toolBindingDic.Add(this.清空文本框Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxClearText(t);
+                TextBoxUtils.TextBoxClearText(t);
+                return null;
+            }));
+            toolBindingDic.Add(this.转化为_大写形式_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+                allTextToUpper.Invoke(data);
+                rightMenuStrip.Close();
+                return null;
+            }));
+            toolBindingDic.Add(this.转化为_大写形式_全部_Item.Name, allTextToUpper);
+            toolBindingDic.Add(this.转化为_大写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxToUpper(t, 1);
+                return null;
+            }));
+            toolBindingDic.Add(this.转化为_大写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxToUpper(t, 2);
+                return null;
+            }));
+            toolBindingDic.Add(this.转化为_大写形式_自定义_Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
+
                 return null;
             }));
 
-            toolBindingDic.Add(this.大写形式_全部_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToUpper(t, 0);
+            toolBindingDic.Add(this.转化为小写形式_Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
+                allTextToLower.Invoke(data);
+                rightMenuStrip.Close();
                 return null;
             }));
-            toolBindingDic.Add(this.大写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_小写形式_全部_Item.Name, allTextToLower);
+            toolBindingDic.Add(this.转化为_小写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToUpper(t, 1);
+                TextBoxUtils.TextBoxToLower(t, 1);
                 return null;
             }));
-            toolBindingDic.Add(this.大写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_小写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToUpper(t, 2);
+                TextBoxUtils.TextBoxToLower(t, 2);
                 return null;
             }));
-            toolBindingDic.Add(this.大写形式_自定义_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_小写形式_自定义_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 
                 return null;
             }));
 
-            toolBindingDic.Add(this.小写形式_全部_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_驼峰形式_大驼峰_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToLower(t, 0);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                TextBoxUtils.TextBoxToHump(t, 0);
                 return null;
             }));
-            toolBindingDic.Add(this.小写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_驼峰形式_小驼峰_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToLower(t, 1);
-                return null;
-            }));
-            toolBindingDic.Add(this.小写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToLower(t, 2);
-                return null;
-            }));
-            toolBindingDic.Add(this.小写形式_自定义_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                
-                return null;
-            }));
-
-            toolBindingDic.Add(this.驼峰形式_大驼峰_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToHump(t, 0);
-                return null;
-            }));
-            toolBindingDic.Add(this.驼峰形式_小驼峰_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
-                TextBox t = (TextBox)data[typeof(TextBox)];
-                TextBoxUtilsMet.TextBoxToHump(t, 1);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                TextBoxUtils.TextBoxToHump(t, 1);
                 return null;
             }));
             return toolBindingDic;
@@ -398,29 +435,29 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolImageDic.Add(this.转化为Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_ITEM_NAME);
             toolImageDic.Add(this.清空文本框Item, MainTextBRightMenuDataLib.ItemDataLib.清空文本框_ITEM_NAME);
 
-            toolImageDic.Add(this.空格Item, MainTextBRightMenuDataLib.ItemDataLib.空格_ITEM_NAME);
-            toolImageDic.Add(this.全部空格Item, MainTextBRightMenuDataLib.ItemDataLib.空格_ITEM_NAME);
-            toolImageDic.Add(this.行首空格Item, MainTextBRightMenuDataLib.ItemDataLib.行首空格_ITEM_NAME);
-            toolImageDic.Add(this.行尾空格Item, MainTextBRightMenuDataLib.ItemDataLib.行尾空格_ITEM_NAME);
-            toolImageDic.Add(this.空行Item, MainTextBRightMenuDataLib.ItemDataLib.空行_ITEM_NAME);
-            toolImageDic.Add(this.换行符Item, MainTextBRightMenuDataLib.ItemDataLib.换行符_ITEM_NAME);
-            toolImageDic.Add(this.制表符Item, MainTextBRightMenuDataLib.ItemDataLib.制表符_ITEM_NAME);
+            toolImageDic.Add(this.去除_空格_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_空格_ITEM_NAME);
+            toolImageDic.Add(this.去除_空格_全部空格_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_空格_全部空格_ITEM_NAME);
+            toolImageDic.Add(this.去除_空格_行首空格_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_空格_行首空格_ITEM_NAME);
+            toolImageDic.Add(this.去除_空格_行尾空格_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_空格_行尾空格_ITEM_NAME);
+            toolImageDic.Add(this.去除_空行_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_空行_ITEM_NAME);
+            toolImageDic.Add(this.去除_换行符_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_换行符_ITEM_NAME);
+            toolImageDic.Add(this.去除_制表符_Item, MainTextBRightMenuDataLib.ItemDataLib.去除_制表符_ITEM_NAME);
 
-            toolImageDic.Add(this.大写形式Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_ITEM_NAME);
-            toolImageDic.Add(this.大写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_全部_ITEM_NAME);
-            toolImageDic.Add(this.大写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_行首_ITEM_NAME);
-            toolImageDic.Add(this.大写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_行尾_ITEM_NAME);
-            toolImageDic.Add(this.大写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.大写形式_自定义_ITEM_NAME);
+            toolImageDic.Add(this.转化为_大写形式_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_大写形式_ITEM_NAME);
+            toolImageDic.Add(this.转化为_大写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_大写形式_全部_ITEM_NAME);
+            toolImageDic.Add(this.转化为_大写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_大写形式_行首_ITEM_NAME);
+            toolImageDic.Add(this.转化为_大写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_大写形式_行尾_ITEM_NAME);
+            toolImageDic.Add(this.转化为_大写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_大写形式_自定义_ITEM_NAME);
 
-            toolImageDic.Add(this.小写形式Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_ITEM_NAME);
-            toolImageDic.Add(this.小写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_全部_ITEM_NAME);
-            toolImageDic.Add(this.小写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_行首_ITEM_NAME);
-            toolImageDic.Add(this.小写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_行尾_ITEM_NAME);
-            toolImageDic.Add(this.小写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.小写形式_自定义_ITEM_NAME);
+            toolImageDic.Add(this.转化为小写形式_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_小写形式_ITEM_NAME);
+            toolImageDic.Add(this.转化为_小写形式_全部_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_小写形式_全部_ITEM_NAME);
+            toolImageDic.Add(this.转化为_小写形式_行首_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_小写形式_行首_ITEM_NAME);
+            toolImageDic.Add(this.转化为_小写形式_行尾_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_小写形式_行尾_ITEM_NAME);
+            toolImageDic.Add(this.转化为_小写形式_自定义_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_小写形式_自定义_ITEM_NAME);
 
-            toolImageDic.Add(this.驼峰形式Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_ITEM_NAME);
-            toolImageDic.Add(this.驼峰形式_大驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_大驼峰_ITEM_NAME);
-            toolImageDic.Add(this.驼峰形式_小驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.驼峰形式_小驼峰_ITEM_NAME);
+            toolImageDic.Add(this.转化为_驼峰形式_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_驼峰形式_ITEM_NAME);
+            toolImageDic.Add(this.转化为_驼峰形式_大驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_驼峰形式_大驼峰_ITEM_NAME);
+            toolImageDic.Add(this.转化为_驼峰形式_小驼峰_Item, MainTextBRightMenuDataLib.ItemDataLib.转化为_驼峰形式_小驼峰_ITEM_NAME);
 
             if (toolImageDic.ContainsKey(item)) { 
                 return toolImageDic[item];
@@ -432,7 +469,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         private void intelligentSelectText(TextBox t) { 
             int mouseIndex = t.SelectionStart;
             // 是否处于行的末尾
-            bool isMouseLineEnd = TextBoxUtilsMet.IsPointLineEnd(t, mouseIndex);
+            bool isMouseLineEnd = TextBoxUtils.IsPointLineEnd(t, mouseIndex);
             if(isMouseLineEnd) { 
                 // 选中整行
                 int i = t.GetFirstCharIndexOfCurrentLine();

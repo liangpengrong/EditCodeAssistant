@@ -13,7 +13,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 杂项工具类
     /// </summary>
-    public static class MessyUtilsMet
+    public static class MessyUtils
     {
         /// <summary>
         /// 当前环境下的换行符的长度

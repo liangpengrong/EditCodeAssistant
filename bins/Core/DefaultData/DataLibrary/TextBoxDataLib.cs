@@ -54,6 +54,10 @@ namespace Core.DefaultData.DataLibrary
         /// </summary>
         public const string TEXTBOX_IS_RESTORE = "textIsRestore";
         /// <summary>
+        /// 文本框不缓存空
+        /// </summary>
+        public const string TEXTBOX_EMPTY_NOT_CACHED = "textboxEmptyNotCached";
+        /// <summary>
         /// 是否触发了文件监听更改事件
         /// </summary>
         public const string IS_FILE_CHANG_EVENT = "isFileChangEvent";

@@ -45,7 +45,7 @@ namespace Core.CacheLibrary.ControlCache {
         public static bool addPrototypeCache(DefaultNameEnum name, Control protCon) { 
             bool retBool = false;
             try { 
-                string key = EnumUtilsMet.GetDescription(name);
+                string key = EnumUtils.GetDescription(name);
                 if(protCon == null) return retBool;
                 if(prototypeCache.ContainsKey(key)) { 
                     Control[] arr = prototypeCache[key];
@@ -68,7 +68,7 @@ namespace Core.CacheLibrary.ControlCache {
         /// <param name="singFormName">控件名</param>
         /// <returns>获取到的控件</returns>
         public static Control getSingletonCache(DefaultNameEnum singConName) { 
-            string key = EnumUtilsMet.GetDescription(singConName);
+            string key = EnumUtils.GetDescription(singConName);
             if (singletonCache.ContainsKey(key)) { 
                 return singletonCache[key];
             } else { 
@@ -84,15 +84,15 @@ namespace Core.CacheLibrary.ControlCache {
         public static T[] getSingletonChildCon<T>(DefaultNameEnum singConName) where T:Control{
             T[] retAll = null;
             // 全局单例控件工厂
-            if(singletonCache.ContainsKey(EnumUtilsMet.GetDescription(singConName))) { 
+            if(singletonCache.ContainsKey(EnumUtils.GetDescription(singConName))) { 
                 // 全局单例控件工厂
                 Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
-                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
+                if(single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
                     // 获取指定姓名的控件
-                    Control tabParent = single[EnumUtilsMet.GetDescription(singConName)];
+                    Control tabParent = single[EnumUtils.GetDescription(singConName)];
                     if(tabParent != null) { 
                         List<T> conList = new List<T>();
-                        ControlsUtilsMet.GetAllControlByType(ref conList, tabParent.Controls);
+                        ControlsUtils.GetAllControlByType(ref conList, tabParent.Controls);
                         if (conList != null && conList.Count > 0) { 
                             retAll = conList.ToArray();
                         }

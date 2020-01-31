@@ -81,26 +81,34 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
         /// <param name="keys"></param>
         /// <param name="mous"></param>
         /// <returns></returns>
-        private static Boolean isAddCasche(TextBox t) {
-            Dictionary<string, object> tag = TextBoxUtilsMet.GetTextTagToMap(t);
+        private static bool isAddCasche(TextBox t) {
+            Dictionary<string, object> tag = TextBoxUtils.GetTextTagToMap(t);
             if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_IS_CANCEL)) {
-                // 获取Tag数据中的撤销状态
                 bool cancel = (bool)tag[TextBoxTagKey.TEXTBOX_IS_CANCEL];
                 // 判断处于撤销时不加入到缓存
                 if(cancel) {
                     // 重置撤销状态
-                    TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, false);
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, false);
+                    return false;
+                } 
+                
+            }
+            if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED)) {
+                bool notCached = (bool)tag[TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED];
+                // 判断为空时不加入到缓存
+                if(notCached && t.TextLength == 0) {
+                    // 重置撤销状态
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, false);
                     return false;
                 } 
                 
             }
             if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_IS_RESTORE)) { 
-                // 获取Tag数据中的恢复状态
                 bool restore = (bool)tag[TextBoxTagKey.TEXTBOX_IS_RESTORE];
                 // 判断处于恢复时不加入到缓存
                 if(restore) {
                     // 重置恢复状态
-                    TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, false);
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, false);
                     return false;
                 } 
             }
@@ -179,8 +187,6 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
             return textM;
         }
     /*=================================策略生成区域===========================*/
-    /*=================================策略生成区域===========================*/
-    /*=================================策略生成区域===========================*/
         /// <summary>
         /// 缓存对象添加到缓存List集合时的添加策略
         /// </summary>
@@ -197,8 +203,8 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
             }
 
             // 判断是否输入了不同语言
-            if ( (StringUtilsMet.IsStrChines(textM.Text) && !StringUtilsMet.IsStrChines(upMod.Text))
-                || !StringUtilsMet.IsStrChines(textM.Text) && StringUtilsMet.IsStrChines(upMod.Text) ) { 
+            if ( (StringUtils.IsStrChines(textM.Text) && !StringUtils.IsStrChines(upMod.Text))
+                || !StringUtils.IsStrChines(textM.Text) && StringUtils.IsStrChines(upMod.Text) ) { 
                     
                 modList.Add(textM);
                 return modList;
@@ -213,7 +219,7 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
                 return modList;
             }
             // 判断鼠标左键或者右键按下
-            if (WinApiUtilsMet.GetAsyncKeyState(0x02) > 0|| WinApiUtilsMet.GetAsyncKeyState(0x01) > 0) {
+            if (WinApiUtils.GetAsyncKeyState(0x02) > 0|| WinApiUtils.GetAsyncKeyState(0x01) > 0) {
                 modList.Add(textM);
                 return modList;
             } else {
@@ -296,7 +302,6 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
                     t.SelectionLength = tMode.SelectLegth;
                     // 刷新索引
                     cacheIndexs[key] = index;
-                    
                 } else { 
                     cacheIndexs[key] = 0;
                     t.Text = "";

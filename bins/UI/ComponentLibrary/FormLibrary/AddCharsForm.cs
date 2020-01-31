@@ -56,7 +56,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.ADD_CHARS_FORM);
             if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
                 addChars = this;
-                addChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);
+                addChars.Name = EnumUtils.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);
                 addChars = FormCacheFactory.ininSingletonForm(addChars, false);
             } else {
                 addChars = (AddCharsForm)form;
@@ -73,7 +73,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             AddCharsForm addChars = this;
-            addChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_CHARS_FORM)+DateTime.Now.Ticks.ToString();;
+            addChars.Name = EnumUtils.GetDescription(DefaultNameEnum.ADD_CHARS_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(addChars);
             // 加入到多例工厂
@@ -84,7 +84,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         }
         // 初始化窗体默认配置
         private void initFormDefConfig() { 
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);    
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.ADD_CHARS_FORM);    
         }
         /// <summary>
         /// 初始化结果文本框
@@ -105,7 +105,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void ordinaryAddChars() {
             // 按照换行符分割
-            string[] strArr = StringUtilsMet.SplitStrToArray(text_val
+            string[] strArr = StringUtils.SplitStrToArray(text_val
                 ,new string[]{ Environment.NewLine}, true, false);
             //StringBuilder stringBuilder = new StringBuilder();
             //// 遍历数组并添加字符
@@ -120,7 +120,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             //string textVal = stringBuilder.ToString();
             //// 去除最后一个换行符
             //textVal = textVal.Substring(0, textVal.Length - Environment.NewLine.Length);
-            string textVal = StringUtilsMet.InsertLineFirstAndLast(text_val, head_text, end_text, isMatchBlack);
+            string textVal = StringUtils.InsertLineFirstAndLast(text_val, head_text, end_text, isMatchBlack);
             // 判断是否不匹配末尾
             if (!isMatchEnd) {
                 int noneLength = 0;
@@ -148,7 +148,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void addCharsMet() {
             // 获取当前标签的文本框
-            TextBox textBox = ControlsUtilsMet.GetSelectPageTextBox();
+            TextBox textBox = ControlsUtils.GetSelectPageTextBox();
             textBox = textBox != null? textBox : new TextBox();
             // 普通模式
             if(0.Equals(type)) {
@@ -171,7 +171,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         public void exportThisPage() {
             string s = resultTextBox.SelectionLength == 0? resultTextBox.Text : resultTextBox.SelectedText;
-            ControlsUtilsMet.ExportThisPage(s);
+            ControlsUtils.ExportThisPage(s);
         }
         /// <summary>
         /// 导出数据到记事本
@@ -180,9 +180,9 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <param name="excNoHaveTabs">不包含tab符号</param>
         public void exportNotepad() {
             if(resultTextBox.SelectionLength > 0) { 
-                FileUtilsMet.TurnOnNotepad(resultTextBox.SelectedText);
+                FileUtils.TurnOnNotepad(resultTextBox.SelectedText);
             } else { 
-                FileUtilsMet.TurnOnNotepad(resultTextBox.Text);
+                FileUtils.TurnOnNotepad(resultTextBox.Text);
             }
             
         }
@@ -265,7 +265,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         private void textHistoryRecord(string butName) {
             if (普通_行首历史but.Name.Equals(butName)) {
                 if (textHistory.ContainsKey(0) && textHistory[0].Length > 0) {
-                    Panel p = ControlsUtilsMet.GetHistoricalPanel(普通_行首text
+                    Panel p = ControlsUtils.GetHistoricalPanel(普通_行首text
                         , 普通_行首历史but.FindForm().Controls
                         , true
                         , textHistory[0]
@@ -277,7 +277,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             }
             if (普通_行尾历史but.Name.Equals(butName)) {
                 if (textHistory.ContainsKey(1) && textHistory[1].Length > 0) {
-                    Panel p = ControlsUtilsMet.GetHistoricalPanel(普通_行尾text
+                    Panel p = ControlsUtils.GetHistoricalPanel(普通_行尾text
                         , 普通_行尾历史but.FindForm().Controls
                         , true
                         , textHistory[1]
@@ -308,12 +308,12 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 设置图标
             this.AutoScaleMode = AutoScaleMode.None;
             // 调节窗口位置
-            this.Location = FormUtislMet.MiddleForm(this);
+            this.Location = FormUtisl.MiddleForm(this);
         }
         // 操作区容器重绘事件
         private void 普通_操作容器_Paint(object sender, PaintEventArgs e) {
             Panel panel = (Panel)sender;
-            ControlsUtilsMet.SetControlBorderStyle(e.Graphics, panel.ClientRectangle
+            ControlsUtils.SetControlBorderStyle(e.Graphics, panel.ClientRectangle
                 ,ButtonBorderStyle.Solid
                 ,0,0,0,1
                 , ColorTranslator.FromHtml("#D9D9D9"));

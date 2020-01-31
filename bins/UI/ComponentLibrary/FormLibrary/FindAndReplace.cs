@@ -87,7 +87,7 @@ namespace UI.ComponentLibrary.FormLibrary
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.FIND_REPLACE_FORM);
             if(form == null || form.IsDisposed || !(form is FindAndReplace)) { 
                 findAndReplace = this;
-                findAndReplace.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.FIND_REPLACE_FORM);
+                findAndReplace.Name = EnumUtils.GetDescription(DefaultNameEnum.FIND_REPLACE_FORM);
                 // 将窗体放入单例窗体工厂中
                 findAndReplace = FormCacheFactory.ininSingletonForm(findAndReplace, false);
             } else {
@@ -106,7 +106,7 @@ namespace UI.ComponentLibrary.FormLibrary
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             FindAndReplace findAndReplace = this;
-            findAndReplace.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.FIND_REPLACE_FORM)+DateTime.Now.Ticks.ToString();;
+            findAndReplace.Name = EnumUtils.GetDescription(DefaultNameEnum.FIND_REPLACE_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(findAndReplace);
             // 加入到多例工厂
@@ -125,7 +125,7 @@ namespace UI.ComponentLibrary.FormLibrary
                 List<TextBox> controls = null;
                 TextBox t = null;
                 if (conTab != null && conTab is TabControl && t == null) { 
-                    ControlsUtilsMet.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
+                    ControlsUtils.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
                     if (controls.Count > 0 && controls[0] is TextBox) { 
                         textBox = controls[0];
                     }
@@ -156,7 +156,7 @@ namespace UI.ComponentLibrary.FormLibrary
         private void FindAndReplace_Load(object sender, EventArgs e)
         {
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.查找替换,true);
+            this.Icon = MessyUtils.IamgeToIcon(Core.ImageResource.查找替换,true);
             this.StartPosition = FormStartPosition.CenterParent;
             if(textBox.SelectionLength == 0) { 
                 this.当前文档R.Checked = true;
@@ -164,7 +164,7 @@ namespace UI.ComponentLibrary.FormLibrary
                 this.选定内容R.Checked = true;
             }
             // 调节窗口位置
-            Location = FormUtislMet.MiddleForm(this);
+            Location = FormUtisl.MiddleForm(this);
             // 设置当前索引和总共的索引
             setCurrentLab();
         }
@@ -534,7 +534,7 @@ namespace UI.ComponentLibrary.FormLibrary
             if(isTextOrSelectT == 0) { 
               tempStr = textBox.Text;
               // 是否区分大小写
-              textBox.Text = StringUtilsMet.ReplaceCaseText(textBox.Text,findChars,repChars,isCass);
+              textBox.Text = StringUtils.ReplaceCaseText(textBox.Text,findChars,repChars,isCass);
             }
             //选中内容
             if(isTextOrSelectT == 1) {
@@ -542,7 +542,7 @@ namespace UI.ComponentLibrary.FormLibrary
               // 记录文本框起始选中位置
               int index = textBox.SelectionStart;
               // 是否区分大小写
-              string s = StringUtilsMet.ReplaceCaseText(textBox.SelectedText,findChars,repChars,isCass);
+              string s = StringUtils.ReplaceCaseText(textBox.SelectedText,findChars,repChars,isCass);
               // 将文本框的选中内容替换为替换后的内容
               textBox.SelectedText = s;
               // 将替换后的内容选中
@@ -561,7 +561,7 @@ namespace UI.ComponentLibrary.FormLibrary
         /// <returns></returns>
         private void repMessShow(string text, string findChars, Boolean isCase) { 
             string tempText = text;
-            int count =  StringUtilsMet.GetIndexOfAllCount(tempText, findChars, isCase);
+            int count =  StringUtils.GetIndexOfAllCount(tempText, findChars, isCase);
             //MessageBox.Show("已成功替换 "+count+" 处");
         }
         /// <summary>
@@ -799,7 +799,7 @@ namespace UI.ComponentLibrary.FormLibrary
         /// <param name="time"></param>
         /// <returns></returns>
         private ToolTip textTip(TextBox t, string tipVal, int x, int y, int time) { 
-            ToolTip toolTip = ControlsUtilsMet.GetControlMessTip(t,tipVal,x,y,time,
+            ToolTip toolTip = ControlsUtils.GetControlMessTip(t,tipVal,x,y,time,
                 ColorTranslator.FromHtml("#E7D5D5"), Color.Black);
             return toolTip;
         }
@@ -841,7 +841,7 @@ namespace UI.ComponentLibrary.FormLibrary
         private void historyBut_Click(object sender, EventArgs e) {
             Button but = (Button)sender;
             if(查找历史B.Name.Equals(but.Name)) {
-                ControlsUtilsMet.GetHistoricalPanel(查找内容T
+                ControlsUtils.GetHistoricalPanel(查找内容T
                     , but.FindForm().Controls
                     , true
                     , findHistorical.ToArray()
@@ -849,7 +849,7 @@ namespace UI.ComponentLibrary.FormLibrary
                     , 22);
             }
             if(替换历史B.Name.Equals(but.Name)) {
-                ControlsUtilsMet.GetHistoricalPanel(替换内容T
+                ControlsUtils.GetHistoricalPanel(替换内容T
                     , but.FindForm().Controls
                     , true
                     , repHistorical.ToArray()

@@ -26,7 +26,7 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// </summary>
         /// <returns></returns>
         public static object exitProgram(Dictionary<Type , object> data){ 
-            FormUtislMet.DropOut();
+            FormUtisl.DropOut();
             return null;
         }
         /// <summary>
@@ -53,7 +53,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                 // 非只读状态才能撤销
                 if (!t.ReadOnly) { 
                     // 将文本框置于撤销状态
-                    TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
                     TextBoxCache.cancelCache(t);
                 }
                 
@@ -72,7 +72,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                 // 非只读状态才能恢复
                 if (!t.ReadOnly) { 
                     // 将文本框置于恢复状态
-                    TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
                     TextBoxCache.restoreCache(t);
                 }
                 
@@ -108,7 +108,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                 // 获取文本框
                 TextBox t = (TextBox)data[typeof(TextBox)];
                 // 获取文本框的Tag数据
-                Dictionary<string,object> textDic = TextBoxUtilsMet.GetTextTagToMap(t);
+                Dictionary<string,object> textDic = TextBoxUtils.GetTextTagToMap(t);
                 // 定义初始化的路径
                 object path = null;
                 // 赋值路径
@@ -123,7 +123,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                     if(ee != null && ee is Encoding) encoding = (Encoding)ee;
                 } else { path = "";}
                 // 判断路径是否存在
-                if (path!=null&&FileUtilsMet.isFileUrl(path.ToString())) {
+                if (path!=null&&FileUtils.isFileUrl(path.ToString())) {
                     //if (path.ToString().Split('.')[path.ToString().Split('.').Length - 1].ToLower().Equals("txt"))
                     //{//判断文件后缀名是否为txt格式
                     if (MessageBox.Show(
@@ -131,7 +131,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                         , "保存提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         // 调用方法写入文件内容
-                        FileUtilsMet.FileWrite.WriteFile(path.ToString(), t.Text , encoding);
+                        FileUtils.FileWrite.WriteFile(path.ToString(), t.Text , encoding);
                     }
                     //} else {
                     //    MessageBox.Show("只保存TXT格式的文件");
@@ -151,14 +151,14 @@ namespace UI_TopMenuBar.TopMenuEvent
         /// </summary>
         /// <returns></returns>
         public static object textBoxFontReset(Dictionary<Type , object> data) { 
-            ControlsUtilsMet.ShowAskMessBox("是否恢复全部文本框的默认字体", "恢复默认字体",
+            ControlsUtils.ShowAskMessBox("是否恢复全部文本框的默认字体", "恢复默认字体",
             delegate { 
                 MainTextBConfig.TEXTBOX_FONT = TextBoxDataLibcs.TEXTBOX_FONT_DEF;
                 // 获取tab容器中的全部的主文本框
                 TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
                 if(textAll != null) {
                     foreach(TextBox textB in textAll) {
-                        if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                        if(textB.Name.IndexOf(EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
                             // 设置字体
                             textB.Font = TextBoxDataLibcs.TEXTBOX_FONT_DEF;
                         }
@@ -184,14 +184,14 @@ namespace UI_TopMenuBar.TopMenuEvent
                     DialogResult ok = dic.ContainsKey("2") && dic["2"] is DialogResult? (DialogResult)dic["2"] : DialogResult.None;
                     if(DialogResult.OK.Equals(ok) && fontD !=  null) {
                         // 询问是否将该字体应用到全部的文本框
-                        ControlsUtilsMet.ShowAskMessBox("是否将该字体应用到全部的文本框中", "设置字体", 
+                        ControlsUtils.ShowAskMessBox("是否将该字体应用到全部的文本框中", "设置字体", 
                         delegate{ 
                             MainTextBConfig.TEXTBOX_FONT = fontD.Font;
                             // 获取tab容器中的全部的主文本框
                             TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
                             if(textAll != null) {
                                 foreach(TextBox textB in textAll) {
-                                    if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                                    if(textB.Name.IndexOf(EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
                                         // 设置字体
                                         textB.Font = fontD.Font;
                                     }
@@ -215,7 +215,7 @@ namespace UI_TopMenuBar.TopMenuEvent
             // 获取文本框
             if (data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] is TextBox) { 
                 TextBox t = (TextBox)data[typeof(TextBox)];
-                FileUtilsMet.TurnOnNotepad(t.Text);
+                FileUtils.TurnOnNotepad(t.Text);
             } else { 
                 MessageBox.Show("无法获取文本框");    
             }
@@ -239,7 +239,7 @@ namespace UI_TopMenuBar.TopMenuEvent
                 TextBox[] textAll = ControlCacheFactory.getSingletonChildCon<TextBox>(DefaultNameEnum.TAB_CONTENT);
                 if(textAll != null) {
                     foreach(TextBox textB in textAll) {
-                        if(textB.Name.IndexOf(EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
+                        if(textB.Name.IndexOf(EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)) >= 0) { 
                             // 设置自动换行
                             textB.WordWrap = check;
                         }
@@ -261,11 +261,11 @@ namespace UI_TopMenuBar.TopMenuEvent
                 ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
                 // 全局单例控件工厂
                 Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
-                if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
+                if(single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)) && single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT))) { 
                     // 状态栏
-                    Control toolStrip = single[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)];
+                    Control toolStrip = single[EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)];
                     // 标签容器的父容器
-                    Control tabParent = single[EnumUtilsMet.GetDescription(DefaultNameEnum.MAIN_CONTAINER)];
+                    Control tabParent = single[EnumUtils.GetDescription(DefaultNameEnum.MAIN_CONTAINER)];
                     // 设置状态栏显示与隐藏
                     bool check = item.Checked;
                     toolStrip.Visible = check;

@@ -27,6 +27,7 @@
             this.rightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.全选Item = new System.Windows.Forms.ToolStripMenuItem();
             this.选中整行Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.智能选择Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.剪切Item = new System.Windows.Forms.ToolStripMenuItem();
             this.复制Item = new System.Windows.Forms.ToolStripMenuItem();
@@ -34,30 +35,29 @@
             this.删除Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.去除Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.空格Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.全部空格Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.行首空格Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.行尾空格Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.空行Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.换行符Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.制表符Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_空格_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_空格_全部空格_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_空格_行首空格_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_空格_行尾空格_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_空行_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_换行符_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.去除_制表符_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.转化为Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.大写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.小写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式_大驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.驼峰形式_小驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_大写形式_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_大写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_大写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_大写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_大写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为小写形式_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_小写形式_全部_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_小写形式_行首_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_小写形式_行尾_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_小写形式_自定义_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_驼峰形式_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_驼峰形式_大驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.转化为_驼峰形式_小驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.清空文本框Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.智能选择Item = new System.Windows.Forms.ToolStripMenuItem();
             this.rightMenuStrip.SuspendLayout();
             // 
             // rightMenuStrip
@@ -93,6 +93,12 @@
             this.选中整行Item.Name = "选中整行Item";
             this.选中整行Item.Size = new System.Drawing.Size(136, 22);
             this.选中整行Item.Text = "选中整行";
+            // 
+            // 智能选择Item
+            // 
+            this.智能选择Item.Name = "智能选择Item";
+            this.智能选择Item.Size = new System.Drawing.Size(136, 22);
+            this.智能选择Item.Text = "智能选择";
             // 
             // toolStripSeparator1
             // 
@@ -131,168 +137,168 @@
             // 去除Item
             // 
             this.去除Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.空格Item,
-            this.空行Item,
-            this.换行符Item,
-            this.制表符Item});
+            this.去除_空格_Item,
+            this.去除_空行_Item,
+            this.去除_换行符_Item,
+            this.去除_制表符_Item});
             this.去除Item.Name = "去除Item";
             this.去除Item.Size = new System.Drawing.Size(136, 22);
             this.去除Item.Text = "去除";
             // 
-            // 空格Item
+            // 去除_空格_Item
             // 
-            this.空格Item.BackColor = System.Drawing.SystemColors.Control;
-            this.空格Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.全部空格Item,
-            this.行首空格Item,
-            this.行尾空格Item});
-            this.空格Item.Name = "空格Item";
-            this.空格Item.Size = new System.Drawing.Size(112, 22);
-            this.空格Item.Text = "空格";
-            this.空格Item.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.去除_空格_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_空格_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.去除_空格_全部空格_Item,
+            this.去除_空格_行首空格_Item,
+            this.去除_空格_行尾空格_Item});
+            this.去除_空格_Item.Name = "去除_空格_Item";
+            this.去除_空格_Item.Size = new System.Drawing.Size(112, 22);
+            this.去除_空格_Item.Text = "空格";
+            this.去除_空格_Item.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             // 
-            // 全部空格Item
+            // 去除_空格_全部空格_Item
             // 
-            this.全部空格Item.BackColor = System.Drawing.SystemColors.Control;
-            this.全部空格Item.Name = "全部空格Item";
-            this.全部空格Item.Size = new System.Drawing.Size(100, 22);
-            this.全部空格Item.Text = "全部";
+            this.去除_空格_全部空格_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_空格_全部空格_Item.Name = "去除_空格_全部空格_Item";
+            this.去除_空格_全部空格_Item.Size = new System.Drawing.Size(100, 22);
+            this.去除_空格_全部空格_Item.Text = "全部";
             // 
-            // 行首空格Item
+            // 去除_空格_行首空格_Item
             // 
-            this.行首空格Item.BackColor = System.Drawing.SystemColors.Control;
-            this.行首空格Item.Name = "行首空格Item";
-            this.行首空格Item.Size = new System.Drawing.Size(100, 22);
-            this.行首空格Item.Text = "行首";
+            this.去除_空格_行首空格_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_空格_行首空格_Item.Name = "去除_空格_行首空格_Item";
+            this.去除_空格_行首空格_Item.Size = new System.Drawing.Size(100, 22);
+            this.去除_空格_行首空格_Item.Text = "行首";
             // 
-            // 行尾空格Item
+            // 去除_空格_行尾空格_Item
             // 
-            this.行尾空格Item.BackColor = System.Drawing.SystemColors.Control;
-            this.行尾空格Item.Name = "行尾空格Item";
-            this.行尾空格Item.Size = new System.Drawing.Size(100, 22);
-            this.行尾空格Item.Text = "行尾";
+            this.去除_空格_行尾空格_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_空格_行尾空格_Item.Name = "去除_空格_行尾空格_Item";
+            this.去除_空格_行尾空格_Item.Size = new System.Drawing.Size(100, 22);
+            this.去除_空格_行尾空格_Item.Text = "行尾";
             // 
-            // 空行Item
+            // 去除_空行_Item
             // 
-            this.空行Item.BackColor = System.Drawing.SystemColors.Control;
-            this.空行Item.Name = "空行Item";
-            this.空行Item.Size = new System.Drawing.Size(112, 22);
-            this.空行Item.Text = "空行";
+            this.去除_空行_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_空行_Item.Name = "去除_空行_Item";
+            this.去除_空行_Item.Size = new System.Drawing.Size(112, 22);
+            this.去除_空行_Item.Text = "空行";
             // 
-            // 换行符Item
+            // 去除_换行符_Item
             // 
-            this.换行符Item.BackColor = System.Drawing.SystemColors.Control;
-            this.换行符Item.Name = "换行符Item";
-            this.换行符Item.Size = new System.Drawing.Size(112, 22);
-            this.换行符Item.Text = "换行符";
+            this.去除_换行符_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_换行符_Item.Name = "去除_换行符_Item";
+            this.去除_换行符_Item.Size = new System.Drawing.Size(112, 22);
+            this.去除_换行符_Item.Text = "换行符";
             // 
-            // 制表符Item
+            // 去除_制表符_Item
             // 
-            this.制表符Item.BackColor = System.Drawing.SystemColors.Control;
-            this.制表符Item.Name = "制表符Item";
-            this.制表符Item.Size = new System.Drawing.Size(112, 22);
-            this.制表符Item.Text = "制表符";
+            this.去除_制表符_Item.BackColor = System.Drawing.SystemColors.Control;
+            this.去除_制表符_Item.Name = "去除_制表符_Item";
+            this.去除_制表符_Item.Size = new System.Drawing.Size(112, 22);
+            this.去除_制表符_Item.Text = "制表符";
             // 
             // 转化为Item
             // 
             this.转化为Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.大写形式Item,
-            this.小写形式Item,
-            this.驼峰形式Item});
+            this.转化为_大写形式_Item,
+            this.转化为小写形式_Item,
+            this.转化为_驼峰形式_Item});
             this.转化为Item.Name = "转化为Item";
             this.转化为Item.Size = new System.Drawing.Size(136, 22);
             this.转化为Item.Text = "转化为";
             // 
-            // 大写形式Item
+            // 转化为_大写形式_Item
             // 
-            this.大写形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.大写形式_全部_Item,
-            this.大写形式_行首_Item,
-            this.大写形式_行尾_Item,
-            this.大写形式_自定义_Item});
-            this.大写形式Item.Name = "大写形式Item";
-            this.大写形式Item.Size = new System.Drawing.Size(124, 22);
-            this.大写形式Item.Text = "大写形式";
+            this.转化为_大写形式_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.转化为_大写形式_全部_Item,
+            this.转化为_大写形式_行首_Item,
+            this.转化为_大写形式_行尾_Item,
+            this.转化为_大写形式_自定义_Item});
+            this.转化为_大写形式_Item.Name = "转化为_大写形式_Item";
+            this.转化为_大写形式_Item.Size = new System.Drawing.Size(124, 22);
+            this.转化为_大写形式_Item.Text = "大写形式";
             // 
-            // 大写形式_全部_Item
+            // 转化为_大写形式_全部_Item
             // 
-            this.大写形式_全部_Item.Name = "大写形式_全部_Item";
-            this.大写形式_全部_Item.Size = new System.Drawing.Size(118, 22);
-            this.大写形式_全部_Item.Text = "全部";
+            this.转化为_大写形式_全部_Item.Name = "转化为_大写形式_全部_Item";
+            this.转化为_大写形式_全部_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_大写形式_全部_Item.Text = "全部";
             // 
-            // 大写形式_行首_Item
+            // 转化为_大写形式_行首_Item
             // 
-            this.大写形式_行首_Item.Name = "大写形式_行首_Item";
-            this.大写形式_行首_Item.Size = new System.Drawing.Size(118, 22);
-            this.大写形式_行首_Item.Text = "行首";
+            this.转化为_大写形式_行首_Item.Name = "转化为_大写形式_行首_Item";
+            this.转化为_大写形式_行首_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_大写形式_行首_Item.Text = "行首";
             // 
-            // 大写形式_行尾_Item
+            // 转化为_大写形式_行尾_Item
             // 
-            this.大写形式_行尾_Item.Name = "大写形式_行尾_Item";
-            this.大写形式_行尾_Item.Size = new System.Drawing.Size(118, 22);
-            this.大写形式_行尾_Item.Text = "行尾";
+            this.转化为_大写形式_行尾_Item.Name = "转化为_大写形式_行尾_Item";
+            this.转化为_大写形式_行尾_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_大写形式_行尾_Item.Text = "行尾";
             // 
-            // 大写形式_自定义_Item
+            // 转化为_大写形式_自定义_Item
             // 
-            this.大写形式_自定义_Item.Name = "大写形式_自定义_Item";
-            this.大写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
-            this.大写形式_自定义_Item.Text = "自定义..";
+            this.转化为_大写形式_自定义_Item.Name = "转化为_大写形式_自定义_Item";
+            this.转化为_大写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_大写形式_自定义_Item.Text = "自定义..";
             // 
-            // 小写形式Item
+            // 转化为小写形式_Item
             // 
-            this.小写形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.小写形式_全部_Item,
-            this.小写形式_行首_Item,
-            this.小写形式_行尾_Item,
-            this.小写形式_自定义_Item});
-            this.小写形式Item.Name = "小写形式Item";
-            this.小写形式Item.Size = new System.Drawing.Size(124, 22);
-            this.小写形式Item.Text = "小写形式";
+            this.转化为小写形式_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.转化为_小写形式_全部_Item,
+            this.转化为_小写形式_行首_Item,
+            this.转化为_小写形式_行尾_Item,
+            this.转化为_小写形式_自定义_Item});
+            this.转化为小写形式_Item.Name = "转化为小写形式_Item";
+            this.转化为小写形式_Item.Size = new System.Drawing.Size(124, 22);
+            this.转化为小写形式_Item.Text = "小写形式";
             // 
-            // 小写形式_全部_Item
+            // 转化为_小写形式_全部_Item
             // 
-            this.小写形式_全部_Item.Name = "小写形式_全部_Item";
-            this.小写形式_全部_Item.Size = new System.Drawing.Size(118, 22);
-            this.小写形式_全部_Item.Text = "全部";
+            this.转化为_小写形式_全部_Item.Name = "转化为_小写形式_全部_Item";
+            this.转化为_小写形式_全部_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_小写形式_全部_Item.Text = "全部";
             // 
-            // 小写形式_行首_Item
+            // 转化为_小写形式_行首_Item
             // 
-            this.小写形式_行首_Item.Name = "小写形式_行首_Item";
-            this.小写形式_行首_Item.Size = new System.Drawing.Size(118, 22);
-            this.小写形式_行首_Item.Text = "行首";
+            this.转化为_小写形式_行首_Item.Name = "转化为_小写形式_行首_Item";
+            this.转化为_小写形式_行首_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_小写形式_行首_Item.Text = "行首";
             // 
-            // 小写形式_行尾_Item
+            // 转化为_小写形式_行尾_Item
             // 
-            this.小写形式_行尾_Item.Name = "小写形式_行尾_Item";
-            this.小写形式_行尾_Item.Size = new System.Drawing.Size(118, 22);
-            this.小写形式_行尾_Item.Text = "行尾";
+            this.转化为_小写形式_行尾_Item.Name = "转化为_小写形式_行尾_Item";
+            this.转化为_小写形式_行尾_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_小写形式_行尾_Item.Text = "行尾";
             // 
-            // 小写形式_自定义_Item
+            // 转化为_小写形式_自定义_Item
             // 
-            this.小写形式_自定义_Item.Name = "小写形式_自定义_Item";
-            this.小写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
-            this.小写形式_自定义_Item.Text = "自定义..";
+            this.转化为_小写形式_自定义_Item.Name = "转化为_小写形式_自定义_Item";
+            this.转化为_小写形式_自定义_Item.Size = new System.Drawing.Size(118, 22);
+            this.转化为_小写形式_自定义_Item.Text = "自定义..";
             // 
-            // 驼峰形式Item
+            // 转化为_驼峰形式_Item
             // 
-            this.驼峰形式Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.驼峰形式_大驼峰_Item,
-            this.驼峰形式_小驼峰_Item});
-            this.驼峰形式Item.Name = "驼峰形式Item";
-            this.驼峰形式Item.Size = new System.Drawing.Size(124, 22);
-            this.驼峰形式Item.Text = "驼峰形式";
+            this.转化为_驼峰形式_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.转化为_驼峰形式_大驼峰_Item,
+            this.转化为_驼峰形式_小驼峰_Item});
+            this.转化为_驼峰形式_Item.Name = "转化为_驼峰形式_Item";
+            this.转化为_驼峰形式_Item.Size = new System.Drawing.Size(124, 22);
+            this.转化为_驼峰形式_Item.Text = "驼峰形式";
             // 
-            // 驼峰形式_大驼峰_Item
+            // 转化为_驼峰形式_大驼峰_Item
             // 
-            this.驼峰形式_大驼峰_Item.Name = "驼峰形式_大驼峰_Item";
-            this.驼峰形式_大驼峰_Item.Size = new System.Drawing.Size(112, 22);
-            this.驼峰形式_大驼峰_Item.Text = "大驼峰";
+            this.转化为_驼峰形式_大驼峰_Item.Name = "转化为_驼峰形式_大驼峰_Item";
+            this.转化为_驼峰形式_大驼峰_Item.Size = new System.Drawing.Size(112, 22);
+            this.转化为_驼峰形式_大驼峰_Item.Text = "大驼峰";
             // 
-            // 驼峰形式_小驼峰_Item
+            // 转化为_驼峰形式_小驼峰_Item
             // 
-            this.驼峰形式_小驼峰_Item.Name = "驼峰形式_小驼峰_Item";
-            this.驼峰形式_小驼峰_Item.Size = new System.Drawing.Size(112, 22);
-            this.驼峰形式_小驼峰_Item.Text = "小驼峰";
+            this.转化为_驼峰形式_小驼峰_Item.Name = "转化为_驼峰形式_小驼峰_Item";
+            this.转化为_驼峰形式_小驼峰_Item.Size = new System.Drawing.Size(112, 22);
+            this.转化为_驼峰形式_小驼峰_Item.Text = "小驼峰";
             // 
             // toolStripSeparator3
             // 
@@ -304,12 +310,6 @@
             this.清空文本框Item.Name = "清空文本框Item";
             this.清空文本框Item.Size = new System.Drawing.Size(136, 22);
             this.清空文本框Item.Text = "清空文本框";
-            // 
-            // 智能选择Item
-            // 
-            this.智能选择Item.Name = "智能选择Item";
-            this.智能选择Item.Size = new System.Drawing.Size(136, 22);
-            this.智能选择Item.Text = "智能选择";
             this.rightMenuStrip.ResumeLayout(false);
 
         }
@@ -324,29 +324,29 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 去除Item;
-        private System.Windows.Forms.ToolStripMenuItem 空格Item;
-        private System.Windows.Forms.ToolStripMenuItem 全部空格Item;
-        private System.Windows.Forms.ToolStripMenuItem 行首空格Item;
-        private System.Windows.Forms.ToolStripMenuItem 行尾空格Item;
-        private System.Windows.Forms.ToolStripMenuItem 空行Item;
-        private System.Windows.Forms.ToolStripMenuItem 换行符Item;
-        private System.Windows.Forms.ToolStripMenuItem 制表符Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_空格_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_空格_全部空格_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_空格_行首空格_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_空格_行尾空格_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_空行_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_换行符_Item;
+        private System.Windows.Forms.ToolStripMenuItem 去除_制表符_Item;
         private System.Windows.Forms.ToolStripMenuItem 转化为Item;
-        private System.Windows.Forms.ToolStripMenuItem 大写形式Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写形式Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_大写形式_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为小写形式_Item;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem 驼峰形式Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_驼峰形式_Item;
         private System.Windows.Forms.ContextMenuStrip rightMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem 大写形式_全部_Item;
-        private System.Windows.Forms.ToolStripMenuItem 大写形式_行首_Item;
-        private System.Windows.Forms.ToolStripMenuItem 大写形式_行尾_Item;
-        private System.Windows.Forms.ToolStripMenuItem 大写形式_自定义_Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写形式_全部_Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写形式_行首_Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写形式_行尾_Item;
-        private System.Windows.Forms.ToolStripMenuItem 小写形式_自定义_Item;
-        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_大驼峰_Item;
-        private System.Windows.Forms.ToolStripMenuItem 驼峰形式_小驼峰_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_大写形式_全部_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_大写形式_行首_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_大写形式_行尾_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_大写形式_自定义_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_小写形式_全部_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_小写形式_行首_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_小写形式_行尾_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_小写形式_自定义_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_驼峰形式_大驼峰_Item;
+        private System.Windows.Forms.ToolStripMenuItem 转化为_驼峰形式_小驼峰_Item;
         private System.Windows.Forms.ToolStripMenuItem 选中整行Item;
         private System.Windows.Forms.ToolStripMenuItem 智能选择Item;
     }

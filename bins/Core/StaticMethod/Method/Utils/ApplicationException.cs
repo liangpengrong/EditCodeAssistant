@@ -10,7 +10,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 全局异常捕获
     /// </summary>
-    public class ApplicationExc
+    public class ApplicationException
     {
         /// <summary>
         /// 全局异常处理绑定类

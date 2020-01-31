@@ -30,7 +30,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.ASK_MESS_FORM);
             if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
                 askMessForm = this;
-                askMessForm.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ASK_MESS_FORM);
+                askMessForm.Name = EnumUtils.GetDescription(DefaultNameEnum.ASK_MESS_FORM);
                 askMessForm = FormCacheFactory.ininSingletonForm(askMessForm, false);
             } else {
                 askMessForm = (AskMessForm)form;
@@ -47,7 +47,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             AskMessForm askMessForm = this;
-            askMessForm.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ASK_MESS_FORM)+DateTime.Now.Ticks.ToString();;
+            askMessForm.Name = EnumUtils.GetDescription(DefaultNameEnum.ASK_MESS_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(askMessForm);
             // 加入到多例工厂

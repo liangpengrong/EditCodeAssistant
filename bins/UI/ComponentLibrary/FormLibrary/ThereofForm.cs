@@ -32,7 +32,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.THEREOF_FORM);
             if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
                 thereofForm = this;
-                thereofForm.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.THEREOF_FORM);
+                thereofForm.Name = EnumUtils.GetDescription(DefaultNameEnum.THEREOF_FORM);
                 thereofForm = FormCacheFactory.ininSingletonForm(thereofForm, false);
             } else {
                 thereofForm = (ThereofForm)form;
@@ -49,7 +49,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             ThereofForm thereofForm = this;
-            thereofForm.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.THEREOF_FORM)+DateTime.Now.Ticks.ToString();;
+            thereofForm.Name = EnumUtils.GetDescription(DefaultNameEnum.THEREOF_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(thereofForm);
             // 加入到多例工厂
@@ -61,9 +61,9 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 窗体加载事件
         private void ThereofForm_Load(object sender, EventArgs e) {
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.关于,true);
-            this.Text = "关于 " + EnumUtilsMet.GetDescription(DefaultNameEnum.PROGRAM_NAME);
-            this.programName.Text = "关于 " + EnumUtilsMet.GetDescription(DefaultNameEnum.PROGRAM_NAME);
+            this.Icon = MessyUtils.IamgeToIcon(Core.ImageResource.关于,true);
+            this.Text = "关于 " + EnumUtils.GetDescription(DefaultNameEnum.PROGRAM_NAME);
+            this.programName.Text = "关于 " + EnumUtils.GetDescription(DefaultNameEnum.PROGRAM_NAME);
             setVersion();
 
             // 组装Tab容器
@@ -78,7 +78,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         /// <returns></returns>
         private void setVersion() { 
-            string version = EnumUtilsMet.GetDescription(DefaultNameEnum.PROGRAM_NAME)+" 2018"+Environment.NewLine
+            string version = EnumUtils.GetDescription(DefaultNameEnum.PROGRAM_NAME)+" 2018"+Environment.NewLine
                 + "版本：1.0.2"+Environment.NewLine
                 + "内部修订版本：1.0.0.2"+Environment.NewLine
                 + "此应用是基于C#和.NET Framework 4.0开发，"
@@ -188,7 +188,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 string val = dicProcess[str].ToString();
                 strB.Append(string.Format("{0}： {1}{2}", str, val, Environment.NewLine));
             }
-            retStr = StringUtilsMet.TrimEndNewLine(strB.ToString());
+            retStr = StringUtils.TrimEndNewLine(strB.ToString());
             return retStr;
         }
 
@@ -209,7 +209,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                     strB.Append(string.Format("{0}： {1}{2}", name, folder, Environment.NewLine));
                 }
             }
-            retStr = StringUtilsMet.TrimEndNewLine(strB.ToString());
+            retStr = StringUtils.TrimEndNewLine(strB.ToString());
             return retStr;
         }
         /// <summary>

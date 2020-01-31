@@ -59,7 +59,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
             Font rowHeadFont = view.RowHeadersDefaultCellStyle.Font;
 
             // 开辟新线程执行方法
-            ControlsUtilsMet.AsynchronousMethod(view, 1, new EventHandler(delegate {
+            ControlsUtils.AsynchronousMethod(view, 1, new EventHandler(delegate {
                 //获取该单元格
                 DataGridViewCell cell = view.Rows[rowIndex].Cells[colIndex];
                 // 判断该列索引不为-1
@@ -156,7 +156,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
 
             // 判断剪贴板内容不为空并且选中单元格不为0
             if(text != null && text.Length > 0 && selCell.Count > 0) {
-                string[][] rowColArr = StringUtilsMet.SplitStrToArray(text, 
+                string[][] rowColArr = StringUtils.SplitStrToArray(text, 
                     new string[]{Environment.NewLine},new string[]{"\t"},true,true,true,true);
                 string[] endstrArr = rowColArr[rowColArr.Length - 1];
                 // 去除末尾的空行
@@ -170,7 +170,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
                 if(rowColArr.Length > rowsColns[0].Length || 
                     maxColu > rowsColns[1].Length) { 
                     // 弹出对话框
-                    ControlsUtilsMet.ShowAskMessBox("当前选定单元格与粘贴板的内容不一致,是否继续",
+                    ControlsUtils.ShowAskMessBox("当前选定单元格与粘贴板的内容不一致,是否继续",
                         "提示"
                     ,delegate{
                         // 判断列是否需要添加
@@ -357,7 +357,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
             string s = getDatatabelSelText(view, false);
             // 判断是否包含制表符
             if(excNoHaveTabs) {s = s.Replace("\t", "");}
-            ControlsUtilsMet.ExportThisPage(s);
+            ControlsUtils.ExportThisPage(s);
         }
         /// <summary>
         /// 导出表格数据到记事本
@@ -368,7 +368,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
             string s = getDatatabelSelText(view, false);
             // 不包含制表符
             if(excNoHaveTabs) {s = s.Replace("\t", "");}
-            FileUtilsMet.TurnOnNotepad(s);
+            FileUtils.TurnOnNotepad(s);
         }
         /// <summary>
         /// 导出表格数据到Excel

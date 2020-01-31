@@ -65,7 +65,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TOOL_START);
             if(con == null || !(con is RedrawStatusBar)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TOOL_START);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawStatusBar)con;
@@ -80,7 +80,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawStatusBar conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.TOOL_START, conThis);
@@ -102,7 +102,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         }
         // 加载状态栏默认配置
         private void initControlDefConfig() {
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.TOOL_START);
             this.AutoSize = false;
             this.BackColor = startsDefBackColor;
             this.Padding = new Padding(0,0,0,0);
@@ -340,7 +340,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 rigMenu.Show(point);
             };
             // 将右键菜单设置为鼠标在内时不关闭
-            ToolStripUtilsMet.ToolStripMoveOutClosing(rigMenu);
+            ToolStripUtils.ToolStripMoveOutClosing(rigMenu);
             ToolStripItemCollection tempArr = this.Items;
             foreach(ToolStripItem stripL in tempArr) {
                 item = new ToolStripMenuItem();
@@ -377,7 +377,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <param name="menu">需要重绘的菜单</param>
         private void paintStrutsBarFrame(object sender, PaintEventArgs e) {
             StatusStrip toolStrip = (StatusStrip)sender;
-            ControlsUtilsMet.SetControlBorderStyle(e.Graphics, toolStrip.ClientRectangle
+            ControlsUtils.SetControlBorderStyle(e.Graphics, toolStrip.ClientRectangle
                 , ButtonBorderStyle.Solid
                 , 0, 1, 0, 0
                 , Color.FromArgb(160, 160, 160));
@@ -408,7 +408,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         private void toolLabelMouseDown(object sender, MouseEventArgs e) {
             ToolStripStatusLabel lable = (ToolStripStatusLabel)sender;
             List<Control> textList = new List<Control>();
-            ControlsUtilsMet.GetAllControlByType(ref textList,ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT).Controls);
+            ControlsUtils.GetAllControlByType(ref textList,ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT).Controls);
             TextBox textBox = textList[0] is TextBox? (TextBox)textList[0] : new TextBox();
             //判断当前控件是否有与其关联的句柄并且按下的是左键
             if (this.IsHandleCreated&&e.Button.Equals(MouseButtons.Left)){
@@ -424,7 +424,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if (myDelegate!=null) {
                 Dictionary<Type, object> data = new Dictionary<Type, object>();
                 // 获取源控件中获取焦点的控件
-                Control focusCon = ControlsUtilsMet.GetFocueControlByType(SourceControlArr);
+                Control focusCon = ControlsUtils.GetFocueControlByType(SourceControlArr);
                 this.Invoke(myDelegate,new object[]{focusCon});
             }
         }
@@ -470,17 +470,17 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }));
             toolBindingDic.Add(StrutsStripDataLib.ItemName.大小写状态, new methodDelegate((Control con)=>{ 
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this, 1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this, 1, delegate{ 
                     ToolStripLabel lable = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.大小写状态];
                     byte[] bs = new byte[256];
                     //判断当前大小写1为大写
-                    WinApiUtilsMet.GetKeyboardState(bs);
+                    WinApiUtils.GetKeyboardState(bs);
                     if (bs[0x14].Equals(1)) {// 判断当前为大写
                         //设置为小写
-                        WinApiUtilsMet.SetCapitalState(false);
+                        WinApiUtils.SetCapitalState(false);
                         lable.Text = "小写";
                     } else {
-                        WinApiUtilsMet.SetCapitalState(true);
+                        WinApiUtils.SetCapitalState(true);
                         lable.Text = "大写";
                     }
                 });
@@ -497,7 +497,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     // 获取只读lable
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.只读状态];
                     t.ReadOnly = !t.ReadOnly;
@@ -509,7 +509,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     // 获取只读lable
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.只读状态];
                     g.ReadOnly = !g.ReadOnly;
@@ -530,18 +530,18 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { 
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(t,300, delegate{ 
-                    Dictionary<string, object> tag = TextBoxUtilsMet.GetTextTagToMap(t);
+                ControlsUtils.AsynchronousMethod(t,300, delegate{ 
+                    Dictionary<string, object> tag = TextBoxUtils.GetTextTagToMap(t);
                     Encoding ecoding = TextBoxDataLibcs.TEXTBOX_ECODING_DEF;
                     // 获取文本框中Tag中存的编码
                     if(tag.ContainsKey(TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING)) {
-                        ecoding = (Encoding)TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
+                        ecoding = (Encoding)TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING];
                     }
                     // 全局单例控件工厂
                     Dictionary<string, Control> single = ControlCacheFactory.getSingletonCache();
-                    if(single.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START))) { 
+                    if(single.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.TOOL_START))) { 
                         // 状态栏
-                        ToolStrip toolStrip = (ToolStrip)single[EnumUtilsMet.GetDescription(DefaultNameEnum.TOOL_START)];
+                        ToolStrip toolStrip = (ToolStrip)single[EnumUtils.GetDescription(DefaultNameEnum.TOOL_START)];
                         // 获取编码Item
                         ToolStripItem labEcoding = toolStrip.Items[StrutsStripDataLib.ItemName.编码];
                         labEcoding.Text = ecoding.BodyName.ToUpper();
@@ -555,10 +555,10 @@ namespace UI.ComponentLibrary.ControlLibrary {
         private void setCaseKey(Control con) {
             // 获取文本框
             // 开辟新线程执行方法
-            ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+            ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                 ToolStripLabel lable = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.大小写状态];
                 // 判断当前为大写
-                if (WinApiUtilsMet.GetCapitalState()){
+                if (WinApiUtils.GetCapitalState()){
                     lable.Text = "大写";
                 } else {
                     lable.Text = "小写";
@@ -572,18 +572,18 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 获取文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.总行数];
                     ToolStripLabel lable2 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.总字符数];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     string tag2 = lable2.Tag != null?lable2.Tag.ToString()+"：":"";
-                    lable1.Text = tag1+TextBoxUtilsMet.GetTextBoxTotalRow(t).ToString();
-                    lable2.Text = tag2+TextBoxUtilsMet.GetTextBoxChars(t, false).ToString();
+                    lable1.Text = tag1+TextBoxUtils.GetTextBoxTotalRow(t).ToString();
+                    lable2.Text = tag2+TextBoxUtils.GetTextBoxChars(t, false).ToString();
                 });
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.总行数];
                     ToolStripLabel lable2 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.总字符数];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
@@ -601,7 +601,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 获取文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中字符数];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     // 给状态栏赋值
@@ -610,7 +610,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中字符数];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     // 给状态栏赋值
@@ -625,7 +625,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中列];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     int selColum = DataGridViewUtilMet.getSelCellRowsColns(g)[1].Length;
@@ -640,7 +640,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.最大列];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     // 给状态栏赋值
@@ -654,7 +654,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中元素];
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString()+"：":"";
                     // 给状态栏赋值
@@ -668,9 +668,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 获取文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.行列数];
-                    int[] val = TextBoxUtilsMet.GetTextBoxRowColumn(t);
+                    int[] val = TextBoxUtils.GetTextBoxRowColumn(t);
                     string tag1 = lable1.Tag != null?lable1.Tag.ToString():"";
                     if (val != null) {
                         //将行与列赋值给label
@@ -681,7 +681,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.行列数];
                     int[] val = new int[]{ 
                         g.SelectedCells.Count>0? g.SelectedCells[0].RowIndex+1: 0, 
@@ -702,11 +702,11 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 获取文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中行];
                         int val = 0;
                         if(t.SelectedText.Length >0) { 
-                            val = StringUtilsMet.SplitStrToArray(t.SelectedText, 
+                            val = StringUtils.SplitStrToArray(t.SelectedText, 
                                 new string[]{Environment.NewLine}, true, false).Length; 
                         }
                         // 将选中行赋值给label
@@ -715,7 +715,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.选中行];
                     int val = DataGridViewUtilMet.getSelCellRowsColns(g)[0].Length;
                     // 将选中行赋值给label
@@ -729,7 +729,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if(con is TextBox) { // 获取文本框
                 TextBox t = (TextBox)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     // 获取只读lable
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.只读状态];
                     bool only = t.ReadOnly;
@@ -740,7 +740,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             }else if(con is DataGridView) { // 表格
                 DataGridView g = (DataGridView)con;
                 // 开辟新线程执行方法
-                ControlsUtilsMet.AsynchronousMethod(this,1, delegate{ 
+                ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                     // 获取只读lable
                     ToolStripLabel lable1 = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.只读状态];
                     bool only = g.ReadOnly;

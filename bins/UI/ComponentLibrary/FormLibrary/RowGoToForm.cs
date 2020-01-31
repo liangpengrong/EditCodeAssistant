@@ -41,7 +41,7 @@ namespace UI.ComponentLibrary.FormLibrary
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.ROW_GOTO_FORM);
             if(form == null || form.IsDisposed || !(form is RowGoToForm)) { 
                 formThis = this;
-                formThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ROW_GOTO_FORM);
+                formThis.Name = EnumUtils.GetDescription(DefaultNameEnum.ROW_GOTO_FORM);
                 // 将窗体放入单例窗体工厂中
                 formThis = FormCacheFactory.ininSingletonForm(formThis, false);
             } else {
@@ -60,7 +60,7 @@ namespace UI.ComponentLibrary.FormLibrary
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             RowGoToForm formThis = this;
-            formThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ROW_GOTO_FORM)+DateTime.Now.Ticks.ToString();;
+            formThis.Name = EnumUtils.GetDescription(DefaultNameEnum.ROW_GOTO_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(formThis);
             // 加入到多例工厂
@@ -78,9 +78,9 @@ namespace UI.ComponentLibrary.FormLibrary
         }
         private void initFormDefConfig() { 
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.转到行,true);
+            this.Icon = MessyUtils.IamgeToIcon(Core.ImageResource.转到行,true);
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ROW_GOTO_FORM);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.ROW_GOTO_FORM);
         }
         // 初始化数据
         private void initData() { 
@@ -105,7 +105,7 @@ namespace UI.ComponentLibrary.FormLibrary
                 Control conTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
                 List<TextBox> controls = null;
                 if(conTab != null && conTab is TabControl) { 
-                    ControlsUtilsMet.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
+                    ControlsUtils.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
                     if (controls.Count > 0 && controls[0] is TextBox) { 
                         textBox = controls[0];
                     }

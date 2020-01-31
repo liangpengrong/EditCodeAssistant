@@ -31,7 +31,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.PROMPT_MESSAGE);
             if(con == null || !(con is RedrawPromptMessBut)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.PROMPT_MESSAGE);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.PROMPT_MESSAGE);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawPromptMessBut)con;
@@ -47,7 +47,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawPromptMessBut conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.PROMPT_MESSAGE)+DateTime.Now.Ticks.ToString();
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.PROMPT_MESSAGE)+DateTime.Now.Ticks.ToString();
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.PROMPT_MESSAGE, conThis);
@@ -56,7 +56,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
 
         // 鼠标移入事件
         protected override void OnMouseEnter(EventArgs e) {
-            ToolTip toolTip = ControlsUtilsMet.GetControlMessTip(this, ButtonMess,
+            ToolTip toolTip = ControlsUtils.GetControlMessTip(this, ButtonMess,
             this.Width +2, -4, 10000, Color.White, Color.Black);
             this.Tag = toolTip;
             base.OnMouseEnter(e);
@@ -73,7 +73,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         }
         // 初始化默认配置
         private void initControlDefConfig() { 
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.PROMPT_MESSAGE);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.PROMPT_MESSAGE);
             this.Size = new Size(15,15);
             this.FlatStyle = FlatStyle.Flat;
             this.BackColor = Color.Transparent;

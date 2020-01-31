@@ -100,7 +100,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TEXTBOX_NAME_DEF);
             if(con == null || !(con is RedrawTextBox)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawTextBox)con;
@@ -115,7 +115,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawTextBox conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.TEXTBOX_NAME_DEF, conThis);
@@ -130,17 +130,17 @@ namespace UI.ComponentLibrary.ControlLibrary {
                ControlStyles.OptimizedDoubleBuffer |    // 该控件首先在缓冲区中绘制，而不是直接绘制到屏幕上，这样可以减少闪烁  
                ControlStyles.AllPaintingInWmPaint |     // 控件将忽略 WM_ERASEBKGND 窗口消息以减少闪烁  
                ControlStyles.ResizeRedraw |             // 在调整控件大小时重绘控件  
-               ControlStyles.SupportsTransparentBackColor // 控件接受 alpha 组件小于 255 的 BackColor 以模拟透明  
+               ControlStyles.SupportsTransparentBackColor // 控件接受 alpha 组件小于 255 的 BackColor 以模拟透明
                //ControlStyles.UserMouse // 自身处理鼠标事件
                ,
-               true);                               // 设置以上值为 true  
+               true);
             UpdateStyles(); 
         }
         // 设置文本框的默认配置
         private void initControlDefConfig() { 
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             // 文本框姓名
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF) + timeStr;
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF) + timeStr;
             this.TabStop = true;
             this.AllowDrop = true;
             this.BorderStyle = BorderStyle.None;
@@ -150,6 +150,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             this.Location = new Point(0, 0);
             this.MaxLength = 999999999;
             this.Multiline = true;
+            this.ShortcutsEnabled = false;
             this.ScrollBars = ScrollBars.Both;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             this.TabIndex = 0;
@@ -157,9 +158,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
             this.AcceptsTab = false;
             this.TextPadding = new Padding(3);
             // 将文件默认编码写入到文本框tag数据中
-            TextBoxUtilsMet.TextBoxAddTag(this, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, TextBoxDataLibcs.TEXTBOX_ECODING_DEF);
+            TextBoxUtils.TextBoxAddTag(this, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, TextBoxDataLibcs.TEXTBOX_ECODING_DEF);
             // 消除控件重绘闪烁
-            ControlsUtilsMet.ClearRedrawFlashing(this);
+            ControlsUtils.ClearRedrawFlashing(this);
         }
         // 调整大小事件
         protected override void OnResize(EventArgs e) {
@@ -276,7 +277,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             if (this.AllowDrop) { 
                 Array arrFile = (Array)e.Data.GetData(DataFormats.FileDrop);
                 string path = arrFile != null && arrFile.Length > 0? arrFile.GetValue(0).ToString() : null;
-                FileUtilsMet.SetTextBoxValByPath(this, path, Encoding.UTF8);
+                FileUtils.SetTextBoxValByPath(this, path, Encoding.UTF8);
             }
             base.OnDragDrop(e);
         }
@@ -286,7 +287,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void setTextDispLayout() {
             Rectangle rect = new Rectangle();
-            WinApiUtilsMet.SendMessage(Handle, 178, (IntPtr)0, ref rect);
+            WinApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
             int top = TextPadding != Padding.Empty? TextPadding.Top : 1;
             int bottom = TextPadding != Padding.Empty? TextPadding.Bottom : 1;
             int left = TextPadding != Padding.Empty? TextPadding.Left : 1;
@@ -296,7 +297,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             rect.Height = ClientSize.Height - bottom;
             rect.Width = ClientSize.Width - right;
 
-            WinApiUtilsMet.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
+            WinApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
         }
         // 重写GetCharIndexFromPosition方法
         public new int GetCharIndexFromPosition(Point p) { 
@@ -313,17 +314,17 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 TextBox t = this;
                 if(t.ReadOnly) MessageBox.Show("文本框为只读的");
                 // 全选
-                if(IsKeysCtrl && KeysDown.Equals(Keys.A)) {
-                    TextBoxUtilsMet.TextBoxAllSelect(t);
-                }
+                /*if(IsKeysCtrl && KeysDown.Equals(Keys.A)) {
+                    TextBoxUtils.TextBoxAllSelect(t);
+                }*/
                 // 启用缓存
-                if(IsEnabledCache) { 
+                /*if(IsEnabledCache) { 
                     // 撤销
                     if(IsKeysCtrl && KeysDown.Equals(Keys.Z)) { 
                         // 将文本框置于撤销状态
                         if (!t.ReadOnly) { 
                             // 将文本框置于撤销状态
-                            TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
+                            TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_CANCEL, true);
                             TextBoxCache.cancelCache(t);
                         }
                     }
@@ -333,11 +334,11 @@ namespace UI.ComponentLibrary.ControlLibrary {
                         // 非只读才能撤销
                         if (!t.ReadOnly) { 
                             // 将文本框置于恢复状态
-                            TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
+                            TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_IS_RESTORE, true);
                             TextBoxCache.restoreCache(t);
                         }
                     }
-                }
+                }*/
                 
             } catch(Exception exc) {
                 Console.WriteLine(exc.StackTrace);
@@ -352,12 +353,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = t.Parent;
             // 判断父容器是否为TabPage
             if(con.GetType().Equals(typeof(TabPage))) {
-                ControlsUtilsMet.AsynchronousMethod(t, 300, delegate{ 
+                ControlsUtils.AsynchronousMethod(t, 300, delegate{ 
                     // 判断Tag中是否存在保存路径
-                    if(TextBoxUtilsMet.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
-                        string filepath = TextBoxUtilsMet.GetTextTagToMap(t)[TextBoxTagKey.SAVE_FILE_PATH].ToString();
+                    if(TextBoxUtils.GetTextTagToMap(t).ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
+                        string filepath = TextBoxUtils.GetTextTagToMap(t)[TextBoxTagKey.SAVE_FILE_PATH].ToString();
                         TabPage page = (TabPage)t.Parent;
-                        string[] pathArr = FileUtilsMet.GetPathArr(filepath);
+                        string[] pathArr = FileUtils.GetPathArr(filepath);
                         page.ResetText();
                         
                         // 设置标签文本
@@ -387,7 +388,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         private void doubleClickSelectText() { 
             int mouseIndex = SelectionStart;
             // 是否处于行的末尾
-            bool isMouseLineEnd = TextBoxUtilsMet.IsPointLineEnd(this, mouseIndex);
+            bool isMouseLineEnd = TextBoxUtils.IsPointLineEnd(this, mouseIndex);
             if(isMouseLineEnd) { 
                 // 选中整行
                 int i = GetFirstCharIndexOfCurrentLine();
@@ -438,7 +439,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         // 开启或关闭鼠标选中文本的拖放
         private void diIsSelectTextDrag() { 
             // 判断是否要启用拖放操作
-            ControlsUtilsMet.AsynchronousMethod(this, 100, new EventHandler((object sender1, EventArgs e1)=>{ 
+            ControlsUtils.AsynchronousMethod(this, 100, new EventHandler((object sender1, EventArgs e1)=>{ 
                 Point p = MouseDownLocation;
                 if(p.X <0) p.X = 0;
                 if(p.Y <0) p.Y = 0;
@@ -464,7 +465,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                     this.SelectionLength = Math.Abs(mouseIndex-selIndex);
                 } else { 
                     if(isMouseEnterSelectText(p) /*|| SelectionLength == 0*/) {
-                        ControlsUtilsMet.AsynchronousMethod(this, 120, new EventHandler((object sender1, EventArgs e1) => {
+                        ControlsUtils.AsynchronousMethod(this, 120, new EventHandler((object sender1, EventArgs e1) => {
                             if (!Cursor.Equals(selectTextDragCur) && MouseDownButton.Equals(MouseButtons.None)) {
                                 SelectionLength = 0;
                                 SelectionStart = mouseIndex;
@@ -485,8 +486,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             int WM_VSCROLL = 0x115;
             int SB_THUMBPOSITION = 4;
             // 获得鼠标在X和Y两个方向上的移动量。除以10是为是让移动页面的速度变慢一点。而前面的负号则是用来调节页面移动方向的。
-            WinApiUtilsMet.GetScrollRange(Handle, 0, out MinH, out MaxH); 
-            WinApiUtilsMet.GetScrollRange(Handle, 1, out MinV, out MaxV);
+            WinApiUtils.GetScrollRange(Handle, 0, out MinH, out MaxH); 
+            WinApiUtils.GetScrollRange(Handle, 1, out MinV, out MaxV);
             int MoveX = 0;
             Console.WriteLine(MaxH);
             if(MouseMoveLocation.X > MouseDownLocation.X) { //向左移动
@@ -499,8 +500,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             ////获取滚动条的最大最小位置和当前位置 
 
             Console.WriteLine(MouseDownLocation);
-            WinApiUtilsMet.SetScrollPos(Handle, SB_HORZ, MoveX, true);// 水平滚动栏
-            WinApiUtilsMet.PostMessage(Handle, WM_HSCROLL, SB_THUMBPOSITION + 0x10000 * MoveX, 0);//告诉控件移动页面内容到相应的位置上 
+            WinApiUtils.SetScrollPos(Handle, SB_HORZ, MoveX, true);// 水平滚动栏
+            WinApiUtils.PostMessage(Handle, WM_HSCROLL, SB_THUMBPOSITION + 0x10000 * MoveX, 0);//告诉控件移动页面内容到相应的位置上 
             //WinApiUtilsMet.SetScrollPos(Handle, SB_VERT, MoveY, true);// 垂直滚动栏
             //WinApiUtilsMet.PostMessage(Handle, WM_VSCROLL, SB_THUMBPOSITION + 0x10000 * MoveY, 0); 
         }
@@ -537,13 +538,13 @@ namespace UI.ComponentLibrary.ControlLibrary {
             int tabLen = "\t".Length;
             if(IsKeysShift && Keys.Tab.Equals(KeysDown)) {
                 if (selLen > 0) { 
-                    string s = StringUtilsMet.CharTrimByLine(selText, chars, 1, 1);
+                    string s = StringUtils.CharTrimByLine(selText, chars, 1, 1);
                     this.Paste(s);
                     this.Select(index, s.Length);
                 }
             } else if(Keys.Tab.Equals(KeysDown)){
                 if(selLen > 0) {
-                    string s = StringUtilsMet.InsertLineFirstAndLast(selText, chars, "", true);
+                    string s = StringUtils.InsertLineFirstAndLast(selText, chars, "", true);
                     this.Paste(s);
                     this.Select(index, s.Length);
                 } else { 

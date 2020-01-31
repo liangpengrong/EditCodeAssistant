@@ -116,7 +116,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
             if(con == null || !(con is RedrawTabControl)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawTabControl)con;
@@ -132,7 +132,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawTabControl conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.TAB_CONTENT, conThis);
@@ -176,7 +176,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 默认设置
         /// </summary>
         private void initTabControlDefConfig() { 
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_CONTENT);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT);
             // 字体
             this.Font = new Font("Microsoft YaHei", 10, FontStyle.Regular);
             // 标签大小
@@ -288,7 +288,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         }
         // 调整大小事件
         protected override void OnResize(EventArgs e) {
-            ControlsUtilsMet.AsynchronousMethod(this, 0, delegate{
+            ControlsUtils.AsynchronousMethod(this, 0, delegate{
                 doIsAddPageSizeMode();
                 doIsAddPageButLocation(addPageBut);
             });
@@ -311,7 +311,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 TabPage ppp = (TabPage)e.Control;
                 // 确定移除标签后的显示模式
                 delPageIsPageMode(ppp);
-                ControlsUtilsMet.AsynchronousMethod(this, 0, delegate{
+                ControlsUtils.AsynchronousMethod(this, 0, delegate{
                     // 确定显示模式
                     doIsAddPageSizeMode();
                     // 确定添加按钮的位置
@@ -356,7 +356,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             bool retBool = false;
             // 删除是否提示
             if (IsDelPageAsk) {
-                retBool = DialogResult.OK.Equals(ControlsUtilsMet.ShowAskMessBox("是否删除该标签", "删除标签", null, null));
+                retBool = DialogResult.OK.Equals(ControlsUtils.ShowAskMessBox("是否删除该标签", "删除标签", null, null));
             } else { 
                 retBool = true;
             }
@@ -417,7 +417,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 绘制标签背景
             g.FillRectangle(backbrush, backrect);
             // 绘制标签边框
-            ControlsUtilsMet.SetControlBorderStyle(g, backrect, ButtonBorderStyle.Solid
+            ControlsUtils.SetControlBorderStyle(g, backrect, ButtonBorderStyle.Solid
                 ,1 , 1, 1, 1, page_sel_color);
             // 绘制标签文本
             PageDrawString(g, backrect, changedpage.Text, tabFont, fontbrush);
@@ -438,7 +438,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 绘制标签背景
             g.FillRectangle(backbrush, backrect);
             // 绘制标签边框
-            ControlsUtilsMet.SetControlBorderStyle(g, backrect, ButtonBorderStyle.Solid
+            ControlsUtils.SetControlBorderStyle(g, backrect, ButtonBorderStyle.Solid
                 ,1, 1, 1, 1, page_mouse_sel_color);
             // 绘制标签文本
             PageDrawString(g, backrect, changedpage.Text, tabFont, fontbrush);
@@ -453,7 +453,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 用来零时制定偏移量的标签背景区域
             Rectangle offsetBackrect = backrect;
             // 向下的偏移量
-            int offset = 4; 
+            int offset = 1; 
             offsetBackrect.Y = offsetBackrect.Y + offset;
             offsetBackrect.Height = offsetBackrect.Height - offset*2;
             Brush backbrush = new SolidBrush(page_nosel_color);// 标签背景色
@@ -463,12 +463,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Font tabFont = new Font(tab.Font.SystemFontName, tab.Font.Size, tab.Font.Style);// 标签字体
             // 绘制标签背景
             g.FillRectangle(backbrush, backrect);
-            // 不为0 且不为选中标签 且不为当前鼠标下的标签 且不为当前鼠标下的标签的后一个标签
-            if(index != tab.SelectedIndex && index != tab.SelectedIndex -1
-                && ((index != MousePage && index != MousePage-1) || (!MouseButtons.None.Equals(MouseClickButtons))
-                )) { 
+            // 不为第一个 不为最后一个 且不为选中标签 且不为当前鼠标下的标签 且不为当前鼠标下的标签的后一个标签
+            if(index != tab.SelectedIndex && index != tab.SelectedIndex -1 && index < tab.TabCount-1
+                && ((index != MousePage && index != MousePage-1) 
+                    || (!MouseButtons.None.Equals(MouseClickButtons)))) { 
                 // 绘制标签边框
-                ControlsUtilsMet.SetControlBorderStyle(g, offsetBackrect, ButtonBorderStyle.Solid
+                ControlsUtils.SetControlBorderStyle(g, offsetBackrect, ButtonBorderStyle.Solid
                 , 1, 1, 1, 1, page_nosel_color, page_nosel_color, bordercolor, page_nosel_color);
             }
             // 绘制标签文本
@@ -519,7 +519,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             backrectStr.Height = backrectStr.Height;
             backrectStr.Width = backrectStr.Width - (delPageButSize.Width+5);
             backrectStr.X = backrectStr.X + 0;
-            if (StringUtilsMet.GetChineseLength(text) > 0) {// 包含中文
+            if (StringUtils.GetChineseLength(text) > 0) {// 包含中文
                 _StringFlags.LineAlignment = StringAlignment.Far;
                 backrectStr.Y = backrectStr.Y + -2;
             } else { 
@@ -547,7 +547,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void initAddPageButton() {
             // 刚启动时父控件可能为空  循环判断tab的父控件是否为空
-            ControlsUtilsMet.TimersMethod(200, 1000, this, (object sender, ElapsedEventArgs e) => {
+            ControlsUtils.TimersMethod(200, 1000, this, (object sender, ElapsedEventArgs e) => {
                 addPageBut.Visible = IsShowAddPageBut;
                 this.Parent.Controls.Add(addPageBut);
                 addPageBut.BringToFront();
@@ -636,7 +636,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 // 标签个数
                 int itemCount = tab.TabCount;
                 // 按钮的x坐标
-                int y = tab.Location.Y + tab.ItemSize.Height - addCon.ClientSize.Height-2;
+                int y = tab.Location.Y + tab.ItemSize.Height - addCon.ClientSize.Height-0;
                 // 按钮的x坐标
                 int x = itemCount*itemW+6;
                 

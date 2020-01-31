@@ -14,7 +14,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于控件集的工具类
     /// </summary>
-    public static class ControlsUtilsMet
+    public static class ControlsUtils
     {
        
         /// <summary>
@@ -638,7 +638,7 @@ namespace Core.StaticMethod.Method.Utils
             if(con is TabControl) { 
                 TabControl redrawTab = (TabControl)con;
                 // 获取标签容器中当前标签的文本框
-                con = ControlsUtilsMet.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+                con = ControlsUtils.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
             }
             // 转化为文本框
             TextBox textBox = con != null && con is TextBox?(TextBox)con : null;

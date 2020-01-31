@@ -84,7 +84,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.CREAD_JAVA_ENTITY);
             if(form == null || form.IsDisposed || !(form is SplitCharsForm)) { 
                 fieldToJavaEntity = this;
-                fieldToJavaEntity.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY);
+                fieldToJavaEntity.Name = EnumUtils.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY);
                 fieldToJavaEntity = FormCacheFactory.ininSingletonForm(fieldToJavaEntity, false);
             } else {
                 fieldToJavaEntity = (CreadJavaEntity)form;
@@ -102,7 +102,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) { 
             CreadJavaEntity fieldToJavaEntity = this;
-            fieldToJavaEntity.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY)+DateTime.Now.Ticks.ToString();;
+            fieldToJavaEntity.Name = EnumUtils.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(fieldToJavaEntity);
             // 加入到多例工厂
@@ -135,9 +135,9 @@ namespace UI.ComponentLibrary.FormLibrary {
             this.ShowIcon = false;
             this.StartPosition = FormStartPosition.CenterParent;
             this.AutoScaleMode = AutoScaleMode.None;
-            this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.CREAD_JAVA_ENTITY);
             // 调节窗口位置
-            this.Location = FormUtislMet.MiddleForm(this);
+            this.Location = FormUtisl.MiddleForm(this);
         }
         // 设置输出类型下拉框
         private void setOutputComBox() { 
@@ -308,7 +308,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 builder.AppendLine("package "+packageNameStr+";");
             }
             // 去除最后的换行符
-            retStr = StringUtilsMet.TrimEndNewLine(builder.ToString());
+            retStr = StringUtils.TrimEndNewLine(builder.ToString());
             return retStr;
         }
         // 生成导包语句的方法
@@ -320,7 +320,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 builder.AppendLine("import java.io.Serializable;"+Environment.NewLine);
             }
             
-            retStr = StringUtilsMet.TrimEndNewLine(builder.ToString());
+            retStr = StringUtils.TrimEndNewLine(builder.ToString());
             return retStr;
         }
         // 生成序列化的方法
@@ -358,7 +358,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 
             }
             // 去除最后一个换行符
-            retStr = StringUtilsMet.TrimEndNewLine(builder.ToString());
+            retStr = StringUtils.TrimEndNewLine(builder.ToString());
             return retStr;
         }
         // 生成get set的方法
@@ -502,7 +502,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 string methodVar = methodVarBui.ToString();
                 if(methodVar.Length >= 1) methodVar = methodVar.Substring(0, methodVar.Length - 1);
                 // 去除最后一个换行符
-                string interiorVar = StringUtilsMet.TrimEndNewLine(interiorVarBui.ToString());
+                string interiorVar = StringUtils.TrimEndNewLine(interiorVarBui.ToString());
                 // 组装最后的字符串
                 // 生成无参构造器
                 builder.AppendLine(TAB_STR+"public "+classNameStr+"() {super();}");
@@ -549,7 +549,7 @@ namespace UI.ComponentLibrary.FormLibrary {
                 builder.AppendLine(TAB_STR + "/** 自动生成的深克隆方法，将对象中的每项属性进行深克隆 */");
                 builder.AppendLine(TAB_STR+"public "+classNameStr+" deepCloning() {");
                 // 去除最后一个换行符
-                string interiorVar = StringUtilsMet.TrimEndNewLine(interiorVarBui.ToString());
+                string interiorVar = StringUtils.TrimEndNewLine(interiorVarBui.ToString());
                 builder.AppendLine(TAB_STR+TAB_STR+interiorVar);
                 builder.AppendLine(TAB_STR+TAB_STR+"return "+claName+";");
                 builder.Append(TAB_STR+"}");
@@ -597,7 +597,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 判断全选反选复选框
         private void isSelectAllChecked() { 
             List<bool> boos = new List<bool>();
-            ControlsUtilsMet.GetControlsChecked(ref boos, 结果选项容器.Controls);
+            ControlsUtils.GetControlsChecked(ref boos, 结果选项容器.Controls);
             // 获取选中的的复选框的个数
             int trueL = boos.Where(b=> b.Equals(true)).ToArray().Length;
             // 获取未选中的的复选框的个数
@@ -656,19 +656,19 @@ namespace UI.ComponentLibrary.FormLibrary {
             string str = name;
             switch(type) { 
             case 0:
-                str = StringUtilsMet.CharsToHumpChars(name, 1);
+                str = StringUtils.CharsToHumpChars(name, 1);
                 break;
             case 1:
-                str = "get"+StringUtilsMet.CharsToHumpChars(name, 0);
+                str = "get"+StringUtils.CharsToHumpChars(name, 0);
                 break;
             case 2:
-                str = "set"+StringUtilsMet.CharsToHumpChars(name, 0);
+                str = "set"+StringUtils.CharsToHumpChars(name, 0);
                 break;
             case 3:
-                str = StringUtilsMet.CharsToHumpChars(name, 0);
+                str = StringUtils.CharsToHumpChars(name, 0);
                 break;
             case 4:
-                str = StringUtilsMet.CharsToHumpChars(name, 1);
+                str = StringUtils.CharsToHumpChars(name, 1);
                 break;
             }
             return str;
@@ -816,7 +816,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             if (全选反选_check.Equals(checkBox)) {
                 if (checkBox.Capture) { 
                     checkBox.ThreeState = false;
-                    ControlsUtilsMet.SetControlsChecked(结果选项容器.Controls, bl); 
+                    ControlsUtils.SetControlsChecked(结果选项容器.Controls, bl); 
                 }
                 
             }else if (生成get_set_check.Equals(checkBox)) { 
@@ -905,13 +905,13 @@ namespace UI.ComponentLibrary.FormLibrary {
                         if(str.Length > 0) MainTabControlUtils.ExportNewPage(str);
                     break;
                     case ExportComBoxValEnum.EXPORT_THIS_PAGE_VAL: // 当前标签
-                        if(str.Length > 0) ControlsUtilsMet.ExportThisPage(str);
+                        if(str.Length > 0) ControlsUtils.ExportThisPage(str);
                     break;
                     case ExportComBoxValEnum.EXPORT_JAVA_VAL: // java文件
-                        if(str.Length > 0) FileUtilsMet.SaveJavaFile(str, classNameStr, encoding);
+                        if(str.Length > 0) FileUtils.SaveJavaFile(str, classNameStr, encoding);
                     break;
                     case ExportComBoxValEnum.EXPORT_NOTEBOOK_VAL: // 记事本
-                        if(str.Length > 0) FileUtilsMet.TurnOnNotepad(str);
+                        if(str.Length > 0) FileUtils.TurnOnNotepad(str);
                     break;
                 }
             }
@@ -927,14 +927,14 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// 设置编码下拉列表框的值
         /// </summary>
         private void SetEcodingVal() {
-            Dictionary<int, string> encDic = FileUtilsMet.GetBrieflyFileEncodingInfo();
+            Dictionary<int, string> encDic = FileUtils.GetBrieflyFileEncodingInfo();
             Dictionary<object, string> encDic2 = new Dictionary<object, string>();
             // 将int转为object
             foreach(KeyValuePair<int,string> kvp in encDic) { 
                 encDic2.Add(kvp.Key, kvp.Value);
             }
             // 设置下拉列表框的值
-            ControlsUtilsMet.SetComboBoxItems(输入_编码_comB, encDic2);
+            ControlsUtils.SetComboBoxItems(输入_编码_comB, encDic2);
             // 选定与文本框编写相同的项
             输入_编码_comB.SelectedValue = Encoding.UTF8.CodePage;
             // 设置自动匹配

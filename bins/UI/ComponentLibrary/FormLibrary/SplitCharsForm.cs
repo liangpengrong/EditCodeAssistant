@@ -69,7 +69,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <param name="textBox"></param>
         internal SplitCharsForm() {
             // 赋值要操作的文本框
-            this.textBox = ControlsUtilsMet.GetSelectPageTextBox();
+            this.textBox = ControlsUtils.GetSelectPageTextBox();
             InitializeComponent();
             // 初始化消息提示控件
             initToolTip();
@@ -86,7 +86,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.SPLIT_CHARS_FORM);
             if(form == null || form.IsDisposed || !(form is SplitCharsForm)) { 
                 splitChars = this;
-                splitChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM);
+                splitChars.Name = EnumUtils.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM);
                 splitChars = FormCacheFactory.ininSingletonForm(splitChars, false);
             } else {
                 splitChars = (SplitCharsForm)form;
@@ -104,7 +104,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop){
             SplitCharsForm splitChars = this;
-            splitChars.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM)+DateTime.Now.Ticks.ToString();;
+            splitChars.Name = EnumUtils.GetDescription(DefaultNameEnum.SPLIT_CHARS_FORM)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(splitChars);
             // 加入到多例工厂
@@ -149,7 +149,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// <returns></returns>
         private string[][] initRowColuArr(string text) { 
             // 将字符串按照换行符和制表符分割为行列的形式
-            string[][] rowColuArr = StringUtilsMet.SplitStrToArray(text
+            string[][] rowColuArr = StringUtils.SplitStrToArray(text
                 ,new string[]{ Environment.NewLine }, new string[]{ "\t" }
                 , true ,true, true, true);
 
@@ -252,7 +252,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             int dataViewH = redrawDataTable.Location.Y + colHeadersHeight + (cellDefHeight * rowColuArr.Length);
             // 判断工作区的宽
             if(dataViewW > 1000) { 
-                Width = MessyUtilsMet.GetResolvingpower()[0] - 100;
+                Width = MessyUtils.GetResolvingpower()[0] - 100;
             } else if(dataViewW < 600) {
                 Width = 600;
             } else{ 
@@ -260,7 +260,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             }
             // 判断工作区的高
             if(dataViewH > Screen.PrimaryScreen.Bounds.Height) {
-                Height = MessyUtilsMet.GetResolvingpower()[1] - 100;
+                Height = MessyUtils.GetResolvingpower()[1] - 100;
             } else if(dataViewH < 500) { 
                 Height = 500;
             } else{ 
@@ -274,9 +274,9 @@ namespace UI.ComponentLibrary.FormLibrary {
         private void middleForm() {
             Form rootDisplayForm = textBox.FindForm();
             // 根据父窗体居中
-            Location = FormUtislMet.MiddleForm(this, rootDisplayForm);
+            Location = FormUtisl.MiddleForm(this, rootDisplayForm);
             // 获取当前屏幕分辨率
-            int[] wh = MessyUtilsMet.GetResolvingpower();
+            int[] wh = MessyUtils.GetResolvingpower();
             
             int w = rootDisplayForm.Location.X+rootDisplayForm.Width;
             if(w + Width <= wh[0]) {
@@ -361,7 +361,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 判断是单行还是全部文本的执行方法
             isSinglelineOrAllMet();
             // 执行分列
-            rowColArr = StringUtilsMet.SplitStrToArray(text, new string[]{Environment.NewLine}
+            rowColArr = StringUtils.SplitStrToArray(text, new string[]{Environment.NewLine}
                 , separatorArr, true, isNone, true, isSensitive);
             return rowColArr;
         }
@@ -377,12 +377,12 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 判断是单行还是全部文本的执行方法
             isSinglelineOrAllMet();
             // 执行分列
-            string[] tempArr = StringUtilsMet.SplitStrToArray(text, new string[]{Environment.NewLine}
+            string[] tempArr = StringUtils.SplitStrToArray(text, new string[]{Environment.NewLine}
             ,isNone, true);
             rowColArr = new string[tempArr.Length][];
             for(int i = 0, len = tempArr.Length; i< len; i++) { 
                 string s = tempArr[i];
-                string[] tempArr2 = StringUtilsMet.SplitStrToArray(s, indexArr, isNone, false);
+                string[] tempArr2 = StringUtils.SplitStrToArray(s, indexArr, isNone, false);
                 rowColArr[i] = tempArr2;
             }
             return rowColArr;
@@ -448,7 +448,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             rTextBox.SelectionBackColor = ColorTranslator.FromHtml("#DB494E");
             rTextBox.SelectionColor = Color.White;
             // 查找逗号的位置
-            int[] indexArr = StringUtilsMet.GetCharsIndexOf(richText, ",", true);
+            int[] indexArr = StringUtils.GetCharsIndexOf(richText, ",", true);
             // 判断是否找到了逗号
             if(indexArr != null && indexArr.Length > 0) {
                 for (int i = 0, len = indexArr.Length; i < len; i++) {
@@ -539,10 +539,10 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void formDefConfig() { 
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.分割,true);
+            this.Icon = MessyUtils.IamgeToIcon(Core.ImageResource.分割,true);
             this.AutoScaleMode = AutoScaleMode.None;
             // 调节窗口位置
-            this.Location = FormUtislMet.MiddleForm(this);
+            this.Location = FormUtisl.MiddleForm(this);
         }
         // 单选按钮选项改变事件
         private void Radio_CheckedChanged(object sender, EventArgs e) {
@@ -590,7 +590,7 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 分列按钮点击事件
         private void 分列_but_Click(object sender, EventArgs e) {
             // 赋值要操作的文本框
-            textBox = ControlsUtilsMet.GetSelectPageTextBox();
+            textBox = ControlsUtils.GetSelectPageTextBox();
             // 清空缓存
             DataViewCache.removeCacheFactory(redrawDataTable.Name);
             // 执行验证

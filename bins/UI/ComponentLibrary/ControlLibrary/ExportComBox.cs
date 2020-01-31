@@ -10,7 +10,7 @@ using System.Drawing;
 using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
 using Core.StaticMethod.Method.Utils;
-using static Core.StaticMethod.Method.Utils.EnumUtilsMet;
+using static Core.StaticMethod.Method.Utils.EnumUtils;
 
 namespace UI.ComponentLibrary.ControlLibrary {
     /// <summary>

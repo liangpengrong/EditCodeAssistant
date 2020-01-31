@@ -29,7 +29,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.DATA_VIEW_RIGHT_MENU);
             if(con == null || !(con is ContextMenuStrip)) {
                 conThis = table_rightStrip;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (ContextMenuStrip)con;
@@ -44,7 +44,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             ContextMenuStrip conThis = table_rightStrip;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.DATA_VIEW_RIGHT_MENU, conThis);
@@ -54,7 +54,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu {
         /// 右键菜单的默认配置
         /// </summary>
         private void menuDefaultConfig() {
-            table_rightStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU);
+            table_rightStrip.Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_VIEW_RIGHT_MENU);
             // 使用自定义的样式
             table_rightStrip.Renderer = new RightStripRenderer();
             // 设置不具有Tab焦点
@@ -69,7 +69,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu {
             table_rightStrip.ShowItemToolTips = true;
             foreach (ToolStripMenuItem tool in table_rightStrip.Items.OfType<ToolStripMenuItem>())
             {//遍历右键菜单下所有的一级ToolStripMenuItem选项
-                ToolStripUtilsMet.doIsDownItemAop(tool, this);
+                ToolStripUtils.doIsDownItemAop(tool, this);
             }
         }
         /// <summary>

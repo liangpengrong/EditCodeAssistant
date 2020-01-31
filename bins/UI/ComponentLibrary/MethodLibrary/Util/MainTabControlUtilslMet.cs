@@ -73,7 +73,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
                 RedrawTabControl redrawTab = (RedrawTabControl)con;
                 redrawTab.TransferDddPageInvoke();
                 // 获取标签容器中当前标签的文本框
-                con = ControlsUtilsMet.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+                con = ControlsUtils.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
             }
             // 转化为文本框
             TextBox textBox = con != null && con is TextBox?(TextBox)con : null;
@@ -90,11 +90,11 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
                 RedrawTabControl redrawTab = (RedrawTabControl)con;
                 redrawTab.TransferDddPageInvoke();
                 // 获取标签容器中当前标签的文本框
-                con = ControlsUtilsMet.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+                con = ControlsUtils.GetControlByName(redrawTab.SelectedTab.Controls, EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
             }
             // 转化为文本框
             TextBox textBox = con != null && con is TextBox?(TextBox)con : null;
-            ControlsUtilsMet.ExportTextBox(textBox, s);
+            ControlsUtils.ExportTextBox(textBox, s);
         }
         /// <summary>
         /// 移除TabPage
@@ -107,9 +107,9 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
                     int delIndex = GetTabIndex(tab, tabPage);
                     tab.TabPages.Remove(tabPage);
                     // 移除page标签所带有的删除按钮
-                    Dictionary<string,object> tag = ControlsUtilsMet.GetControlTagToDic(tabPage);
-                    if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
-                        Control con = (Control)tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
+                    Dictionary<string,object> tag = ControlsUtils.GetControlTagToDic(tabPage);
+                    if(tag != null && tag.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
+                        Control con = (Control)tag[EnumUtils.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
                         if(con != null && !con.IsDisposed) { 
                             con.Dispose();
                         }
@@ -187,9 +187,9 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
         public static Control GetDelPageButByPageTag(TabPage tabPage) { 
             Control retCon = null;
             if(tabPage != null) { 
-                Dictionary<string,object> tag = ControlsUtilsMet.GetControlTagToDic(tabPage);
-                if(tag != null && tag.ContainsKey(EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
-                    retCon = (Control)tag[EnumUtilsMet.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
+                Dictionary<string,object> tag = ControlsUtils.GetControlTagToDic(tabPage);
+                if(tag != null && tag.ContainsKey(EnumUtils.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY))) { 
+                    retCon = (Control)tag[EnumUtils.GetDescription(DefaultNameEnum.DEF_BUTTON_TAG_KEY)];
                 }
             }
             return retCon;
@@ -326,7 +326,7 @@ namespace UI.ComponentLibrary.MethodLibrary.Util {
                 page.Controls.Add(t);
                 t.BringToFront();
             }
-            ControlsUtilsMet.TimersMethod(200, 1000, t, (object sender, ElapsedEventArgs e)=>{
+            ControlsUtils.TimersMethod(200, 1000, t, (object sender, ElapsedEventArgs e)=>{
                 if(t.FindForm() !=  null) { 
                     t.FindForm().ActiveControl = t;
                     ((System.Timers.Timer)sender).Dispose();

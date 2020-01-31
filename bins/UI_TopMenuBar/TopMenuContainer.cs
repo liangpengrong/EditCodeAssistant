@@ -36,7 +36,7 @@ namespace UI_TopMenuBar {
         {
             foreach(ToolStripMenuItem tool in this.topMenuStrip.Items.OfType<ToolStripMenuItem>())
             {
-                ToolStripUtilsMet.doIsDownItemAop(tool,this);
+                ToolStripUtils.doIsDownItemAop(tool,this);
             }
         }
         /// <summary>
@@ -68,7 +68,7 @@ namespace UI_TopMenuBar {
             tool.ToolTipText = tool.Text;
             // tool.Font = topMenuStrip.Font;
             // 绑定Image
-            setItemImage(tool);
+            //setItemImage(tool);
             // 判断是否选中
             doISItemChecked(tool);
         }
@@ -76,7 +76,7 @@ namespace UI_TopMenuBar {
         /// 初始化顶部菜单配置
         /// </summary>
         private void initTopMenuConfig() {
-            topMenuStrip.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TOP_MENU);
+            topMenuStrip.Name = EnumUtils.GetDescription(DefaultNameEnum.TOP_MENU);
             topMenuStrip.TabStop = false;
             // 设置大小
             topMenuStrip.Size = new Size(this.Size.Width,10);
@@ -107,13 +107,13 @@ namespace UI_TopMenuBar {
                 if(tabCon != null && tabCon is TabControl) { 
                     TabControl tab = (TabControl)tabCon;
                     if (t == null) { 
-                        control = ControlsUtilsMet.GetControlByName(tab.SelectedTab.Controls, EnumUtilsMet.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
+                        control = ControlsUtils.GetControlByName(tab.SelectedTab.Controls, EnumUtils.GetDescription(DefaultNameEnum.TEXTBOX_NAME_DEF), true);
                         if (control != null && control is TextBox) { 
                             t = (TextBox)control;
                         } 
                     } 
                     if(t == null) { 
-                        control = ControlsUtilsMet.GetFocueControlByType(tab.SelectedTab.Controls);
+                        control = ControlsUtils.GetFocueControlByType(tab.SelectedTab.Controls);
                         if (control != null && control is TextBox) { 
                             t = (TextBox)control;
                         }
@@ -266,7 +266,7 @@ namespace UI_TopMenuBar {
             toolBindingDic.Add(this.全选Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxAllSelect(t);
+                    TextBoxUtils.TextBoxAllSelect(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -275,7 +275,7 @@ namespace UI_TopMenuBar {
             toolBindingDic.Add(this.剪切Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxCuttingText(t);
+                    TextBoxUtils.TextBoxCuttingText(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -284,7 +284,7 @@ namespace UI_TopMenuBar {
             toolBindingDic.Add(this.复制Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxCopyText(t);
+                    TextBoxUtils.TextBoxCopyText(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -293,7 +293,8 @@ namespace UI_TopMenuBar {
             toolBindingDic.Add(this.粘贴Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxPasteText(t);
+                    TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
+                    TextBoxUtils.TextBoxPasteText(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -303,7 +304,7 @@ namespace UI_TopMenuBar {
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
                     && data[typeof(TextBox)] is TextBox) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxDeleteText(t);
+                    TextBoxUtils.TextBoxDeleteText(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -331,7 +332,7 @@ namespace UI_TopMenuBar {
                 if(data.ContainsKey(typeof(TextBox)) && data[typeof(TextBox)] != null 
                     && data[typeof(TextBox)] is TextBox) {
                     TextBox t = (TextBox)data[typeof(TextBox)];
-                    TextBoxUtilsMet.TextBoxInsertDate(t);
+                    TextBoxUtils.TextBoxInsertDate(t);
                 } else { 
                     MessageBox.Show("无法获取文本框");    
                 }
@@ -390,7 +391,7 @@ namespace UI_TopMenuBar {
         private static void paintMenuFrame(object sender, PaintEventArgs e)
         {
             MenuStrip menu = (MenuStrip)sender;
-            ControlsUtilsMet.SetControlBorderStyle(e.Graphics, menu.ClientRectangle
+            ControlsUtils.SetControlBorderStyle(e.Graphics, menu.ClientRectangle
                 ,ButtonBorderStyle.Solid
                 ,0,0,0,0
                 , Color.FromArgb(160, 160, 160));

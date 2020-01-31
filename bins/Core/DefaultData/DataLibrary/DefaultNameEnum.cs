@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using static Core.StaticMethod.Method.Utils.EnumUtilsMet;
+using static Core.StaticMethod.Method.Utils.EnumUtils;
 
 namespace Core.DefaultData.DataLibrary {
     /// <summary>

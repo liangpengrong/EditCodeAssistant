@@ -36,7 +36,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_PAGE_NAME);
             if(con == null || !(con is RedrawTabPage)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_PAGE_NAME);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_PAGE_NAME);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (RedrawTabPage)con;
@@ -52,7 +52,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawTabPage conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_PAGE_NAME)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_PAGE_NAME)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.TAB_PAGE_NAME, conThis);
@@ -95,7 +95,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 con.Size = new Size(con.Width, con.Height-2);
             }
             if(IsAssociationStatusBar) { 
-                ControlsUtilsMet.AsynchronousMethod(this,1,new EventHandler((object sender2, EventArgs e2)=>{ 
+                ControlsUtils.AsynchronousMethod(this,1,new EventHandler((object sender2, EventArgs e2)=>{ 
                     statusBarAssociation();    
                 }));    
             };
@@ -109,7 +109,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 设置Page的背景颜色为白色
             string timeStr = DateTime.Now.ToUniversalTime().Ticks.ToString();
             page.BackColor = Color.White;
-            page.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.TAB_PAGE_NAME) + timeStr;
+            page.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_PAGE_NAME) + timeStr;
             page.Text = TabControlDataLib.PAGE_TEXT;
             page.UseVisualStyleBackColor = true;
             page.Padding = new Padding(0,20,0,0);
@@ -119,11 +119,13 @@ namespace UI.ComponentLibrary.ControlLibrary {
             page.Size = new Size(1, 1);
             // 进入控件事件
             page.Enter += (object sender, EventArgs e) =>{ 
-                ControlsUtilsMet.TimersMethod(200, 1000, page.Parent, (object sender1, ElapsedEventArgs e1) => {
+                ControlsUtils.TimersMethod(200, 1000, page.Parent, (object sender1, ElapsedEventArgs e1) => {
                     if (page.Controls.Count > 0) {
                         Control con = page.Controls[page.Controls.Count - 1];
-                        page.FindForm().ActiveControl = con;
-                        ((System.Timers.Timer)sender1).Dispose();
+                        if (con != null) {
+                            page.FindForm().ActiveControl = con;
+                            ((System.Timers.Timer)sender1).Dispose();
+                        }
                     }
                 });
             };
@@ -133,7 +135,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void setPageDispLayout() {
             Rectangle rect = new Rectangle();
-            WinApiUtilsMet.SendMessage(Handle, 178, (IntPtr)0, ref rect);
+            WinApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
             int top = Padding != Padding.Empty? Padding.Top : 1;
             int bottom = Padding != Padding.Empty? Padding.Bottom : 1;
             int left = Padding != Padding.Empty? Padding.Left : 1;
@@ -142,7 +144,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             rect.X = left;
             rect.Height = ClientSize.Height - bottom;
             rect.Width = ClientSize.Width - right;
-            WinApiUtilsMet.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
+            WinApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
             this.Refresh();
         }
         // 关联状态栏
@@ -153,7 +155,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 void setSourceControl(Control con) {
                     foreach(Control c in con.Controls) {
                         if(c is TextBox || c is DataGridView) { 
-                            ControlsUtilsMet.TimersMethod(20, 2000, this, (object sender, ElapsedEventArgs e) => {
+                            ControlsUtils.TimersMethod(20, 2000, this, (object sender, ElapsedEventArgs e) => {
                             Control ccc = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TOOL_START);
                                 if (ccc != null && ccc is RedrawStatusBar) {
                                     RedrawStatusBar bar = (RedrawStatusBar)ccc;

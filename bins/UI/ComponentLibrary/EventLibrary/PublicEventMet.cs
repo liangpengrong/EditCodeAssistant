@@ -32,9 +32,9 @@ namespace Ui.ComponentLibrary.EventLibrary {
             if (openFile.ShowDialog() == DialogResult.OK) {
                 string path = openFile.FileName;
                 // 判断编码
-                Encoding encoding = FileUtilsMet.GetType(path);
+                Encoding encoding = FileUtils.GetType(path);
                 TextBox tempTextB = t != null? t : MainTabControlUtils.GetNewPageTextBox();
-                FileUtilsMet.SetTextBoxValByPath(tempTextB, path, encoding);
+                FileUtils.SetTextBoxValByPath(tempTextB, path, encoding);
             }
             return openFile;
         }
@@ -46,7 +46,7 @@ namespace Ui.ComponentLibrary.EventLibrary {
         /// <returns></returns>
         public static object saveFileMethod(TextBox t) {
             SaveFileDialog newSaveFile = new SaveFileDialog();
-            Dictionary<string,object> textTag = TextBoxUtilsMet.GetTextTagToMap(t);
+            Dictionary<string,object> textTag = TextBoxUtils.GetTextTagToMap(t);
             newSaveFile.RestoreDirectory = false;
             newSaveFile.ValidateNames = true;
             newSaveFile.DefaultExt = "txt";
@@ -63,12 +63,12 @@ namespace Ui.ComponentLibrary.EventLibrary {
             if (newSaveFile.ShowDialog() == DialogResult.OK) {
                 string path = newSaveFile.FileName;
                 // 调用方法写入文件内容
-                FileUtilsMet.FileWrite.WriteFile(path, t.Text, encoding);
+                FileUtils.FileWrite.WriteFile(path, t.Text, encoding);
                 // 将保存路径加入到文本框的Tag属性
-                TextBoxUtilsMet.TextBoxAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName);
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.SAVE_FILE_PATH , newSaveFile.FileName);
                 // 监听文件变化并弹窗提醒 传入的文本框为null则开启一个新标签
                 TextBox tempTextB = t != null? t : MainTabControlUtils.GetNewPageTextBox();
-                FileUtilsMet.SetTextBoxValByPath(tempTextB, path, encoding);
+                FileUtils.SetTextBoxValByPath(tempTextB, path, encoding);
             }
             return newSaveFile;
         }

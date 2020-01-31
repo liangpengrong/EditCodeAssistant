@@ -29,7 +29,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Control con = ControlCacheFactory.getSingletonCache(DefaultNameEnum.DATA_GRID_VIEW_REDRAW);
             if(con == null || !(con is DataGridView)) {
                 conThis = this;
-                conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW);
+                conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW);
                 ControlCacheFactory.addSingletonCache(conThis);
             } else { 
                 conThis = (DataGridView)con;
@@ -45,7 +45,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <returns></returns>
         public Control initPrototypeExample(bool isShowTop) {
             RedrawDataTable conThis = this;
-            conThis.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW)+DateTime.Now.Ticks.ToString();;
+            conThis.Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW)+DateTime.Now.Ticks.ToString();;
             if(isShowTop) conThis.BringToFront();
             // 加入到多例工厂
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.DATA_GRID_VIEW_REDRAW, conThis);
@@ -133,7 +133,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <param name="cellHeight">单元格高</param>
         /// <param name="colHeadersHeight">列标题高</param>
         private void initDatatableDefConfig() {
-            ControlsUtilsMet.AsynchronousMethod(this, 1, delegate{ 
+            ControlsUtils.AsynchronousMethod(this, 1, delegate{ 
                 // 设置单元格默认样式
                 setDefaultCellStyle();
                 // 设置列标题默认样式
@@ -147,7 +147,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             DataGridViewRightMenu.bindingDataGridView(this);
         }
         private void setDataTableStyle() {    
-            Name = EnumUtilsMet.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW);
+            Name = EnumUtils.GetDescription(DefaultNameEnum.DATA_GRID_VIEW_REDRAW);
             Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
             // 边框
             BackgroundColor = Color.White;

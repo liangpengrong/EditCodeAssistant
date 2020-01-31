@@ -9,7 +9,7 @@ namespace Core.StaticMethod.Method.Utils {
     /// <summary>
     /// 字符串操作工具类
     /// </summary>
-    public static class StringUtilsMet {
+    public static class StringUtils {
         /// <summary>
         /// 将字符串中的指定字符串替换为某个字符串
         /// </summary>

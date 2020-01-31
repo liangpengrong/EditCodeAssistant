@@ -14,7 +14,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于文本框操作的公有工具类
     /// </summary>
-    public static class TextBoxUtilsMet
+    public static class TextBoxUtils
     {
         /// <summary>
         /// 实现文本框全选
@@ -145,7 +145,7 @@ namespace Core.StaticMethod.Method.Utils
             string[] lineArr = null;
             if(text.Length > 0) { 
                 lineArr = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                StringUtilsMet.CharsTrim(lineArr, " ", 1);
+                StringUtils.CharsTrim(lineArr, " ", 1);
                 text = string.Join(Environment.NewLine, lineArr);
                 if(tselLength > 0) {
                     t.SelectedText = text;
@@ -173,7 +173,7 @@ namespace Core.StaticMethod.Method.Utils
             string[] lineArr = null;
             if(text.Length > 0) { 
                 lineArr = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                StringUtilsMet.CharsTrim(lineArr, " ", 2);
+                StringUtils.CharsTrim(lineArr, " ", 2);
                 text = string.Join(Environment.NewLine, lineArr);
                 if(tselLength > 0) {
                     t.SelectedText = text;
@@ -380,11 +380,11 @@ namespace Core.StaticMethod.Method.Utils
             int textlen = t.TextLength;
             string str = "";
             if(t.SelectionLength > 0){
-                str = StringUtilsMet.CharsToHumpChars(t.SelectedText, type);
+                str = StringUtils.CharsToHumpChars(t.SelectedText, type);
                 t.SelectedText = str;
                 t.Select(start, str.Length);
             } else { 
-                str = StringUtilsMet.CharsToHumpChars(t.Text, type);;
+                str = StringUtils.CharsToHumpChars(t.Text, type);;
                 t.Text = str;
                 t.SelectionStart = start;
             }
@@ -397,7 +397,7 @@ namespace Core.StaticMethod.Method.Utils
         public static object TextBoxInsertDate(TextBox t)
         {
             int start = t.SelectionStart;
-            string dateStr = MessyUtilsMet.GetGenerateDate("yyyy/MM/dd HH:mm:ss");
+            string dateStr = MessyUtils.GetGenerateDate("yyyy/MM/dd HH:mm:ss");
             t.Text=t.Text.Insert(t.SelectionStart, dateStr);
             t.SelectionStart = start + dateStr.Length;
             return null;

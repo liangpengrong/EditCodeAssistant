@@ -63,7 +63,7 @@ namespace UI.ComponentLibrary.FormLibrary
             Form form = FormCacheFactory.getSingletonCache(DefaultNameEnum.CHARS_STATISTICS);
             if(form == null || form.IsDisposed || !(form is AddCharsForm)) { 
                 charsStatistics = this;
-                charsStatistics.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.CHARS_STATISTICS);
+                charsStatistics.Name = EnumUtils.GetDescription(DefaultNameEnum.CHARS_STATISTICS);
                 charsStatistics = FormCacheFactory.ininSingletonForm(charsStatistics, false);
             } else {
                 charsStatistics = (CharsStatistics)form;
@@ -80,7 +80,7 @@ namespace UI.ComponentLibrary.FormLibrary
         /// <returns></returns>
         public Form initPrototypeExample(bool isShowTop) {
             CharsStatistics charsStatistics = this;
-            charsStatistics.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.CHARS_STATISTICS)+DateTime.Now.Ticks.ToString();;
+            charsStatistics.Name = EnumUtils.GetDescription(DefaultNameEnum.CHARS_STATISTICS)+DateTime.Now.Ticks.ToString();;
             // 加入到顶层窗体集合
             if(isShowTop) FormCacheFactory.addTopFormCache(charsStatistics);
             // 加入到多例工厂
@@ -92,7 +92,7 @@ namespace UI.ComponentLibrary.FormLibrary
         // 窗体加载事件
         private void CharsStatistics_Load(object sender, EventArgs e) {
             // 设置图标
-            this.Icon = MessyUtilsMet.IamgeToIcon(Core.ImageResource.统计,true);
+            this.Icon = MessyUtils.IamgeToIcon(Core.ImageResource.统计,true);
             // 获取待添加的控件集合
             List<Control[]> conList = getControlList();
             // 为选中字符控件绑定事件
@@ -155,7 +155,7 @@ namespace UI.ComponentLibrary.FormLibrary
             string 字符总数 = text.Length.ToString();
             string 字符数不计空格 = text.Replace(" ", "").Replace(" ", "").Length.ToString();
             string 字符数不计换行符 = text.Replace(Environment.NewLine, "").Length.ToString();
-            string 行数 = text.Length == 0?"0" : TextBoxUtilsMet.GetTextBoxTotalRow(text).ToString();
+            string 行数 = text.Length == 0?"0" : TextBoxUtils.GetTextBoxTotalRow(text).ToString();
             string 非中文数 = Regex.Replace(text,@"[\u4e00-\u9fa5]","").Length.ToString();
             string 中文数 = (text.Length - int.Parse(非中文数)).ToString();
 
@@ -178,7 +178,7 @@ namespace UI.ComponentLibrary.FormLibrary
             foreach(KeyValuePair<string,string> kvp in dic){
                 string name = kvp.Key;
                 string textVal = kvp.Value;
-                Control con = ControlsUtilsMet.GetControlByName(统计信息G.Controls, name, false);
+                Control con = ControlsUtils.GetControlByName(统计信息G.Controls, name, false);
                 con.Text = textVal;
             }
         }
@@ -216,7 +216,7 @@ namespace UI.ComponentLibrary.FormLibrary
             textBox.BackColor = Color.White;
             textBox.TabStop = false;
             textBox.MouseDown += (object sender, MouseEventArgs e)=>{
-                WinApiUtilsMet.HideCaret(((TextBox)sender).Handle);
+                WinApiUtils.HideCaret(((TextBox)sender).Handle);
             };
             textBox.BorderStyle = BorderStyle.None;
             return textBox;
