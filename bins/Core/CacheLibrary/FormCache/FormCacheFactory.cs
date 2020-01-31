@@ -56,7 +56,7 @@ namespace Core.CacheLibrary.FormCache {
                 }
             }
             // 实例化Timer类，设置时间间隔
-            System.Timers.Timer timer = new System.Timers.Timer(600000);
+            System.Timers.Timer timer = new System.Timers.Timer(6000);
             // 到达时间的时候执行事件
             timer.Elapsed += new System.Timers.ElapsedEventHandler(delegate{ 
                 clearDeaForm();
@@ -74,6 +74,9 @@ namespace Core.CacheLibrary.FormCache {
             try {
                 if(singForm == null) return retBool;
                 string fNamer = singForm.Name;
+                singForm.FormClosed += (object sender, FormClosedEventArgs e)=>{
+                    remSingletonCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name));
+                };
                 if(singletonCache.ContainsKey(fNamer)) { 
                     singletonCache[fNamer] = singForm;
                 } else { 
@@ -86,6 +89,7 @@ namespace Core.CacheLibrary.FormCache {
             return retBool;
             
         }
+
         /// <summary>
         /// 将窗体添加到多例工厂中
         /// </summary>
@@ -94,6 +98,9 @@ namespace Core.CacheLibrary.FormCache {
             try {
                 string key = EnumUtilsMet.GetDescription(name);
                 if(protForm == null) return retBool;
+                protForm.FormClosed += (object sender, FormClosedEventArgs e)=>{
+                    remPrototypeCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name), (Form)sender);
+                };
                 if(prototypeCache.ContainsKey(key)) { 
                     Form[] formArr = prototypeCache[key];
                     List<Form> formL = formArr.ToList();
@@ -115,6 +122,9 @@ namespace Core.CacheLibrary.FormCache {
         public static void addTopFormCache(Form topform) { 
             if(topform == null) return;
             string fNamer = topform.Name;
+            topform.FormClosed += (object sender, FormClosedEventArgs e)=>{
+                remTopFormCache(EnumUtilsMet.GetStrToDefaultName(((Form)sender).Name));
+            };
             if(topFormCache.ContainsKey(fNamer)) { 
                 topFormCache[fNamer] = topform;
             } else { 
@@ -160,6 +170,28 @@ namespace Core.CacheLibrary.FormCache {
                 List<Form> formL = formArr.ToList();
                 if(formL.Contains(protForm)) formL.Remove(protForm);
                 prototypeCache[key] = formL.ToArray();
+            }
+        }
+        /// <summary>
+        /// 移除在单例窗口缓存的指定窗体
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="protForm"></param>
+        public static void remSingletonCache(DefaultNameEnum name) { 
+            string key = EnumUtilsMet.GetDescription(name);
+            if(singletonCache.ContainsKey(key)) {
+                singletonCache.Remove(key);
+            }
+        }
+        /// <summary>
+        /// 移除在顶层窗口缓存的指定窗体
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="protForm"></param>
+        public static void remTopFormCache(DefaultNameEnum name) { 
+            string key = EnumUtilsMet.GetDescription(name);
+            if(topFormCache.ContainsKey(key)) { 
+                topFormCache.Remove(key);
             }
         }
         /// <summary>

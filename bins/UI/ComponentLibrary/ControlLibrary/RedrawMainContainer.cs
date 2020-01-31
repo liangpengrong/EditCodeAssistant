@@ -28,7 +28,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 stripContainer.TabStop = false;
                 // 容器的大小
                 stripContainer.Size = new Size(1,1);
-                stripContainer.Location = new Point(1,1);
+                stripContainer.Location = new Point(1, 1);
                 ControlCacheFactory.addSingletonCache(stripContainer);
             } else { 
                 stripContainer = (ToolStripContainer)con;

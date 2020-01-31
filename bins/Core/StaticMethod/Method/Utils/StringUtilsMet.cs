@@ -393,7 +393,9 @@ namespace Core.StaticMethod.Method.Utils {
                         if(index > -1) {
                             starts = index+find.Length;
                             // 截取行首到字符串结尾
-                            strArr[i] = s.Substring(starts, s.Length-starts);
+                            if (starts < s.Length) { 
+                                strArr[i] = s.Substring(starts, s.Length-starts);
+                            }
                         }
                     }
                     break;

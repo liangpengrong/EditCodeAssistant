@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.DefaultData.DataLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,16 @@ namespace Core.StaticMethod.Method.Utils {
                 description = attributes[0].Description;
             }
             return description;
+        }
+        // 根据名称转换为默认命名枚举
+        public static DefaultNameEnum GetStrToDefaultName(string name){ 
+            foreach (DefaultNameEnum n in Enum.GetValues(typeof(DefaultNameEnum)))
+            {
+                if(GetDescription(n).Equals(name)) { 
+                    return n;
+                }
+            }
+            return DefaultNameEnum.NONE;
         }
         [AttributeUsage(AttributeTargets.Field,AllowMultiple = false)]  
         public sealed class EnumDescriptionAttribute : Attribute {

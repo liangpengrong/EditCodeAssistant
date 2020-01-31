@@ -36,6 +36,7 @@ namespace Core.DefaultData.DataLibrary {
             public const string 字符串工具_删除字符_ITEM = "字符串工具_删除字符_Item";
             public const string 首选项_ITEM = "首选项Item";
             public const string 查看_ITEM = "查看Item";
+            public const string 置顶_ITEM = "置顶Item";
             public const string 自动换行_ITEM = "自动换行Item";
             public const string 状态栏_ITEM = "状态栏Item";
             public const string 字体_ITEM = "字体Item";

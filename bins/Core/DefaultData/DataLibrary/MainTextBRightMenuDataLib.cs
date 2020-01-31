@@ -13,6 +13,8 @@ namespace Core.DefaultData.DataLibrary {
         /// </summary>
         public class ItemDataLib {
             public const string 全选_ITEM_NAME = "全选Item";
+            public const string 选中整行_ITEM_NAME = "选中整行Item";
+            public const string 智能选择_ITEM_NAME = "智能选择Item";
             public const string 剪切_ITEM_NAME = "剪切Item";
             public const string 复制_ITEM_NAME = "复制Item";
             public const string 粘贴_ITEM_NAME = "粘贴Item";

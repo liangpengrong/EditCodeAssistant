@@ -103,7 +103,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             Dictionary<string, ExportComBoxValEnum> dataDic = new Dictionary<string, ExportComBoxValEnum>();
             if(notHideCode == null) notHideCode = new ExportComBoxValEnum[]{};
             // 判断是否需要隐藏导出到新建标签
-            if(!notHideCode.Contains(ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL)) { 
+            if(!notHideCode.Contains(ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL)) {
                 dataDic.Add(EXPORT_NEW_PAGE, ExportComBoxValEnum.EXPORT_NEW_PAGE_VAL);
             } 
             // 判断是否需要隐藏导出到当前标签

@@ -12,7 +12,7 @@ using UI.ComponentLibrary.MethodLibrary.Util;
 namespace UI.ComponentLibrary.ControlLibrary {
     public class RedrawTabControl : TabControl, IComponentInitMode<Control>{
         // 添加标签的按钮
-        private Control AddPageBut = UIComponentFactory.getSingleControl(DefaultNameEnum.ADD_PAGE_BUTTON, true);
+        private Control addPageBut = UIComponentFactory.getSingleControl(DefaultNameEnum.ADD_PAGE_BUTTON, true);
         // 添加标签按钮的代理对象
         public delegate void AddPageButInvoker();
         // 添加标签按钮的实际代理对象
@@ -183,7 +183,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             this.ItemSize = new Size(TabControlDataLib.DEF_ITEM_WIDTH, TabControlDataLib.DEF_ITEM_HEIGHT);
             // 显示关闭按钮
             this.IsShowDelPageBut = MainTabControlConfig.IS_SHOW_DEL_BUTTON;
-            //按下滚轮关闭按钮
+            // 按下滚轮关闭按钮
             this.IsClickMiddleDelPage = MainTabControlConfig.IS_CLICK_MIDDLE_DEL_PAGE;
             // 删除按钮时是否询问
             this.IsDelPageAsk =  MainTabControlConfig.IS_DEL_ASK;
@@ -193,9 +193,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
             this.ShowAddPageButtton(true, true);
             // 设置不被焦点选中
             this.TabStop = false;
-            //设置主Tab容器的四周锚定
+            // 设置主Tab容器的四周锚定
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            //设置主Tab容器标签的宽高
+            // 设置主Tab容器标签的宽高
             this.ItemSize = new Size(MainTabControlConfig.ITEM_WIDTH, MainTabControlConfig.ITEM_HEIGHT);
             // 选项卡方式
             this.SizeMode = TabSizeMode.Fixed;
@@ -282,7 +282,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         // 控件添加事件
         protected override void OnControlAdded(ControlEventArgs e) {
             doIsAddPageSizeMode();
-            doIsAddPageButLocation(AddPageBut);
+            doIsAddPageButLocation(addPageBut);
             statusBarAssociation((TabPage)e.Control);
             base.OnControlAdded(e);
         }
@@ -290,7 +290,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         protected override void OnResize(EventArgs e) {
             ControlsUtilsMet.AsynchronousMethod(this, 0, delegate{
                 doIsAddPageSizeMode();
-                doIsAddPageButLocation(AddPageBut);
+                doIsAddPageButLocation(addPageBut);
             });
             base.OnResize(e);
         }
@@ -315,7 +315,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
                     // 确定显示模式
                     doIsAddPageSizeMode();
                     // 确定添加按钮的位置
-                    doIsAddPageButLocation(AddPageBut);
+                    doIsAddPageButLocation(addPageBut);
                 });
             }
             
@@ -548,9 +548,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
         private void initAddPageButton() {
             // 刚启动时父控件可能为空  循环判断tab的父控件是否为空
             ControlsUtilsMet.TimersMethod(200, 1000, this, (object sender, ElapsedEventArgs e) => {
-                AddPageBut.Visible = IsShowAddPageBut;
-                this.Parent.Controls.Add(AddPageBut);
-                AddPageBut.BringToFront();
+                addPageBut.Visible = IsShowAddPageBut;
+                this.Parent.Controls.Add(addPageBut);
+                addPageBut.BringToFront();
                 this.SendToBack();
                 ((System.Timers.Timer)sender).Dispose();
             });
@@ -616,7 +616,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         public void ShowAddPageButtton(bool isShow, bool transfer, AddPageButInvoker mouse) { 
             IsShowAddPageBut = isShow;
             addPageButInvoker = mouse;
-            AddPageBut.MouseClick += (object sender, MouseEventArgs e)=> {
+            addPageBut.MouseClick += (object sender, MouseEventArgs e)=> {
                 if(MouseButtons.Left.Equals(e.Button)) {
                     mouse.Invoke();
                 }

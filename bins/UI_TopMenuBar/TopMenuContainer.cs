@@ -230,6 +230,7 @@ namespace UI_TopMenuBar {
             toolImageDic.Add(this.代码工具_java_生成JAVA实体类, TopMenuDataLib.ItemDataLib.代码工具_java_生成JAVA实体类_ITEM);
 
             toolImageDic.Add(this.首选项Item, TopMenuDataLib.ItemDataLib.首选项_ITEM);
+            toolImageDic.Add(this.置顶Item, TopMenuDataLib.ItemDataLib.置顶_ITEM);
             toolImageDic.Add(this.查看Item, TopMenuDataLib.ItemDataLib.查看_ITEM);
             toolImageDic.Add(this.自动换行Item, TopMenuDataLib.ItemDataLib.自动换行_ITEM);
             toolImageDic.Add(this.状态栏Item, TopMenuDataLib.ItemDataLib.状态栏_ITEM);
@@ -337,6 +338,12 @@ namespace UI_TopMenuBar {
                 return null;
             }));
 
+            toolBindingDic.Add(this.置顶Item.Name, new methodDelegate((Dictionary<Type , object> data) =>{
+                ToolStripMenuItem item = (ToolStripMenuItem)data[typeof(ToolStripMenuItem)];
+                Form f = UIComponentFactory.getSingleForm(DefaultNameEnum.ROOT_FORM_NAME);
+                f.TopMost = item.Checked;
+                return null;
+            }));
             toolBindingDic.Add(this.自动换行Item.Name, new methodDelegate(TopMenuEventMet.isAutoLine));
             toolBindingDic.Add(this.状态栏Item.Name, new methodDelegate(TopMenuEventMet.isStartBarDisplay));
 

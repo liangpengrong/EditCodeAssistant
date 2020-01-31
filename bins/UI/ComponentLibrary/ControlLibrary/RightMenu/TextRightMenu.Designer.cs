@@ -26,6 +26,7 @@
             this.components = new System.ComponentModel.Container();
             this.rightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.全选Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中整行Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.剪切Item = new System.Windows.Forms.ToolStripMenuItem();
             this.复制Item = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +57,7 @@
             this.驼峰形式_小驼峰_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.清空文本框Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.智能选择Item = new System.Windows.Forms.ToolStripMenuItem();
             this.rightMenuStrip.SuspendLayout();
             // 
             // rightMenuStrip
@@ -64,6 +66,8 @@
             this.rightMenuStrip.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rightMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.全选Item,
+            this.选中整行Item,
+            this.智能选择Item,
             this.toolStripSeparator1,
             this.剪切Item,
             this.复制Item,
@@ -83,6 +87,12 @@
             this.全选Item.Name = "全选Item";
             this.全选Item.Size = new System.Drawing.Size(136, 22);
             this.全选Item.Text = "全选";
+            // 
+            // 选中整行Item
+            // 
+            this.选中整行Item.Name = "选中整行Item";
+            this.选中整行Item.Size = new System.Drawing.Size(136, 22);
+            this.选中整行Item.Text = "选中整行";
             // 
             // toolStripSeparator1
             // 
@@ -294,6 +304,12 @@
             this.清空文本框Item.Name = "清空文本框Item";
             this.清空文本框Item.Size = new System.Drawing.Size(136, 22);
             this.清空文本框Item.Text = "清空文本框";
+            // 
+            // 智能选择Item
+            // 
+            this.智能选择Item.Name = "智能选择Item";
+            this.智能选择Item.Size = new System.Drawing.Size(136, 22);
+            this.智能选择Item.Text = "智能选择";
             this.rightMenuStrip.ResumeLayout(false);
 
         }
@@ -331,5 +347,7 @@
         private System.Windows.Forms.ToolStripMenuItem 小写形式_自定义_Item;
         private System.Windows.Forms.ToolStripMenuItem 驼峰形式_大驼峰_Item;
         private System.Windows.Forms.ToolStripMenuItem 驼峰形式_小驼峰_Item;
+        private System.Windows.Forms.ToolStripMenuItem 选中整行Item;
+        private System.Windows.Forms.ToolStripMenuItem 智能选择Item;
     }
 }

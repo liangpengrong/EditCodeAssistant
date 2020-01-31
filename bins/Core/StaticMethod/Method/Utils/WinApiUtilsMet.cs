@@ -13,6 +13,35 @@ namespace Core.StaticMethod.Method.Utils
     public class WinApiUtilsMet
     {
         /// <summary>
+        /// 设置滚动条得到最小 最大值
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nBar"></param>
+        /// <param name="lpMinPos"></param>
+        /// <param name="lpMaxPos"></param>
+        /// <returns></returns>
+        [DllImport("user32", CharSet = CharSet.Auto)] 
+        public static extern bool GetScrollRange(IntPtr hWnd, int nBar, out int lpMinPos, out int lpMaxPos);
+        /// <summary>
+        /// 获取指定滚动条中滚动按钮的当前位置
+        /// </summary>
+        /// <param name="hWnd">带有标准滚动条控件的句柄</param>
+        /// <param name="nBar">0：水平滚动条，1：垂直滚动条</param>
+        /// <returns></returns>
+        [DllImport("user32.dll", EntryPoint = "GetScrollPos")]
+        public static extern int GetScrollPos(IntPtr hWnd, int nBar);
+
+        /// <summary>
+        /// 设置滚动条位置
+        /// </summary>
+        /// <param name="hWnd">带有标准滚动条控件的句柄</param>
+        /// <param name="nBar">0：水平滚动条，1：垂直滚动条</param>
+        /// <param name="nPos">位置</param>
+        /// <param name="bRedraw">重绘标志，是否重绘</param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern int SetScrollPos(IntPtr hWnd, int nBar, int nPos, bool bRedraw);
+        /// <summary>
         /// 向一个指定的窗口句柄的窗口发送消息
         /// </summary>
         /// <param name="hWnd">指定的窗口句柄</param>
@@ -22,6 +51,8 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         [DllImport("User32.DLL")]
         public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, string lParam);
+        [DllImport("user32.dll")] 
+        public static extern bool PostMessage(IntPtr hWnd, int nBar, int wParam, int lParam); 
         /// <summary>
         /// 该函数将指定的消息发送到一个或多个窗口。此函数为指定的窗口调用窗口程序，直到窗口程序处理完消息再返回。而和函数PostMessage不同，PostMessage是将一个消息寄送到一个线程的消息队列后就立即返回。
         /// </summary>

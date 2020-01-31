@@ -13,6 +13,7 @@ using Core.CacheLibrary.ControlCache;
 using Core.DefaultData.DataLibrary;
 using Core.ComponentlRedraw;
 using UI.ComponentLibrary.MethodLibrary.Interface;
+using System.Text.RegularExpressions;
 
 namespace UI.ComponentLibrary.ControlLibrary.RightMenu
 {
@@ -120,6 +121,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             rightMenuStrip.ShowCheckMargin = false;
             //显示信息提示
             rightMenuStrip.ShowItemToolTips = true;
+            rightMenuStrip.BackColor = Color.White;
             // 遍历右键菜单下所有的一级ToolStripMenuItem选项
             foreach (ToolStripMenuItem tool in rightMenuStrip.Items.OfType<ToolStripMenuItem>()) {
                 ToolStripUtilsMet.doIsDownItemAop(tool, this);
@@ -147,9 +149,8 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
                 item.Height = itemHeigth;
                 // 设置为右键菜单项的字体
                 item.Font = rightMenuStrip.Font;
-
                 // 设置图像
-                setItemImage(item);
+                // setItemImage(item);
             }
             rightMenuStrip.Height = (itemHeigth + 2) * itemAll.Length + sepAll.Length * 2;
         }
@@ -235,6 +236,17 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolBindingDic.Add(this.全选Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
                 TextBoxUtilsMet.TextBoxAllSelect(t);
+                return null;
+            }));
+            toolBindingDic.Add(this.选中整行Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                int i = t.GetFirstCharIndexOfCurrentLine();
+                t.Select(i, t.Lines[t.GetLineFromCharIndex(t.SelectionStart)].Length);
+                return null;
+            }));
+            toolBindingDic.Add(this.智能选择Item.Name, new methodDelegate((Dictionary<Type, object> data) => {
+                TextBox t = (TextBox)data[typeof(TextBox)];
+                intelligentSelectText(t);
                 return null;
             }));
             toolBindingDic.Add(this.剪切Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
@@ -376,6 +388,8 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
         private string getItemNameDic(ToolStripMenuItem item) { 
             Dictionary<ToolStripMenuItem, string> toolImageDic = new Dictionary<ToolStripMenuItem, string>();
             toolImageDic.Add(this.全选Item, MainTextBRightMenuDataLib.ItemDataLib.全选_ITEM_NAME);
+            toolImageDic.Add(this.选中整行Item, MainTextBRightMenuDataLib.ItemDataLib.选中整行_ITEM_NAME);
+            toolImageDic.Add(this.智能选择Item, MainTextBRightMenuDataLib.ItemDataLib.智能选择_ITEM_NAME);
             toolImageDic.Add(this.剪切Item, MainTextBRightMenuDataLib.ItemDataLib.剪切_ITEM_NAME);
             toolImageDic.Add(this.复制Item, MainTextBRightMenuDataLib.ItemDataLib.复制_ITEM_NAME);
             toolImageDic.Add(this.粘贴Item, MainTextBRightMenuDataLib.ItemDataLib.粘贴_ITEM_NAME);
@@ -412,6 +426,43 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
                 return toolImageDic[item];
             } else { 
                 return "";    
+            }
+        }
+        // 智能选择
+        private void intelligentSelectText(TextBox t) { 
+            int mouseIndex = t.SelectionStart;
+            // 是否处于行的末尾
+            bool isMouseLineEnd = TextBoxUtilsMet.IsPointLineEnd(t, mouseIndex);
+            if(isMouseLineEnd) { 
+                // 选中整行
+                int i = t.GetFirstCharIndexOfCurrentLine();
+                t.Select(i, mouseIndex-i);
+            } else { 
+                int headMatch = 0;
+                int tailMatch = 0;
+                for (int i = 1; i <= t.TextLength; i++) {
+                    if (headMatch.Equals(0)) {
+                        if (t.SelectionStart - i >= 0) {
+                            if(Regex.IsMatch(t.Text[t.SelectionStart - i].ToString(), @"\W")) {
+                                headMatch = (t.SelectionStart - i)+1;
+                            }
+                        } else {
+                            headMatch = 0;
+                        }
+                    }
+                    if (tailMatch.Equals(0)) {
+                        if (t.SelectionStart + i < t.TextLength) {
+                            if (Regex.IsMatch(t.Text[t.SelectionStart + i].ToString(), @"\W")) {
+                                tailMatch = t.SelectionStart + i;
+                            }
+                        } else {
+                            tailMatch = (t.SelectionStart +i);
+                        }
+                    }
+                    if (!headMatch.Equals(0) && !tailMatch.Equals(0)) { break; }
+                }
+                t.SelectionStart = headMatch;
+                t.SelectionLength = tailMatch - t.SelectionStart;
             }
         }
     }

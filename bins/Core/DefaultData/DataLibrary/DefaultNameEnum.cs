@@ -9,7 +9,8 @@ namespace Core.DefaultData.DataLibrary {
     /// <summary>
     /// 默认姓名配置枚举类
     /// </summary>
-    public enum DefaultNameEnum{
+    public enum DefaultNameEnum {
+        [EnumDescription("")] NONE,
         /// <summary>
         /// 程序本身命名
         /// </summary>

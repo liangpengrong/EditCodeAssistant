@@ -56,13 +56,12 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 初始化添加标签按钮
         /// </summary>
         /// <returns></returns>
-        private void initMainAddPageButton() { 
-            // 初始背景色
-            Color backColor = Color.Red;
+        private void initMainAddPageButton() {
             this.Name = EnumUtilsMet.GetDescription(DefaultNameEnum.ADD_PAGE_BUTTON);
             this.TabStop = false;
             this.Size = new Size(16,16);
             this.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            this.BackColor = ColorTranslator.FromHtml("#F0F0F0");
             // but.BackColor = backColor;
             this.Paint += (object sender, PaintEventArgs e) =>{ 
                 Panel panel = (Panel)sender;

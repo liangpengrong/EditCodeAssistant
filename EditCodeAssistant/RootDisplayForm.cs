@@ -14,8 +14,6 @@ using UI_TopMenuBar;
 namespace EditCodeAssistant {
     public partial class RootDisplayForm : Form {
         private string[] loadPath = null;
-        // 状态栏默认背景色
-        private Color formBackColor = ColorTranslator.FromHtml("#fff");
         public RootDisplayForm() {
             InitializeComponent();
         }
@@ -50,8 +48,7 @@ namespace EditCodeAssistant {
             this.Size = RootFormCongfig.ROOT_SIZE;
             this.BackColor = Color.White;
             this.Text = RootFormDataLib.ROOT_FORM_TEXT;
-            this.IsMdiContainer = true;
-            this.BackColor = formBackColor;
+            this.IsMdiContainer = false;
             // 图标
             this.Icon = Properties.Resources.编辑器适配;
         }
@@ -131,10 +128,12 @@ namespace EditCodeAssistant {
             Form[] topFormArr = FormCacheFactory.getTopFormCache().Values.ToArray();
             for(int i=0; i<topFormArr.Length; i++) { 
                 Form f = topFormArr[i];
-                if(this.WindowState.Equals(FormWindowState.Minimized)) { 
-                    f.Visible = false;
-                } else { 
-                    f.Visible = true;
+                if (!f.IsDisposed) {
+                    if (this.WindowState.Equals(FormWindowState.Minimized)) {
+                        f.Visible = false;
+                    } else {
+                        f.Visible = true;
+                    }
                 }
             }
         }
@@ -163,7 +162,7 @@ namespace EditCodeAssistant {
             container.RightToolStripPanelVisible = false;
             container.BottomToolStripPanelVisible = false;
             container.ContentPanel.Controls.Add(tab);
-            tab.Location = new Point(-1, 0);
+            tab.Location = new Point(-1, -3);
             tab.Size = new Size(container.ContentPanel.ClientSize.Width+5, 
                 container.ContentPanel.ClientSize.Height - tab.Location.Y - container.BottomToolStripPanel.Height);
 

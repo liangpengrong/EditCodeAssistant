@@ -67,6 +67,7 @@
             this.字体_恢复默认Item = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助Item = new System.Windows.Forms.ToolStripMenuItem();
             this.关于Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.置顶Item = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -263,7 +264,7 @@
             this.字符串工具_添加字符_Item,
             this.字符串工具_删除字符_Item});
             this.字符串工具Item.Name = "字符串工具Item";
-            this.字符串工具Item.Size = new System.Drawing.Size(180, 22);
+            this.字符串工具Item.Size = new System.Drawing.Size(136, 22);
             this.字符串工具Item.Text = "字符串工具";
             // 
             // 字符串工具_分割字符_Item
@@ -289,7 +290,7 @@
             this.代码工具Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.代码工具_java_Item});
             this.代码工具Item.Name = "代码工具Item";
-            this.代码工具Item.Size = new System.Drawing.Size(180, 22);
+            this.代码工具Item.Size = new System.Drawing.Size(136, 22);
             this.代码工具Item.Text = "代码工具";
             // 
             // 代码工具_java_Item
@@ -297,24 +298,25 @@
             this.代码工具_java_Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.代码工具_java_生成JAVA实体类});
             this.代码工具_java_Item.Name = "代码工具_java_Item";
-            this.代码工具_java_Item.Size = new System.Drawing.Size(180, 22);
+            this.代码工具_java_Item.Size = new System.Drawing.Size(105, 22);
             this.代码工具_java_Item.Text = "JAVA";
             // 
             // 代码工具_java_生成JAVA实体类
             // 
             this.代码工具_java_生成JAVA实体类.Name = "代码工具_java_生成JAVA实体类";
-            this.代码工具_java_生成JAVA实体类.Size = new System.Drawing.Size(180, 22);
+            this.代码工具_java_生成JAVA实体类.Size = new System.Drawing.Size(136, 22);
             this.代码工具_java_生成JAVA实体类.Text = "生成实体类";
             // 
             // 首选项Item
             // 
             this.首选项Item.Name = "首选项Item";
-            this.首选项Item.Size = new System.Drawing.Size(180, 22);
+            this.首选项Item.Size = new System.Drawing.Size(136, 22);
             this.首选项Item.Text = "首选项";
             // 
             // 查看Item
             // 
             this.查看Item.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.置顶Item,
             this.自动换行Item,
             this.状态栏Item,
             this.字体Item});
@@ -327,7 +329,7 @@
             this.自动换行Item.AutoToolTip = true;
             this.自动换行Item.CheckOnClick = true;
             this.自动换行Item.Name = "自动换行Item";
-            this.自动换行Item.Size = new System.Drawing.Size(124, 22);
+            this.自动换行Item.Size = new System.Drawing.Size(180, 22);
             this.自动换行Item.Text = "自动换行";
             // 
             // 状态栏Item
@@ -337,7 +339,7 @@
             this.状态栏Item.CheckOnClick = true;
             this.状态栏Item.CheckState = System.Windows.Forms.CheckState.Checked;
             this.状态栏Item.Name = "状态栏Item";
-            this.状态栏Item.Size = new System.Drawing.Size(124, 22);
+            this.状态栏Item.Size = new System.Drawing.Size(180, 22);
             this.状态栏Item.Text = "状态栏";
             // 
             // 字体Item
@@ -346,19 +348,19 @@
             this.字体_设置字体Item,
             this.字体_恢复默认Item});
             this.字体Item.Name = "字体Item";
-            this.字体Item.Size = new System.Drawing.Size(124, 22);
+            this.字体Item.Size = new System.Drawing.Size(180, 22);
             this.字体Item.Text = "字体";
             // 
             // 字体_设置字体Item
             // 
             this.字体_设置字体Item.Name = "字体_设置字体Item";
-            this.字体_设置字体Item.Size = new System.Drawing.Size(130, 22);
+            this.字体_设置字体Item.Size = new System.Drawing.Size(180, 22);
             this.字体_设置字体Item.Text = "设置字体..";
             // 
             // 字体_恢复默认Item
             // 
             this.字体_恢复默认Item.Name = "字体_恢复默认Item";
-            this.字体_恢复默认Item.Size = new System.Drawing.Size(130, 22);
+            this.字体_恢复默认Item.Size = new System.Drawing.Size(180, 22);
             this.字体_恢复默认Item.Text = "恢复默认";
             // 
             // 帮助Item
@@ -374,6 +376,15 @@
             this.关于Item.Name = "关于Item";
             this.关于Item.Size = new System.Drawing.Size(106, 22);
             this.关于Item.Text = "关于..";
+            // 
+            // 置顶Item
+            // 
+            this.置顶Item.AutoToolTip = true;
+            this.置顶Item.CheckOnClick = true;
+            this.置顶Item.Name = "置顶Item";
+            this.置顶Item.Size = new System.Drawing.Size(180, 22);
+            this.置顶Item.Text = "置顶";
+            this.置顶Item.ToolTipText = "置顶";
             // 
             // TopMenuContainer
             // 
@@ -429,5 +440,6 @@
         private System.Windows.Forms.ToolStripMenuItem 字符串工具_分割字符_Item;
         private System.Windows.Forms.ToolStripMenuItem 字符串工具_添加字符_Item;
         private System.Windows.Forms.ToolStripMenuItem 字符串工具_删除字符_Item;
+        public System.Windows.Forms.ToolStripMenuItem 置顶Item;
     }
 }

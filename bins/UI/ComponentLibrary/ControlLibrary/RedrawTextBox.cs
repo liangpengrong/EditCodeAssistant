@@ -126,12 +126,13 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void setThisStyles() { 
             SetStyle(  
-               //ControlStyles.UserPaint |                      // 控件将自行绘制，而不是通过操作系统来绘制  
-               ControlStyles.OptimizedDoubleBuffer |          // 该控件首先在缓冲区中绘制，而不是直接绘制到屏幕上，这样可以减少闪烁  
-               ControlStyles.AllPaintingInWmPaint |           // 控件将忽略 WM_ERASEBKGND 窗口消息以减少闪烁  
-               ControlStyles.ResizeRedraw |                   // 在调整控件大小时重绘控件  
-               ControlStyles.SupportsTransparentBackColor |     // 控件接受 alpha 组件小于 255 的 BackColor 以模拟透明  
-               ControlStyles.UserMouse,
+               ControlStyles.ContainerControl |         // 控件将自行绘制，而不是通过操作系统来绘制  
+               ControlStyles.OptimizedDoubleBuffer |    // 该控件首先在缓冲区中绘制，而不是直接绘制到屏幕上，这样可以减少闪烁  
+               ControlStyles.AllPaintingInWmPaint |     // 控件将忽略 WM_ERASEBKGND 窗口消息以减少闪烁  
+               ControlStyles.ResizeRedraw |             // 在调整控件大小时重绘控件  
+               ControlStyles.SupportsTransparentBackColor // 控件接受 alpha 组件小于 255 的 BackColor 以模拟透明  
+               //ControlStyles.UserMouse // 自身处理鼠标事件
+               ,
                true);                               // 设置以上值为 true  
             UpdateStyles(); 
         }
@@ -191,9 +192,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
             MouseDownLocation = e.Location;
             MouseDownButton = e.Button;
             // 开启或关闭鼠标选中文本的拖放
-            diIsSelectTextDrag();
+            //diIsSelectTextDrag();
             // 鼠标按钮按下选中文本
-            mouseDownSelectText();
+            //mouseDownSelectText();
             
             base.OnMouseDown(e);
         }
@@ -222,14 +223,14 @@ namespace UI.ComponentLibrary.ControlLibrary {
             MouseMoveLocation = e.Location;
             if(e.Button.Equals(MouseButtons.Left)) {
                 // 选中文本
-                mouseMoveSelectText();
+                //mouseMoveSelectText();
             }
             base.OnMouseMove(e);
         }
         // 鼠标双击事件
         protected override void OnMouseDoubleClick(MouseEventArgs e) {
             // 双击选中文本
-            doubleClickSelectText();
+            //doubleClickSelectText();
             base.OnMouseDoubleClick(e);
         }
         // 键盘按键按下事件
@@ -476,17 +477,46 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 }
             }
         }
+        private void setScrollOfMouse() {
+            int MinH, MaxH, MinV, MaxV;
+            int SB_HORZ = 0x0;
+            int SB_VERT = 0x1;
+            int WM_HSCROLL = 0x114;
+            int WM_VSCROLL = 0x115;
+            int SB_THUMBPOSITION = 4;
+            // 获得鼠标在X和Y两个方向上的移动量。除以10是为是让移动页面的速度变慢一点。而前面的负号则是用来调节页面移动方向的。
+            WinApiUtilsMet.GetScrollRange(Handle, 0, out MinH, out MaxH); 
+            WinApiUtilsMet.GetScrollRange(Handle, 1, out MinV, out MaxV);
+            int MoveX = 0;
+            Console.WriteLine(MaxH);
+            if(MouseMoveLocation.X > MouseDownLocation.X) { //向左移动
+                MoveX = MouseMoveLocation.X-(this.FindForm().Width/3);
+                MoveX = MoveX <0? 0 : MoveX;
+            } else { // 向右移动鼠标
+                MoveX = MaxH;
+            }
+            int MoveY = Math.Abs(MouseMoveLocation.Y - MouseDownLocation.Y); 
+            ////获取滚动条的最大最小位置和当前位置 
+
+            Console.WriteLine(MouseDownLocation);
+            WinApiUtilsMet.SetScrollPos(Handle, SB_HORZ, MoveX, true);// 水平滚动栏
+            WinApiUtilsMet.PostMessage(Handle, WM_HSCROLL, SB_THUMBPOSITION + 0x10000 * MoveX, 0);//告诉控件移动页面内容到相应的位置上 
+            //WinApiUtilsMet.SetScrollPos(Handle, SB_VERT, MoveY, true);// 垂直滚动栏
+            //WinApiUtilsMet.PostMessage(Handle, WM_VSCROLL, SB_THUMBPOSITION + 0x10000 * MoveY, 0); 
+        }
         // 鼠标移动选中文本
         private void mouseMoveSelectText() { 
             Point p = MouseMoveLocation;
             if(p.X < 0) p.X = 0;
-            if(p.Y < 0) p.Y = 0;
+            if(p.Y < 0) p.Y = 0; 
             // 判断是否启用了选中文本拖放
             if(Cursor.Equals(selectTextDragCur)) {
                 if(!isMouseEnterSelectText()) { // 判断鼠标不在当前选定文本的范围内
                     
                 }
-            } else { 
+            } else {
+                // 设置滚动条跟随鼠标翻页
+                //setScrollOfMouse();
                 int mouseIndex = this.GetCharIndexFromPosition(p);
                 int selIndex = this.GetCharIndexFromPosition(MouseDownLocation);
                 this.SelectionLength = Math.Abs(mouseIndex-selIndex);
@@ -500,6 +530,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         // 设置tab键到文本框
         private void outTabTotextbox() { 
             string chars = "    ";
+            // string chars = "\t";
             int index = this.SelectionStart;
             int selLen = this.SelectionLength;
             string selText = this.SelectedText;

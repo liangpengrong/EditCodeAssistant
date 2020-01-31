@@ -362,7 +362,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             return retStr;
         }
         // 生成get set的方法
-        private string beGetSetMethod(List<Dictionary<string, string>> dataDic) { 
+        private string beGetSetMethod(List<Dictionary<string, string>> dataDic) {
             StringBuilder builder = new StringBuilder();
             string retStr = "";
             if(dataDic != null && dataDic.Count > 0 && 生成get_set_check.Enabled) { 
