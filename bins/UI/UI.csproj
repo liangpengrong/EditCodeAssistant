@@ -199,6 +199,12 @@
     <EmbeddedResource Include="ComponentLibrary\ControlLibrary\ExportComBox.resx">
       <DependentUpon>ExportComBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RedrawMainContainer.resx">
+      <DependentUpon>RedrawMainContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RedrawTabPage.resx">
+      <DependentUpon>RedrawTabPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RightMenu\DataGridViewRightMenu.resx">
       <DependentUpon>DataGridViewRightMenu.cs</DependentUpon>
     </EmbeddedResource>

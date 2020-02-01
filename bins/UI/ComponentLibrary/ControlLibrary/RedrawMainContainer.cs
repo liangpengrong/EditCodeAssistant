@@ -66,5 +66,60 @@ namespace UI.ComponentLibrary.ControlLibrary {
             ControlCacheFactory.addPrototypeCache(DefaultNameEnum.MAIN_CONTAINER, conThis);
             return conThis;
         }
+
+        private void InitializeComponent() {
+            this.SuspendLayout();
+            // 
+            // RedrawMainContainer
+            // 
+            // 
+            // 
+            // 
+            this.BottomToolStripPanel.BackColor = Color.White;
+            this.BottomToolStripPanel.Dock = DockStyle.Bottom;
+            this.BottomToolStripPanel.Location = new Point(0, 175);
+            this.BottomToolStripPanel.Name = "";
+            this.BottomToolStripPanel.Orientation = Orientation.Horizontal;
+            this.BottomToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            this.BottomToolStripPanel.Size = new Size(150, 0);
+            // 
+            // 
+            // 
+            this.ContentPanel.BackColor = Color.White;
+            this.ContentPanel.Size = new Size(150, 175);
+            // 
+            // 
+            // 
+            this.LeftToolStripPanel.BackColor = Color.White;
+            this.LeftToolStripPanel.Dock = DockStyle.Left;
+            this.LeftToolStripPanel.Location = new Point(0, 0);
+            this.LeftToolStripPanel.Name = "";
+            this.LeftToolStripPanel.Orientation = Orientation.Vertical;
+            this.LeftToolStripPanel.RowMargin = new Padding(0, 3, 0, 0);
+            this.LeftToolStripPanel.Size = new Size(0, 175);
+            // 
+            // 
+            // 
+            this.RightToolStripPanel.BackColor = Color.White;
+            this.RightToolStripPanel.Dock = DockStyle.Right;
+            this.RightToolStripPanel.Location = new Point(150, 0);
+            this.RightToolStripPanel.Name = "";
+            this.RightToolStripPanel.Orientation = Orientation.Vertical;
+            this.RightToolStripPanel.RowMargin = new Padding(0, 3, 0, 0);
+            this.RightToolStripPanel.Size = new Size(0, 175);
+            // 
+            // 
+            // 
+            this.TopToolStripPanel.BackColor = Color.White;
+            this.TopToolStripPanel.Dock = DockStyle.Top;
+            this.TopToolStripPanel.Location = new Point(0, 0);
+            this.TopToolStripPanel.Name = "";
+            this.TopToolStripPanel.Orientation = Orientation.Horizontal;
+            this.TopToolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
+            this.TopToolStripPanel.Size = new Size(150, 0);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
     }
 }

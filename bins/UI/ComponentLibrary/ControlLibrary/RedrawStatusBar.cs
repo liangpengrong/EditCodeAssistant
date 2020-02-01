@@ -758,7 +758,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 定义清除已释放控件的内部方法
             void clear() { 
                 List<Control> list = new List<Control>(SourceControlArr);
-                for (int i=SourceControlArr.Length; i > 0; i--) { 
+                for (int i=SourceControlArr.Length-1; i >= 0; i--) {
                     Control c = SourceControlArr[i];
                     if(c == null || c.IsDisposed) { 
                         list.RemoveAt(i);

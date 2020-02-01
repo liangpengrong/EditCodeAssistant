@@ -73,6 +73,7 @@
             // 
             // topMenuStrip
             // 
+            this.topMenuStrip.BackColor = System.Drawing.Color.White;
             this.topMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件Item,
             this.编辑Item,
@@ -164,7 +165,7 @@
             this.撤销Item.Name = "撤销Item";
             this.撤销Item.ShortcutKeyDisplayString = "Ctrl+Z";
             this.撤销Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.撤销Item.Size = new System.Drawing.Size(180, 22);
+            this.撤销Item.Size = new System.Drawing.Size(172, 22);
             this.撤销Item.Text = "撤销";
             // 
             // 恢复Item
@@ -172,20 +173,20 @@
             this.恢复Item.Name = "恢复Item";
             this.恢复Item.ShortcutKeyDisplayString = "Ctrl+Y";
             this.恢复Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.恢复Item.Size = new System.Drawing.Size(180, 22);
+            this.恢复Item.Size = new System.Drawing.Size(172, 22);
             this.恢复Item.Text = "恢复";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // 剪切Item
             // 
             this.剪切Item.Name = "剪切Item";
             this.剪切Item.ShortcutKeyDisplayString = "Ctrl+X";
             this.剪切Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.剪切Item.Size = new System.Drawing.Size(180, 22);
+            this.剪切Item.Size = new System.Drawing.Size(172, 22);
             this.剪切Item.Text = "剪切";
             // 
             // 复制Item
@@ -193,7 +194,7 @@
             this.复制Item.Name = "复制Item";
             this.复制Item.ShortcutKeyDisplayString = "Ctrl+C";
             this.复制Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.复制Item.Size = new System.Drawing.Size(180, 22);
+            this.复制Item.Size = new System.Drawing.Size(172, 22);
             this.复制Item.Text = "复制";
             // 
             // 粘贴Item
@@ -201,54 +202,54 @@
             this.粘贴Item.Name = "粘贴Item";
             this.粘贴Item.ShortcutKeyDisplayString = "Ctrl+V";
             this.粘贴Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.粘贴Item.Size = new System.Drawing.Size(180, 22);
+            this.粘贴Item.Size = new System.Drawing.Size(172, 22);
             this.粘贴Item.Text = "粘贴";
             // 
             // 删除Item
             // 
             this.删除Item.Name = "删除Item";
             this.删除Item.ShortcutKeyDisplayString = "DELETE";
-            this.删除Item.Size = new System.Drawing.Size(180, 22);
+            this.删除Item.Size = new System.Drawing.Size(172, 22);
             this.删除Item.Text = "删除";
             // 
             // 全选Item
             // 
             this.全选Item.Name = "全选Item";
             this.全选Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.全选Item.Size = new System.Drawing.Size(180, 22);
+            this.全选Item.Size = new System.Drawing.Size(172, 22);
             this.全选Item.Text = "全选";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
             // 
             // 查找替换Item
             // 
             this.查找替换Item.Name = "查找替换Item";
             this.查找替换Item.ShortcutKeyDisplayString = "Ctrl+F";
             this.查找替换Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.查找替换Item.Size = new System.Drawing.Size(180, 22);
+            this.查找替换Item.Size = new System.Drawing.Size(172, 22);
             this.查找替换Item.Text = "查找/替换";
             // 
             // 转到行Item
             // 
             this.转到行Item.Name = "转到行Item";
             this.转到行Item.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.转到行Item.Size = new System.Drawing.Size(180, 22);
+            this.转到行Item.Size = new System.Drawing.Size(172, 22);
             this.转到行Item.Text = "转到行";
             // 
             // 统计字符Item
             // 
             this.统计字符Item.Name = "统计字符Item";
-            this.统计字符Item.Size = new System.Drawing.Size(180, 22);
+            this.统计字符Item.Size = new System.Drawing.Size(172, 22);
             this.统计字符Item.Text = "统计字符";
             // 
             // 时间日期Item
             // 
             this.时间日期Item.Name = "时间日期Item";
             this.时间日期Item.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.时间日期Item.Size = new System.Drawing.Size(180, 22);
+            this.时间日期Item.Size = new System.Drawing.Size(172, 22);
             this.时间日期Item.Text = "时间/日期";
             this.时间日期Item.Visible = false;
             // 
@@ -315,7 +316,7 @@
             // 首选项Item
             // 
             this.首选项Item.Name = "首选项Item";
-            this.首选项Item.Size = new System.Drawing.Size(180, 22);
+            this.首选项Item.Size = new System.Drawing.Size(136, 22);
             this.首选项Item.Text = "首选项";
             this.首选项Item.Visible = false;
             // 
@@ -396,6 +397,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.topMenuStrip);
             this.Name = "TopMenuContainer";
             this.Size = new System.Drawing.Size(482, 288);

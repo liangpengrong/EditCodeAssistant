@@ -1,6 +1,7 @@
 ﻿using Core.CacheLibrary.ControlCache;
 using Core.CacheLibrary.FormCache;
 using Core.DefaultData.DataLibrary;
+using Core.StaticMethod.Method.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +98,8 @@ namespace UI {
                 mode = new SetCodingForm();
             } else if(DefaultNameEnum.THEREOF_FORM.Equals(name)) {
                 mode = new ThereofForm();
+            } else if(DefaultNameEnum.CHARS_STATISTICS.Equals(name)) { 
+                mode = new CharsStatistics(getPageTextBox());
             }
             return mode;
         }
@@ -124,6 +127,19 @@ namespace UI {
                 mode = new RedrawPromptMessBut();
             }
             return mode;
+        }
+
+        private static TextBox getPageTextBox() { 
+            Control conTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
+            List<TextBox> controls = null;
+            TextBox t = null;
+            if (conTab != null && conTab is TabControl && t == null) { 
+                ControlsUtils.GetAllControlByType(ref controls, ((TabControl)conTab).SelectedTab.Controls);
+                if (controls.Count > 0 && controls[0] is TextBox) { 
+                    return controls[0];
+                }
+            }
+            return null;
         }
     }
 }

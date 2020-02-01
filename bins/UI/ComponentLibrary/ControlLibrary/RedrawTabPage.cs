@@ -171,5 +171,15 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 
             }
         }
+
+        private void InitializeComponent() {
+            this.SuspendLayout();
+            // 
+            // RedrawTabPage
+            // 
+            this.BackColor = System.Drawing.Color.White;
+            this.ResumeLayout(false);
+
+        }
     }
 }

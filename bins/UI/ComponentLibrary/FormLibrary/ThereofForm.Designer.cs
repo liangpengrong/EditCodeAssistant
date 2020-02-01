@@ -103,6 +103,7 @@
             // 
             this.head_textB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.head_textB.BackColor = System.Drawing.Color.White;
             this.head_textB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.head_textB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.head_textB.ForeColor = System.Drawing.Color.LightCoral;
@@ -129,6 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(687, 558);
             this.Controls.Add(this.描述_lab);
             this.Controls.Add(this.head_textB);

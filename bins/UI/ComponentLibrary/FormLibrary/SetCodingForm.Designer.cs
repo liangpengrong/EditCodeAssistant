@@ -66,7 +66,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(70, 25);
             this.button1.TabIndex = 3;
-            this.button1.Text = "确定打开";
+            this.button1.Text = "重新读取";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -83,6 +83,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(281, 102);
             this.Controls.Add(this.coding_set);
             this.Controls.Add(this.button1);
@@ -96,7 +97,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "指定的编码重新打开";
+            this.Text = "指定的编码重新读取";
             this.Load += new System.EventHandler(this.SetCodingForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

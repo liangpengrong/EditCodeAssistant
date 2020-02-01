@@ -19,6 +19,8 @@ namespace UI.ComponentLibrary.FormLibrary {
     public partial class SetCodingForm : Form, IComponentInitMode<Form> {
         // 要操作的文本框
         private TextBox textBox;
+        // 文本框内容备份
+        private string textBoxBackup;
         // 文本框的编码
         private Encoding textCoding = null;
 
@@ -64,20 +66,18 @@ namespace UI.ComponentLibrary.FormLibrary {
         }
         // 窗体加载事件
         private void SetCodingForm_Load(object sender, EventArgs e) {
-            initData();
+            // 初始化源数据控件
+            initSourceDataControl();
+            initTextBoxBackup();
             // 将文本框的编码赋值到label中
             textCodinCopyLab();
             setCodingSet();
         }
-        // 初始化数据
-        private void initData() { 
-            // 初始化源数据控件
-            initSourceDataCon();
-        }
+
         /// <summary>
         /// 初始化源数据控件 这里是文本框
         /// </summary>
-        private void initSourceDataCon() {
+        private void initSourceDataControl() {
             if (textBox == null) { 
                 Control conTab = ControlCacheFactory.getSingletonCache(DefaultNameEnum.TAB_CONTENT);
                 List<TextBox> controls = null;
@@ -87,6 +87,11 @@ namespace UI.ComponentLibrary.FormLibrary {
                         textBox = controls[0];
                     }
                 }
+            }
+        }
+        private void initTextBoxBackup(){
+            if (textBox != null) {
+                textBoxBackup = textBox.Text.ToString();
             }
         }
         /// <summary>
@@ -140,17 +145,20 @@ namespace UI.ComponentLibrary.FormLibrary {
                     MessageBox.Show("选中内容无法转化为编码，将使用默认编码"+ee);
                 }
             }
-
             // 获取选择项的编码
             Encoding coding = Encoding.GetEncoding(codingInt);
-
             // 获取文本框的文本
-            string text = "";
+            string text = null;
             if(tag.ContainsKey(TextBoxTagKey.SAVE_FILE_PATH)) {
-                text = FileUtils.FileRead.Read(tag[TextBoxTagKey.SAVE_FILE_PATH].ToString(), coding);
-            } else { 
-                text = textBox.Text;
-            }
+                string path = tag[TextBoxTagKey.SAVE_FILE_PATH].ToString();
+                if (FileUtils.isFileUrl(path)) { 
+                    text = FileUtils.FileRead.Read(path, coding);
+                }
+            } 
+            if(text == null)
+                text = textBoxBackup;
+            if(text == null || text.Length == 0) 
+                return; 
             // 将文本框的文本设置为指定编码格式
             byte[] textBoxBytes = textCoding.GetBytes(text);
             byte[] asciiBytes = Encoding.Convert(textCoding, coding, textBoxBytes);
@@ -159,7 +167,7 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 恢复文本框的起始位置和选中长度
             textBox.SelectionStart = index;
             textBox.SelectionLength = selLen;
-            // 设置保持在Tag数据中的文本框编码
+            // 设置保存在Tag数据中的文本框编码
             TextBoxUtils.TextBoxAddTag(textBox, TextBoxTagKey.TEXTBOX_TAG_KEY_ECODING, coding);
         }
         /// <summary>
@@ -180,12 +188,12 @@ namespace UI.ComponentLibrary.FormLibrary {
         // 确定按钮的点击事件
         private void button1_Click(object sender, EventArgs e) {
             // 初始化源数据控件
-            initSourceDataCon();
+            initSourceDataControl();
             // 验证
             if(!isCheck()) return;
             // 设置编码
             setTextByEncoding();
-            this.Close();
+            //this.Close();
         }
     }
 }

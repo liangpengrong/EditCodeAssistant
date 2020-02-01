@@ -26,8 +26,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         // 标签选中背景色
         private Color page_sel_color = ColorTranslator.FromHtml("#007ACC");
         // 标签鼠标选中背景色
-        //private Color page_mouse_sel_color = ColorTranslator.FromHtml("#1C97EA");
-        private Color page_mouse_sel_color = ColorTranslator.FromHtml("#007ACC");
+        private Color page_mouse_sel_color = ColorTranslator.FromHtml("#5A7E8F");
 
         // 标签选中前景色
         private Color page_sel_font_color = ColorTranslator.FromHtml("#fff");
@@ -575,7 +574,9 @@ namespace UI.ComponentLibrary.ControlLibrary {
                         tab.SizeMode = TabSizeMode.Fixed;
                     }
                 } else { 
-                    int itemWW = ((tabWidth-rightMargin) / itemCount);
+                    int itemWW = (tabWidth-rightMargin) / itemCount;
+                    if(itemWW <= 0)
+                        itemWW = 10;
                     itemSize = new Size(itemWW, tab.ItemSize.Height);
                     if(itemSize != Size.Empty && (!itemSize.Width.Equals(tab.ItemSize.Width) 
                         || !itemSize.Height.Equals(tab.ItemSize.Height))) { 

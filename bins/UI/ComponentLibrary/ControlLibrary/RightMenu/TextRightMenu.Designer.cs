@@ -63,6 +63,7 @@
             // rightMenuStrip
             // 
             this.rightMenuStrip.AutoSize = false;
+            this.rightMenuStrip.BackColor = System.Drawing.Color.White;
             this.rightMenuStrip.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rightMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.全选Item,
