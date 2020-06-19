@@ -219,7 +219,7 @@ namespace Core.CacheLibrary.OperateCache.TextBoxOperateCache
                 return modList;
             }
             // 判断鼠标左键或者右键按下
-            if (WinApiUtils.GetAsyncKeyState(0x02) > 0|| WinApiUtils.GetAsyncKeyState(0x01) > 0) {
+            if (WindowsApiUtils.GetAsyncKeyState(0x02) > 0|| WindowsApiUtils.GetAsyncKeyState(0x01) > 0) {
                 modList.Add(textM);
                 return modList;
             } else {

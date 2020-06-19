@@ -18,26 +18,19 @@ namespace UI.ComponentLibrary.FormLibrary {
     /// </summary>
     public partial class AddCharsForm : Form, IComponentInitMode<Form> {
         // 显示结果的文本框
-        private RedrawTextBox resultTextBox;
-        
+        private TextBox resultTextBox;
         // 要操作的字符串
         private string text_val = "";
-        
         // 当前要操作的模式(0普通 1高级)
         private int type = 0;
-
         // 添加字符文本框的历史
         private Dictionary<int, string[]> textHistory = new Dictionary<int, string[]>();
-
         // 要添加到行首的字符
         private string head_text = "";
-
         // 要添加到行尾部的字符
         private string end_text = "";
-
         // 匹配空行
         private bool isMatchBlack = true;
-
         // 匹配末尾
         private bool isMatchEnd = true;
 
@@ -91,12 +84,19 @@ namespace UI.ComponentLibrary.FormLibrary {
         /// </summary>
         private void initResultTextBox() { 
             Control parent = 普通_操作容器.Parent;
+            int padding = 3;
             if(parent != null) { 
-                resultTextBox = new RedrawTextBox();
-                resultTextBox.Location = new Point(1, 普通_操作容器.Location.Y + 普通_操作容器.Height);
-                resultTextBox.Size = new Size(parent.ClientSize.Width-2, (parent.Height-普通_操作容器.Height));
-                resultTextBox.ReadOnly = false;
+                resultTextBox = new TextBox();
                 parent.Controls.Add(resultTextBox);
+                resultTextBox.Multiline = true;
+                resultTextBox.Location = new Point(padding, 普通_操作容器.Location.Y + 普通_操作容器.Height+padding);
+                resultTextBox.Width = parent.ClientSize.Width - padding * 2;
+                resultTextBox.Height = parent.Height-普通_操作容器.Height - padding * 2;
+                resultTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+                resultTextBox.BorderStyle = BorderStyle.None;
+                resultTextBox.ReadOnly = false;
+                resultTextBox.WordWrap = false;
+                resultTextBox.ScrollBars = ScrollBars.Both;
                 resultTextBox.BringToFront();
             }
         }
@@ -153,6 +153,8 @@ namespace UI.ComponentLibrary.FormLibrary {
             // 普通模式
             if(0.Equals(type)) {
                 text_val = textBox.SelectionLength > 0?textBox.SelectedText : textBox.Text;
+                if (text_val.Length == 0)
+                    return;
                 // 添加字符
                 ordinaryAddChars();
                 // 将首尾字符添加到历史纪录中
@@ -336,7 +338,6 @@ namespace UI.ComponentLibrary.FormLibrary {
         }
         // 确定按钮的点击事件
         private void 普通_确定添加but_Click(object sender, EventArgs e) {
-            // 执行添加方法
             addCharsMet();
         }
         // 文本框键盘按下事件

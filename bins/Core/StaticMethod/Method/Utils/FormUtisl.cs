@@ -56,10 +56,10 @@ namespace Core.StaticMethod.Method.Utils
             if(form == null || form.IsDisposed) return;
             if (form != null) {
                 if (isTop) {
-                    WinApiUtils.setFormTopNoFocus(true, form);
+                    WindowsApiUtils.setFormTopNoFocus(true, form);
                 } else {
-                    if (!WinApiUtils.GetForegroundWindow().Equals(form.Handle)) {
-                        WinApiUtils.setFormTopNoFocus(false, form);
+                    if (!WindowsApiUtils.GetForegroundWindow().Equals(form.Handle)) {
+                        WindowsApiUtils.setFormTopNoFocus(false, form);
                     }
                 }
             }
@@ -79,12 +79,12 @@ namespace Core.StaticMethod.Method.Utils
                     // 判断是否要设置为顶层
                     if(isTop) {
                         // 设为顶层
-                        WinApiUtils.setFormTopNoFocus(true, form);
+                        WindowsApiUtils.setFormTopNoFocus(true, form);
                     } else {
                         // 判断当前前台窗口是否为要设置的窗口
-                        if(form.TopLevel && !WinApiUtils.GetForegroundWindow().Equals(form.Handle)) {
+                        if(form.TopLevel && !WindowsApiUtils.GetForegroundWindow().Equals(form.Handle)) {
                             // 将窗口设置为非顶层
-                            WinApiUtils.setFormTopNoFocus(false, form);
+                            WindowsApiUtils.setFormTopNoFocus(false, form);
                         }
                     }
                 }
@@ -96,7 +96,7 @@ namespace Core.StaticMethod.Method.Utils
         /// <param name="name">窗体标题名</param>
         /// <returns></returns>
         public static IntPtr GetProcessFormByName(string headName) {
-            IntPtr intPtr = WinApiUtils.FindWindow(null, headName);
+            IntPtr intPtr = WindowsApiUtils.FindWindow(null, headName);
             return intPtr;
         }
 

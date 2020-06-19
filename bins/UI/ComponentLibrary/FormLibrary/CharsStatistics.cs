@@ -216,7 +216,7 @@ namespace UI.ComponentLibrary.FormLibrary
             textBox.BackColor = Color.White;
             textBox.TabStop = false;
             textBox.MouseDown += (object sender, MouseEventArgs e)=>{
-                WinApiUtils.HideCaret(((TextBox)sender).Handle);
+                WindowsApiUtils.HideCaret(((TextBox)sender).Handle);
             };
             textBox.BorderStyle = BorderStyle.None;
             return textBox;

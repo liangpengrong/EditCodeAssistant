@@ -68,7 +68,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
 
             Button but = this.下拉按钮_but;
             Button but2 = this.button1;
-            WinApiUtils.AnimateWindow(but.Handle, 3000, 0x80000);
+            WindowsApiUtils.AnimateWindow(but.Handle, 3000, 0x80000);
             // 边框颜色
             but.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#ADADAD");
             but.BackColor = ColorTranslator.FromHtml("#E1E1E1");

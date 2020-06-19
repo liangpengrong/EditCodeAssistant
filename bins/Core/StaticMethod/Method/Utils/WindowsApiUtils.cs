@@ -10,7 +10,7 @@ namespace Core.StaticMethod.Method.Utils
     /// <summary>
     /// 关于WindowsAPI的工具类
     /// </summary>
-    public class WinApiUtils
+    public class WindowsApiUtils
     {
         /// <summary>
         /// 设置滚动条得到最小 最大值
@@ -90,6 +90,26 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out Point p);
+        ///<summary>
+        /// 该函数设置由不同线程产生的窗口的显示状态
+        /// </summary>
+        /// <param name="hWnd">窗口句柄</param>
+        /// <param name="cmdShow">指定窗口如何显示。查看允许值列表，请查阅ShowWlndow函数的说明部分</param>
+        /// <returns>如果函数原来可见，返回值为非零；如果函数原来被隐藏，返回值为零</returns>
+        [DllImport("User32.dll")]
+        public static extern bool ShowWindowAsync(IntPtr hWnd, int cmdShow);
+        /// <summary>
+        ///  该函数将创建指定窗口的线程设置到前台，并且激活该窗口。键盘输入转向该窗口，并为用户改各种可视的记号。
+        ///  系统给创建前台窗口的线程分配的权限稍高于其他线程。 
+        /// </summary>
+        /// <param name="hWnd">将被激活并被调入前台的窗口句柄</param>
+        /// <returns>如果窗口设入了前台，返回值为非零；如果窗口未被设入前台，返回值为零</returns>
+        [DllImport("User32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll", EntryPoint = "ShowWindow", CharSet = CharSet.Auto)]
+        public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
+        [DllImport("user32.dll ", SetLastError = true)]
+        public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
         /// <summary>
         /// 判断当前键盘的大小写
         /// </summary>
@@ -183,13 +203,38 @@ namespace Core.StaticMethod.Method.Utils
         public static extern bool AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
 
         /// <summary>
-        /// 闪烁指定窗体
+        /// 闪烁指定窗体一次
         /// </summary>
-        /// <param name="handle"></param>
+        /// <param name="handle">窗口句柄</param>
         /// <param name="invert"></param>
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool FlashWindow(IntPtr handle, bool invert);
+        /// <summary>
+        /// 闪烁指定窗体
+        /// </summary>
+        /// <param name="handle">窗体句柄</param>
+        /// <param name="interval">闪烁的间隔，单位毫秒</param>
+        /// <param name="countTime">闪烁的总时长，单位秒</param>
+        /// <param name="isMus">是否播放提示音</param>
+        public static System.Timers.Timer FlashWindow(IntPtr handle, int interval, int countTime) {
+            // 定时器
+            System.Timers.Timer myTimer = new System.Timers.Timer();
+            int counter = 0;
+            myTimer.AutoReset = true;
+            myTimer.Interval = interval;
+            myTimer.Enabled = true;
+            myTimer.Elapsed += (sender, e) =>
+            {
+                FlashWindow(handle, true);
+                counter = counter + 1;
+                if(counter.Equals((int)Math.Floor((double)(countTime * 1000 / interval)))){
+                    myTimer.Enabled = false;
+                    myTimer.Dispose();
+                }
+            };
+            return myTimer;
+        }
 
         /// <summary>
         /// 模拟鼠标动作
@@ -212,31 +257,5 @@ namespace Core.StaticMethod.Method.Utils
         /// <returns></returns>
         [DllImport("user32")]
         public static extern bool GetCaretPos(ref System.Drawing.Point lpPoint);
-        /// <summary>
-        /// 闪烁指定窗体
-        /// </summary>
-        /// <param name="handle">窗体句柄</param>
-        /// <param name="countTime">闪烁的间隔，单位毫秒</param>
-        /// <param name="countTime">闪烁的总时长，单位秒</param>
-        /// <param name="isMus">是否播放提示音</param>
-        public static void flashWindesTime(IntPtr handle, int interval, int countTime, bool isMus) {
-            // 是否播放提示音
-            if(isMus) System.Media.SystemSounds.Asterisk.Play();
-            // 定时器
-            System.Timers.Timer myTimer = new System.Timers.Timer();
-            int counter = 0;
-            myTimer.AutoReset = true;
-            myTimer.Interval = interval;
-            myTimer.Enabled = true;
-            myTimer.Elapsed += (sender, e) =>
-            {
-                FlashWindow(handle, true);
-                counter = counter + 1;
-                if(counter.Equals((int)Math.Floor((double)(countTime * 1000 / interval)))){
-                    myTimer.Enabled = false;
-                    myTimer.Dispose();
-                }
-            };
-        }
     }
 }

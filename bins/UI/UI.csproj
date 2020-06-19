@@ -122,16 +122,16 @@
     <Compile Include="ComponentLibrary\ControlLibrary\RedrawTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\DataGridViewRightMenu.cs">
+    <Compile Include="ComponentLibrary\ControlLibrary\DataGridViewRightMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\DataGridViewRightMenu.Designer.cs">
+    <Compile Include="ComponentLibrary\ControlLibrary\DataGridViewRightMenu.Designer.cs">
       <DependentUpon>DataGridViewRightMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.cs">
+    <Compile Include="ComponentLibrary\ControlLibrary\TextRightMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.Designer.cs">
+    <Compile Include="ComponentLibrary\ControlLibrary\TextRightMenu.Designer.cs">
       <DependentUpon>TextRightMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentLibrary\FormLibrary\AddCharsForm.cs">
@@ -205,10 +205,10 @@
     <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RedrawTabPage.resx">
       <DependentUpon>RedrawTabPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RightMenu\DataGridViewRightMenu.resx">
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\DataGridViewRightMenu.resx">
       <DependentUpon>DataGridViewRightMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\RightMenu\TextRightMenu.resx">
+    <EmbeddedResource Include="ComponentLibrary\ControlLibrary\TextRightMenu.resx">
       <DependentUpon>TextRightMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentLibrary\FormLibrary\AddCharsForm.resx">

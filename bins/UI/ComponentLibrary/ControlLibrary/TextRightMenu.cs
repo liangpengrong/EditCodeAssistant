@@ -252,6 +252,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             });
             methodDelegate clearAllSpaces = new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxDeleteSpace(t);
                 return null;
             });
@@ -310,26 +311,31 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolBindingDic.Add(this.去除_空格_全部空格_Item.Name, clearAllSpaces);
             toolBindingDic.Add(this.去除_空格_行首空格_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxDelRowFirstSpace(t);
                 return null;
             }));
             toolBindingDic.Add(this.去除_空格_行尾空格_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxDelRowTailSpace(t);
                 return null;
             }));
             toolBindingDic.Add(this.去除_空行_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxDelBlankLine(t);
                 return null;
             }));
             toolBindingDic.Add(this.去除_换行符_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxPlaceNewline(t);
                 return null;
             }));
             toolBindingDic.Add(this.去除_制表符_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxPlaceTabs(t);
                 return null;
             }));
@@ -338,7 +344,7 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
                 TextBoxUtils.TextBoxClearText(t);
                 return null;
             }));
-            toolBindingDic.Add(this.转化为_大写形式_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
+            toolBindingDic.Add(this.转化为_大写形式_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{
                 allTextToUpper.Invoke(data);
                 rightMenuStrip.Close();
                 return null;
@@ -346,11 +352,13 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolBindingDic.Add(this.转化为_大写形式_全部_Item.Name, allTextToUpper);
             toolBindingDic.Add(this.转化为_大写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxToUpper(t, 1);
                 return null;
             }));
             toolBindingDic.Add(this.转化为_大写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxToUpper(t, 2);
                 return null;
             }));
@@ -367,11 +375,13 @@ namespace UI.ComponentLibrary.ControlLibrary.RightMenu
             toolBindingDic.Add(this.转化为_小写形式_全部_Item.Name, allTextToLower);
             toolBindingDic.Add(this.转化为_小写形式_行首_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxToLower(t, 1);
                 return null;
             }));
             toolBindingDic.Add(this.转化为_小写形式_行尾_Item.Name, new methodDelegate((Dictionary<Type , object> data)=>{ 
                 TextBox t = (TextBox)data[typeof(TextBox)];
+                TextBoxUtils.TextBoxAddTag(t, TextBoxTagKey.TEXTBOX_EMPTY_NOT_CACHED, true);
                 TextBoxUtils.TextBoxToLower(t, 2);
                 return null;
             }));

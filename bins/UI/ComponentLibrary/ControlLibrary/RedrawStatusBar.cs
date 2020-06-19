@@ -474,13 +474,13 @@ namespace UI.ComponentLibrary.ControlLibrary {
                     ToolStripLabel lable = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.大小写状态];
                     byte[] bs = new byte[256];
                     //判断当前大小写1为大写
-                    WinApiUtils.GetKeyboardState(bs);
+                    WindowsApiUtils.GetKeyboardState(bs);
                     if (bs[0x14].Equals(1)) {// 判断当前为大写
                         //设置为小写
-                        WinApiUtils.SetCapitalState(false);
+                        WindowsApiUtils.SetCapitalState(false);
                         lable.Text = "小写";
                     } else {
-                        WinApiUtils.SetCapitalState(true);
+                        WindowsApiUtils.SetCapitalState(true);
                         lable.Text = "大写";
                     }
                 });
@@ -558,7 +558,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             ControlsUtils.AsynchronousMethod(this,1, delegate{ 
                 ToolStripLabel lable = (ToolStripLabel)this.Items[StrutsStripDataLib.ItemName.大小写状态];
                 // 判断当前为大写
-                if (WinApiUtils.GetCapitalState()){
+                if (WindowsApiUtils.GetCapitalState()){
                     lable.Text = "大写";
                 } else {
                     lable.Text = "小写";

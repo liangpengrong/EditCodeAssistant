@@ -135,7 +135,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void setPageDispLayout() {
             Rectangle rect = new Rectangle();
-            WinApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
+            WindowsApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
             int top = Padding != Padding.Empty? Padding.Top : 1;
             int bottom = Padding != Padding.Empty? Padding.Bottom : 1;
             int left = Padding != Padding.Empty? Padding.Left : 1;
@@ -144,7 +144,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             rect.X = left;
             rect.Height = ClientSize.Height - bottom;
             rect.Width = ClientSize.Width - right;
-            WinApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
+            WindowsApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
             this.Refresh();
         }
         // 关联状态栏

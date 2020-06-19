@@ -175,7 +175,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// 默认设置
         /// </summary>
         private void initTabControlDefConfig() { 
-            this.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT);
+            this.Name = EnumUtils.GetDescription(DefaultNameEnum.TAB_CONTENT); 
             // 字体
             this.Font = new Font("Microsoft YaHei", 10, FontStyle.Regular);
             // 标签大小
@@ -219,21 +219,19 @@ namespace UI.ComponentLibrary.ControlLibrary {
                 if (i == tabc_draw.SelectedIndex) {
                     // 选中样式
                     DrawSelectPage(g, tabc_draw, i);
-                } else {
-                    if (i == MousePage && MouseButtons.None.Equals(MouseClickButtons)) { 
-                        // 鼠标移入标签样式
-                        DrawMouseSelectPage(g, tabc_draw, MousePage);
-                    } else { 
-                        // 未选中样式
-                        DrawNoSelectPage(g, tabc_draw, i);
-                    }
+                }else if (i == MousePage && MouseButtons.None.Equals(MouseClickButtons)){
+                    // 鼠标移入标签样式
+                    DrawMouseSelectPage(g, tabc_draw, MousePage);
+                }else { 
+                    // 未选中样式
+                    DrawNoSelectPage(g, tabc_draw, i);
                 }
                 if((i == tabc_draw.SelectedIndex || i == MousePage)
                     && IsShowDelPageBut && tabc_draw.TabCount > 1) { 
                     // 绘制当前鼠标下选项卡的关闭按钮
-                    PageDrawDeleteBut(g, tabc_draw, MousePage);
+                    DrawPageDeleteBut(g, tabc_draw, MousePage);
                     // 绘制选中选项卡的关闭按钮
-                    PageDrawDeleteBut(g, tabc_draw, tabc_draw.SelectedIndex);
+                    DrawPageDeleteBut(g, tabc_draw, tabc_draw.SelectedIndex);
                 }
             }
         }
@@ -364,14 +362,22 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// <summary>
         /// 判断当前鼠标下的删除标签按钮样式
         /// </summary>
-        private void diIsDelPageMouseStyle() { 
-            if (IsShowDelPageBut) { 
+        ///
+        bool b1 = false, b2 = false;
+        private void diIsDelPageMouseStyle() {
+            if (IsShowDelPageBut && this.TabCount > 1) { 
                 int delIndex = GetMouseDelPageIndex();
-                if(delIndex >= 0) { 
-                    PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
-                } else { 
-                    delIndex = getMouseLocPage(this, MousePagePoint);
-                    if(delIndex >= 0) PageDrawDeleteBut(this.CreateGraphics(),this, delIndex);
+                if(delIndex >= 0) {
+                    if (!b1) { 
+                        DrawPageDeleteBut(this.CreateGraphics(),this, getMouseLocPage(this, MousePagePoint));
+                        b1 = true;b2 = false;
+                    }
+                        
+                }else { 
+                    if(!b2) { 
+                        DrawPageDeleteBut(this.CreateGraphics(),this, getMouseLocPage(this, MousePagePoint));
+                        b1 = false;b2 = true;
+                    }
                 }
             }
         }
@@ -474,23 +480,24 @@ namespace UI.ComponentLibrary.ControlLibrary {
             PageDrawString(g, backrect, changedpage.Text, tabFont, fontbrush);
         }
         // 标签关闭按钮绘制
-        private void PageDrawDeleteBut(Graphics g, TabControl tab, int index) {
+        private void DrawPageDeleteBut(Graphics g, TabControl tab, int index) {
             if(index < 0 || index >= tab.TabCount) return;
             // 当前处理标签
             TabPage changedpage = tab.TabPages[index];
             // 标签背景区域
             Rectangle backrect = DrawPageRec(tab, index);
-
             int width = delPageButSize.Width;
             int height = delPageButSize.Height;
             int x1 = (backrect.Right-width)-6;
             int y1 = (backrect.Bottom-height)/2+4;
-            Color lineColor = Color.Empty;
-            if(GetMouseDelPageIndex() == index) { // 判断要绘制的关闭按钮是否位于鼠标下
-
-                lineColor = ColorTranslator.FromHtml("#DF585D");
-            } else { 
-                lineColor = ColorTranslator.FromHtml("#FFF");
+            Rectangle fillRect = new Rectangle(x1-4,y1-4,width+9,height+9);
+            int delPageIndex = GetMouseDelPageIndex();
+            if(delPageIndex == index) { // 判断要绘制的关闭按钮是否位于鼠标下
+                g.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#DF585D")), fillRect);
+            } else if (index == this.SelectedIndex){ 
+                g.FillRectangle(new SolidBrush(page_sel_color), fillRect);
+            }else if (index == MousePage && MouseButtons.None.Equals(MouseClickButtons)){
+                g.FillRectangle(new SolidBrush(page_mouse_sel_color), fillRect);
             }
             // 重绘关闭背景和标签背景重叠
             // g.FillRectangle(new SolidBrush(lable_mouse_sel_color), new Rectangle(backrect.Right,backrect.Y,delPageButSize.Width+4,backrect.Height));
@@ -499,7 +506,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             // 线的宽
             int linewidth = (int) Math.Sqrt((height*height)*(width*width));
             // 颜色
-            Pen pen = new Pen(lineColor, lineheight);
+            Pen pen = new Pen(ColorTranslator.FromHtml("#FFF"), lineheight);
             // 绘制第一条线
             g.DrawLine(pen, x1, y1, x1+width, y1+height);
             // 绘制第二条线

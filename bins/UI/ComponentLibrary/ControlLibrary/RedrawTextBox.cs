@@ -287,7 +287,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
         /// </summary>
         private void setTextDispLayout() {
             Rectangle rect = new Rectangle();
-            WinApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
+            WindowsApiUtils.SendMessage(Handle, 178, (IntPtr)0, ref rect);
             int top = TextPadding != Padding.Empty? TextPadding.Top : 1;
             int bottom = TextPadding != Padding.Empty? TextPadding.Bottom : 1;
             int left = TextPadding != Padding.Empty? TextPadding.Left : 1;
@@ -297,7 +297,7 @@ namespace UI.ComponentLibrary.ControlLibrary {
             rect.Height = ClientSize.Height - bottom;
             rect.Width = ClientSize.Width - right;
 
-            WinApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
+            WindowsApiUtils.SendMessage(Handle, 179, IntPtr.Zero, ref rect);
         }
         // 重写GetCharIndexFromPosition方法
         public new int GetCharIndexFromPosition(Point p) { 
@@ -486,8 +486,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             int WM_VSCROLL = 0x115;
             int SB_THUMBPOSITION = 4;
             // 获得鼠标在X和Y两个方向上的移动量。除以10是为是让移动页面的速度变慢一点。而前面的负号则是用来调节页面移动方向的。
-            WinApiUtils.GetScrollRange(Handle, 0, out MinH, out MaxH); 
-            WinApiUtils.GetScrollRange(Handle, 1, out MinV, out MaxV);
+            WindowsApiUtils.GetScrollRange(Handle, 0, out MinH, out MaxH); 
+            WindowsApiUtils.GetScrollRange(Handle, 1, out MinV, out MaxV);
             int MoveX = 0;
             Console.WriteLine(MaxH);
             if(MouseMoveLocation.X > MouseDownLocation.X) { //向左移动
@@ -500,8 +500,8 @@ namespace UI.ComponentLibrary.ControlLibrary {
             ////获取滚动条的最大最小位置和当前位置 
 
             Console.WriteLine(MouseDownLocation);
-            WinApiUtils.SetScrollPos(Handle, SB_HORZ, MoveX, true);// 水平滚动栏
-            WinApiUtils.PostMessage(Handle, WM_HSCROLL, SB_THUMBPOSITION + 0x10000 * MoveX, 0);//告诉控件移动页面内容到相应的位置上 
+            WindowsApiUtils.SetScrollPos(Handle, SB_HORZ, MoveX, true);// 水平滚动栏
+            WindowsApiUtils.PostMessage(Handle, WM_HSCROLL, SB_THUMBPOSITION + 0x10000 * MoveX, 0);//告诉控件移动页面内容到相应的位置上 
             //WinApiUtilsMet.SetScrollPos(Handle, SB_VERT, MoveY, true);// 垂直滚动栏
             //WinApiUtilsMet.PostMessage(Handle, WM_VSCROLL, SB_THUMBPOSITION + 0x10000 * MoveY, 0); 
         }

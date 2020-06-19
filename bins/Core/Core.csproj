@@ -113,7 +113,7 @@
     <Compile Include="StaticMethod\Method\Utils\MessyUtils.cs" />
     <Compile Include="StaticMethod\Method\Utils\StringUtils.cs" />
     <Compile Include="StaticMethod\Method\Utils\TextBoxUtils.cs" />
-    <Compile Include="StaticMethod\Method\Utils\WinApiUtils.cs" />
+    <Compile Include="StaticMethod\Method\Utils\WindowsApiUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

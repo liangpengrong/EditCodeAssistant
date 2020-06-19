@@ -45,7 +45,7 @@ namespace Core.StaticMethod.Method.Utils
             tool.Closing += new ToolStripDropDownClosingEventHandler((object sender, ToolStripDropDownClosingEventArgs e)=>{ 
                 ToolStripDropDown menu = (ToolStripDropDown)sender;
                 Point mousePoint;//初始化一个接受鼠标位置的Point
-                WinApiUtils.GetCursorPos(out mousePoint);//赋值
+                WindowsApiUtils.GetCursorPos(out mousePoint);//赋值
                 if (menu.ClientRectangle.Contains(mousePoint.X - menu.Left, mousePoint.Y - menu.Top)){
                     e.Cancel = true;//阻止关闭
                 } else {

@@ -174,9 +174,9 @@ namespace Core.StaticMethod.Method.Utils
                 process.Refresh();
             }
             // 得到文本框主窗体中的类名为Edit的窗口句柄
-            IntPtr vHandle = WinApiUtils.FindWindowEx(process.MainWindowHandle, IntPtr.Zero, "Edit", null);
+            IntPtr vHandle = WindowsApiUtils.FindWindowEx(process.MainWindowHandle, IntPtr.Zero, "Edit", null);
             // 向指定窗口句柄发送设置文本的消息
-            WinApiUtils.SendMessage(vHandle, 0x000C, 0, text);        
+            WindowsApiUtils.SendMessage(vHandle, 0x000C, 0, text);        
         }
         
         // 保存为JAVA文件
@@ -441,8 +441,9 @@ namespace Core.StaticMethod.Method.Utils
                         // 闪烁窗体
                         Form f = t.FindForm();
                         if(f.InvokeRequired) { 
-                            f.Invoke(new EventHandler(delegate{ 
-                                WinApiUtils.flashWindesTime(f.Handle, 400, 3, true);
+                            f.Invoke(new EventHandler(delegate{
+                                System.Media.SystemSounds.Asterisk.Play();
+                                WindowsApiUtils.FlashWindow(f.Handle, 400, 3);
                             }));
                         }
                         // 弹出对话框
